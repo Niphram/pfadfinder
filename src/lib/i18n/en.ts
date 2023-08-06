@@ -81,5 +81,16 @@ export default {
 		survival: 'Survival',
 		swim: 'Swim',
 		useMagicDevice: 'Use Magic Device'
+	},
+	texts: {
+		pages: {
+			abilities: 'Abilities',
+			combat: 'Combat',
+			character: 'Character'
+		},
+		general: {
+			unsaved: 'unsaved',
+			close: 'close'
+		}
 	}
 };

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { t } from '$lib/i18n';
 	import { c, dirty } from '$lib/state/character';
 
 	import { openDialog } from '$lib/components/dialog.svelte';
@@ -13,17 +14,17 @@
 	import HpDialog from '$lib/components/dialogs/hp-dialog.svelte';
 
 	const pages = [
-		{ label: 'Abilities', hash: 'abilities', component: AbilitiesPage },
-		{ label: 'Combat', hash: 'combat', component: CombatPage },
-		{ label: 'Character', hash: 'character', component: CharacterPage }
-	];
+		{ key: 'abilities', component: AbilitiesPage },
+		{ key: 'combat', component: CombatPage },
+		{ key: 'character', component: CharacterPage }
+	] as const;
 
 	let pageModal: HTMLDialogElement;
 </script>
 
 <svelte:head>
 	<title>
-		{$c.name}{$dirty ? ' (Unsaved)' : ''}
+		{$c.name}{$dirty ? ` (${$t('texts.general.unsaved')})` : ''}
 	</title>
 </svelte:head>
 
@@ -36,7 +37,7 @@
 						{$c.name} <span class="text-sm font-normal">(Lvl. {$c.classes.totalLevel})</span>
 					</p>
 					<span class="text-sm"
-						>{$c.classes.classes.map((c) => `${c.name} ${c.level}`).join('; ')}</span
+						>{$c.classes.classes.map((c) => `${c.name} ${c.level}`).join(', ')}</span
 					>
 				</div>
 			</button>
@@ -47,8 +48,8 @@
 	<div
 		class="flex flex-grow snap-x snap-mandatory flex-row flex-nowrap divide-x overflow-x-scroll scroll-smooth"
 	>
-		{#each pages as { hash, component } (hash)}
-			<div id={hash} class="w-screen flex-none snap-center snap-always overflow-y-scroll p-4">
+		{#each pages as { key, component } (key)}
+			<div id={key} class="w-screen flex-none snap-center snap-always overflow-y-scroll p-4">
 				<svelte:component this={component} />
 				<div class="h-16" />
 			</div>
@@ -82,14 +83,16 @@
 <dialog bind:this={pageModal} class="modal">
 	<form method="dialog" class="modal-box">
 		<div class="flex flex-col gap-2">
-			{#each pages as { hash, label }, i}
-				<a href="#{hash}" class="btn w-full" on:click={() => pageModal.close()}>{label}</a>
+			{#each pages as { key } (key)}
+				<a href="#{key}" class="btn w-full" on:click={() => pageModal.close()}
+					>{$t(`texts.pages.${key}`)}</a
+				>
 			{/each}
 			<div class="divider">Options</div>
 			<button class="btn">Stuff</button>
 		</div>
 	</form>
 	<form method="dialog" class="modal-backdrop">
-		<button>close</button>
+		<button>{$t('texts.general.close')}</button>
 	</form>
 </dialog>
