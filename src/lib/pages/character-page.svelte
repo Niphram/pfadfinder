@@ -1,0 +1,54 @@
+<script lang="ts">
+	import { c, type Class } from '$lib/state';
+
+	import { openDialog } from '$lib/components/dialog.svelte';
+
+	import CaptionedButton from '$lib/components/captioned-button.svelte';
+
+	import ClassDialog from '$lib/components/dialogs/class-dialog.svelte';
+	import RaceDialog from '$lib/components/dialogs/race-dialog.svelte';
+
+	function addClass() {
+		const newClass: Class = {
+			name: 'New Class',
+			favored: false,
+			level: 1,
+			hitDice: 6,
+			bab: 0,
+			fort: 0,
+			ref: 0,
+			will: 0,
+			speed: 0,
+			ranks: 0,
+			ranksMisc: 0
+		};
+
+		$c.classes.classes.push(newClass);
+		$c.classes.classes = $c.classes.classes;
+
+		openDialog(ClassDialog, { classIndex: $c.classes.classes.length - 1 });
+	}
+</script>
+
+<div class="flex flex-col gap-4">
+	<div class="divider">Race</div>
+
+	<CaptionedButton
+		label={$c.race.name}
+		caption="Race"
+		on:click={() => openDialog(RaceDialog, {})}
+	/>
+
+	<div class="divider">Classes</div>
+
+	<div class="grid w-full grid-cols-1 gap-2 md:grid-cols-4">
+		{#each $c.classes.classes as { name, level }, classIndex}
+			<CaptionedButton
+				label={name}
+				caption="Level {level}"
+				on:click={() => openDialog(ClassDialog, { classIndex })}
+			/>
+		{/each}
+	</div>
+	<button on:click={addClass} class="btn btn-secondary self-center">Add Class</button>
+</div>
