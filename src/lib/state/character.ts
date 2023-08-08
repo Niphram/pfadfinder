@@ -1,6 +1,7 @@
-import type { PickProps } from '$lib/utils/utilTypes';
+import { openDialog } from '$lib/components/dialog.svelte';
+import ErrorDialog from '$lib/components/dialogs/error-dialog.svelte';
 import { idbWritable } from './idb-store';
-import { abilityKeys, type AbilityKey, type SaveKey, saveKeys } from './types';
+import { abilityKeys, saveKeys, type AbilityKey } from './types';
 
 function makeObject<Keys extends string, T>(keys: readonly Keys[], valueFac: (key: Keys) => T) {
 	return keys.reduce((obj, key) => {
@@ -9,9 +10,15 @@ function makeObject<Keys extends string, T>(keys: readonly Keys[], valueFac: (ke
 	}, {} as Record<Keys, T>);
 }
 
-function abilityObject<T>(valueFac: (key: AbilityKey) => T) {
-	return makeObject(abilityKeys, valueFac);
+function sum<T>(arr: T[], cb: (v: T) => number) {
+	return arr.reduce((sum, v) => sum + cb(v), 0);
 }
+
+const defaultSaveAbility = {
+	fort: 'con',
+	ref: 'dex',
+	will: 'wis'
+} as const;
 
 export type Class = {
 	name: string;
@@ -23,116 +30,82 @@ export type Class = {
 	ref: number;
 	will: number;
 	speed: number;
-	ranks: number;
-	ranksMisc: number;
+	levelRanks: number;
+	miscRanks: number;
 };
 
-class Character {
-	/**
-	 * General
-	 */
-	public name = 'Unnamed Character';
+function makeDefaultCharacter() {
+	const char = {
+		name: 'Unnamed Character',
 
-	/**
-	 * Hitpoints
-	 */
-	public readonly hp = {
-		max: 8,
-		current: 8,
-		temp: 0
-	};
+		// Hit Points
+		hp: {
+			max: 8,
+			current: 8,
+			temp: 0
+		},
 
-	/**
-	 * Initiative
-	 */
-	public initMisc = 0;
-	public get init() {
-		return this.abilities.dex.mod + this.initMisc;
-	}
+		// Initiative
+		init: {
+			misc: 0,
+			get mod() {
+				return char.dex.mod + this.misc;
+			}
+		},
 
-	/**
-	 * Abilities
-	 */
-	public readonly abilities = (() => {
-		const char = this;
+		// Race
+		race: {
+			name: 'Unknown Race',
+			speed: 30,
+			...makeObject(abilityKeys, () => 0)
+		},
 
-		return abilityObject((key) => ({
+		// Abilities
+		...makeObject(abilityKeys, (key) => ({
 			base: 10,
-			temp: 0,
+			bonus: 0,
+			notes: '',
 			get total() {
-				return this.base + char.race.abilities[key] + this.temp;
+				return this.base + char.race[key] + this.bonus;
 			},
 			get mod() {
 				return Math.floor(this.total / 2) - 5;
-			},
-			notes: ''
-		}));
-	})();
+			}
+		})),
 
-	/**
-	 * Saves
-	 */
-	public saves = (() => {
-		const char = this;
+		// Saves
+		...makeObject(saveKeys, (key) => ({
+			ability: defaultSaveAbility[key],
+			bonus: 0,
+			misc: 0,
+			get mod() {
+				return char.classes[key] + char[this.ability].mod + this.bonus + this.misc;
+			}
+		})),
 
-		function make(ability: AbilityKey, classMod: SaveKey) {
-			return {
-				ability,
-				misc: 0,
-				tempMod: 0,
-				get totalMod() {
-					return (
-						char.classes[classMod] + char.abilities[this.ability].mod + this.misc + this.tempMod
-					);
-				}
-			};
-		}
-
-		return {
-			fort: make('con', 'fort'),
-			ref: make('dex', 'ref'),
-			will: make('wis', 'will')
-		};
-	})();
-
-	/**
-	 * Armor Class
-	 */
-	public ac = (() => {
-		const char = this;
-
-		return {
+		// Armor Class
+		ac: {
 			primaryAbility: 'dex' as AbilityKey,
 			secondaryAbility: undefined as undefined | AbilityKey,
-
 			get abilityMod() {
 				return (
-					char.abilities[this.primaryAbility].mod +
-					(this.secondaryAbility ? char.abilities[this.secondaryAbility].mod : 0)
+					char[this.primaryAbility].mod +
+					(this.secondaryAbility ? char[this.secondaryAbility].mod : 0)
 				);
 			},
-
 			get total() {
 				return 10 + this.abilityMod;
 			},
-
 			get touch() {
 				return 10 + this.abilityMod;
 			},
-
 			get flatFooted() {
 				return 10;
 			}
-		};
-	})();
+		},
 
-	/**
-	 * Attacks
-	 */
-	public attacks = (() => {
-		const char = this;
-
-		return {
+		// Combat
+		combat: {
 			cmbAbility: 'str' as AbilityKey,
 			meeleeAbility: 'str' as AbilityKey,
 			rangedAbility: 'dex' as AbilityKey,
@@ -152,65 +125,48 @@ class Character {
 				// ToDo
 				return -1;
 			}
-		};
-	})();
+		},
 
-	/**
-	 * Race
-	 */
-	public race = (() => {
-		return {
-			name: 'Unknown Race',
-			abilities: abilityObject(() => 0),
-			speed: 30
-		};
-	})();
+		// Classes
+		classes: {
+			list: [] as Class[],
 
-	/**
-	 * Classes
-	 */
-	public classes = (() => {
-		const char = this;
-
-		function sum<T extends object>(classes: T[], key: keyof PickProps<T, number>) {
-			return classes.reduce((sum, c) => sum + c[key], 0);
-		}
-
-		return {
-			classes: [] as Class[],
-
-			get totalLevel() {
-				return sum(this.classes, 'level');
+			get levels() {
+				return sum(this.list, (c) => c.level);
 			},
-
-			get totalSpeed() {
-				return sum(this.classes, 'speed');
+			get speed() {
+				return sum(this.list, (c) => c.speed);
 			},
-
 			get bab() {
-				return sum(this.classes, 'bab');
+				return sum(this.list, (c) => c.bab);
 			},
-
 			get fort() {
-				return sum(this.classes, 'fort');
+				return sum(this.list, (c) => c.fort);
 			},
-
 			get ref() {
-				return sum(this.classes, 'ref');
+				return sum(this.list, (c) => c.ref);
 			},
-
 			get will() {
-				return sum(this.classes, 'will');
+				return sum(this.list, (c) => c.will);
 			},
-
-			get totalSkillRanks() {
-				return this.classes.reduce(
-					(sum, c) => sum + (c.ranks + char.abilities.int.mod) * c.level + c.ranksMisc,
-					0
-				);
+			get ranks() {
+				return sum(this.list, (c) => (c.levelRanks + char.int.mod) * c.level + c.miscRanks);
 			}
-		};
-	})();
+		}
+	};
+
+	return char;
 }
 
-export const { data: c, dirty, loaded } = idbWritable('character', () => new Character());
+export const {
+	data: c,
+	dirty,
+	loaded
+} = idbWritable('character', makeDefaultCharacter, {
+	loadError: () =>
+		openDialog(ErrorDialog, { message: 'There was an error while loading your character.' })
+});
+
+export function resetChar() {
+	c.set(makeDefaultCharacter());
+}

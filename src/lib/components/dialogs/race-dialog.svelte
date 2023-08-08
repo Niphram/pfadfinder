@@ -29,7 +29,7 @@
 					type="number"
 					placeholder={$t(`abilities.${key}.short`)}
 					class="input input-bordered w-full"
-					bind:value={$c.race.abilities[key]}
+					bind:value={$c.race[key]}
 				/>
 			</div>
 		{/each}

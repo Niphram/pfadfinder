@@ -86,7 +86,8 @@ export default {
 		pages: {
 			abilities: 'Abilities',
 			combat: 'Combat',
-			character: 'Character'
+			character: 'Character',
+			spells: 'Spells'
 		},
 		general: {
 			unsaved: 'unsaved',

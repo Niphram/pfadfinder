@@ -13,6 +13,6 @@
 		type="number"
 		placeholder="Type here"
 		class="input input-bordered w-full max-w-xs"
-		bind:value={$c.initMisc}
+		bind:value={$c.init.misc}
 	/>
 </div>

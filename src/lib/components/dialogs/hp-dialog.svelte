@@ -1,21 +1,25 @@
 <script lang="ts">
 	import { c } from '$lib/state';
+	import { deriveValidated, validated } from '$lib/utils/stores';
+	import { integer, positive0 } from '$lib/validators/numbers';
 
-	let amount = 1;
+	let [amount, amountInvalid] = validated<number>(1, integer);
 
 	function heal() {
-		$c.hp.current = Math.min($c.hp.current + amount, $c.hp.max);
+		$c.hp.current = Math.min($c.hp.current + $amount, $c.hp.max);
 
-		amount = 1;
+		$amount = 1;
 	}
 
 	function damage() {
-		const tempBuffer = $c.hp.temp - amount;
+		const tempBuffer = $c.hp.temp - $amount;
 		$c.hp.temp = Math.max(0, tempBuffer);
 		$c.hp.current += Math.min(0, tempBuffer);
 
-		amount = 1;
+		$amount = 1;
 	}
+
+	const [tempHp, tempHpInvalid] = deriveValidated(c, 'hp.temp', integer, positive0);
 </script>
 
 <h3 class="text-lg font-bold">HP Management</h3>
@@ -29,8 +33,9 @@
 	<span class="uppercase">Temp HP</span>
 	<input
 		type="number"
+		class:input-error={$tempHpInvalid}
 		class="input input-bordered w-16 text-center text-2xl"
-		bind:value={$c.hp.temp}
+		bind:value={$tempHp}
 	/>
 </div>
 <div class="divider">Modify</div>
@@ -39,8 +44,9 @@
 	<input
 		type="number"
 		class="input input-bordered w-16 text-center text-2xl"
+		class:input-error={$amountInvalid}
 		min="0"
-		bind:value={amount}
+		bind:value={$amount}
 	/>
 	<button on:click|preventDefault={heal} class="btn flex-grow bg-green-500 text-2xl">+</button>
 </div>

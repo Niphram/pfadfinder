@@ -19,14 +19,14 @@
 			ref: 0,
 			will: 0,
 			speed: 0,
-			ranks: 0,
-			ranksMisc: 0
+			levelRanks: 0,
+			miscRanks: 0
 		};
 
-		$c.classes.classes.push(newClass);
-		$c.classes.classes = $c.classes.classes;
+		$c.classes.list.push(newClass);
+		$c.classes.list = $c.classes.list;
 
-		openDialog(ClassDialog, { classIndex: $c.classes.classes.length - 1 });
+		openDialog(ClassDialog, { classIndex: $c.classes.list.length - 1 });
 	}
 </script>
 
@@ -42,7 +42,7 @@
 	<div class="divider">Classes</div>
 
 	<div class="grid w-full grid-cols-1 gap-2 md:grid-cols-4">
-		{#each $c.classes.classes as { name, level }, classIndex}
+		{#each $c.classes.list as { name, level }, classIndex}
 			<CaptionedButton
 				label={name}
 				caption="Level {level}"

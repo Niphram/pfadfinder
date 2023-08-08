@@ -7,19 +7,20 @@
 	import AbilitiesPage from '$lib/pages/abilities-page.svelte';
 	import CharacterPage from '$lib/pages/character-page.svelte';
 	import CombatPage from '$lib/pages/combat-page.svelte';
+	import SpellsPage from '$lib/pages/spells-page.svelte';
 
 	import HpButton from '$lib/components/buttons/hp-button.svelte';
 
 	import CharacterInfoDialog from '$lib/components/dialogs/character-info-dialog.svelte';
 	import HpDialog from '$lib/components/dialogs/hp-dialog.svelte';
+	import PageDialog from '$lib/components/dialogs/page-dialog.svelte';
 
 	const pages = [
 		{ key: 'abilities', component: AbilitiesPage },
 		{ key: 'combat', component: CombatPage },
+		{ key: 'spells', component: SpellsPage },
 		{ key: 'character', component: CharacterPage }
 	] as const;
-
-	let pageModal: HTMLDialogElement;
 </script>
 
 <svelte:head>
@@ -34,11 +35,11 @@
 			<button class="flex-grow text-left" on:click={() => openDialog(CharacterInfoDialog, {})}>
 				<div class="flex flex-col">
 					<p class="text-lg font-bold">
-						{$c.name} <span class="text-sm font-normal">(Lvl. {$c.classes.totalLevel})</span>
+						{$c.name} <span class="text-sm font-normal">(Lvl. {$c.classes.levels})</span>
 					</p>
-					<span class="text-sm"
-						>{$c.classes.classes.map((c) => `${c.name} ${c.level}`).join(', ')}</span
-					>
+					<span class="text-sm">
+						{$c.classes.list.map((c) => `${c.name} ${c.level}`).join(', ')}
+					</span>
 				</div>
 			</button>
 			<HpButton on:click={() => openDialog(HpDialog, {})} />
@@ -60,7 +61,7 @@
 <!-- Floating Action Button -->
 
 <div class="fixed bottom-4 right-4">
-	<button class="btn btn-circle btn-primary" on:click={() => pageModal.showModal()}>
+	<button class="btn btn-circle btn-primary" on:click={() => openDialog(PageDialog, {})}>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			fill="none"
@@ -77,22 +78,3 @@
 		</svg>
 	</button>
 </div>
-
-<!-- Navigation Dialog -->
-
-<dialog bind:this={pageModal} class="modal">
-	<form method="dialog" class="modal-box">
-		<div class="flex flex-col gap-2">
-			{#each pages as { key } (key)}
-				<a href="#{key}" class="btn w-full" on:click={() => pageModal.close()}
-					>{$t(`texts.pages.${key}`)}</a
-				>
-			{/each}
-			<div class="divider">Options</div>
-			<button class="btn">Stuff</button>
-		</div>
-	</form>
-	<form method="dialog" class="modal-backdrop">
-		<button>{$t('texts.general.close')}</button>
-	</form>
-</dialog>

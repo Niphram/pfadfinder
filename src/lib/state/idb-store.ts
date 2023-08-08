@@ -48,12 +48,13 @@ function assignPOD<T extends object>(o: T, pod: DeepPartial<T>) {
 
 type IDBWritableOptions = {
 	timeout?: number;
+	loadError?: (err: unknown) => void;
 };
 
 export function idbWritable<T extends object>(
 	key: string,
 	dataFactory: () => T,
-	{ timeout = 1000 }: IDBWritableOptions = {}
+	{ timeout = 1000, loadError }: IDBWritableOptions = {}
 ) {
 	const store = writable(dataFactory());
 	const loaded = writable(false);
@@ -68,13 +69,15 @@ export function idbWritable<T extends object>(
 					assignPOD(newDataObj, data);
 					store.set(newDataObj);
 				}
-
-				loaded.set(true);
 			})
 			.catch(async (err) => {
 				store.set(dataFactory());
 				await idbKeyVal.del(key);
 				console.error(err);
+				loadError?.(err);
+			})
+			.finally(() => {
+				loaded.set(true);
 			});
 	}
 

@@ -15,7 +15,9 @@
 		bind:value={$c.ac.primaryAbility}
 	>
 		{#each abilityKeys as key}
-			<option value={key}>{$t(`abilities.${key}.full`)}</option>
+			<option value={key}>
+				{$t(`abilities.${key}.full`)}
+			</option>
 		{/each}
 	</select>
 </div>
@@ -31,7 +33,9 @@
 	>
 		<option value={undefined}>None</option>
 		{#each abilityKeys as key}
-			<option value={key}>{$t(`abilities.${key}.full`)}</option>
+			<option value={key}>
+				{$t(`abilities.${key}.full`)}
+			</option>
 		{/each}
 	</select>
 </div>

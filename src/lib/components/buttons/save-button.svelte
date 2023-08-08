@@ -8,8 +8,4 @@
 	export let key: SaveKey;
 </script>
 
-<CaptionedButton
-	on:click
-	label={withSign($c.saves[key].totalMod)}
-	caption={$t(`saves.${key}.short`)}
-/>
+<CaptionedButton on:click label={withSign($c[key].mod)} caption={$t(`saves.${key}.short`)} />

@@ -5,4 +5,4 @@
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
 </script>
 
-<CaptionedButton on:click label={withSign($c.init)} caption="Initiative" />
+<CaptionedButton on:click label={withSign($c.init.mod)} caption="Initiative" />

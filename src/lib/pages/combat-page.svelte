@@ -9,9 +9,9 @@
 	<div class="divider">Mods</div>
 
 	<div class="grid w-full grid-cols-2 gap-2 md:grid-cols-4">
-		<CaptionedButton label={withSign($c.attacks.bab)} caption="Base Attack Bonus" />
-		<CaptionedButton label={withSign($c.attacks.sr)} caption="Spell Resistance" />
-		<CaptionedButton label={withSign($c.attacks.cmb)} caption="CMB" />
-		<CaptionedButton label={withSign($c.attacks.cmd)} caption="CMD" />
+		<CaptionedButton label={withSign($c.combat.bab)} caption="Base Attack Bonus" />
+		<CaptionedButton label={withSign($c.combat.sr)} caption="Spell Resistance" />
+		<CaptionedButton label={withSign($c.combat.cmb)} caption="CMB" />
+		<CaptionedButton label={withSign($c.combat.cmd)} caption="CMD" />
 	</div>
 </div>
