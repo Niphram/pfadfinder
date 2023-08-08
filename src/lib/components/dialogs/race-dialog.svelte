@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
 	import { abilityKeys, c } from '$lib/state';
+	import Integer from '../input/integer.svelte';
 </script>
 
 <div class="flex flex-col gap-2">
@@ -20,31 +21,14 @@
 
 	<div class="grid grid-cols-3 gap-2">
 		{#each abilityKeys as key}
-			<div class="form-control w-full">
-				<label for="race{key}" class="label">
-					<span class="label-text">{$t(`abilities.${key}.full`)}</span>
-				</label>
-				<input
-					name="race{key}"
-					type="number"
-					placeholder={$t(`abilities.${key}.short`)}
-					class="input input-bordered w-full"
-					bind:value={$c.race[key]}
-				/>
-			</div>
+			<Integer
+				bind:value={$c.race[key]}
+				name="race{key}"
+				label={$t(`abilities.${key}.full`)}
+				placeholder={$t(`abilities.${key}.short`)}
+			/>
 		{/each}
 	</div>
 
-	<div class="form-control w-full">
-		<label for="raceSpeed" class="label">
-			<span class="label-text">Speed</span>
-		</label>
-		<input
-			name="raceSpeed"
-			type="number"
-			placeholder="Speed"
-			class="input input-bordered w-full"
-			bind:value={$c.race.speed}
-		/>
-	</div>
+	<Integer bind:value={$c.race.speed} name="raceSpeed" label="Speed" placeholder="Speed" />
 </div>

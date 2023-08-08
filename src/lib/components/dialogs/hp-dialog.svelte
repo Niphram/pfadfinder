@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { c } from '$lib/state';
 	import { deriveValidated, validated } from '$lib/utils/stores';
-	import { integer, positive0 } from '$lib/validators/numbers';
+	import { integer, positive, positive0 } from '$lib/validators/numbers';
 
-	let [amount, amountInvalid] = validated<number>(1, integer);
+	let [amount, amountInvalid] = validated<number>(1, integer, positive);
 
 	function heal() {
 		$c.hp.current = Math.min($c.hp.current + $amount, $c.hp.max);
