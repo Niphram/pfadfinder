@@ -1,9 +1,0 @@
-{
-	"name": "Pfadfinder",
-	"short_name": "Pfadfinder",
-	"theme_color": "#DBC99A",
-	"background_color": "#E4D8B4",
-	"display": "standalone",
-	"scope": "/pfadfinder",
-	"start_url": "/pfadfinder"
-}
