@@ -1,12 +1,13 @@
 {
 	"name": "Pfadfinder",
 	"short_name": "Pfadfinder",
+	"description": "Charactersheet for Pathfinder 1st Edition",
 	"theme_color": "#DBC99A",
 	"background_color": "#E4D8B4",
 	"display": "standalone",
 	"scope": "./",
 	"start_url": "./",
-	"id": "./",
+	"id": "pfadfinder",
 	"icons": [
 		{
 			"src": "./icons/512.png",
