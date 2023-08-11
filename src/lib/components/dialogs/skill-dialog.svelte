@@ -5,34 +5,53 @@
 	import TextArea from '../input/text-area.svelte';
 
 	export let key: SkillKeys = 'acrobatics';
+	export let index = 0;
 </script>
 
-<h3 class="text-lg font-bold">{$t(`skills.${key}`)}</h3>
+<h3 class="text-lg font-bold">
+	{$t(`skills.${key}`)}{$c.skills[key].variants[index].type
+		? ` (${$c.skills[key].variants[index].type})`
+		: ''}
+</h3>
 
-<div class="form-control w-full">
-	<label for="skillBaseAbility" class="label">
-		<span class="label-text">Base Ability</span>
-	</label>
-	<select
-		name="skillBaseAbility"
-		class="select select-bordered w-full"
-		bind:value={$c.skills[key].ability}
-	>
-		{#each abilityKeys as key}
-			<option value={key}>{$t(`abilities.${key}.full`)}</option>
-		{/each}
-	</select>
+<div class="flex flex-row gap-2">
+	<div class="form-control">
+		<label for="classSkill" class="label cursor-pointer">
+			<span class="label-text">C?</span>
+		</label>
+		<input
+			name="classSkill"
+			type="checkbox"
+			bind:checked={$c.skills[key].variants[index].classSkill}
+			class="checkbox checkbox-lg"
+		/>
+	</div>
+
+	<div class="form-control w-full">
+		<label for="skillBaseAbility" class="label">
+			<span class="label-text">Base Ability</span>
+		</label>
+		<select
+			name="skillBaseAbility"
+			class="select select-bordered select-sm w-full"
+			bind:value={$c.skills[key].variants[index].ability}
+		>
+			{#each abilityKeys as key}
+				<option value={key}>{$t(`abilities.${key}.full`)}</option>
+			{/each}
+		</select>
+	</div>
 </div>
 
-<div class="form-control">
-	<label class="label cursor-pointer">
-		<span class="label-text">Class Skill</span>
-		<input type="checkbox" class="toggle" bind:checked={$c.skills[key].classSkill} />
-	</label>
+<div class="flex flex-row gap-2">
+	<Integer bind:value={$c.skills[key].variants[index].ranks} name="skillRanks" label="Ranks" />
+	<Integer bind:value={$c.skills[key].variants[index].misc} name="skillMisc" label="Misc" />
+	<Integer bind:value={$c.skills[key].variants[index].temp} name="skillBonus" label="Temp Mod" />
 </div>
 
-<Integer bind:value={$c.skills[key].ranks} name="skillRanks" label="Ranks" />
-<Integer bind:value={$c.skills[key].misc} name="skillMisc" label="Misc" />
-<Integer bind:value={$c.skills[key].temp} name="skillBonus" label="Temp Mod" />
-
-<TextArea bind:value={$c.skills[key].notes} name="skillNotes" label="Notes" placeholder="Notes" />
+<TextArea
+	bind:value={$c.skills[key].variants[index].notes}
+	name="skillNotes"
+	label="Notes"
+	placeholder="Notes"
+/>

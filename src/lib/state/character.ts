@@ -2,7 +2,14 @@ import { openDialog } from '$lib/components/dialog.svelte';
 import ErrorDialog from '$lib/components/dialogs/error-dialog.svelte';
 import type { Paths } from '$lib/utils';
 import { idbWritable } from './idb-store';
-import { abilityKeys, saveKeys, type AbilityKey, type SizeKey, skillKeys } from './types';
+import {
+	abilityKeys,
+	saveKeys,
+	type AbilityKey,
+	type SizeKey,
+	skillKeys,
+	type SkillKeys
+} from './types';
 
 function makeObject<Keys extends string, T>(keys: readonly Keys[], valueFac: (key: Keys) => T) {
 	return keys.reduce((obj, key) => {
@@ -90,6 +97,43 @@ export type Class = {
 	miscRanks: number;
 };
 
+export type SkillVariant = {
+	type: string;
+	ability: AbilityKey;
+	classSkill: boolean;
+	acPenalty: boolean;
+	ranks: number;
+	misc: number;
+	temp: number;
+	notes: string;
+};
+
+export function makeSkillVariant(skill: SkillKeys): SkillVariant {
+	return {
+		type: '',
+		ability: skillDefaults[skill].ability,
+		acPenalty: true,
+		ranks: 0,
+		misc: 0,
+		temp: 0,
+		classSkill: false,
+		notes: ''
+	};
+}
+
+export function getSkillMod(char: ICharacter, skillKey: SkillKeys, idx: number) {
+	const skill = char.skills[skillKey];
+	const variant = skill.variants[idx];
+
+	return (
+		char[variant.ability].mod +
+		variant.ranks +
+		variant.misc +
+		variant.temp +
+		(variant.classSkill && variant.ranks > 0 ? 3 : 0)
+	);
+}
+
 function makeDefaultCharacter() {
 	const char = {
 		name: 'Unnamed Character',
@@ -144,23 +188,10 @@ function makeDefaultCharacter() {
 
 		// Skills
 		skills: makeObject(skillKeys, (key) => ({
-			ability: skillDefaults[key].ability,
-			classSkill: false,
-			ranks: 0,
-			misc: 0,
-			temp: 0,
-			acPenalty: skillDefaults[key].acPenalty,
 			trained: skillDefaults[key].trained,
-			subskills: skillDefaults[key].subskills,
-			notes: '',
-			get mod() {
-				return (
-					char[this.ability].mod +
-					this.ranks +
-					this.misc +
-					this.temp +
-					(this.classSkill && this.ranks > 0 ? 3 : 0)
-				);
+			variants: [makeSkillVariant(key)],
+			get hasVariants() {
+				return skillDefaults[key].subskills;
 			}
 		})),
 
