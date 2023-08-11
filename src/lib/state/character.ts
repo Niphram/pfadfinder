@@ -1,7 +1,8 @@
 import { openDialog } from '$lib/components/dialog.svelte';
 import ErrorDialog from '$lib/components/dialogs/error-dialog.svelte';
+import type { Paths } from '$lib/utils';
 import { idbWritable } from './idb-store';
-import { abilityKeys, saveKeys, type AbilityKey } from './types';
+import { abilityKeys, saveKeys, type AbilityKey, type SizeKey } from './types';
 
 function makeObject<Keys extends string, T>(keys: readonly Keys[], valueFac: (key: Keys) => T) {
 	return keys.reduce((obj, key) => {
@@ -19,6 +20,18 @@ const defaultSaveAbility = {
 	ref: 'dex',
 	will: 'wis'
 } as const;
+
+const sizeModifiers: Record<SizeKey, { mod: number; ability: AbilityKey }> = {
+	fine: { ability: 'dex', mod: -8 },
+	diminutive: { ability: 'dex', mod: -4 },
+	tiny: { ability: 'dex', mod: -2 },
+	small: { ability: 'str', mod: -1 },
+	medium: { ability: 'str', mod: 0 },
+	large: { ability: 'str', mod: 1 },
+	huge: { ability: 'str', mod: +2 },
+	gargantuan: { ability: 'str', mod: +4 },
+	colossal: { ability: 'str', mod: +8 }
+};
 
 export type Class = {
 	name: string;
@@ -48,6 +61,7 @@ function makeDefaultCharacter() {
 		// Initiative
 		init: {
 			misc: 0,
+			notes: '',
 			get mod() {
 				return char.dex.mod + this.misc;
 			}
@@ -57,6 +71,7 @@ function makeDefaultCharacter() {
 		race: {
 			name: 'Unknown Race',
 			speed: 30,
+			size: 'medium' as SizeKey,
 			...makeObject(abilityKeys, () => 0)
 		},
 
@@ -78,6 +93,7 @@ function makeDefaultCharacter() {
 			ability: defaultSaveAbility[key],
 			bonus: 0,
 			misc: 0,
+			notes: '',
 			get mod() {
 				return char.classes[key] + char[this.ability].mod + this.bonus + this.misc;
 			}
@@ -110,20 +126,42 @@ function makeDefaultCharacter() {
 			meeleeAbility: 'str' as AbilityKey,
 			rangedAbility: 'dex' as AbilityKey,
 
-			get bab() {
-				return char.classes.bab;
+			sr: {
+				base: 0,
+				misc: 0,
+				notes: '',
+				get total() {
+					return this.base + this.misc;
+				}
 			},
-			get sr() {
-				// ToDo
-				return -1;
+
+			bab: {
+				notes: '',
+				get mod() {
+					return char.classes.bab;
+				}
 			},
-			get cmb() {
-				// ToDo
-				return -1;
+
+			cmb: {
+				notes: '',
+				get mod() {
+					const { ability, mod } = sizeModifiers[char.race.size];
+					// BAB + STR/DEX + SizeMod
+					return char.combat.bab.mod + char[ability].mod + mod;
+				}
 			},
-			get cmd() {
-				// ToDo
-				return -1;
+
+			cmd: {
+				notes: '',
+				get mod() {
+					return (
+						10 +
+						char.combat.bab.mod +
+						char.str.mod +
+						char.dex.mod +
+						sizeModifiers[char.race.size].mod
+					);
+				}
 			}
 		},
 
@@ -157,6 +195,10 @@ function makeDefaultCharacter() {
 
 	return char;
 }
+
+export type ICharacter = ReturnType<typeof makeDefaultCharacter>;
+
+export type CharPaths = Paths<ICharacter>;
 
 export const {
 	data: c,

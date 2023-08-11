@@ -4,7 +4,7 @@
 
 	let dialog: HTMLDialogElement;
 
-	const dialogContent = writable<{ component?: ComponentType; props: any }>({
+	const dialogContent = writable<{ component?: ComponentType; props: object }>({
 		component: undefined,
 		props: {}
 	});

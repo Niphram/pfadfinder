@@ -4,9 +4,11 @@
 	import { loaded } from '$lib/state/character';
 
 	import Dialog from '$lib/components/dialog.svelte';
+	import ToastProvider from '$lib/components/toast-provider.svelte';
 </script>
 
 <Dialog />
+<ToastProvider />
 
 <div class="h-screen w-screen">
 	{#if $loaded}

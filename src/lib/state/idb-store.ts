@@ -40,7 +40,7 @@ function assignPOD<T extends object>(o: T, pod: DeepPartial<T>) {
 			if (typeof value === 'object' && !Array.isArray(value)) {
 				assignPOD(o[key], value);
 			} else {
-				o[key] = value as any;
+				o[key] = value as T[typeof key];
 			}
 		}
 	}

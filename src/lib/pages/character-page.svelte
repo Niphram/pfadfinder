@@ -36,7 +36,7 @@
 	<CaptionedButton
 		label={$c.race.name}
 		caption="Race"
-		on:click={() => openDialog(RaceDialog, {})}
+		on:contextmenu={() => openDialog(RaceDialog, {})}
 	/>
 
 	<div class="divider">Classes</div>
@@ -46,7 +46,7 @@
 			<CaptionedButton
 				label={name}
 				caption="Level {level}"
-				on:click={() => openDialog(ClassDialog, { classIndex })}
+				on:contextmenu={() => openDialog(ClassDialog, { classIndex })}
 			/>
 		{/each}
 	</div>

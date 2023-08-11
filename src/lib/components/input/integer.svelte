@@ -3,10 +3,10 @@
 	export let noZero = false;
 	export let noPositive = false;
 
-	export let value;
+	export let value: number;
 
 	export let name: string;
-	export let label: string | undefined;
+	export let label: string;
 	export let placeholder: string | undefined = undefined;
 
 	let current = value;

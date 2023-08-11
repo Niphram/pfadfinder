@@ -2,7 +2,7 @@
 	import { c } from '$lib/state';
 </script>
 
-<button class="btn h-min px-0" on:click>
+<button class="btn h-min px-0" on:click on:contextmenu|preventDefault>
 	<div class="grid w-full grid-cols-3 divide-x">
 		<div class="flex w-full flex-col divide-y text-center">
 			<div class="py-1 text-3xl font-extrabold">{$c.ac.total}</div>
