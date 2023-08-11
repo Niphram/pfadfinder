@@ -19,6 +19,7 @@
 		$amount = 1;
 	}
 
+	const [maxHp, maxHpInvalid] = deriveValidated(c, 'hp.max', integer, positive0);
 	const [tempHp, tempHpInvalid] = deriveValidated(c, 'hp.temp', integer, positive0);
 </script>
 
@@ -29,7 +30,12 @@
 	<span class="uppercase">Current HP</span>
 	<span class="text-4xl font-extrabold">{$c.hp.current}</span>
 	<span class="uppercase">Max HP</span>
-	<span class="text-4xl font-extrabold">{$c.hp.max}</span>
+	<input
+		type="number"
+		class:input-error={$maxHpInvalid}
+		class="input input-bordered w-16 text-center text-2xl"
+		bind:value={$maxHp}
+	/>
 	<span class="uppercase">Temp HP</span>
 	<input
 		type="number"
