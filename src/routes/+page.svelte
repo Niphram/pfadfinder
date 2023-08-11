@@ -7,6 +7,7 @@
 	import AbilitiesPage from '$lib/pages/abilities-page.svelte';
 	import CharacterPage from '$lib/pages/character-page.svelte';
 	import CombatPage from '$lib/pages/combat-page.svelte';
+	import SkillsPage from '$lib/pages/skills-page.svelte';
 	import SpellsPage from '$lib/pages/spells-page.svelte';
 
 	import HpButton from '$lib/components/buttons/hp-button.svelte';
@@ -18,6 +19,7 @@
 	const pages = [
 		{ key: 'abilities', component: AbilitiesPage },
 		{ key: 'combat', component: CombatPage },
+		{ key: 'skills', component: SkillsPage },
 		{ key: 'spells', component: SpellsPage },
 		{ key: 'character', component: CharacterPage }
 	] as const;

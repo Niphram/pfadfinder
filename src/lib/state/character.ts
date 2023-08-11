@@ -2,7 +2,7 @@ import { openDialog } from '$lib/components/dialog.svelte';
 import ErrorDialog from '$lib/components/dialogs/error-dialog.svelte';
 import type { Paths } from '$lib/utils';
 import { idbWritable } from './idb-store';
-import { abilityKeys, saveKeys, type AbilityKey, type SizeKey } from './types';
+import { abilityKeys, saveKeys, type AbilityKey, type SizeKey, skillKeys } from './types';
 
 function makeObject<Keys extends string, T>(keys: readonly Keys[], valueFac: (key: Keys) => T) {
 	return keys.reduce((obj, key) => {
@@ -19,6 +19,49 @@ const defaultSaveAbility = {
 	fort: 'con',
 	ref: 'dex',
 	will: 'wis'
+} as const;
+
+export const skillDefaults = {
+	acrobatics: { ability: 'dex', trained: false, subskills: false, acPenalty: true },
+	appraise: { ability: 'int', trained: false, subskills: false, acPenalty: true },
+	bluff: { ability: 'cha', trained: false, subskills: false, acPenalty: true },
+	climb: { ability: 'str', trained: false, subskills: false, acPenalty: true },
+	craft: { ability: 'int', trained: false, subskills: true, acPenalty: true },
+	diplomacy: { ability: 'cha', trained: false, subskills: false, acPenalty: true },
+	disableDevice: { ability: 'dex', trained: true, subskills: false, acPenalty: true },
+	disguise: { ability: 'cha', trained: false, subskills: false, acPenalty: true },
+	escapeArtist: { ability: 'dex', trained: false, subskills: false, acPenalty: true },
+	fly: { ability: 'dex', trained: false, subskills: false, acPenalty: true },
+	handleAnimal: { ability: 'cha', trained: true, subskills: false, acPenalty: true },
+	heal: { ability: 'wis', trained: false, subskills: false, acPenalty: true },
+	intimidate: { ability: 'cha', trained: false, subskills: false, acPenalty: true },
+	knowledgeArcana: { ability: 'int', trained: true, subskills: false, acPenalty: true },
+	knowledgeDungeoneering: {
+		ability: 'int',
+		trained: true,
+		subskills: false,
+		acPenalty: true
+	},
+	knowledgeEngineering: { ability: 'int', trained: true, subskills: false, acPenalty: true },
+	knowledgeGeography: { ability: 'int', trained: true, subskills: false, acPenalty: true },
+	knowledgeHistory: { ability: 'int', trained: true, subskills: false, acPenalty: true },
+	knowledgeLocal: { ability: 'int', trained: true, subskills: false, acPenalty: true },
+	knowledgeNature: { ability: 'int', trained: true, subskills: false, acPenalty: true },
+	knowledgeNobility: { ability: 'int', trained: true, subskills: false, acPenalty: true },
+	knowledgePlanes: { ability: 'int', trained: true, subskills: false, acPenalty: true },
+	knowledgeReligion: { ability: 'int', trained: true, subskills: false, acPenalty: true },
+	linguistics: { ability: 'int', trained: true, subskills: false, acPenalty: true },
+	perception: { ability: 'wis', trained: false, subskills: false, acPenalty: true },
+	perform: { ability: 'cha', trained: false, subskills: true, acPenalty: true },
+	profession: { ability: 'wis', trained: true, subskills: true, acPenalty: true },
+	ride: { ability: 'dex', trained: false, subskills: false, acPenalty: true },
+	senseMotive: { ability: 'wis', trained: false, subskills: false, acPenalty: true },
+	sleightOfHand: { ability: 'dex', trained: true, subskills: false, acPenalty: true },
+	spellcraft: { ability: 'int', trained: true, subskills: false, acPenalty: true },
+	stealth: { ability: 'dex', trained: false, subskills: false, acPenalty: true },
+	survival: { ability: 'wis', trained: false, subskills: false, acPenalty: true },
+	swim: { ability: 'str', trained: false, subskills: false, acPenalty: true },
+	useMagicDevice: { ability: 'cha', trained: true, subskills: false, acPenalty: true }
 } as const;
 
 const sizeModifiers: Record<SizeKey, { mod: number; ability: AbilityKey }> = {
@@ -96,6 +139,28 @@ function makeDefaultCharacter() {
 			notes: '',
 			get mod() {
 				return char.classes[key] + char[this.ability].mod + this.bonus + this.misc;
+			}
+		})),
+
+		// Skills
+		skills: makeObject(skillKeys, (key) => ({
+			ability: skillDefaults[key].ability,
+			classSkill: false,
+			ranks: 0,
+			misc: 0,
+			temp: 0,
+			acPenalty: skillDefaults[key].acPenalty,
+			trained: skillDefaults[key].trained,
+			subskills: skillDefaults[key].subskills,
+			notes: '',
+			get mod() {
+				return (
+					char[this.ability].mod +
+					this.ranks +
+					this.misc +
+					this.temp +
+					(this.classSkill && this.ranks > 0 ? 3 : 0)
+				);
 			}
 		})),
 

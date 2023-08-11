@@ -87,7 +87,8 @@ export default {
 			abilities: 'Abilities',
 			combat: 'Combat',
 			character: 'Character',
-			spells: 'Spells'
+			spells: 'Spells',
+			skills: 'Skills'
 		},
 		general: {
 			unsaved: 'unsaved',
