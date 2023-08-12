@@ -16,7 +16,11 @@
 >
 	<div class="flex w-full flex-col divide-y text-center">
 		<div class="py-1 text-3xl font-extrabold">{withSign($c[key].mod)}</div>
-		<div class="py-1 text-xs">{$c[key].total}</div>
-		<div class="py-1 uppercase">{$t(`abilities.${key}.short`)}</div>
+		<div class="py-1 text-xs decoration-wavy" class:underline={!!$c[key].notes}>
+			{$c[key].total}
+		</div>
+		<div class="py-1 uppercase decoration-wavy" class:underline={!!$c[key].notes}>
+			{$t(`abilities.${key}.short`)}
+		</div>
 	</div>
 </button>

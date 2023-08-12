@@ -11,6 +11,7 @@
 <CaptionedButton
 	on:click={() => macroNotify('Initiative', $c.init.notes, $c)}
 	on:contextmenu={() => openDialog(InitDialog, {})}
+	underline={!!$c.init.notes}
 	label={withSign($c.init.mod)}
 	caption="Initiative"
 />

@@ -14,6 +14,7 @@
 <CaptionedButton
 	on:click={() => macroNotify($t(`saves.${key}.full`), $c[key].notes, $c)}
 	on:contextmenu={() => openDialog(SaveDialog, { key })}
+	underline={!!$c[key].notes}
 	label={withSign($c[key].mod)}
 	caption={$t(`saves.${key}.short`)}
 />

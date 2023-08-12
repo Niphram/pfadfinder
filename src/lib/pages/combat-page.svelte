@@ -18,24 +18,28 @@
 		<CaptionedButton
 			label={withSign($c.combat.bab.mod)}
 			caption="Base Attack Bonus"
+			underline={!!$c.combat.bab.notes}
 			on:click={() => macroNotify('Base Attack Bonus', $c.combat.bab.notes, $c)}
 			on:contextmenu={() => openDialog(BabDialog, {})}
 		/>
 		<CaptionedButton
 			label={withSign($c.combat.sr.total)}
 			caption="Spell Resistance"
+			underline={!!$c.combat.sr.notes}
 			on:click={() => macroNotify('Spell Resistance', $c.combat.sr.notes, $c)}
 			on:contextmenu={() => openDialog(SrDialog, {})}
 		/>
 		<CaptionedButton
 			label={withSign($c.combat.cmb.mod)}
 			caption="CMB"
+			underline={!!$c.combat.cmb.notes}
 			on:click={() => macroNotify('Combat Manouver Bonus', $c.combat.cmb.notes, $c)}
 			on:contextmenu={() => openDialog(CmbDialog, {})}
 		/>
 		<CaptionedButton
 			label={withSign($c.combat.cmd.mod)}
 			caption="CMD"
+			underline={!!$c.combat.cmd.notes}
 			on:click={() => macroNotify('Combat Manouver Defense', $c.combat.cmd.notes, $c)}
 			on:contextmenu={() => openDialog(CmdDialog, {})}
 		/>

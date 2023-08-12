@@ -21,7 +21,9 @@
 						<span class="w-16">{variant.classSkill ? 'c' : ''}</span>
 					</div>
 					<div class="join-item flex flex-grow items-center bg-base-200">
-						<span class="join-item flex-grow align-middle"
+						<span
+							class="join-item flex-grow align-middle decoration-wavy"
+							class:underline={variant.notes}
 							>{$t(`skills.${key}`)}{variant.type ? ` (${variant.type})` : ''}</span
 						>
 					</div>
