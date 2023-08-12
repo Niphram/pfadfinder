@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { c, type Class } from '$lib/state';
+	import { c } from '$lib/state';
 
 	import { openDialog } from '$lib/components/dialog.svelte';
 
@@ -7,6 +7,7 @@
 
 	import ClassDialog from '$lib/components/dialogs/class-dialog.svelte';
 	import RaceDialog from '$lib/components/dialogs/race-dialog.svelte';
+	import type { Class } from '$lib/state/char-types/class';
 
 	function addClass() {
 		const newClass: Class = {
