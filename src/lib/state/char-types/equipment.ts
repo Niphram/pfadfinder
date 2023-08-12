@@ -20,7 +20,7 @@ export type AcItem = {
 export function makeDefaultAcItem(): AcItem {
 	return {
 		name: 'Unnamed Item',
-		equipped: true,
+		equipped: false,
 		acBonus: 0,
 		ffBonus: 0,
 		touchBonus: 0,

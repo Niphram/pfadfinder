@@ -41,6 +41,17 @@
 			/>
 		</div>
 
+		<div class="form-control">
+			<label class="label cursor-pointer pb-0">
+				<span class="label-text">Equipped?</span>
+				<input
+					type="checkbox"
+					class="toggle"
+					bind:checked={$c.equipment.ac.items[index].equipped}
+				/>
+			</label>
+		</div>
+
 		<div class="grid grid-cols-3 gap-2">
 			{#each bonusKeys as key}
 				<Integer

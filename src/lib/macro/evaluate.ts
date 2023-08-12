@@ -1,11 +1,18 @@
 import type { ICharacter } from '$lib/state';
-import { NodeType, type Node } from './parser';
+import { NodeType, type Node, parse } from './parser';
 
 function calcAttribute(path: string[], char: ICharacter): number {
 	try {
 		const val: unknown = path.reduce((c, p) => c[p], char as Record<string, any>);
 
-		return typeof val === 'number' ? val : NaN;
+		switch (typeof val) {
+			case 'number':
+				return val;
+			case 'string':
+				return calculateNode(parse(val), char);
+			default:
+				return NaN;
+		}
 	} catch (err) {
 		return NaN;
 	}

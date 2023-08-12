@@ -85,7 +85,7 @@ export default {
 	equipment: {
 		armorType: {
 			light: 'Light',
-			medium: 'Armor',
+			medium: 'Medium',
 			heavy: 'Heavy',
 			shield: 'Shield',
 			misc: 'Misc'

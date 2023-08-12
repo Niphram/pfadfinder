@@ -302,7 +302,7 @@ function makeDefaultCharacter() {
 				items: [] as AcItem[],
 
 				get acBonus() {
-					return mapSum(this.items, (i) => i.acBonus);
+					return mapSum(this.items, (i) => (i.equipped ? i.acBonus : 0));
 				}
 			}
 		}
