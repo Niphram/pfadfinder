@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
 	import { abilityKeys, c, type SaveKey } from '$lib/state';
-	import Integer from '../input/integer.svelte';
+	import MacroInteger from '../input/macro-integer.svelte';
 	import TextArea from '../input/text-area.svelte';
 
 	export let key: SaveKey = 'fort';
@@ -20,7 +20,7 @@
 	</select>
 </div>
 
-<Integer bind:value={$c[key].misc} name="saveMisc" label="Misc" />
-<Integer bind:value={$c[key].bonus} name="saveBonus" label="Temp Mod" />
+<MacroInteger bind:value={$c[key].misc} name="saveMisc" label="Misc" />
+<MacroInteger bind:value={$c[key].bonus} name="saveBonus" label="Temp Mod" />
 
 <TextArea bind:value={$c[key].notes} name="saveNotes" label="Notes" placeholder="Notes" />

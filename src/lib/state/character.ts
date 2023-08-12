@@ -1,5 +1,7 @@
 import { openDialog } from '$lib/components/dialog.svelte';
 import ErrorDialog from '$lib/components/dialogs/error-dialog.svelte';
+import { calculateNode } from '$lib/macro/evaluate';
+import { parse } from '$lib/macro/parser';
 import type { Paths } from '$lib/utils';
 import { idbWritable } from './idb-store';
 import {
@@ -10,6 +12,8 @@ import {
 	skillKeys,
 	type SkillKeys
 } from './types';
+
+const VERSION = 0;
 
 function makeObject<Keys extends string, T>(keys: readonly Keys[], valueFac: (key: Keys) => T) {
 	return keys.reduce((obj, key) => {
@@ -103,8 +107,8 @@ export type SkillVariant = {
 	classSkill: boolean;
 	acPenalty: boolean;
 	ranks: number;
-	misc: number;
-	temp: number;
+	misc: string;
+	temp: string;
 	notes: string;
 };
 
@@ -114,28 +118,33 @@ export function makeSkillVariant(skill: SkillKeys): SkillVariant {
 		ability: skillDefaults[skill].ability,
 		acPenalty: true,
 		ranks: 0,
-		misc: 0,
-		temp: 0,
+		misc: '0',
+		temp: '0',
 		classSkill: false,
 		notes: ''
 	};
 }
 
-export function getSkillMod(char: ICharacter, skillKey: SkillKeys, idx: number) {
+export function getSkillMod(char: ICharacter, skillKey: SkillKeys, idx: number): number {
 	const skill = char.skills[skillKey];
 	const variant = skill.variants[idx];
 
 	return (
 		char[variant.ability].mod +
 		variant.ranks +
-		variant.misc +
-		variant.temp +
+		p(variant.misc, char) +
+		p(variant.temp, char) +
 		(variant.classSkill && variant.ranks > 0 ? 3 : 0)
 	);
 }
 
+function p(expr: string, char: ICharacter) {
+	return calculateNode(parse(expr), char);
+}
+
 function makeDefaultCharacter() {
 	const char = {
+		version: VERSION,
 		name: 'Unnamed Character',
 
 		// Hit Points
@@ -147,30 +156,30 @@ function makeDefaultCharacter() {
 
 		// Initiative
 		init: {
-			misc: 0,
+			misc: '0',
 			notes: '',
-			get mod() {
-				return char.dex.mod + this.misc;
+			get mod(): number {
+				return char.dex.mod + p(this.misc, char);
 			}
 		},
 
 		// Race
 		race: {
 			name: 'Unknown Race',
-			speed: 30,
+			speed: '30',
 			size: 'medium' as SizeKey,
-			...makeObject(abilityKeys, () => 0)
+			...makeObject(abilityKeys, () => '0')
 		},
 
 		// Abilities
 		...makeObject(abilityKeys, (key) => ({
-			base: 10,
-			bonus: 0,
+			base: '10',
+			bonus: '0',
 			notes: '',
-			get total() {
-				return this.base + char.race[key] + this.bonus;
+			get total(): number {
+				return p(this.base, char) + p(char.race[key], char) + p(this.bonus, char);
 			},
-			get mod() {
+			get mod(): number {
 				return Math.floor(this.total / 2) - 5;
 			}
 		})),
@@ -178,11 +187,13 @@ function makeDefaultCharacter() {
 		// Saves
 		...makeObject(saveKeys, (key) => ({
 			ability: defaultSaveAbility[key],
-			bonus: 0,
-			misc: 0,
+			bonus: '0',
+			misc: '0',
 			notes: '',
-			get mod() {
-				return char.classes[key] + char[this.ability].mod + this.bonus + this.misc;
+			get mod(): number {
+				return (
+					char.classes[key] + char[this.ability].mod + p(this.bonus, char) + p(this.misc, char)
+				);
 			}
 		})),
 
@@ -190,7 +201,7 @@ function makeDefaultCharacter() {
 		skills: makeObject(skillKeys, (key) => ({
 			trained: skillDefaults[key].trained,
 			variants: [makeSkillVariant(key)],
-			get hasVariants() {
+			get hasVariants(): boolean {
 				return skillDefaults[key].subskills;
 			}
 		})),
@@ -199,19 +210,19 @@ function makeDefaultCharacter() {
 		ac: {
 			primaryAbility: 'dex' as AbilityKey,
 			secondaryAbility: undefined as undefined | AbilityKey,
-			get abilityMod() {
+			get abilityMod(): number {
 				return (
 					char[this.primaryAbility].mod +
 					(this.secondaryAbility ? char[this.secondaryAbility].mod : 0)
 				);
 			},
-			get total() {
+			get total(): number {
 				return 10 + this.abilityMod;
 			},
-			get touch() {
+			get touch(): number {
 				return 10 + this.abilityMod;
 			},
-			get flatFooted() {
+			get flatFooted(): number {
 				return 10;
 			}
 		},
@@ -223,24 +234,24 @@ function makeDefaultCharacter() {
 			rangedAbility: 'dex' as AbilityKey,
 
 			sr: {
-				base: 0,
-				misc: 0,
+				base: '0',
+				misc: '0',
 				notes: '',
-				get total() {
-					return this.base + this.misc;
+				get total(): number {
+					return p(this.base, char) + p(this.misc, char);
 				}
 			},
 
 			bab: {
 				notes: '',
-				get mod() {
+				get mod(): number {
 					return char.classes.bab;
 				}
 			},
 
 			cmb: {
 				notes: '',
-				get mod() {
+				get mod(): number {
 					const { ability, mod } = sizeModifiers[char.race.size];
 					// BAB + STR/DEX + SizeMod
 					return char.combat.bab.mod + char[ability].mod + mod;
@@ -249,7 +260,7 @@ function makeDefaultCharacter() {
 
 			cmd: {
 				notes: '',
-				get mod() {
+				get mod(): number {
 					return (
 						10 +
 						char.combat.bab.mod +
@@ -265,25 +276,25 @@ function makeDefaultCharacter() {
 		classes: {
 			list: [] as Class[],
 
-			get levels() {
+			get levels(): number {
 				return sum(this.list, (c) => c.level);
 			},
-			get speed() {
+			get speed(): number {
 				return sum(this.list, (c) => c.speed);
 			},
-			get bab() {
+			get bab(): number {
 				return sum(this.list, (c) => c.bab);
 			},
-			get fort() {
+			get fort(): number {
 				return sum(this.list, (c) => c.fort);
 			},
-			get ref() {
+			get ref(): number {
 				return sum(this.list, (c) => c.ref);
 			},
-			get will() {
+			get will(): number {
 				return sum(this.list, (c) => c.will);
 			},
-			get ranks() {
+			get ranks(): number {
 				return sum(this.list, (c) => (c.levelRanks + char.int.mod) * c.level + c.miscRanks);
 			}
 		}
@@ -300,7 +311,7 @@ export const {
 	data: c,
 	dirty,
 	loaded
-} = idbWritable('character', makeDefaultCharacter, {
+} = idbWritable('character', 1, makeDefaultCharacter, {
 	loadError: () =>
 		openDialog(ErrorDialog, { message: 'There was an error while loading your character.' })
 });

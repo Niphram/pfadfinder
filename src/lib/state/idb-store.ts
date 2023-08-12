@@ -53,6 +53,7 @@ type IDBWritableOptions = {
 
 export function idbWritable<T extends object>(
 	key: string,
+	version: number,
 	dataFactory: () => T,
 	{ timeout = 1000, loadError }: IDBWritableOptions = {}
 ) {

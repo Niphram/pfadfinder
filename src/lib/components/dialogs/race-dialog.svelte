@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
 	import { abilityKeys, c } from '$lib/state';
-	import Integer from '../input/integer.svelte';
+	import MacroInteger from '../input/macro-integer.svelte';
 </script>
 
 <div class="flex flex-col gap-2">
@@ -21,7 +21,7 @@
 
 	<div class="grid grid-cols-3 gap-2">
 		{#each abilityKeys as key}
-			<Integer
+			<MacroInteger
 				bind:value={$c.race[key]}
 				name="race{key}"
 				label={$t(`abilities.${key}.full`)}
@@ -30,5 +30,5 @@
 		{/each}
 	</div>
 
-	<Integer bind:value={$c.race.speed} name="raceSpeed" label="Speed" placeholder="Speed" />
+	<MacroInteger bind:value={$c.race.speed} name="raceSpeed" label="Speed" placeholder="Speed" />
 </div>
