@@ -2,6 +2,7 @@
 	import { c } from '$lib/state';
 	import { deriveValidated, validated } from '$lib/utils/stores';
 	import { integer, positive, positive0 } from '$lib/validators/numbers';
+	import { title } from '../dialog.svelte';
 
 	let [amount, amountInvalid] = validated<number>(1, integer, positive);
 
@@ -21,9 +22,10 @@
 
 	const [maxHp, maxHpInvalid] = deriveValidated(c, 'hp.max', integer, positive0);
 	const [tempHp, tempHpInvalid] = deriveValidated(c, 'hp.temp', integer, positive0);
+
+	$title = 'Hitpoints';
 </script>
 
-<h3 class="text-lg font-bold">HP Management</h3>
 <div
 	class="grid grid-flow-col grid-cols-3 grid-rows-2 place-items-center content-center items-center"
 >

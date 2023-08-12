@@ -2,16 +2,20 @@
 	import { t } from '$lib/i18n';
 	import { resetChar } from '$lib/state';
 
-	import { closeDialog } from '../dialog.svelte';
+	import { closeDialog, title } from '../dialog.svelte';
 	import Steps from '../steps.svelte';
 
 	let navButtons = ['abilities', 'combat', 'skills', 'spells', 'equipment', 'character'] as const;
+
+	$title = '';
 </script>
 
-<div class="flex flex-col gap-2">
+<div class="flex h-full flex-col gap-2">
 	{#each navButtons as key (key)}
 		<a href="#{key}" class="btn w-full" on:click={closeDialog}>{$t(`texts.pages.${key}`)}</a>
 	{/each}
+
+	<div class="grow" />
 
 	<div class="divider">Options</div>
 

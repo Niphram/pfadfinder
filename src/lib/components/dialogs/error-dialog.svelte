@@ -1,8 +1,10 @@
 <script lang="ts">
-	export let message: string;
-</script>
+	import { title } from '../dialog.svelte';
 
-<h3 class="text-lg font-bold">Error</h3>
+	export let message: string;
+
+	$title = 'Error';
+</script>
 
 <div>{message}</div>
 

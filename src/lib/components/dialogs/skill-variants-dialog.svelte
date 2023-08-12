@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
 	import { c, makeSkillVariant, type SkillKeys } from '$lib/state';
+	import { title } from '../dialog.svelte';
 
 	function addSkill(skill: SkillKeys) {
 		$c.skills[skill].variants.push(makeSkillVariant(skill));
@@ -13,11 +14,11 @@
 	}
 
 	const skills = ['craft', 'perform', 'profession'] as const;
+
+	$title = 'Variant Skills';
 </script>
 
 <div class="flex flex-col gap-2">
-	<h3 class="text-lg font-bold">Variant Skills</h3>
-
 	{#each skills as key}
 		<div class="divider">{$t(`skills.${key}`)}</div>
 

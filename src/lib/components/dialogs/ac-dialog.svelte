@@ -1,9 +1,10 @@
 <script>
 	import { t } from '$lib/i18n';
 	import { abilityKeys, c } from '$lib/state';
-</script>
+	import { title } from '../dialog.svelte';
 
-<h3>Armor Class</h3>
+	$title = 'Armor Class';
+</script>
 
 <div class="form-control w-full">
 	<label for="acPrimaryAbility" class="label pb-0">

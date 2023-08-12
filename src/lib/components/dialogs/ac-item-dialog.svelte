@@ -2,6 +2,7 @@
 	import { t } from '$lib/i18n';
 	import { c } from '$lib/state';
 	import { armorTypes } from '$lib/state/char-types/equipment';
+	import { title } from '../dialog.svelte';
 	import Integer from '../input/integer.svelte';
 	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
@@ -23,11 +24,11 @@
 		$c.equipment.ac.items.splice(index, 1);
 		$c.equipment.ac.items = $c.equipment.ac.items;
 	}
+
+	$title = 'Item';
 </script>
 
 <div class="flex flex-col gap-2">
-	<h3 class="text-lg font-bold">Item</h3>
-
 	{#if index < $c.equipment.ac.items.length}
 		<div class="form-control w-full max-w-xs">
 			<label for="className" class="label pb-0">

@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
 	import { abilityKeys, c, type SaveKey } from '$lib/state';
+	import { title } from '../dialog.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
 	import TextArea from '../input/text-area.svelte';
 
 	export let key: SaveKey = 'fort';
-</script>
 
-<h3 class="text-lg font-bold">{$t(`saves.${key}.full`)}</h3>
+	$title = $t(`saves.${key}.full`);
+</script>
 
 <div class="form-control w-full">
 	<label for="saveBaseAbility" class="label pb-0">

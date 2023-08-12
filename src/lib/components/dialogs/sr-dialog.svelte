@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { c } from '$lib/state/character';
+	import { title } from '../dialog.svelte';
 
 	import MacroInteger from '../input/macro-integer.svelte';
 	import TextArea from '../input/text-area.svelte';
-</script>
 
-<h3 class="text-lg font-bold">Spell Resistance</h3>
+	$title = 'Spell Resistance';
+</script>
 
 <MacroInteger bind:value={$c.combat.sr.base} name="srBase" label="Base" placeholder="Base" />
 <MacroInteger bind:value={$c.combat.sr.misc} name="srMisc" label="Misc" placeholder="Misc" />

@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { c } from '$lib/state/character';
+	import { title } from '../dialog.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
 	import TextArea from '../input/text-area.svelte';
-</script>
 
-<h3 class="text-lg font-bold">Initiative</h3>
+	$title = 'Initiative';
+</script>
 
 <MacroInteger
 	bind:value={$c.init.misc}

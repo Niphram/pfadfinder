@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
 	import { abilityKeys, c } from '$lib/state';
+	import { title } from '../dialog.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
+
+	$title = 'Race';
 </script>
 
 <div class="flex flex-col gap-2">
-	<h3 class="text-lg font-bold">Race</h3>
-
 	<div class="form-control w-full">
 		<label for="raceName" class="label pb-0">
 			<span class="label-text">Name</span>

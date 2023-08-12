@@ -1,8 +1,9 @@
 <script>
 	import { c } from '$lib/state';
-</script>
+	import { title } from '../dialog.svelte';
 
-<h3>Character Details</h3>
+	$title = 'Character Details';
+</script>
 
 <div class="form-control w-full">
 	<label for="characterName" class="label pb-0">

@@ -4,6 +4,7 @@
 	import { t } from '$lib/i18n';
 	import { c, saveKeys } from '$lib/state';
 	import Integer from '../input/integer.svelte';
+	import { title } from '../dialog.svelte';
 
 	export let classIndex: number;
 
@@ -22,11 +23,11 @@
 			$c.classes.list = $c.classes.list;
 		}
 	}
+
+	$title = 'Class';
 </script>
 
 <div class="flex flex-col gap-2">
-	<h3 class="text-lg font-bold">Class</h3>
-
 	{#if classIndex < $c.classes.list.length}
 		<div class="flex flex-row gap-2">
 			<div class="form-control w-full max-w-xs">
