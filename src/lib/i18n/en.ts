@@ -82,6 +82,55 @@ export default {
 		swim: 'Swim',
 		useMagicDevice: 'Use Magic Device'
 	},
+	equipment: {
+		armorType: {
+			light: 'Light',
+			medium: 'Armor',
+			heavy: 'Heavy',
+			shield: 'Shield',
+			misc: 'Misc'
+		},
+		acBonuses: {
+			acBonus: {
+				short: 'AC',
+				full: 'AC Bonus'
+			},
+			ffBonus: {
+				short: 'FF',
+				full: 'Flat-Footed Bonus'
+			},
+			touchBonus: {
+				short: 'TOU',
+				full: 'Touch Bonus'
+			},
+			natBonus: {
+				short: 'NAT',
+				full: 'Natural Bonus'
+			},
+			defBonus: {
+				short: 'DEF',
+				full: 'Deflection Bonus'
+			},
+			dodBonus: {
+				short: 'DOD',
+				full: 'Dodge Bonus'
+			}
+		},
+		penalties: {
+			chkPenalty: {
+				short: 'CHK',
+				full: 'Check Penalty'
+			},
+			maxDexBonus: {
+				short: 'DEX',
+				full: 'Max Dex Bonus'
+			},
+			spellFailure: {
+				short: 'SPL',
+				full: 'Spell Failure'
+			}
+		}
+	},
 	texts: {
 		pages: {
 			abilities: 'Abilities',

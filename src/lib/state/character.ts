@@ -2,14 +2,16 @@ import { openDialog } from '$lib/components/dialog.svelte';
 import ErrorDialog from '$lib/components/dialogs/error-dialog.svelte';
 import { calculateNode } from '$lib/macro/evaluate';
 import { parse } from '$lib/macro/parser';
-import type { Paths } from '$lib/utils';
+import { mapSum, type Paths } from '$lib/utils';
+import { makeDefaultClass } from './char-types/class';
+import type { AcItem } from './char-types/equipment';
 import { idbWritable } from './idb-store';
 import {
 	abilityKeys,
 	saveKeys,
+	skillKeys,
 	type AbilityKey,
 	type SizeKey,
-	skillKeys,
 	type SkillKeys
 } from './types';
 
@@ -85,20 +87,6 @@ const sizeModifiers: Record<SizeKey, { mod: number; ability: AbilityKey }> = {
 	huge: { ability: 'str', mod: +2 },
 	gargantuan: { ability: 'str', mod: +4 },
 	colossal: { ability: 'str', mod: +8 }
-};
-
-export type Class = {
-	name: string;
-	favored: boolean;
-	level: number;
-	hitDice: number;
-	bab: number;
-	fort: number;
-	ref: number;
-	will: number;
-	speed: number;
-	levelRanks: number;
-	miscRanks: number;
 };
 
 export type SkillVariant = {
@@ -217,7 +205,7 @@ function makeDefaultCharacter() {
 				);
 			},
 			get total(): number {
-				return 10 + this.abilityMod;
+				return 10 + this.abilityMod + char.equipment.ac.acBonus;
 			},
 			get touch(): number {
 				return 10 + this.abilityMod;
@@ -274,7 +262,7 @@ function makeDefaultCharacter() {
 
 		// Classes
 		classes: {
-			list: [] as Class[],
+			list: [makeDefaultClass()],
 
 			get levels(): number {
 				return sum(this.list, (c) => c.level);
@@ -299,12 +287,24 @@ function makeDefaultCharacter() {
 			}
 		},
 
+		// Money
 		money: {
 			pp: 0,
 			gp: 0,
 			sp: 0,
 			cp: 0,
 			other: ''
+		},
+
+		// Equipment
+		equipment: {
+			ac: {
+				items: [] as AcItem[],
+
+				get acBonus() {
+					return mapSum(this.items, (i) => i.acBonus);
+				}
+			}
 		}
 	};
 

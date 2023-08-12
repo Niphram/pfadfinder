@@ -1,7 +1,17 @@
 <script>
+	import { openDialog } from '$lib/components/dialog.svelte';
+	import AcItemDialog from '$lib/components/dialogs/ac-item-dialog.svelte';
 	import Integer from '$lib/components/input/integer.svelte';
 	import TextArea from '$lib/components/input/text-area.svelte';
 	import { c } from '$lib/state';
+	import { makeDefaultAcItem } from '$lib/state/char-types/equipment';
+
+	function addAcItem() {
+		$c.equipment.ac.items.push(makeDefaultAcItem());
+		$c.equipment.ac.items = $c.equipment.ac.items;
+
+		openDialog(AcItemDialog, { index: $c.equipment.ac.items.length - 1 });
+	}
 </script>
 
 <div class="flex flex-col gap-2">
@@ -17,5 +27,21 @@
 	<TextArea bind:value={$c.money.other} name="valuables" placeholder="Other Valuables" rows={1} />
 
 	<div class="divider">Gear</div>
-	<div class="divider">AC Items</div>
+	<div class="divider">
+		<div class="flex flex-row gap-2">
+			AC Items
+			<button class="btn btn-secondary btn-xs" on:click={addAcItem}>Add</button>
+		</div>
+	</div>
+
+	<div class="flex flex-col gap-2">
+		{#each $c.equipment.ac.items as item, idx}
+			<button
+				class="btn btn-sm"
+				on:contextmenu|preventDefault={() => openDialog(AcItemDialog, { index: idx })}
+			>
+				{item.name}
+			</button>
+		{/each}
+	</div>
 </div>
