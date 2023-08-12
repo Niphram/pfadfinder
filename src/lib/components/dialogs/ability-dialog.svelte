@@ -12,7 +12,7 @@
 <MacroInteger bind:value={$c[key].bonus} name="abilityBonus" label="Temp" />
 
 <div class="form-control w-full max-w-xs">
-	<label for="abilityNotes" class="label">
+	<label for="abilityNotes" class="label pb-0">
 		<span class="label-text">Notes</span>
 	</label>
 	<textarea

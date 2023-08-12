@@ -10,7 +10,7 @@
 <h3 class="text-lg font-bold">{$t(`saves.${key}.full`)}</h3>
 
 <div class="form-control w-full">
-	<label for="saveBaseAbility" class="label">
+	<label for="saveBaseAbility" class="label pb-0">
 		<span class="label-text">Base Ability</span>
 	</label>
 	<select name="saveBaseAbility" class="select select-bordered w-full" bind:value={$c[key].ability}>

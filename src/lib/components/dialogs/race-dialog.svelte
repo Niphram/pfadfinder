@@ -8,7 +8,7 @@
 	<h3 class="text-lg font-bold">Race</h3>
 
 	<div class="form-control w-full">
-		<label for="raceName" class="label">
+		<label for="raceName" class="label pb-0">
 			<span class="label-text">Name</span>
 		</label>
 		<input

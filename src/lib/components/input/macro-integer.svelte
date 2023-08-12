@@ -29,7 +29,7 @@
 </script>
 
 <div class="form-control w-full">
-	<label for={name} class="label">
+	<label for={name} class="label pb-0">
 		<span class="label-text">{label}</span>
 	</label>
 	<input

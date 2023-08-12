@@ -6,7 +6,7 @@
 <h3>Armor Class</h3>
 
 <div class="form-control w-full">
-	<label for="acPrimaryAbility" class="label">
+	<label for="acPrimaryAbility" class="label pb-0">
 		<span class="label-text">Primary Ability</span>
 	</label>
 	<select
@@ -23,7 +23,7 @@
 </div>
 
 <div class="form-control w-full">
-	<label for="acSecondaryAbility" class="label">
+	<label for="acSecondaryAbility" class="label pb-0">
 		<span class="label-text">Secondary Ability</span>
 	</label>
 	<select

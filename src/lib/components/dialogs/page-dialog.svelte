@@ -5,7 +5,7 @@
 	import { closeDialog } from '../dialog.svelte';
 	import Steps from '../steps.svelte';
 
-	let navButtons = ['abilities', 'combat', 'skills', 'spells', 'character'] as const;
+	let navButtons = ['abilities', 'combat', 'skills', 'spells', 'equipment', 'character'] as const;
 </script>
 
 <div class="flex flex-col gap-2">

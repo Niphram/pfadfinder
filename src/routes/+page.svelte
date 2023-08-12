@@ -15,12 +15,14 @@
 	import CharacterInfoDialog from '$lib/components/dialogs/character-info-dialog.svelte';
 	import HpDialog from '$lib/components/dialogs/hp-dialog.svelte';
 	import PageDialog from '$lib/components/dialogs/page-dialog.svelte';
+	import EquipmentPage from '$lib/pages/equipment-page.svelte';
 
 	const pages = [
 		{ key: 'abilities', component: AbilitiesPage },
 		{ key: 'combat', component: CombatPage },
 		{ key: 'skills', component: SkillsPage },
 		{ key: 'spells', component: SpellsPage },
+		{ key: 'equipment', component: EquipmentPage },
 		{ key: 'character', component: CharacterPage }
 	] as const;
 </script>

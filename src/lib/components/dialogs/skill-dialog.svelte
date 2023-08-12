@@ -17,7 +17,7 @@
 
 <div class="flex flex-row gap-2">
 	<div class="form-control">
-		<label for="classSkill" class="label cursor-pointer">
+		<label for="classSkill" class="label cursor-pointer pb-0">
 			<span class="label-text">C?</span>
 		</label>
 		<input
@@ -29,7 +29,7 @@
 	</div>
 
 	<div class="form-control w-full">
-		<label for="skillBaseAbility" class="label">
+		<label for="skillBaseAbility" class="label pb-0">
 			<span class="label-text">Base Ability</span>
 		</label>
 		<select

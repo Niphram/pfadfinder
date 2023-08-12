@@ -297,6 +297,14 @@ function makeDefaultCharacter() {
 			get ranks(): number {
 				return sum(this.list, (c) => (c.levelRanks + char.int.mod) * c.level + c.miscRanks);
 			}
+		},
+
+		money: {
+			pp: 0,
+			gp: 0,
+			sp: 0,
+			cp: 0,
+			other: ''
 		}
 	};
 

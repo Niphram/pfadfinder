@@ -5,7 +5,7 @@
 <h3>Character Details</h3>
 
 <div class="form-control w-full">
-	<label for="characterName" class="label">
+	<label for="characterName" class="label pb-0">
 		<span class="label-text">Name</span>
 	</label>
 	<input

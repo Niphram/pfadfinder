@@ -30,7 +30,7 @@
 	{#if classIndex < $c.classes.list.length}
 		<div class="flex flex-row gap-2">
 			<div class="form-control w-full max-w-xs">
-				<label for="className" class="label">
+				<label for="className" class="label pb-0">
 					<span class="label-text">Name</span>
 				</label>
 				<input
@@ -49,7 +49,7 @@
 			/>
 		</div>
 		<div class="form-control">
-			<label class="label cursor-pointer">
+			<label class="label cursor-pointer pb-0">
 				<span class="label-text">Favored Class</span>
 				<input type="checkbox" class="toggle" bind:checked={$c.classes.list[classIndex].favored} />
 			</label>
