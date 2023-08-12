@@ -7,7 +7,7 @@
 	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
 
-	export let index = 0;
+	export let index: number;
 
 	const bonusKeys = [
 		'acBonus',
