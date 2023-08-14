@@ -37,7 +37,7 @@
 			on:contextmenu={() => openDialog(CmbDialog, {})}
 		/>
 		<CaptionedButton
-			label={withSign($p.combat.cmd.mod)}
+			label={$p.combat.cmd.mod}
 			caption="CMD"
 			underline={!!$c.combat.cmd.notes}
 			on:click={() => macroNotify('Combat Manouver Defense', $c.combat.cmd.notes, $c)}

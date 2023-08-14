@@ -13,7 +13,8 @@ import {
 	type Parser,
 	type Token as ParsecToken,
 	expectSingleResult,
-	expectEOF
+	expectEOF,
+	alt_sc
 } from 'typescript-parsec';
 
 import { TokenKind, tokenize } from './tokenizer';
@@ -143,7 +144,10 @@ const constantParser = apply(tok(TokenKind.Number), applyConstant);
  * ATTRIBUTE = "@" STRING [ { "." STRING } ]
  */
 const attributeParser = apply(
-	kright(tok(TokenKind.At), list_sc(tok(TokenKind.String), tok(TokenKind.Period))),
+	kright(
+		tok(TokenKind.At),
+		list_sc(alt_sc(tok(TokenKind.String), tok(TokenKind.Number)), tok(TokenKind.Period))
+	),
 	applyAttribute
 );
 

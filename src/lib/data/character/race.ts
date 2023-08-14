@@ -1,6 +1,6 @@
 import { autoserialize } from 'cerialize';
 
-import { formula } from '../makros';
+import { formula } from '../macros';
 import type { SizeKey } from './combat';
 
 export class Race {

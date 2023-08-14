@@ -1,6 +1,6 @@
 import { autoserialize } from 'cerialize';
 
-import { formula, type Formula } from '../makros';
+import { formula, type Formula } from '../macros';
 
 export const ABILITY_KEYS = ['str', 'dex', 'con', 'int', 'wis', 'cha'] as const;
 export type AbilityKey = (typeof ABILITY_KEYS)[number];

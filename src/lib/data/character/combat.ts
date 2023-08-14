@@ -1,6 +1,6 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
 
-import { formula } from '../makros';
+import { formula } from '../macros';
 import type { AbilityKey } from './abilities';
 
 export const sizeKeys = [

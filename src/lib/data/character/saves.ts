@@ -1,6 +1,6 @@
 import { autoserialize } from 'cerialize';
 
-import { formula, type Formula } from '../makros';
+import { formula, type Formula } from '../macros';
 import type { AbilityKey } from './abilities';
 
 export const SAVE_KEYS = ['fort', 'ref', 'will'] as const;

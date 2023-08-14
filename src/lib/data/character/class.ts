@@ -1,7 +1,7 @@
 import { autoserialize, autoserializeAs, serialize } from 'cerialize';
 
 import { mapSum } from '$lib/utils';
-import { formula } from '../makros';
+import { formula } from '../macros';
 
 export enum Dice {
 	D4 = 4,

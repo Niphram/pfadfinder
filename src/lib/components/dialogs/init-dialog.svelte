@@ -8,7 +8,7 @@
 </script>
 
 <MacroInteger
-	bind:value={$c.init.misc}
+	bind:value={$c.init.misc.expr}
 	name="initMisc"
 	label="Misc"
 	placeholder="Initiative Misc"

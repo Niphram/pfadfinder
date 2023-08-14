@@ -1,7 +1,7 @@
 import { derived } from 'svelte/store';
 
 import { calculateNode } from '$lib/macro/evaluate';
-import { parse } from '$lib/macro/parser';
+import { parse, type Node } from '$lib/macro/parser';
 
 import { Character } from './character';
 import { idbWritable } from './idb-store';
@@ -21,6 +21,8 @@ export function resetChar() {
 	c.set(new Character());
 }
 
+const formulaMap = new Map<string, Node>();
+
 export const p = derived(c, (char) => {
 	function makeProxy(obj: any) {
 		return new Proxy(obj, {
@@ -30,7 +32,13 @@ export const p = derived(c, (char) => {
 				if (typeof target[p] === 'object') {
 					return makeProxy(target[p]);
 				} else if (typeof target[p] === 'string') {
-					return calculateNode(parse(target[p]), char);
+					if (formulaMap.has(target[p])) {
+						return calculateNode(formulaMap.get(target[p])!, char);
+					} else {
+						const node = parse(target[p]);
+						formulaMap.set(target[p], node);
+						return calculateNode(node, char);
+					}
 				}
 			}
 		});

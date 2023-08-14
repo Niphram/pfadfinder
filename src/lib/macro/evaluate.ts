@@ -1,9 +1,14 @@
 import type { Character } from '$lib/data';
+import { Macro } from '$lib/data/macros/macro';
 import { NodeType, type Node, parse } from './parser';
 
 function calcAttribute(path: string[], char: Character): number {
 	try {
 		const val: unknown = path.reduce((c, p) => c[p], char as Record<string, any>);
+
+		if (val instanceof Macro) {
+			return val.eval(char);
+		}
 
 		switch (typeof val) {
 			case 'number':

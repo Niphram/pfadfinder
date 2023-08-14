@@ -13,7 +13,7 @@ export enum TokenKind {
 
 const lexer = buildLexer([
 	[true, /^\d+/g, TokenKind.Number],
-	[true, /^\w+/g, TokenKind.String],
+	[true, /^[\w\d]+/g, TokenKind.String],
 	[true, /^[+\-*/]/g, TokenKind.Op],
 	[true, /^@/g, TokenKind.At],
 	[true, /^\(/g, TokenKind.LParen],

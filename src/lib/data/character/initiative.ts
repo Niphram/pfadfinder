@@ -1,10 +1,11 @@
 import { autoserialize } from 'cerialize';
 
-import { formula } from '../makros';
+import { formula } from '../macros';
+import { Macro, macro } from '../macros/macro';
 
 export class Initiative {
-	@autoserialize
-	misc = formula('0');
+	@macro
+	misc = new Macro('0');
 
 	@autoserialize
 	notes = '';

@@ -1,6 +1,6 @@
 import { autoserialize } from 'cerialize';
 
-import { formula } from '../makros';
+import { formula } from '../macros';
 import type { AbilityKey } from './abilities';
 
 export class ArmorClass {
@@ -25,6 +25,6 @@ export class ArmorClass {
 	}
 
 	get flatFooted() {
-		return formula('10');
+		return formula('10+@equipment.acBonus');
 	}
 }

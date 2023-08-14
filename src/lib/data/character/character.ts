@@ -11,6 +11,7 @@ import { Money } from './money';
 import { Race } from './race';
 import { Save } from './saves';
 import { SkillList } from './skills';
+import { Spells } from './spells';
 
 export class Character {
 	@autoserialize
@@ -53,6 +54,9 @@ export class Character {
 
 	@autoserializeAs(SkillList)
 	skills = new SkillList();
+
+	@autoserializeAs(Spells)
+	spells = new Spells();
 
 	@autoserializeAs(ArmorClass)
 	ac = new ArmorClass();
