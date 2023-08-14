@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { c } from '$lib/state/character';
+	import { c } from '$lib/data';
 	import { title } from '../dialog.svelte';
 
 	import TextArea from '../input/text-area.svelte';

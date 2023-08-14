@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { c } from '$lib/data';
 	import { calculateNode } from '$lib/macro/evaluate';
 	import { parse } from '$lib/macro/parser';
-	import { c } from '$lib/state';
 
 	export let noNegatives = false;
 	export let noZero = false;

@@ -2,9 +2,9 @@
 	import { onMount } from 'svelte';
 
 	import { t } from '$lib/i18n';
-	import { c, saveKeys } from '$lib/state';
 	import Integer from '../input/integer.svelte';
 	import { title } from '../dialog.svelte';
+	import { SAVE_KEYS, c } from '$lib/data';
 
 	export let classIndex: number;
 
@@ -60,7 +60,7 @@
 			<Integer bind:value={$c.classes.list[classIndex].speed} name="classSpeed" label="Speed" />
 		</div>
 		<div class="grid grid-cols-3 gap-2">
-			{#each saveKeys as key}
+			{#each SAVE_KEYS as key}
 				<Integer
 					bind:value={$c.classes.list[classIndex][key]}
 					name="class{key}"

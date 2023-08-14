@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
-	import { c, dirty } from '$lib/state/character';
+
+	import { c, dirty } from '$lib/data';
 
 	import { openDialog } from '$lib/components/dialog.svelte';
 

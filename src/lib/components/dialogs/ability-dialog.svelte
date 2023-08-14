@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { c, type AbilityKey } from '$lib/data';
 	import { t } from '$lib/i18n';
-	import { c, type AbilityKey } from '$lib/state';
 	import { title } from '../dialog.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
 

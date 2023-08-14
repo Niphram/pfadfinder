@@ -1,17 +1,19 @@
 <script>
 	import { openDialog } from '$lib/components/dialog.svelte';
-	import AcItemDialog from '$lib/components/dialogs/ac-item-dialog.svelte';
-	import Integer from '$lib/components/input/integer.svelte';
-	import TextArea from '$lib/components/input/text-area.svelte';
-	import { c } from '$lib/state';
-	import { makeDefaultAcItem } from '$lib/state/char-types/equipment';
 	import { macroNotify } from '$lib/utils/notes';
 
-	function addAcItem() {
-		$c.equipment.ac.items.push(makeDefaultAcItem());
-		$c.equipment.ac.items = $c.equipment.ac.items;
+	import { AcItem, c } from '$lib/data';
 
-		openDialog(AcItemDialog, { index: $c.equipment.ac.items.length - 1 });
+	import AcItemDialog from '$lib/components/dialogs/ac-item-dialog.svelte';
+
+	import Integer from '$lib/components/input/integer.svelte';
+	import TextArea from '$lib/components/input/text-area.svelte';
+
+	function addAcItem() {
+		$c.equipment.acItems.push(new AcItem());
+		$c.equipment.acItems = $c.equipment.acItems;
+
+		openDialog(AcItemDialog, { index: $c.equipment.acItems.length - 1 });
 	}
 </script>
 
@@ -25,7 +27,7 @@
 		<Integer bind:value={$c.money.pp} label="PP" name="pp" placeholder="Platinum" />
 	</div>
 
-	<TextArea bind:value={$c.money.other} name="valuables" placeholder="Other Valuables" rows={1} />
+	<TextArea bind:value={$c.money.notes} name="valuables" placeholder="Other Valuables" rows={1} />
 
 	<div class="divider">Gear</div>
 	<div class="divider">
@@ -36,7 +38,7 @@
 	</div>
 
 	<div class="flex flex-col gap-2">
-		{#each $c.equipment.ac.items as item, idx}
+		{#each $c.equipment.acItems as item, idx}
 			<button
 				class="btn btn-sm"
 				class:bg-base-300={item.equipped}

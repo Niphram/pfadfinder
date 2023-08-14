@@ -1,7 +1,7 @@
-import type { ICharacter } from '$lib/state';
+import type { Character } from '$lib/data';
 import { NodeType, type Node, parse } from './parser';
 
-function calcAttribute(path: string[], char: ICharacter): number {
+function calcAttribute(path: string[], char: Character): number {
 	try {
 		const val: unknown = path.reduce((c, p) => c[p], char as Record<string, any>);
 
@@ -50,7 +50,7 @@ function calcFunc(func: undefined | 'floor' | 'round' | 'ceil', value: number): 
 	}
 }
 
-export function calculateNode(node: Node, char: ICharacter): number {
+export function calculateNode(node: Node, char: Character): number {
 	switch (node.type) {
 		case NodeType.Error:
 			return NaN;
@@ -67,7 +67,7 @@ export function calculateNode(node: Node, char: ICharacter): number {
 	}
 }
 
-export function printNode(node: Node, char: ICharacter): string {
+export function printNode(node: Node, char: Character): string {
 	switch (node.type) {
 		case NodeType.Error:
 			return '[ERR]';

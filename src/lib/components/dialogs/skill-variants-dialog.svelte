@@ -1,15 +1,16 @@
 <script lang="ts">
+	import { c } from '$lib/data';
+	import { Skill, type SkillKey } from '$lib/data/character/skills';
 	import { t } from '$lib/i18n';
-	import { c, makeSkillVariant, type SkillKeys } from '$lib/state';
 	import { title } from '../dialog.svelte';
 
-	function addSkill(skill: SkillKeys) {
-		$c.skills[skill].variants.push(makeSkillVariant(skill));
+	function addSkill(skill: SkillKey) {
+		$c.skills[skill].skills.push(new Skill(skill));
 		$c.skills = $c.skills;
 	}
 
-	function removeSkill(skill: SkillKeys, idx: number) {
-		$c.skills[skill].variants.splice(idx, 1);
+	function removeSkill(skill: SkillKey, idx: number) {
+		$c.skills[skill].skills.splice(idx, 1);
 		$c.skills = $c.skills;
 	}
 
@@ -22,10 +23,10 @@
 	{#each skills as key}
 		<div class="divider">{$t(`skills.${key}`)}</div>
 
-		{#each $c.skills[key].variants as skill, idx}
+		{#each $c.skills[key].skills as skill, idx}
 			<div class="flex w-full flex-row gap-2">
 				<div>
-					<input class="input input-bordered w-full" bind:value={skill.type} />
+					<input class="input input-bordered w-full" bind:value={skill.name} />
 				</div>
 				<button
 					on:click|preventDefault={() => {

@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { resetChar } from '$lib/data';
 	import { t } from '$lib/i18n';
-	import { resetChar } from '$lib/state';
 
 	import { closeDialog, title } from '../dialog.svelte';
 	import Steps from '../steps.svelte';

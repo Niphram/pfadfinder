@@ -1,17 +1,15 @@
 <script lang="ts">
+	import { ABILITY_KEYS, c, type SkillKey } from '$lib/data';
 	import { t } from '$lib/i18n';
-	import { abilityKeys, c, type SkillKeys } from '$lib/state';
 	import { title } from '../dialog.svelte';
 	import Integer from '../input/integer.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
 	import TextArea from '../input/text-area.svelte';
 
-	export let key: SkillKeys = 'acrobatics';
+	export let key: SkillKey = 'acrobatics';
 	export let index = 0;
 
-	let variant = $c.skills[key].variants[index].type
-		? ` (${$c.skills[key].variants[index].type})`
-		: '';
+	let variant = $c.skills[key].skills[index].name ? ` (${$c.skills[key].skills[index].name})` : '';
 
 	$title = $t(`skills.${key}`) + variant;
 </script>
@@ -24,7 +22,7 @@
 		<input
 			name="classSkill"
 			type="checkbox"
-			bind:checked={$c.skills[key].variants[index].classSkill}
+			bind:checked={$c.skills[key].skills[index].classSkill}
 			class="checkbox checkbox-lg"
 		/>
 	</div>
@@ -36,9 +34,9 @@
 		<select
 			name="skillBaseAbility"
 			class="select select-bordered select-sm w-full"
-			bind:value={$c.skills[key].variants[index].ability}
+			bind:value={$c.skills[key].skills[index].ability}
 		>
-			{#each abilityKeys as key}
+			{#each ABILITY_KEYS as key}
 				<option value={key}>{$t(`abilities.${key}.full`)}</option>
 			{/each}
 		</select>
@@ -46,17 +44,13 @@
 </div>
 
 <div class="flex flex-row gap-2">
-	<Integer bind:value={$c.skills[key].variants[index].ranks} name="skillRanks" label="Ranks" />
-	<MacroInteger bind:value={$c.skills[key].variants[index].misc} name="skillMisc" label="Misc" />
-	<MacroInteger
-		bind:value={$c.skills[key].variants[index].temp}
-		name="skillBonus"
-		label="Temp Mod"
-	/>
+	<Integer bind:value={$c.skills[key].skills[index].ranks} name="skillRanks" label="Ranks" />
+	<MacroInteger bind:value={$c.skills[key].skills[index].misc} name="skillMisc" label="Misc" />
+	<MacroInteger bind:value={$c.skills[key].skills[index].temp} name="skillBonus" label="Temp Mod" />
 </div>
 
 <TextArea
-	bind:value={$c.skills[key].variants[index].notes}
+	bind:value={$c.skills[key].skills[index].notes}
 	name="skillNotes"
 	label="Notes"
 	placeholder="Notes"

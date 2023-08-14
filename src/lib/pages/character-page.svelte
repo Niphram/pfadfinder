@@ -1,30 +1,15 @@
 <script lang="ts">
-	import { c } from '$lib/state';
-
 	import { openDialog } from '$lib/components/dialog.svelte';
+
+	import { c, Class } from '$lib/data';
 
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
 
 	import ClassDialog from '$lib/components/dialogs/class-dialog.svelte';
 	import RaceDialog from '$lib/components/dialogs/race-dialog.svelte';
-	import type { Class } from '$lib/state/char-types/class';
 
 	function addClass() {
-		const newClass: Class = {
-			name: 'New Class',
-			favored: false,
-			level: 1,
-			hitDice: 6,
-			bab: 0,
-			fort: 0,
-			ref: 0,
-			will: 0,
-			speed: 0,
-			levelRanks: 0,
-			miscRanks: 0
-		};
-
-		$c.classes.list.push(newClass);
+		$c.classes.list.push(new Class());
 		$c.classes.list = $c.classes.list;
 
 		openDialog(ClassDialog, { classIndex: $c.classes.list.length - 1 });

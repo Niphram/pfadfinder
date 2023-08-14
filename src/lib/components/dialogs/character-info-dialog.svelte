@@ -1,5 +1,5 @@
 <script>
-	import { c } from '$lib/state';
+	import { c } from '$lib/data';
 	import { title } from '../dialog.svelte';
 
 	$title = 'Character Details';

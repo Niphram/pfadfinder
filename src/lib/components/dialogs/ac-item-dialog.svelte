@@ -1,7 +1,6 @@
 <script lang="ts">
+	import { ARMOR_TYPES, c } from '$lib/data';
 	import { t } from '$lib/i18n';
-	import { c } from '$lib/state';
-	import { armorTypes } from '$lib/state/char-types/equipment';
 	import { title } from '../dialog.svelte';
 	import Integer from '../input/integer.svelte';
 	import Select from '../input/select.svelte';
@@ -21,15 +20,15 @@
 	const penaltyKeys = ['chkPenalty', 'maxDexBonus', 'spellFailure'] as const;
 
 	function deleteAcItem() {
-		$c.equipment.ac.items.splice(index, 1);
-		$c.equipment.ac.items = $c.equipment.ac.items;
+		$c.equipment.acItems.splice(index, 1);
+		$c.equipment.acItems = $c.equipment.acItems;
 	}
 
 	$title = 'Item';
 </script>
 
 <div class="flex flex-col gap-2">
-	{#if index < $c.equipment.ac.items.length}
+	{#if index < $c.equipment.acItems.length}
 		<div class="form-control w-full max-w-xs">
 			<label for="className" class="label pb-0">
 				<span class="label-text">Name</span>
@@ -38,25 +37,21 @@
 				name="className"
 				placeholder="Type here"
 				class="input input-bordered w-full max-w-xs"
-				bind:value={$c.equipment.ac.items[index].name}
+				bind:value={$c.equipment.acItems[index].name}
 			/>
 		</div>
 
 		<div class="form-control">
 			<label class="label cursor-pointer pb-0">
 				<span class="label-text">Equipped?</span>
-				<input
-					type="checkbox"
-					class="toggle"
-					bind:checked={$c.equipment.ac.items[index].equipped}
-				/>
+				<input type="checkbox" class="toggle" bind:checked={$c.equipment.acItems[index].equipped} />
 			</label>
 		</div>
 
 		<div class="grid grid-cols-3 gap-2">
 			{#each bonusKeys as key}
 				<Integer
-					bind:value={$c.equipment.ac.items[index][key]}
+					bind:value={$c.equipment.acItems[index][key]}
 					name="class{key}"
 					label={$t(`equipment.acBonuses.${key}.short`)}
 				/>
@@ -64,10 +59,10 @@
 		</div>
 
 		<Select
-			bind:value={$c.equipment.ac.items[index].type}
+			bind:value={$c.equipment.acItems[index].type}
 			name="itemType"
 			label="Type"
-			options={armorTypes}
+			options={ARMOR_TYPES}
 			let:option
 		>
 			<option value={option}>{$t(`equipment.armorType.${option}`)}</option>
@@ -76,7 +71,7 @@
 		<div class="grid grid-cols-3 gap-2">
 			{#each penaltyKeys as key}
 				<Integer
-					bind:value={$c.equipment.ac.items[index][key]}
+					bind:value={$c.equipment.acItems[index][key]}
 					name="class{key}"
 					label={$t(`equipment.penalties.${key}.short`)}
 				/>
@@ -84,7 +79,7 @@
 		</div>
 
 		<TextArea
-			bind:value={$c.equipment.ac.items[index].notes}
+			bind:value={$c.equipment.acItems[index].notes}
 			name="acItemNotes"
 			placeholder="Notes"
 			label="Notes"

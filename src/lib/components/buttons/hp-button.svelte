@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { c } from '$lib/state';
+	import { c } from '$lib/data';
 </script>
 
 <div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { c } from '$lib/state';
+	import { c } from '$lib/data';
 	import { deriveValidated, validated } from '$lib/utils/stores';
 	import { integer, positive, positive0 } from '$lib/validators/numbers';
 	import { title } from '../dialog.svelte';

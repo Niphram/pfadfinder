@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { ABILITY_KEYS, c } from '$lib/data';
 	import { t } from '$lib/i18n';
-	import { abilityKeys, c } from '$lib/state';
 	import { title } from '../dialog.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
 
@@ -21,7 +21,7 @@
 	</div>
 
 	<div class="grid grid-cols-3 gap-2">
-		{#each abilityKeys as key}
+		{#each ABILITY_KEYS as key}
 			<MacroInteger
 				bind:value={$c.race[key]}
 				name="race{key}"

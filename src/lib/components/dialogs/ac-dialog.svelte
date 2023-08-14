@@ -1,6 +1,6 @@
 <script>
+	import { ABILITY_KEYS, c } from '$lib/data';
 	import { t } from '$lib/i18n';
-	import { abilityKeys, c } from '$lib/state';
 	import { title } from '../dialog.svelte';
 
 	$title = 'Armor Class';
@@ -15,7 +15,7 @@
 		class="select select-bordered w-full"
 		bind:value={$c.ac.primaryAbility}
 	>
-		{#each abilityKeys as key}
+		{#each ABILITY_KEYS as key}
 			<option value={key}>
 				{$t(`abilities.${key}.full`)}
 			</option>
@@ -33,7 +33,7 @@
 		bind:value={$c.ac.secondaryAbility}
 	>
 		<option value={undefined}>None</option>
-		{#each abilityKeys as key}
+		{#each ABILITY_KEYS as key}
 			<option value={key}>
 				{$t(`abilities.${key}.full`)}
 			</option>

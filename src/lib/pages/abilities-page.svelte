@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { abilityKeys, saveKeys } from '$lib/state';
-
 	import { openDialog } from '$lib/components/dialog.svelte';
+
+	import { ABILITY_KEYS, SAVE_KEYS } from '$lib/data';
 
 	import AbilityButton from '$lib/components/buttons/ability-button.svelte';
 	import AcButton from '$lib/components/buttons/ac-button.svelte';
@@ -15,7 +15,7 @@
 	<div class="divider">Abilities</div>
 
 	<div class="grid w-full grid-cols-3 gap-2 md:grid-cols-6">
-		{#each abilityKeys as key}
+		{#each ABILITY_KEYS as key}
 			<AbilityButton {key} />
 		{/each}
 	</div>
@@ -31,7 +31,7 @@
 	<div class="divider">Saves</div>
 
 	<div class="grid w-full grid-cols-3 gap-2">
-		{#each saveKeys as key}
+		{#each SAVE_KEYS as key}
 			<SaveButton {key} />
 		{/each}
 	</div>

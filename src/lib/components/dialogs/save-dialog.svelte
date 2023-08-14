@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { ABILITY_KEYS, c, type SaveKey } from '$lib/data';
 	import { t } from '$lib/i18n';
-	import { abilityKeys, c, type SaveKey } from '$lib/state';
 	import { title } from '../dialog.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
 	import TextArea from '../input/text-area.svelte';
@@ -15,7 +15,7 @@
 		<span class="label-text">Base Ability</span>
 	</label>
 	<select name="saveBaseAbility" class="select select-bordered w-full" bind:value={$c[key].ability}>
-		{#each abilityKeys as key}
+		{#each ABILITY_KEYS as key}
 			<option value={key}>{$t(`abilities.${key}.full`)}</option>
 		{/each}
 	</select>

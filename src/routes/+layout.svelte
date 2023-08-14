@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 
-	import { loaded } from '$lib/state/character';
+	import { loaded } from '$lib/data';
 
 	import Dialog from '$lib/components/dialog.svelte';
 	import ToastProvider from '$lib/components/toast-provider.svelte';
@@ -12,7 +12,7 @@
 	<ToastProvider />
 
 	<div class="h-screen w-screen">
-		{#if $loaded}
+		{#if $loaded && $loaded}
 			<slot />
 		{:else}
 			<div class="flex h-full w-full items-center justify-center">
