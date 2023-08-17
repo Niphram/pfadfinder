@@ -1,33 +1,33 @@
 import { autoserialize } from 'cerialize';
 
-import { formula } from '../macros';
+import { Macro, macro } from '../macros';
 import type { SizeKey } from './combat';
 
 export class Race {
 	@autoserialize
 	name = 'Unknown Race';
 
-	@autoserialize
-	speed = formula('30');
+	@macro
+	speed = new Macro('30');
 
 	@autoserialize
 	size: SizeKey = 'medium';
 
-	@autoserialize
-	str = formula('0');
+	@macro
+	str = new Macro('0');
 
-	@autoserialize
-	dex = formula('0');
+	@macro
+	dex = new Macro('0');
 
-	@autoserialize
-	con = formula('0');
+	@macro
+	con = new Macro('0');
 
-	@autoserialize
-	int = formula('0');
+	@macro
+	int = new Macro('0');
 
-	@autoserialize
-	wis = formula('0');
+	@macro
+	wis = new Macro('0');
 
-	@autoserialize
-	cha = formula('0');
+	@macro
+	cha = new Macro('0');
 }

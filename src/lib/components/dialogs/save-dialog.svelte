@@ -21,7 +21,7 @@
 	</select>
 </div>
 
-<MacroInteger bind:value={$c[key].misc} name="saveMisc" label="Misc" />
-<MacroInteger bind:value={$c[key].bonus} name="saveBonus" label="Temp Mod" />
+<MacroInteger bind:value={$c[key].misc.expr} name="saveMisc" label="Misc" />
+<MacroInteger bind:value={$c[key].bonus.expr} name="saveBonus" label="Temp Mod" />
 
 <TextArea bind:value={$c[key].notes} name="saveNotes" label="Notes" placeholder="Notes" />

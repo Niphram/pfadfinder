@@ -1,5 +1,7 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
-import { Macro } from '../macros/macro';
+import { Derive } from '../macros';
+
+type Level = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 export class Spell {
 	@autoserialize
@@ -22,16 +24,16 @@ export class SpellLevel {
 	@autoserialize
 	dcBonus = 0;
 
-	dc: Macro;
-	totalPerDay: Macro;
+	readonly dc = new Derive((c) => 10 + this.level + c.spells[this.level].known);
+
+	readonly totalPerDay = new Derive(
+		(c) => c.spells[this.level].perDay + c.spells[this.level].perDayBonus
+	);
 
 	@autoserializeAs(Spell)
 	spells: Spell[] = [];
 
-	constructor(level: number) {
-		this.dc = new Macro(`10+${level}+@spells.${level}.known`);
-		this.totalPerDay = new Macro(`@spells.${level}.perDay+@spells.${level}.perDayBonus`);
-	}
+	constructor(private level: Level) {}
 }
 
 export class Spells {

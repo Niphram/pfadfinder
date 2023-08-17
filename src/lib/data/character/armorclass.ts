@@ -1,6 +1,6 @@
 import { autoserialize } from 'cerialize';
 
-import { formula } from '../macros';
+import { Derive } from '../macros';
 import type { AbilityKey } from './abilities';
 
 export class ArmorClass {
@@ -10,21 +10,15 @@ export class ArmorClass {
 	@autoserialize
 	secondaryAbility?: AbilityKey;
 
-	get abilityMod() {
-		return formula(
-			`@${this.primaryAbility}.mod${this.secondaryAbility ? `+@${this.secondaryAbility}.mod` : ''}`
-		);
-	}
+	readonly abilityMod = new Derive(
+		(c) =>
+			c[this.primaryAbility].mod.eval(c) +
+			(this.secondaryAbility ? c[this.secondaryAbility].mod.eval(c) : 0)
+	);
 
-	get total() {
-		return formula(`10+@ac.abilityMod+@equipment.acBonus`);
-	}
+	readonly total = new Derive((c) => 10 + c.ac.abilityMod.eval(c) + c.equipment.acBonus);
 
-	get touch() {
-		return formula(`10+@ac.abilityMod`);
-	}
+	readonly touch = new Derive((c) => 10 + c.ac.abilityMod.eval(c));
 
-	get flatFooted() {
-		return formula('10+@equipment.acBonus');
-	}
+	readonly flatFooted = new Derive((c) => 10 + c.equipment.acBonus);
 }

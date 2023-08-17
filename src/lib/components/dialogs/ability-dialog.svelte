@@ -9,8 +9,13 @@
 	$title = $t(`abilities.${key}.full`);
 </script>
 
-<MacroInteger bind:value={$c[key].base} name="abilityBase" label="Base Ability Score" noNegatives />
-<MacroInteger bind:value={$c[key].bonus} name="abilityBonus" label="Temp" />
+<MacroInteger
+	bind:value={$c[key].base.expr}
+	name="abilityBase"
+	label="Base Ability Score"
+	noNegatives
+/>
+<MacroInteger bind:value={$c[key].bonus.expr} name="abilityBonus" label="Temp" />
 
 <div class="form-control w-full max-w-xs">
 	<label for="abilityNotes" class="label pb-0">

@@ -45,8 +45,12 @@
 
 <div class="flex flex-row gap-2">
 	<Integer bind:value={$c.skills[key].skills[index].ranks} name="skillRanks" label="Ranks" />
-	<MacroInteger bind:value={$c.skills[key].skills[index].misc} name="skillMisc" label="Misc" />
-	<MacroInteger bind:value={$c.skills[key].skills[index].temp} name="skillBonus" label="Temp Mod" />
+	<MacroInteger bind:value={$c.skills[key].skills[index].misc.expr} name="skillMisc" label="Misc" />
+	<MacroInteger
+		bind:value={$c.skills[key].skills[index].temp.expr}
+		name="skillBonus"
+		label="Temp Mod"
+	/>
 </div>
 
 <TextArea

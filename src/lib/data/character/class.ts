@@ -1,7 +1,7 @@
 import { autoserialize, autoserializeAs, serialize } from 'cerialize';
 
 import { mapSum } from '$lib/utils';
-import { formula } from '../macros';
+import { Derive } from '../macros';
 
 export enum Dice {
 	D4 = 4,
@@ -75,8 +75,8 @@ export class Classes {
 		return mapSum(this.list, (c) => c.will);
 	}
 
-	get ranks() {
+	readonly ranks = new Derive((c) => {
 		const classRanks = mapSum(this.list, (c) => c.levelRanks * c.level + c.miscRanks);
-		return formula(`${classRanks}+@int.mod*@classes.levels`);
-	}
+		return classRanks + c.int.mod.eval(c) * c.classes.levels;
+	});
 }

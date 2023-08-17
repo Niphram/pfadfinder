@@ -8,7 +8,7 @@
 	$title = 'Spell Resistance';
 </script>
 
-<MacroInteger bind:value={$c.combat.sr.base} name="srBase" label="Base" placeholder="Base" />
-<MacroInteger bind:value={$c.combat.sr.misc} name="srMisc" label="Misc" placeholder="Misc" />
+<MacroInteger bind:value={$c.combat.sr.base.expr} name="srBase" label="Base" placeholder="Base" />
+<MacroInteger bind:value={$c.combat.sr.misc.expr} name="srMisc" label="Misc" placeholder="Misc" />
 
 <TextArea bind:value={$c.combat.sr.notes} name="srNotes" label="Notes" placeholder="Notes" />

@@ -1,6 +1,6 @@
 import { autoserialize } from 'cerialize';
 
-import { formula } from '../macros';
+import { Derive } from '../macros';
 import { Macro, macro } from '../macros/macro';
 
 export class Initiative {
@@ -10,7 +10,5 @@ export class Initiative {
 	@autoserialize
 	notes = '';
 
-	get mod() {
-		return formula('@dex.mod+@init.misc');
-	}
+	readonly mod = new Derive((c) => c.dex.mod.eval(c) + c.init.misc.eval(c));
 }

@@ -1,26 +1,25 @@
 import { autoserialize } from 'cerialize';
 
-import { formula, type Formula } from '../macros';
+import { Derive, Macro, macro } from '../macros';
 
 export const ABILITY_KEYS = ['str', 'dex', 'con', 'int', 'wis', 'cha'] as const;
 export type AbilityKey = (typeof ABILITY_KEYS)[number];
 
 export class Ability {
-	@autoserialize
-	base = formula('10');
+	@macro
+	base = new Macro('10');
 
-	@autoserialize
-	bonus = formula('0');
+	@macro
+	bonus = new Macro('0');
 
 	@autoserialize
 	notes = '';
 
-	readonly total: Formula;
+	readonly total = new Derive(
+		(c) => c[this.key].base.eval(c) + c.race[this.key].eval(c) + c[this.key].bonus.eval(c)
+	);
 
-	readonly mod: Formula;
+	readonly mod = new Derive((c) => Math.floor(c[this.key].total.eval(c) / 2) - 5);
 
-	constructor(key: AbilityKey) {
-		this.total = formula(`@${key}.base+@race.${key}+@${key}.bonus`);
-		this.mod = formula(`floor(@${key}.total/2)-5`);
-	}
+	constructor(private key: AbilityKey) {}
 }

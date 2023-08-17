@@ -23,7 +23,7 @@
 	<div class="grid grid-cols-3 gap-2">
 		{#each ABILITY_KEYS as key}
 			<MacroInteger
-				bind:value={$c.race[key]}
+				bind:value={$c.race[key].expr}
 				name="race{key}"
 				label={$t(`abilities.${key}.full`)}
 				placeholder={$t(`abilities.${key}.short`)}
@@ -31,5 +31,10 @@
 		{/each}
 	</div>
 
-	<MacroInteger bind:value={$c.race.speed} name="raceSpeed" label="Speed" placeholder="Speed" />
+	<MacroInteger
+		bind:value={$c.race.speed.expr}
+		name="raceSpeed"
+		label="Speed"
+		placeholder="Speed"
+	/>
 </div>

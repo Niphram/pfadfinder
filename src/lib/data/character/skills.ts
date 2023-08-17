@@ -1,6 +1,6 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
 
-import { formula } from '../macros';
+import { Derive, Macro, macro } from '../macros';
 import type { AbilityKey } from './abilities';
 
 const SKILLS = {
@@ -56,11 +56,11 @@ export class Skill {
 	@autoserialize
 	ranks = 0;
 
-	@autoserialize
-	misc = formula('0');
+	@macro
+	misc = new Macro('0');
 
-	@autoserialize
-	temp = formula('0');
+	@macro
+	temp = new Macro('0');
 
 	@autoserialize
 	classSkill = false;
@@ -68,13 +68,14 @@ export class Skill {
 	@autoserialize
 	notes = '';
 
-	get mod() {
-		return formula(
-			`@${this.ability}.mod+${this.ranks}+(${this.misc})+(${this.temp})+${
-				this.classSkill && this.ranks > 0 ? 3 : 0
-			}`
-		);
-	}
+	readonly mod = new Derive(
+		(c) =>
+			c[this.ability].mod.eval(c) +
+			this.ranks +
+			this.misc.eval(c) +
+			this.temp.eval(c) +
+			(this.classSkill && this.ranks > 0 ? 3 : 0)
+	);
 
 	constructor(key?: SkillKey) {
 		if (key) {

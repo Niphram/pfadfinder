@@ -14,8 +14,6 @@ export const macro = autoserializeAs({
 });
 
 export class Macro {
-	expr: string;
-
 	private oldExpr?: string;
 
 	private _node?: Node;
@@ -32,7 +30,5 @@ export class Macro {
 		return calculateNode(this.node, char);
 	}
 
-	constructor(expr: string) {
-		this.expr = expr;
-	}
+	constructor(public expr: string) {}
 }

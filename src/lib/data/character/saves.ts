@@ -1,6 +1,6 @@
 import { autoserialize } from 'cerialize';
 
-import { formula, type Formula } from '../macros';
+import { Derive, Macro, macro } from '../macros';
 import type { AbilityKey } from './abilities';
 
 export const SAVE_KEYS = ['fort', 'ref', 'will'] as const;
@@ -16,20 +16,25 @@ export class Save {
 	@autoserialize
 	ability: AbilityKey;
 
-	@autoserialize
-	bonus = formula('0');
+	@macro
+	bonus = new Macro('0');
 
-	@autoserialize
-	misc = formula('0');
+	@macro
+	misc = new Macro('0');
 
 	@autoserialize
 	notes = '';
 
 	@autoserialize
-	readonly mod: Formula;
+	readonly mod = new Derive(
+		(c) =>
+			c.classes[this.key] +
+			c[this.ability].mod.eval(c) +
+			c[this.key].bonus.eval(c) +
+			c[this.key].misc.eval(c)
+	);
 
-	constructor(key: SaveKey) {
+	constructor(private key: SaveKey) {
 		this.ability = DefaultBaseAbility[key];
-		this.mod = formula(`@classes.${key}+@${this.ability}.mod+@${key}.bonus+@${key}.misc`);
 	}
 }

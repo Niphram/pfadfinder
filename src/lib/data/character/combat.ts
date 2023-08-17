@@ -1,6 +1,6 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
 
-import { formula } from '../macros';
+import { Derive, Macro, macro } from '../macros';
 import type { AbilityKey } from './abilities';
 
 export const sizeKeys = [
@@ -29,49 +29,43 @@ const sizeModifiers: Record<SizeKey, { mod: number; ability: AbilityKey }> = {
 };
 
 export class SpellResistance {
-	@autoserialize
-	base = formula('0');
+	@macro
+	base = new Macro('0');
 
-	@autoserialize
-	misc = formula('0');
+	@macro
+	misc = new Macro('0');
 
 	@autoserialize
 	notes = '';
 
-	get total() {
-		return formula(`@combat.sr.base+@combat.sr.misc`);
-	}
+	readonly total = new Derive((c) => c.combat.sr.base.eval(c) + c.combat.sr.misc.eval(c));
 }
 
 export class BaseAttackBonus {
 	@autoserialize
 	notes = '';
 
-	get mod() {
-		return formula(`@classes.bab`);
-	}
+	readonly mod = new Derive((c) => c.classes.bab);
 }
 
 export class CombatManeuverBonus {
 	@autoserialize
 	notes = '';
 
-	get mod() {
-		// const { ability, mod } = sizeModifiers[char.race.size]
-		// ToDo: Nested formulas?
-		return formula(`@combat.bab.mod`);
-	}
+	readonly mod = new Derive((c) => {
+		const { ability, mod } = sizeModifiers[c.race.size];
+		return c.combat.bab.mod.eval(c) + mod + c[ability].mod.eval(c);
+	});
 }
 
 export class CombatManeuverDefense {
 	@autoserialize
 	notes = '';
 
-	get mod() {
-		// const { ability, mod } = sizeModifiers[char.race.size]
-		// ToDo: Nested formulas?
-		return formula(`10+@combat.bab.mod+@str.mod+@dex.mod`);
-	}
+	readonly mod = new Derive((c) => {
+		const { ability, mod } = sizeModifiers[c.race.size];
+		return 10 + c.combat.bab.mod.eval(c) + c.str.mod.eval(c) + mod + c[ability].mod.eval(c);
+	});
 }
 
 export class Combat {

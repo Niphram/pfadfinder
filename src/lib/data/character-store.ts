@@ -5,6 +5,7 @@ import { parse, type Node } from '$lib/macro/parser';
 
 import { Character } from './character';
 import { idbWritable } from './idb-store';
+import { Derive, Macro } from './macros';
 
 export const {
 	data: c,
@@ -26,10 +27,12 @@ const formulaMap = new Map<string, Node>();
 export const p = derived(c, (char) => {
 	function makeProxy(obj: any) {
 		return new Proxy(obj, {
-			get(target, p, receiver): unknown {
+			get(target, p, _receiver): unknown {
 				if (!(p in target)) throw new Error('Something went wrong');
 
-				if (typeof target[p] === 'object') {
+				if (target[p] instanceof Macro || target[p] instanceof Derive) {
+					return target[p].eval(char);
+				} else if (typeof target[p] === 'object') {
 					return makeProxy(target[p]);
 				} else if (typeof target[p] === 'string') {
 					if (formulaMap.has(target[p])) {
