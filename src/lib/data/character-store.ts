@@ -13,6 +13,7 @@ export const {
 	loaded
 } = idbWritable('character', Character, {
 	loadError(err) {
+		alert('Character data was corrupted and lost! Sorry!');
 		console.log('ERROR WHILE LOADING NEW CHARACTER!');
 		console.error(err);
 	}

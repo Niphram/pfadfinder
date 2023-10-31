@@ -131,6 +131,20 @@ export default {
 			}
 		}
 	},
+	spell: {
+		attackType: {
+			touch: 'Touch',
+			rangedTouch: 'Ranged Touch',
+			cmb: 'CMB',
+			str: 'Strength',
+			dex: 'Dexterity',
+			con: 'Constitution',
+			wis: 'Wisom',
+			int: 'Intelligence',
+			cha: 'Charisma',
+			none: '-'
+		}
+	},
 	texts: {
 		pages: {
 			abilities: 'Abilities',
