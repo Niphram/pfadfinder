@@ -25,7 +25,6 @@ export class Save {
 	@autoserialize
 	notes = '';
 
-	@autoserialize
 	readonly mod = new Derive(
 		(c) =>
 			c.classes[this.key] +
