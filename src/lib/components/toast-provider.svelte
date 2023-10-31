@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+	import { split } from 'postcss/lib/list';
 	import { writable } from 'svelte/store';
 	import { fly } from 'svelte/transition';
 
@@ -20,12 +21,16 @@
 	}
 </script>
 
-<div class="fixed bottom-0 left-0 z-50 flex w-64 flex-col gap-2 whitespace-nowrap p-4">
+<div class="fixed bottom-0 left-0 z-50 flex min-w-min flex-col gap-2 whitespace-nowrap p-4">
 	{#if $notification}
 		<div transition:fly={{ x: -128 }} class="alert alert-info flex flex-col">
 			<span class="text-lg">{$notification.title}</span>
 			{#if $notification.content}
-				<span class="border-t pt-4">{$notification.content}</span>
+				<div class="border-t pt-4">
+					{#each $notification.content.split('\n') as line}
+						<span class="block">{line}</span>
+					{/each}
+				</div>
 			{/if}
 		</div>
 	{/if}
