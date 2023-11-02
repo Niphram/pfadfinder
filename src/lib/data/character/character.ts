@@ -15,6 +15,9 @@ import { Spells } from './spells';
 
 export class Character {
 	@autoserialize
+	version = 1;
+
+	@autoserialize
 	name = 'Unnamed Character';
 
 	@autoserializeAs(Race)
