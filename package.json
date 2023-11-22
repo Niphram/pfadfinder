@@ -36,7 +36,9 @@
 	"dependencies": {
 		"@sveltejs/adapter-static": "^2.0.3",
 		"cerialize": "^0.1.18",
+		"idb": "^7.1.1",
 		"idb-keyval": "^6.2.1",
+		"messagepack": "^1.1.12",
 		"moosmann-svelte": "^0.4.1",
 		"typescript-parsec": "^0.3.4"
 	}

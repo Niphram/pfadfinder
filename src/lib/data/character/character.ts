@@ -14,6 +14,8 @@ import { SkillList } from './skills';
 import { Spells } from './spells';
 
 export class Character {
+	id?: number;
+
 	@autoserialize
 	version = 1;
 

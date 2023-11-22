@@ -6,6 +6,9 @@ import { parse, type Node } from '$lib/macro/parser';
 import { Character } from './character';
 import { idbWritable } from './idb-store';
 import { Derive, Macro } from './macros';
+import { listCharacters, newCharacter, test } from './character-manager';
+import { encode } from 'messagepack';
+import { Serialize } from 'cerialize';
 
 export const {
 	data: c,
@@ -50,3 +53,8 @@ export const p = derived(c, (char) => {
 
 	return makeProxy(char) as any; // TODO
 });
+
+export function encodeCharacter(char: Character) {
+	return Serialize(char);
+	
+}
