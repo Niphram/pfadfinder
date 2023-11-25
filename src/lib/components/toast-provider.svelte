@@ -1,5 +1,4 @@
 <script lang="ts" context="module">
-	import { split } from 'postcss/lib/list';
 	import { writable } from 'svelte/store';
 	import { fly } from 'svelte/transition';
 
@@ -17,7 +16,7 @@
 
 		notification.set({ title, content });
 
-		timeoutId = setTimeout(() => notification.set(undefined), timeout);
+		timeoutId = window.setTimeout(() => notification.set(undefined), timeout);
 	}
 </script>
 
