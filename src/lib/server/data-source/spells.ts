@@ -1,8 +1,7 @@
+import { CLASSES_KEYS, type ClassesMap, type ISpell } from '$lib/pathfinder-data/spells';
 import fs from 'node:fs/promises';
-import { parse } from '../util/parser';
-import { Spell } from './spell';
-
-const CSV_FILE = 'data/spells.csv';
+import sanitize from 'sanitize-html';
+import { parse } from './parser';
 
 export type ISpellsDB = {
 	id: number;
@@ -100,7 +99,7 @@ export type ISpellsDB = {
 	meditative: 0 | 1;
 };
 
-const dynamicTyping: (keyof ISpellsDB)[] = [
+export const dynamicTyping: (keyof ISpellsDB)[] = [
 	'id',
 	'costly_components',
 	'dismissible',
@@ -169,13 +168,57 @@ const dynamicTyping: (keyof ISpellsDB)[] = [
 	'SLA_Level'
 ];
 
+function parseSpell(spell: ISpellsDB): ISpell {
+	const {
+		id,
+		name,
+		school,
+		subschool,
+		casting_time,
+		components,
+		duration,
+		range,
+		description,
+		short_description
+	} = spell;
+
+	const classes: ClassesMap = {};
+	for (const cclass of CLASSES_KEYS) {
+		const level = spell[cclass];
+		if (level !== null) {
+			classes[cclass] = level;
+		}
+	}
+
+	const description_formatted = sanitize(spell.description_formatted, {
+		allowedTags: ['p', 'i', 'br', 'table', 'tr', 'th', 'td', 'b', 'ul', 'li', 'sup', 'caption']
+	});
+
+	return {
+		id,
+		name,
+		school,
+		subschool,
+		classes,
+		casting_time,
+		components,
+		duration,
+		range,
+		description,
+		description_formatted,
+		short_description
+	};
+}
+
+const CSV_FILE = 'data/spells.csv';
+
 const fileHandle = await fs.open(CSV_FILE);
 const parsedSpells = await parse<ISpellsDB>(fileHandle.createReadStream(), dynamicTyping);
 
-const spellMap = new Map<string, Spell>();
+const spellMap = new Map<string, ISpell>();
 
 parsedSpells.forEach((spell) => {
-	spellMap.set(spell.name, new Spell(spell));
+	spellMap.set(spell.name, parseSpell(spell));
 });
 
 export const SPELLS = spellMap;

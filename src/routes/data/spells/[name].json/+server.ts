@@ -1,6 +1,6 @@
 export const prerender = true;
 
-import { SPELLS } from '$lib/pathfinder-data/spells/db';
+import { SPELLS } from '$lib/server/data-source/spells';
 import { json, type RequestHandler } from '@sveltejs/kit';
 import type { EntryGenerator } from './$types';
 
