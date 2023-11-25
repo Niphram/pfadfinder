@@ -1,31 +1,31 @@
 export const CLASSES_KEYS = [
-	'sor',
-	'wiz',
+	'adept',
+	'alchemist',
+	'antipaladin',
+	'bard',
+	'bloodrager',
 	'cleric',
 	'druid',
-	'ranger',
-	'bard',
-	'paladin',
-	'alchemist',
-	'summoner',
-	'witch',
+	'hunter',
 	'inquisitor',
-	'oracle',
-	'antipaladin',
+	'investigator',
 	'magus',
-	'adept',
-	'mythic',
-	'bloodrager',
-	'shaman',
-	'psychic',
 	'medium',
 	'mesmerist',
+	'mythic',
 	'occultist',
-	'spiritualist',
+	'oracle',
+	'paladin',
+	'psychic',
+	'ranger',
+	'shaman',
 	'skald',
-	'investigator',
-	'hunter',
-	'summoner_unchained'
+	'sor',
+	'spiritualist',
+	'summoner',
+	'summoner_unchained',
+	'witch',
+	'wiz'
 ] as const;
 
 export type Classes = (typeof CLASSES_KEYS)[number];
@@ -47,6 +47,12 @@ export type ISpell = {
 	components: string;
 	duration: string;
 	range: string;
+	targets: string;
+
+	saving_throw: string;
+	spell_resistance: string;
+
+	descriptor: string;
 
 	description: string;
 	description_formatted: string;
