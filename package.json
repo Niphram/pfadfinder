@@ -14,10 +14,11 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
+		"@types/papaparse": "^5.3.13",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"autoprefixer": "^10.4.14",
-		"daisyui": "^3.5.0",
+		"daisyui": "^4.4.2",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.30.0",
@@ -36,8 +37,10 @@
 	"dependencies": {
 		"@sveltejs/adapter-static": "^2.0.3",
 		"cerialize": "^0.1.18",
+		"idb": "^7.1.1",
 		"idb-keyval": "^6.2.1",
 		"moosmann-svelte": "^0.4.1",
+		"papaparse": "^5.4.1",
 		"typescript-parsec": "^0.3.4"
 	}
 }
