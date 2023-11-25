@@ -10,7 +10,7 @@ export class SpellsAPI {
 	}
 
 	static async getSpell(name: string) {
-		const response = await fetch(`${base}/data/spells/${encodeURIComponent(name)}.json`);
+		const response = await fetch(`${base}/data/spells/${name}.json`);
 		const spell = (await response.json()) as ISpell;
 
 		return spell;
