@@ -179,7 +179,11 @@ function parseSpell(spell: ISpellsDB): ISpell {
 		duration,
 		range,
 		description,
-		short_description
+		short_description,
+		targets,
+		saving_throw,
+		spell_resistance,
+		descriptor
 	} = spell;
 
 	const classes: ClassesMap = {};
@@ -191,7 +195,28 @@ function parseSpell(spell: ISpellsDB): ISpell {
 	}
 
 	const description_formatted = sanitize(spell.description_formatted, {
-		allowedTags: ['p', 'i', 'br', 'table', 'tr', 'th', 'td', 'b', 'ul', 'li', 'sup', 'caption']
+		allowedTags: [
+			'b',
+			'br',
+			'caption',
+			'i',
+			'li',
+			'p',
+			'sup',
+			'table',
+			'tbody',
+			'td',
+			'tfoot',
+			'thead',
+			'th',
+			'tr',
+			'ul'
+		],
+		allowedAttributes: {
+			table: ['border'],
+			td: ['colspan', 'style'],
+			th: ['colspan', 'rowspan', 'style']
+		}
 	});
 
 	return {
@@ -206,7 +231,11 @@ function parseSpell(spell: ISpellsDB): ISpell {
 		range,
 		description,
 		description_formatted,
-		short_description
+		short_description,
+		targets,
+		saving_throw,
+		spell_resistance,
+		descriptor
 	};
 }
 
