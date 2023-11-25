@@ -27,7 +27,9 @@ jobs:
         run: npm install
 
       - name: Download Pathfinder Data
-        run: wget -O './data/spells.csv' 'https://docs.google.com/spreadsheets/d/1cuwb3QSvWDD7GG5McdvyyRBpqycYuKMRsXgyrvxvLFI/gviz/tq?tqx=out:csv'
+        uses: wei/wget@v1
+        with:
+          args: -O spells.csv -P ./data/ https://docs.google.com/spreadsheets/d/1cuwb3QSvWDD7GG5McdvyyRBpqycYuKMRsXgyrvxvLFI/gviz/tq?tqx=out:csv
 
       - name: build
         env:
