@@ -1,4 +1,5 @@
 import type { ISpellsDB } from './db';
+import sanitizeHtml from 'sanitize-html';
 
 const CLASSES_KEYS = [
 	'sor',
@@ -75,7 +76,9 @@ export class Spell {
 		this.range = spell.range;
 
 		this.description = spell.description;
-		this.description_formatted = spell.description_formatted;
+		this.description_formatted = sanitizeHtml(spell.description_formatted, {
+			allowedTags: ['p', 'i', 'br', 'table', 'tr', 'th', 'td', 'b', 'ul', 'li', 'sup', 'caption']
+		});
 		this.short_description = spell.short_description;
 	}
 }
