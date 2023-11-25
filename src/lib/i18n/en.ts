@@ -158,5 +158,34 @@ export default {
 			unsaved: 'unsaved',
 			close: 'close'
 		}
+	},
+	classes: {
+		sor: 'Sorcerer',
+		wiz: 'Wizard',
+		cleric: 'Cleric',
+		druid: 'Druid',
+		ranger: 'Ranger',
+		bard: 'Bard',
+		paladin: 'Paladin',
+		alchemist: 'Alchemist',
+		summoner: 'Summoner',
+		witch: 'Witch',
+		inquisitor: 'Inquisitor',
+		oracle: 'Oracle',
+		antipaladin: 'Antipaladin',
+		magus: 'Magus',
+		adept: 'Adept',
+		mythic: 'Mythic',
+		bloodrager: 'Bloodrager',
+		shaman: 'Shaman',
+		psychic: 'Psychic',
+		medium: 'Medium',
+		mesmerist: 'Mesmerist',
+		occultist: 'Occultist',
+		spiritualist: 'Spiritualist',
+		skald: 'Skald',
+		investigator: 'Investigator',
+		hunter: 'Hunter',
+		summoner_unchained: 'Summoner Unchained'
 	}
 };
