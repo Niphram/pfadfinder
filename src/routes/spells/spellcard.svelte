@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { fitText } from '$lib/actions/fit-text';
-	import type { Spell } from '$lib/pathfinder-data/spells';
+	import type { ISpell } from '$lib/pathfinder-data/spells';
 
-	export let spell: Spell;
+	export let spell: ISpell;
 </script>
 
 <div class="h-[9cm] w-[6cm] rounded-md border bg-red-500 p-1 text-[5pt]">
