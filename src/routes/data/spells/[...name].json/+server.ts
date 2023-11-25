@@ -5,14 +5,14 @@ import { json, type RequestHandler } from '@sveltejs/kit';
 import type { EntryGenerator } from './$types';
 
 export const entries: EntryGenerator = async () => {
-	return Array.from(SPELLS.keys()).map((name) => ({ name: encodeURIComponent(name) }));
+	return Array.from(SPELLS.keys()).map((name) => ({ name }));
 };
 
 export const GET: RequestHandler = async ({ params }) => {
 	const { name } = params;
 
 	if (name !== undefined) {
-		const spell = SPELLS.get(decodeURIComponent(name));
+		const spell = SPELLS.get(name);
 
 		if (spell) {
 			return json(spell);

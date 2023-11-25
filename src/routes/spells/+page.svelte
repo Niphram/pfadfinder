@@ -1,16 +1,27 @@
 <script lang="ts">
 	import Fab from '$lib/components/fab.svelte';
-	import { SpellsAPI } from '$lib/pathfinder-data/spells';
+	import { SpellsAPI, type ISpell } from '$lib/pathfinder-data/spells';
 	import Spellcard from './spellcard.svelte';
+
+	let spells: ISpell[] = [];
+
+	let spellname = '';
 </script>
 
-{#await SpellsAPI.getSpell('Anywhere But Here')}
-	Loading...
-{:then spell}
+<input bind:value={spellname} />
+<button
+	on:click={async () => {
+		const spell = await SpellsAPI.getSpell(spellname);
+		spells.push(spell);
+		spells = spells;
+	}}>Add</button
+>
+
+{#each spells as spell}
 	<div class="p-4">
 		<Spellcard {spell} />
 	</div>
-{/await}
+{/each}
 
 <Fab on:click={() => window.print()}>
 	<svg

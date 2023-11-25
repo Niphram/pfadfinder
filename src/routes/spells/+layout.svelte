@@ -2,6 +2,6 @@
 
 <style>
 	:global(:root) {
-		background-color: white;
+		--b1: white !important;
 	}
 </style>
