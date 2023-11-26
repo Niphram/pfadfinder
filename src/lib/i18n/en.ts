@@ -152,7 +152,8 @@ export default {
 			character: 'Character',
 			equipment: 'Equipment',
 			spells: 'Spells',
-			skills: 'Skills'
+			skills: 'Skills',
+			features_traits: 'Features/Traits'
 		},
 		general: {
 			unsaved: 'unsaved',

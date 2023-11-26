@@ -9,4 +9,9 @@ export class HitPoints {
 
 	@autoserialize
 	temp = 0;
+
+	heal(amount: number) {
+		this.current += amount;
+		this.current = Math.min(this.current, this.max);
+	}
 }

@@ -2,10 +2,20 @@
 	import { resetChar } from '$lib/data';
 	import { t } from '$lib/i18n';
 
-	import { closeDialog, title } from '../dialog.svelte';
+	import { closeDialog, openDialog, title } from '../dialog.svelte';
 	import Steps from '../steps.svelte';
 
-	let navButtons = ['abilities', 'combat', 'skills', 'spells', 'equipment', 'character'] as const;
+	import RestDialog from './rest-dialog.svelte';
+
+	let navButtons = [
+		'abilities',
+		'combat',
+		'skills',
+		'spells',
+		'features_traits',
+		'equipment',
+		'character'
+	] as const;
 
 	$title = '';
 </script>
@@ -16,6 +26,8 @@
 	{/each}
 
 	<div class="grow" />
+
+	<button class="btn btn-secondary w-full" on:click={() => openDialog(RestDialog, {})}>Rest</button>
 
 	<div class="divider">Options</div>
 

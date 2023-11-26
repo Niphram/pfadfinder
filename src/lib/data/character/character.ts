@@ -12,6 +12,7 @@ import { Race } from './race';
 import { Save } from './saves';
 import { SkillList } from './skills';
 import { Spells } from './spells';
+import { Trait } from './trait';
 
 export class Character {
 	@autoserialize
@@ -57,6 +58,9 @@ export class Character {
 
 	@autoserializeAs(SkillList)
 	skills = new SkillList();
+
+	@autoserializeAs(Trait)
+	traits: Trait[] = [];
 
 	@autoserializeAs(Spells)
 	spells = new Spells();

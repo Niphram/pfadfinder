@@ -6,6 +6,7 @@
 	export let noNegatives = false;
 	export let noZero = false;
 	export let noPositive = false;
+	export let optional = false;
 
 	export let value: string;
 
@@ -18,10 +19,11 @@
 	$: parsed = calculateNode(parse(current), $c);
 
 	$: valid =
-		Number.isInteger(parsed) &&
-		!(noNegatives && parsed < 0) &&
-		!(noZero && parsed === 0) &&
-		!(noPositive && parsed > 0);
+		(!current && optional) ||
+		(Number.isInteger(parsed) &&
+			!(noNegatives && parsed < 0) &&
+			!(noZero && parsed === 0) &&
+			!(noPositive && parsed > 0));
 
 	$: if (valid) {
 		value = current;

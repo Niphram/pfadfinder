@@ -11,3 +11,4 @@ export * from './race';
 export * from './saves';
 export * from './skills';
 export * from './spells';
+export * from './trait';
