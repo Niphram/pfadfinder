@@ -5,6 +5,7 @@ import { ArmorClass } from './armorclass';
 import { Classes } from './class';
 import { Combat } from './combat';
 import { Equipment } from './equipment';
+import { Feat } from './feat';
 import { HitPoints } from './hitpoints';
 import { Initiative } from './initiative';
 import { Money } from './money';
@@ -61,6 +62,9 @@ export class Character {
 
 	@autoserializeAs(Trait)
 	traits: Trait[] = [];
+
+	@autoserializeAs(Feat)
+	feats: Feat[] = [];
 
 	@autoserializeAs(Spells)
 	spells = new Spells();

@@ -188,5 +188,20 @@ export default {
 		investigator: 'Investigator',
 		hunter: 'Hunter',
 		summoner_unchained: 'Summoner Unchained'
+	},
+	feats: {
+		type: {
+			general: 'General',
+			combat: 'Combat',
+			critical: 'Critical',
+			grit: 'Grit',
+			item_creation: 'Item Creation',
+			metamagic: 'Metamagic',
+			panache: 'Panache',
+			performance: 'Performance',
+			style: 'Style',
+			teamwork: 'Teamwork',
+			misc: 'Misc'
+		}
 	}
 };

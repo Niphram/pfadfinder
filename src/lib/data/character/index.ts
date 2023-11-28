@@ -4,6 +4,7 @@ export * from './character';
 export * from './class';
 export * from './combat';
 export * from './equipment';
+export * from './feat';
 export * from './hitpoints';
 export * from './initiative';
 export * from './money';
