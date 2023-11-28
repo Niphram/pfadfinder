@@ -1,4 +1,5 @@
 import { autoserialize } from 'cerialize';
+import { nanoid } from 'nanoid';
 
 export const FEAT_TYPES = [
 	'general',
@@ -16,6 +17,9 @@ export const FEAT_TYPES = [
 export type FeatType = (typeof FEAT_TYPES)[number];
 
 export class Feat {
+	@autoserialize
+	id = nanoid();
+
 	@autoserialize
 	name = 'New Feat';
 

@@ -16,6 +16,7 @@
 		"@sveltejs/kit": "^1.20.4",
 		"@types/papaparse": "^5.3.13",
 		"@types/sanitize-html": "^2.9.5",
+		"@types/sortablejs": "^1.15.7",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"autoprefixer": "^10.4.14",
@@ -41,7 +42,9 @@
 		"cerialize": "^0.1.18",
 		"idb-keyval": "^6.2.1",
 		"moosmann-svelte": "^0.4.1",
+		"nanoid": "^5.0.3",
 		"papaparse": "^5.4.1",
+		"sortablejs": "^1.15.0",
 		"typescript-parsec": "^0.3.4"
 	}
 }
