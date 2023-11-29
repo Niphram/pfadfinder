@@ -16,6 +16,8 @@
 
 	{#each SKILL_KEYS as key (key)}
 		{#each $c.skills[key].skills as variant, index}
+			{@const skillTags = [variant.classSkill && 'c', variant.ranks > 0 && "t"].filter(Boolean).join(", ")}
+
 			<button
 				class="w-full"
 				on:click={() => macroNotify($t(`skills.${key}`), variant.notes, $c)}
@@ -23,7 +25,7 @@
 			>
 				<div class="btn btn-ghost join btn-sm flex flex-row gap-0 p-0">
 					<div class="join-item flex items-center bg-secondary">
-						<span class="w-16">{variant.classSkill ? 'c' : ''}</span>
+						<span class="w-16">{skillTags}</span>
 					</div>
 					<div class="join-item flex flex-grow items-center bg-base-200">
 						<span
