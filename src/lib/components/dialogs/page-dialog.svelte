@@ -5,6 +5,7 @@
 	import { closeDialog, openDialog, title } from '../dialog.svelte';
 	import Steps from '../steps.svelte';
 
+	import ImportExportDialog from './import-export-dialog.svelte';
 	import RestDialog from './rest-dialog.svelte';
 
 	let navButtons = [
@@ -50,6 +51,7 @@
 					ev.preventDefault();
 					next();
 				})}
+			on:contextmenu|preventDefault={() => openDialog(ImportExportDialog, {})}
 		>
 			{label}
 		</button>
