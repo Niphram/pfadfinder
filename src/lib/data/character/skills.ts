@@ -1,5 +1,6 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
 
+import { mapSum } from '$lib/utils';
 import { Derive, Macro, macro } from '../macros';
 import type { AbilityKey } from './abilities';
 
@@ -89,6 +90,10 @@ export class SkillGroup {
 	skills: Skill[];
 
 	readonly trained: boolean;
+
+	get ranks() {
+		return mapSum(this.skills, (skill) => skill.ranks);
+	}
 
 	constructor(key: SkillKey) {
 		this.skills = [new Skill(key)];

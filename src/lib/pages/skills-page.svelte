@@ -4,11 +4,16 @@
 	import SkillVariantsDialog from '$lib/components/dialogs/skill-variants-dialog.svelte';
 	import { SKILL_KEYS, c, p } from '$lib/data';
 	import { t } from '$lib/i18n';
-	import { withSign } from '$lib/utils';
+	import { mapSum, withSign } from '$lib/utils';
 	import { macroNotify } from '$lib/utils/notes';
+
+	$: skillRanks = mapSum(Object.keys($c.skills).map(k => $c.skills[k]), (sg) => sg.ranks)
 </script>
 
 <div class="flex flex-col gap-2">
+
+	<div class="divider">Skills (Ranks {skillRanks}/{$c.classes.ranks.eval($c)})</div>
+
 	{#each SKILL_KEYS as key (key)}
 		{#each $c.skills[key].skills as variant, index}
 			<button
