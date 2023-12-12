@@ -17,7 +17,7 @@ import { Trait } from './trait';
 
 export class Character {
 	@autoserialize
-	version = 1;
+	version = 2;
 
 	@autoserialize
 	name = 'Unnamed Character';

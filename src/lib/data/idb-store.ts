@@ -5,15 +5,18 @@ import { readonly, writable, type Updater, type Writable } from 'svelte/store';
 
 import { debounce } from '$lib/utils';
 
-type IDBWritableOptions = {
+type VersionedObject = { version: number };
+
+type IDBWritableOptions<T extends VersionedObject> = {
 	timeout?: number;
 	loadError?: (err: unknown) => void;
+	onUpgrade?: (data: any, toVersion: number) => T;
 };
 
-export function idbWritable<T extends object>(
+export function idbWritable<T extends VersionedObject>(
 	key: string,
 	Class: new () => T,
-	{ timeout = 1000, loadError }: IDBWritableOptions = {}
+	{ timeout = 1000, loadError, onUpgrade }: IDBWritableOptions<T> = {}
 ) {
 	const store = writable(new Class());
 	const loaded = writable(false);
@@ -25,6 +28,11 @@ export function idbWritable<T extends object>(
 			.then((data) => {
 				if (data) {
 					const newDataObj = new Class();
+
+					if (newDataObj.version > data.version) {
+						onUpgrade?.(data, newDataObj.version);
+					}
+
 					DeserializeInto(data, Class, newDataObj);
 					store.set(newDataObj);
 				}

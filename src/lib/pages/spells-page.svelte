@@ -17,19 +17,19 @@
 			Spells
 		</button>
 	</div>
-	{#each SPELL_LEVELS as spellLevel (spellLevel)}
-		{#if $c.spells[spellLevel].perDay > 0}
+	{#each SPELL_LEVELS as level, idx (level)}
+		{#if $c.spells[level].perDay > 0}
 			<div class="divider">
-				<button class="btn btn-secondary btn-xs" on:click={() => addSpell(spellLevel)}
-					>{count(spellLevel)} Level - {$c.spells[spellLevel].totalPerDay.eval($c)} per day</button
+				<button class="btn btn-secondary btn-xs" on:click={() => addSpell(level)}
+					>{count(idx)} Level - {$c.spells[level].totalPerDay.eval($c)} per day</button
 				>
 			</div>
 			<div class="flex flex-col items-center gap-1">
-				{#each $c.spells[spellLevel].spells as spell, spellIdx (spellIdx)}
+				{#each $c.spells[level].spells as spell, spellIdx (spellIdx)}
 					<button
 						class="btn"
-						on:click={() => openDialog(SpellDialog, { spellIdx, spellLevel })}
-						on:contextmenu|preventDefault={() => openDialog(SpellDialog, { spellIdx, spellLevel })}
+						on:click={() => openDialog(SpellDialog, { spellIdx, spellLevel: level })}
+						on:contextmenu|preventDefault={() => openDialog(SpellDialog, { spellIdx, spellLevel: level })}
 						>{spell.name}
 					</button>
 				{:else}

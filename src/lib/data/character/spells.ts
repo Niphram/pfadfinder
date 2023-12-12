@@ -1,7 +1,18 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
 import { Derive } from '../macros';
 
-export const SPELL_LEVELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] as const;
+export const SPELL_LEVELS = [
+	'level_0',
+	'level_1',
+	'level_2',
+	'level_3',
+	'level_4',
+	'level_5',
+	'level_6',
+	'level_7',
+	'level_8',
+	'level_9'
+] as const;
 export type SpellLevel = (typeof SPELL_LEVELS)[number];
 
 export const SPELL_ATTACK_TYPE = [
@@ -53,7 +64,7 @@ export class SpellSave {
 	@autoserialize
 	dcMod = 0;
 
-	readonly dc = new Derive((c) => 10 + /*spellMod*/ this.parent.parent.dc.eval(c) + this.dcMod);
+	readonly dc = new Derive((c) => 10 + /*spellMod*/ this.parent.dc.eval(c) + this.dcMod);
 
 	constructor(private parent: Spell) {}
 }
@@ -113,7 +124,11 @@ export class Spell {
 	@autoserialize
 	notes = '';
 
-	constructor(public parent: SpellLevelList) {
+	get dc() {
+		return this.parent.dc;
+	}
+
+	constructor(private parent: SpellLevelList) {
 		this.savingThrow = new SpellSave(this);
 	}
 }
@@ -145,32 +160,32 @@ export class SpellLevelList {
 
 export class Spells {
 	@autoserializeAs(SpellLevelList)
-	0 = new SpellLevelList(0);
+	level_0 = new SpellLevelList('level_0');
 
 	@autoserializeAs(SpellLevelList)
-	1 = new SpellLevelList(1);
+	level_1 = new SpellLevelList('level_1');
 
 	@autoserializeAs(SpellLevelList)
-	2 = new SpellLevelList(2);
+	level_2 = new SpellLevelList('level_2');
 
 	@autoserializeAs(SpellLevelList)
-	3 = new SpellLevelList(3);
+	level_3 = new SpellLevelList('level_3');
 
 	@autoserializeAs(SpellLevelList)
-	4 = new SpellLevelList(4);
+	level_4 = new SpellLevelList('level_4');
 
 	@autoserializeAs(SpellLevelList)
-	5 = new SpellLevelList(5);
+	level_5 = new SpellLevelList('level_5');
 
 	@autoserializeAs(SpellLevelList)
-	6 = new SpellLevelList(6);
+	level_6 = new SpellLevelList('level_6');
 
 	@autoserializeAs(SpellLevelList)
-	7 = new SpellLevelList(7);
+	level_7 = new SpellLevelList('level_7');
 
 	@autoserializeAs(SpellLevelList)
-	8 = new SpellLevelList(8);
+	level_8 = new SpellLevelList('level_8');
 
 	@autoserializeAs(SpellLevelList)
-	9 = new SpellLevelList(9);
+	level_9 = new SpellLevelList('level_9');
 }

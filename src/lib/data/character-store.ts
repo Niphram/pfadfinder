@@ -7,6 +7,15 @@ import { Character } from './character';
 import { idbWritable } from './idb-store';
 import { Derive, Macro } from './macros';
 
+const upgrades = new Map<number, (char: any) => void>();
+
+// Spell levels have been renames
+upgrades.set(2, (char) => {
+	for (let i = 0; i <= 9; i++) {
+		char.spells[`level_${i}`] = char.spells[i];
+	}
+});
+
 export const {
 	data: c,
 	dirty,
@@ -16,6 +25,14 @@ export const {
 		alert('Character data was corrupted and lost! Sorry!');
 		console.log('ERROR WHILE LOADING NEW CHARACTER!');
 		console.error(err);
+	},
+	onUpgrade(data, toVersion) {
+		for (let v = data.version; v <= toVersion; v++) {
+			upgrades.get(v)?.(data);
+			data.version = v;
+		}
+
+		return data;
 	}
 });
 
