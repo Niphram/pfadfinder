@@ -3,10 +3,9 @@
 	import { t } from '$lib/i18n';
 
 	import { closeDialog, openDialog, title } from '../dialog.svelte';
-	import Steps from '../steps.svelte';
 
-	import ImportExportDialog from './import-export-dialog.svelte';
 	import RestDialog from './rest-dialog.svelte';
+	import SettingsDialog from './settings-dialog.svelte';
 
 	let navButtons = [
 		'abilities',
@@ -32,28 +31,7 @@
 
 	<div class="divider">Options</div>
 
-	<Steps
-		steps={[
-			{ label: 'Delete Character', style: { warning: true, outline: true } },
-			{ label: 'Are you sure?', style: { warning: true } },
-			{ label: 'REALLY SURE???', style: { error: true }, onClick: resetChar }
-		]}
-		let:props={{ label, onClick, style }}
-		let:next
+	<button class="btn btn-outline btn-warning w-full" on:click={() => openDialog(SettingsDialog, {})}
+		>Settings</button
 	>
-		<button
-			class="btn"
-			class:btn-warning={style.warning}
-			class:btn-outline={style.outline}
-			class:btn-error={style.error}
-			on:click={onClick ??
-				((ev) => {
-					ev.preventDefault();
-					next();
-				})}
-			on:contextmenu|preventDefault={() => openDialog(ImportExportDialog, {})}
-		>
-			{label}
-		</button>
-	</Steps>
 </div>

@@ -14,7 +14,7 @@
 	on:contextmenu|preventDefault={() => openDialog(AbilityDialog, { key })}
 	class="btn h-min p-0"
 >
-	<div class="flex w-full flex-col divide-y text-center">
+	<div class="flex w-full flex-col divide-y divide-base-100 text-center">
 		<div class="py-1 text-3xl font-extrabold">{withSign($c[key].mod.eval($c))}</div>
 		<div class="py-1 text-xs decoration-wavy" class:underline={!!$c[key].notes}>
 			{$p[key].total}
@@ -24,3 +24,5 @@
 		</div>
 	</div>
 </button>
+
+<style></style>
