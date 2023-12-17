@@ -38,7 +38,7 @@
 </script>
 
 <script lang="ts">
-	$: themeColor = $isDarkMode ? '#414558' : '#2E282A';
+	$: themeColor = $isDarkMode ? '#414558' : '#DBCA9A';
 	$: backgroundColor = $isDarkMode ? '#282a36' : '#E4D8B4';
 </script>
 
