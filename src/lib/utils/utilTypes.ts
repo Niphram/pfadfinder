@@ -19,12 +19,12 @@ export type Split<S extends string, D extends string> = S extends `${infer T}${D
 export type Paths<T> = T extends Stringable
 	? never
 	: T extends Array<infer U>
-	? `${number}` | `${number}.${Paths<U>}`
-	:
-			| StringKeyof<T>
-			| {
-					[K in StringKeyof<T>]: `${K}.${Paths<T[K]>}`;
-			  }[StringKeyof<T>];
+		? `${number}` | `${number}.${Paths<U>}`
+		:
+				| StringKeyof<T>
+				| {
+						[K in StringKeyof<T>]: `${K}.${Paths<T[K]>}`;
+				  }[StringKeyof<T>];
 
 type Index<T, P> = T extends Array<infer U> ? U : P extends StringKeyof<T> ? T[P] : never;
 

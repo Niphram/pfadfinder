@@ -37,7 +37,7 @@
 </svelte:head>
 
 <div class="flex h-screen flex-col">
-	<div class="sticky top-0 z-40 w-full bg-base-200 drop-shadow-xl">
+	<div class="sticky top-0 z-40 w-full bg-neutral drop-shadow-xl">
 		<div class="flex flex-row items-stretch gap-2 p-2 align-middle">
 			<button class="flex-grow text-left" on:click={() => openDialog(CharacterInfoDialog, {})}>
 				<div class="flex flex-col">
@@ -54,10 +54,10 @@
 	</div>
 
 	<div
-		class="flex flex-grow snap-x snap-mandatory flex-row flex-nowrap divide-x overflow-x-scroll scroll-smooth"
+		class="flex flex-grow snap-x snap-mandatory flex-row flex-nowrap overflow-x-scroll scroll-smooth"
 	>
 		{#each pages as { key, component } (key)}
-			<div id={key} class="w-screen flex-none snap-center snap-always overflow-y-scroll p-4">
+			<div id={key} class="w-full flex-none snap-center snap-always overflow-y-scroll p-4">
 				<svelte:component this={component} />
 				<div class="h-16" />
 			</div>

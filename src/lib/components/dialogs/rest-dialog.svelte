@@ -46,5 +46,5 @@
 
 	<div class="divider" />
 
-	<button class="btn" on:click={() => rest8Hours()}>8 hours</button>
+	<button class="btn btn-neutral" on:click={() => rest8Hours()}>8 hours</button>
 </div>

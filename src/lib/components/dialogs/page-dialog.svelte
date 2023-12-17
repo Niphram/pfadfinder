@@ -22,16 +22,18 @@
 
 <div class="flex h-full flex-col gap-2">
 	{#each navButtons as key (key)}
-		<a href="#{key}" class="btn w-full" on:click={closeDialog}>{$t(`texts.pages.${key}`)}</a>
+		<a href="#{key}" class="btn btn-neutral w-full" on:click={closeDialog}
+			>{$t(`texts.pages.${key}`)}</a
+		>
 	{/each}
 
 	<div class="grow" />
 
-	<button class="btn btn-secondary w-full" on:click={() => openDialog(RestDialog, {})}>Rest</button>
+	<button class="btn btn-accent w-full" on:click={() => openDialog(RestDialog, {})}>Rest</button>
 
 	<div class="divider">Options</div>
 
-	<button class="btn btn-outline btn-warning w-full" on:click={() => openDialog(SettingsDialog, {})}
+	<button class="btn btn-outline btn-accent w-full" on:click={() => openDialog(SettingsDialog, {})}
 		>Settings</button
 	>
 </div>

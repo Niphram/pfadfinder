@@ -38,8 +38,8 @@
 </script>
 
 <script lang="ts">
-	$: themeColor = $isDarkMode ? '#232530' : '#DBC99A';
-	$: backgroundColor = $isDarkMode ? '#282A36' : '#E4D8B4';
+	$: themeColor = $isDarkMode ? '#414558' : '#2E282A';
+	$: backgroundColor = $isDarkMode ? '#282a36' : '#E4D8B4';
 </script>
 
 <svelte:head>

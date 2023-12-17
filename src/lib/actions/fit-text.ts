@@ -34,7 +34,7 @@ let resizeObserver = browser
 				if (options)
 					scaleText(target as ElementType, options.maxSize, options.minSize, options.step);
 			}
-	  })
+		})
 	: undefined;
 
 export const fitText: Action<ElementType, Partial<Options> | undefined> = (

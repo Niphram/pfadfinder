@@ -8,6 +8,6 @@ export function debounce<A extends unknown[]>(func: (...args: A) => void, timeou
 
 	return (...args: A) => {
 		timeoutId && clearTimeout(timeoutId);
-		timeoutId = setTimeout(() => func(...args), timeout);
+		timeoutId = window.setTimeout(() => func(...args), timeout);
 	};
 }

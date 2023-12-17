@@ -6,6 +6,15 @@ export default {
 	},
 	plugins: [require('daisyui')],
 	daisyui: {
-		themes: ['retro', 'dracula']
+		themes: [
+			{
+				retro: {
+					...require('daisyui/src/theming/themes')['retro'],
+					neutral: '#dbca9a',
+					'neutral-content': '#282425'
+				}
+			},
+			'dracula'
+		]
 	}
 };

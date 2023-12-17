@@ -3,7 +3,7 @@
 </script>
 
 <div>
-	<button class="btn btn-neutral flex h-full p-2" on:click>
+	<button class="btn btn-accent flex h-full p-2" on:click>
 		<div class="flex flex-col justify-center text-center">
 			<div class="text-xs">Hit Points</div>
 			<div class="text-lg">

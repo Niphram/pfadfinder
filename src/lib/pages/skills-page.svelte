@@ -7,27 +7,31 @@
 	import { mapSum, withSign } from '$lib/utils';
 	import { macroNotify } from '$lib/utils/notes';
 
-	$: skillRanks = mapSum(Object.keys($c.skills).map(k => $c.skills[k]), (sg) => sg.ranks)
+	$: skillRanks = mapSum(
+		Object.keys($c.skills).map((k) => $c.skills[k]),
+		(sg) => sg.ranks
+	);
 </script>
 
 <div class="flex flex-col gap-2">
-
 	<div class="divider">Skills (Ranks {skillRanks}/{$c.classes.ranks.eval($c)})</div>
 
 	{#each SKILL_KEYS as key (key)}
 		{#each $c.skills[key].skills as variant, index}
-			{@const skillTags = [variant.classSkill && 'c', variant.ranks > 0 && "t"].filter(Boolean).join(", ")}
+			{@const skillTags = [variant.classSkill && 'c', variant.ranks > 0 && 't']
+				.filter(Boolean)
+				.join(', ')}
 
 			<button
 				class="w-full"
 				on:click={() => macroNotify($t(`skills.${key}`), variant.notes, $c)}
 				on:contextmenu|preventDefault={() => openDialog(SkillDialog, { key, index })}
 			>
-				<div class="btn btn-ghost join btn-sm flex flex-row gap-0 p-0">
-					<div class="join-item flex items-center bg-secondary">
+				<div class="btn btn-ghost join btn-sm flex flex-row gap-1 p-0">
+					<div class="join-item flex items-center bg-secondary text-secondary-content">
 						<span class="w-16">{skillTags}</span>
 					</div>
-					<div class="join-item flex flex-grow items-center bg-base-200">
+					<div class="join-item flex flex-grow items-center bg-neutral text-neutral-content">
 						<span
 							class="join-item flex-grow align-middle decoration-wavy"
 							class:underline={variant.notes}
@@ -35,7 +39,7 @@
 						>
 					</div>
 					<div class="join-item flex items-center bg-secondary">
-						<span class="join-item w-16 bg-secondary align-middle"
+						<span class="join-item w-16 bg-secondary align-middle text-secondary-content"
 							>{withSign($p.skills[key].skills[index].mod)}</span
 						>
 					</div>
