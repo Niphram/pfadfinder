@@ -37,7 +37,7 @@
 </svelte:head>
 
 <div class="flex h-screen flex-col">
-	<div class="sticky top-0 z-40 w-full bg-neutral drop-shadow-xl">
+	<div class="sticky top-0 z-40 w-full bg-base-200 drop-shadow-xl">
 		<div class="flex flex-row items-stretch gap-2 p-2 align-middle">
 			<button class="flex-grow text-left" on:click={() => openDialog(CharacterInfoDialog, {})}>
 				<div class="flex flex-col">

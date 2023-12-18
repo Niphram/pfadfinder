@@ -27,7 +27,7 @@
 
 	<div class="divider">Classes</div>
 
-	<div class="grid w-full grid-cols-1 gap-2 md:grid-cols-4">
+	<div class="flex flex-col gap-4">
 		{#each $c.classes.list as { name, level }, classIndex}
 			<CaptionedButton
 				label={name}

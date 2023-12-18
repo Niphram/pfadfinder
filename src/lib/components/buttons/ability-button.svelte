@@ -12,7 +12,7 @@
 <button
 	on:click={() => macroNotify($t(`abilities.${key}.full`), $c[key].notes, $c)}
 	on:contextmenu|preventDefault={() => openDialog(AbilityDialog, { key })}
-	class="btn btn-neutral h-min p-0"
+	class="btn h-min p-0"
 >
 	<div class="flex w-full flex-col divide-y-2 divide-base-100 text-center">
 		<div class="py-1 text-3xl font-extrabold">{withSign($c[key].mod.eval($c))}</div>

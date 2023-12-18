@@ -2,8 +2,8 @@
 	import { browser } from '$app/environment';
 	import { readonly, writable } from 'svelte/store';
 
-	const lightTheme = 'retro';
-	const darkTheme = 'dracula';
+	const lightTheme = 'light';
+	const darkTheme = 'dark';
 
 	function persistDarkmode(value?: boolean) {
 		if (value !== undefined) {
@@ -38,8 +38,8 @@
 </script>
 
 <script lang="ts">
-	$: themeColor = $isDarkMode ? '#414558' : '#DBCA9A';
-	$: backgroundColor = $isDarkMode ? '#282a36' : '#E4D8B4';
+	$: themeColor = $isDarkMode ? '#20222C' : '#DBCA9A';
+	$: backgroundColor = $isDarkMode ? '#0B0B0F' : '#ECE3CE';
 </script>
 
 <svelte:head>

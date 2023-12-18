@@ -27,7 +27,7 @@
 			<div class="flex flex-col items-center gap-1">
 				{#each $c.spells[level].spells as spell, spellIdx (spellIdx)}
 					<button
-						class="btn btn-neutral w-full"
+						class="btn w-full"
 						on:click={() => openDialog(SpellDialog, { spellIdx, spellLevel: level })}
 						on:contextmenu|preventDefault={() =>
 							openDialog(SpellDialog, { spellIdx, spellLevel: level })}

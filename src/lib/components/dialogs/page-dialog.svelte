@@ -22,9 +22,7 @@
 
 <div class="flex h-full flex-col gap-2">
 	{#each navButtons as key (key)}
-		<a href="#{key}" class="btn btn-neutral w-full" on:click={closeDialog}
-			>{$t(`texts.pages.${key}`)}</a
-		>
+		<a href="#{key}" class="btn w-full" on:click={closeDialog}>{$t(`texts.pages.${key}`)}</a>
 	{/each}
 
 	<div class="grow" />

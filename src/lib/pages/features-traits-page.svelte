@@ -90,7 +90,7 @@
 					</svg>
 				</div>
 				<button
-					class="item btn btn-neutral btn-sm flex-1"
+					class="item btn btn-sm flex-1"
 					on:click={() => macroNotify(feat.name, featBenefits + featNormal + featSpecial, $c)}
 					on:contextmenu|preventDefault={() => openDialog(FeatDialog, { index: idx })}
 				>
@@ -127,7 +127,7 @@
 					</svg>
 				</div>
 				<button
-					class="btn btn-neutral btn-sm flex-1"
+					class="btn btn-sm flex-1"
 					on:click={() => macroNotify(trait.name, trait.description, $c)}
 					on:contextmenu|preventDefault={() => openDialog(TraitDialog, { index: idx })}
 				>

@@ -40,7 +40,7 @@
 	<div class="flex flex-col gap-2">
 		{#each $c.equipment.acItems as item, idx}
 			<button
-				class="btn btn-neutral btn-sm"
+				class="btn btn-sm"
 				class:bg-base-300={item.equipped}
 				class:underline={item.equipped}
 				on:click={() => macroNotify(item.name, item.notes, $c)}

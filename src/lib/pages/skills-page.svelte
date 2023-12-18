@@ -28,18 +28,18 @@
 				on:contextmenu|preventDefault={() => openDialog(SkillDialog, { key, index })}
 			>
 				<div class="btn btn-ghost join btn-sm flex flex-row gap-1 p-0">
-					<div class="join-item flex items-center bg-secondary text-secondary-content">
+					<div class="join-item flex items-center bg-accent text-accent-content">
 						<span class="w-16">{skillTags}</span>
 					</div>
-					<div class="join-item flex flex-grow items-center bg-neutral text-neutral-content">
+					<div class="join-item flex flex-grow items-center bg-base-200 text-base-content">
 						<span
 							class="join-item flex-grow align-middle decoration-wavy"
 							class:underline={variant.notes}
 							>{$t(`skills.${key}`)}{variant.name ? ` (${variant.name})` : ''}</span
 						>
 					</div>
-					<div class="join-item flex items-center bg-secondary">
-						<span class="join-item w-16 bg-secondary align-middle text-secondary-content"
+					<div class="join-item flex items-center bg-accent text-accent-content">
+						<span class="join-item w-16 align-middle"
 							>{withSign($p.skills[key].skills[index].mod)}</span
 						>
 					</div>
