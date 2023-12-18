@@ -41,7 +41,6 @@
 		{#each $c.equipment.acItems as item, idx}
 			<button
 				class="btn btn-sm"
-				class:bg-base-300={item.equipped}
 				class:underline={item.equipped}
 				on:click={() => macroNotify(item.name, item.notes, $c)}
 				on:contextmenu|preventDefault={() => openDialog(AcItemDialog, { index: idx })}

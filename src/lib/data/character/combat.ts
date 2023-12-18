@@ -68,6 +68,92 @@ export class CombatManeuverDefense {
 	});
 }
 
+export const ATTACK_TYPES = [
+	'meelee',
+	'ranged',
+	'cmb',
+	'babFull',
+	'babMax',
+	'flurryOfBlows',
+	'none'
+] as const;
+export type AttackType = (typeof ATTACK_TYPES)[number];
+
+export class AttackRoll {
+	@autoserialize
+	baseModifier: AttackType = 'babFull';
+
+	@autoserialize
+	abilityModifier: AbilityKey | 'none' = 'none';
+
+	@macro
+	bonusModifier = new Macro('0');
+
+	@autoserialize
+	versus = 'AC';
+
+	@macro
+	critRange = new Macro('20');
+
+	@autoserialize
+	range = '';
+
+	readonly baseModValue = new Derive((c) =>
+		// TODO: Check this
+		this.baseModifier === 'none' ? 0
+		: this.baseModifier === 'babMax' ? c.combat.bab.mod.eval(c)
+		: this.baseModifier === 'babFull' ? c.combat.bab.mod.eval(c)
+		: this.baseModifier === 'cmb' ? c.combat.cmb.mod.eval(c)
+		: this.baseModifier === 'meelee' ? c.combat.bab.mod.eval(c) + c.str.mod.eval(c)
+		: this.baseModifier === 'ranged' ? c.combat.bab.mod.eval(c) + c.dex.mod.eval(c)
+		: this.baseModifier === 'flurryOfBlows' ? 0
+		: 0
+	);
+
+	readonly abilityModValue = new Derive((c) =>
+		this.abilityModifier !== 'none' ? c[this.abilityModifier].mod.eval(c) : 0
+	);
+}
+
+export class Damage {
+	@autoserialize
+	damage = '';
+}
+
+export class Attack {
+	@autoserialize
+	name = 'Unnamed Attack';
+
+	@autoserialize
+	category = '';
+
+	@autoserialize
+	type = '';
+
+	@autoserialize
+	hasAttack = false;
+
+	@autoserializeAs(AttackRoll)
+	attack = new AttackRoll();
+
+	@autoserialize
+	hasDamage = false;
+
+	@autoserializeAs(Damage)
+	damage = new Damage();
+
+	@autoserialize
+	notes = '';
+
+	readonly attackBonus = new Derive((c) => {
+		let total = this.attack.baseModValue.eval(c);
+		total += this.attack.abilityModValue.eval(c);
+		const bonus = this.attack.bonusModifier.eval(c) ?? 0;
+		total += Number.isNaN(bonus) ? 0 : bonus;
+		return total;
+	});
+}
+
 export class Combat {
 	@autoserialize
 	cmbAbility: AbilityKey = 'str';
@@ -89,4 +175,7 @@ export class Combat {
 
 	@autoserializeAs(CombatManeuverBonus)
 	cmd = new CombatManeuverDefense();
+
+	@autoserializeAs(Attack)
+	attacks: Attack[] = [];
 }
