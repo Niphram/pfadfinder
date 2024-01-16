@@ -54,7 +54,7 @@ export class CombatManeuverBonus {
 
 	readonly mod = new Derive((c) => {
 		const { ability, mod } = sizeModifiers[c.race.size];
-		return c.combat.bab.mod.eval(c) + mod + c.str.mod.eval(c);
+		return c.combat.bab.mod.eval(c) + mod + c[ability].mod.eval(c);
 	});
 }
 
