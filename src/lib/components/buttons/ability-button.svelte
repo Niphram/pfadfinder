@@ -7,6 +7,8 @@
 	import AbilityDialog from '../dialogs/ability-dialog.svelte';
 
 	export let key: AbilityKey;
+
+	$: bonus = $p[key].bonus;
 </script>
 
 <button
@@ -17,7 +19,13 @@
 	<div class="flex w-full flex-col divide-y-2 divide-base-100 text-center">
 		<div class="py-1 text-3xl font-extrabold">{withSign($c[key].mod.eval($c))}</div>
 		<div class="py-1 text-xs decoration-wavy" class:underline={!!$c[key].notes}>
-			{$p[key].total}
+			{$p[key].totalNoTemp}{#if bonus !== 0}<span
+					class:text-red-700={bonus < 0}
+					class:text-green-700={bonus > 0}
+				>
+					{withSign($p[key].bonus)}
+				</span>
+			{/if}
 		</div>
 		<div class="py-1 uppercase decoration-wavy" class:underline={!!$c[key].notes}>
 			{$t(`abilities.${key}.short`)}

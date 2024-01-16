@@ -19,6 +19,8 @@ export class Ability {
 		(c) => c[this.key].base.eval(c) + c.race[this.key].eval(c) + c[this.key].bonus.eval(c)
 	);
 
+	readonly totalNoTemp = new Derive((c) => c[this.key].base.eval(c) + c.race[this.key].eval(c));
+
 	readonly mod = new Derive((c) => Math.floor(c[this.key].total.eval(c) / 2) - 5);
 
 	constructor(private key: AbilityKey) {}
