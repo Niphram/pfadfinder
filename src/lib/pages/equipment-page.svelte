@@ -11,6 +11,7 @@
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import Integer from '$lib/components/input/integer.svelte';
 	import TextArea from '$lib/components/input/text-area.svelte';
+	import SortableList from '$lib/components/sortable-list.svelte';
 
 	function addItem() {
 		$c.equipment.items.push(new Item());
@@ -25,19 +26,6 @@
 
 		openDialog(AcItemDialog, { index: $c.equipment.acItems.length - 1 });
 	}
-
-	let itemListEl: HTMLDivElement;
-	$: if (itemListEl)
-		Sortable.create(itemListEl, {
-			group: 'items',
-			handle: '.drag-handle',
-			animation: 150,
-			easing: 'cubic-bezier(1, 0, 0, 1)',
-			onUpdate({ oldIndex = 0, newIndex = 0 }) {
-				$c.equipment.items.splice(newIndex, 0, $c.equipment.items.splice(oldIndex, 1)[0]);
-				$c.equipment.items = $c.equipment.items;
-			}
-		});
 </script>
 
 <div class="flex flex-col gap-2">
@@ -60,37 +48,47 @@
 		</div>
 	</div>
 
-	<div class="flex flex-col gap-2" bind:this={itemListEl}>
-		{#each $c.equipment.items as item, idx (item.id)}
-			<div class="flex w-full flex-row items-stretch">
-				<div class="drag-handle flex w-8 items-center justify-center md:w-12">
-					<DragHandle />
-				</div>
-				<div class="flex grow flex-row items-stretch gap-2">
-					<button
-						class="btn btn-sm flex-1 md:btn-md"
-						on:click={() => macroNotify(item.name, item.description, $c)}
-						on:contextmenu|preventDefault={() => openDialog(ItemDialog, { index: idx })}
-					>
-						{item.quantity}x <span class:underline={item.equipped}>{item.name}</span>
-					</button>
-					{#if item.hasCharges}
-						<button
-							class="btn btn-accent btn-sm w-24 md:btn-md"
-							on:click={() => {
-								item.charges -= 1;
-							}}
-							on:contextmenu|preventDefault={() => {
-								item.charges += 1;
-							}}
-						>
-							{item.charges} charges
-						</button>
-					{/if}
-				</div>
+	<SortableList
+		bind:items={$c.equipment.items}
+		options={{
+			group: 'items',
+			handle: '.drag-handle',
+			animation: 150,
+			easing: 'cubic-bezier(1, 0, 0, 1)'
+		}}
+		keyProp="id"
+		class="flex flex-col gap-2"
+		let:item
+		let:index
+	>
+		<div class="flex w-full flex-row items-stretch">
+			<div class="drag-handle flex w-8 items-center justify-center md:w-12">
+				<DragHandle />
 			</div>
-		{/each}
-	</div>
+			<div class="flex grow flex-row items-stretch gap-2">
+				<button
+					class="btn btn-sm flex-1 md:btn-md"
+					on:click={() => macroNotify(item.name, item.description, $c)}
+					on:contextmenu|preventDefault={() => openDialog(ItemDialog, { index })}
+				>
+					{item.quantity}x <span class:underline={item.equipped}>{item.name}</span>
+				</button>
+				{#if item.hasCharges}
+					<button
+						class="btn btn-accent btn-sm w-24 md:btn-md"
+						on:click={() => {
+							item.charges -= 1;
+						}}
+						on:contextmenu|preventDefault={() => {
+							item.charges += 1;
+						}}
+					>
+						{item.charges} charges
+					</button>
+				{/if}
+			</div>
+		</div>
+	</SortableList>
 
 	<div class="divider">
 		<div class="flex flex-row gap-2">
