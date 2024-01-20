@@ -80,11 +80,10 @@
 				</div>
 				<button
 					class="btn btn-sm flex-1 md:btn-md"
-					class:underline={item.equipped}
 					on:click={() => macroNotify(item.name, item.description, $c)}
 					on:contextmenu|preventDefault={() => openDialog(ItemDialog, { index: idx })}
 				>
-					{item.name}
+					{item.quantity}x <span class:underline={item.equipped}>{item.name}</span>
 				</button>
 				{#if item.hasCharges}
 					<button
