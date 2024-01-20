@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { resetChar } from '$lib/data';
 	import { t } from '$lib/i18n';
 
 	import { closeDialog, openDialog, title } from '../dialog.svelte';

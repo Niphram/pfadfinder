@@ -1,3 +1,9 @@
+<script lang="ts" context="module">
+	// Needed to satisfy eslint
+	type V = unknown;
+	type T = unknown;
+</script>
+
 <script lang="ts" generics="V, T">
 	export let name: string;
 

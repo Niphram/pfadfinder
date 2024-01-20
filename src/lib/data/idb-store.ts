@@ -10,6 +10,7 @@ type VersionedObject = { version: number };
 type IDBWritableOptions<T extends VersionedObject> = {
 	timeout?: number;
 	loadError?: (err: unknown) => void;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	onUpgrade?: (data: any, toVersion: number) => T;
 };
 

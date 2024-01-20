@@ -4,11 +4,11 @@ import { autoserializeAs } from 'cerialize';
 import type { Character } from '../character';
 
 export const macro = autoserializeAs({
-	Serialize(instance: Macro): any {
+	Serialize(instance: Macro): string {
 		return instance.expr;
 	},
 
-	Deserialize(expr: any): any {
+	Deserialize(expr: string): Macro {
 		return new Macro(expr);
 	}
 });

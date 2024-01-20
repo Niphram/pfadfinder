@@ -5,6 +5,7 @@ import { NodeType, parse, type Node } from './parser';
 
 function calcAttribute(path: string[], char: Character): number {
 	try {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const val: unknown = path.reduce((c, p) => c[p], char as Record<string, any>);
 
 		if (val instanceof Macro || val instanceof Derive) {

@@ -1,3 +1,8 @@
+<script lang="ts" context="module">
+	// Needed to satisfy eslint
+	type T = unknown;
+</script>
+
 <script lang="ts" generics="T">
 	export let steps: T[];
 

@@ -12,18 +12,17 @@ const CACHE = `cache-${version}`;
 
 const ASSETS = build.concat(files);
 
+console.log(CACHE);
 console.log(ASSETS);
 
 sw.addEventListener('install', (event) => {
-	console.log('INSTALL');
 	event.waitUntil(sw.skipWaiting());
 });
 
 sw.addEventListener('activate', (event) => {
-	console.log('ACTIVATE');
 	event.waitUntil(sw.clients.claim());
 });
 
-sw.addEventListener('fetch', (event) => {
+sw.addEventListener('fetch', () => {
 	// console.log('FETCH');
 });

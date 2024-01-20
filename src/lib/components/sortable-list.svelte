@@ -1,3 +1,8 @@
+<script lang="ts" context="module">
+	// Needed to satisfy eslint
+	type T = unknown;
+</script>
+
 <script lang="ts" generics="T">
 	import Sortable from 'sortablejs';
 	import { onMount } from 'svelte';

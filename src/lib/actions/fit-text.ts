@@ -25,7 +25,7 @@ function scaleText(node: ElementType, maxSize: number, minSize: number, step: nu
 
 const texts = new WeakMap<ElementType, Options>();
 
-let resizeObserver =
+const resizeObserver =
 	browser ?
 		new ResizeObserver((entries) => {
 			console.log(entries);

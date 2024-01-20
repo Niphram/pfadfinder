@@ -7,6 +7,7 @@ import { Character } from './character';
 import { idbWritable } from './idb-store';
 import { Derive, Macro } from './macros';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const upgrades = new Map<number, (char: any) => void>();
 
 // Spell levels have been renames
@@ -43,9 +44,10 @@ export function resetChar() {
 const formulaMap = new Map<string, Node>();
 
 export const p = derived(c, (char) => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function makeProxy(obj: any) {
 		return new Proxy(obj, {
-			get(target, p, _receiver): unknown {
+			get(target, p): unknown {
 				if (!(p in target)) throw new Error('Something went wrong');
 
 				if (target[p] instanceof Macro || target[p] instanceof Derive) {
@@ -65,5 +67,6 @@ export const p = derived(c, (char) => {
 		});
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	return makeProxy(char) as any; // TODO
 });

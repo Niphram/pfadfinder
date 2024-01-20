@@ -1,6 +1,4 @@
 <script lang="ts">
-	import Sortable from 'sortablejs';
-
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import { AcItem, Item, c } from '$lib/data';
 	import { macroNotify } from '$lib/utils/notes';

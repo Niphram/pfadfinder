@@ -7,7 +7,6 @@
 	import { Feat, Trait, c } from '$lib/data';
 	import { t } from '$lib/i18n';
 	import { macroNotify } from '$lib/utils/notes';
-	import Sortable from 'sortablejs';
 
 	function addFeat() {
 		$c.feats.push(new Feat());

@@ -38,6 +38,7 @@
 	<div class="h-min w-full bg-red-500 py-[2px] text-[6pt]">Description</div>
 
 	<div use:fitText={{ maxSize: 8 }} class="h-full min-h-0 rounded-sm bg-white p-1 text-justify">
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html spell.description_formatted}
 	</div>
 </div>
