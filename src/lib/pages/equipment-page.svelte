@@ -8,6 +8,7 @@
 	import AcItemDialog from '$lib/components/dialogs/ac-item-dialog.svelte';
 	import ItemDialog from '$lib/components/dialogs/item-dialog.svelte';
 
+	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import Integer from '$lib/components/input/integer.svelte';
 	import TextArea from '$lib/components/input/text-area.svelte';
 
@@ -61,43 +62,32 @@
 
 	<div class="flex flex-col gap-2" bind:this={itemListEl}>
 		{#each $c.equipment.items as item, idx (item.id)}
-			<div class="flex w-full flex-row items-center gap-2">
-				<div class="drag-handle">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						class="h-6 w-6"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
-						/>
-					</svg>
+			<div class="flex w-full flex-row items-stretch">
+				<div class="drag-handle flex w-8 items-center justify-center md:w-12">
+					<DragHandle />
 				</div>
-				<button
-					class="btn btn-sm flex-1 md:btn-md"
-					on:click={() => macroNotify(item.name, item.description, $c)}
-					on:contextmenu|preventDefault={() => openDialog(ItemDialog, { index: idx })}
-				>
-					{item.quantity}x <span class:underline={item.equipped}>{item.name}</span>
-				</button>
-				{#if item.hasCharges}
+				<div class="flex grow flex-row items-stretch gap-2">
 					<button
-						class="btn btn-accent btn-sm w-24 md:btn-md"
-						on:click={() => {
-							item.charges -= 1;
-						}}
-						on:contextmenu|preventDefault={() => {
-							item.charges += 1;
-						}}
+						class="btn btn-sm flex-1 md:btn-md"
+						on:click={() => macroNotify(item.name, item.description, $c)}
+						on:contextmenu|preventDefault={() => openDialog(ItemDialog, { index: idx })}
 					>
-						{item.charges} charges
+						{item.quantity}x <span class:underline={item.equipped}>{item.name}</span>
 					</button>
-				{/if}
+					{#if item.hasCharges}
+						<button
+							class="btn btn-accent btn-sm w-24 md:btn-md"
+							on:click={() => {
+								item.charges -= 1;
+							}}
+							on:contextmenu|preventDefault={() => {
+								item.charges += 1;
+							}}
+						>
+							{item.charges} charges
+						</button>
+					{/if}
+				</div>
 			</div>
 		{/each}
 	</div>
