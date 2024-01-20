@@ -1,9 +1,39 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
+import { nanoid } from 'nanoid';
 
 import { mapSum } from '$lib/utils';
 
 export const ARMOR_TYPES = ['light', 'medium', 'heavy', 'shield', 'misc'] as const;
 export type ArmorType = (typeof ARMOR_TYPES)[number];
+
+export class Item {
+	id = nanoid();
+
+	@autoserialize
+	name = 'Unnamed Item';
+
+	@autoserialize
+	quantity = 1;
+
+	@autoserialize
+	equipped = false;
+
+	@autoserialize
+	weight = 0;
+
+	@autoserialize
+	hasCharges = false;
+
+	@autoserialize
+	charges = 0;
+
+	@autoserialize
+	description = '';
+
+	get totalWeight() {
+		return this.quantity * this.weight;
+	}
+}
 
 export class AcItem {
 	@autoserialize
@@ -47,10 +77,17 @@ export class AcItem {
 }
 
 export class Equipment {
+	@autoserializeAs(Item)
+	items: Item[] = [];
+
 	@autoserializeAs(AcItem)
 	acItems: AcItem[] = [];
 
 	get acBonus() {
 		return mapSum(this.acItems, (i) => (i.equipped ? i.acBonus : 0));
+	}
+
+	get totalWeight() {
+		return mapSum(this.items, (i) => (i.equipped ? i.totalWeight : 0));
 	}
 }
