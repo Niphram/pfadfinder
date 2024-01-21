@@ -74,12 +74,8 @@
 				{#if item.hasCharges}
 					<button
 						class="btn btn-accent btn-sm w-24 md:btn-md"
-						on:click={() => {
-							item.charges -= 1;
-						}}
-						on:contextmenu|preventDefault={() => {
-							item.charges += 1;
-						}}
+						on:click={() => $c.equipment.items[index].charges--}
+						on:contextmenu|preventDefault={() => $c.equipment.items[index].charges++}
 					>
 						{item.charges} charges
 					</button>

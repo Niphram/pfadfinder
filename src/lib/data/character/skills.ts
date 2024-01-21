@@ -5,41 +5,41 @@ import { Derive, Macro, macro } from '../macros';
 import type { AbilityKey } from './abilities';
 
 const SKILLS = {
-	acrobatics: { ability: 'dex', trained: false },
-	appraise: { ability: 'int', trained: false },
-	bluff: { ability: 'cha', trained: false },
-	climb: { ability: 'str', trained: false },
-	craft: { ability: 'int', trained: false },
-	diplomacy: { ability: 'cha', trained: false },
-	disableDevice: { ability: 'dex', trained: true },
-	disguise: { ability: 'cha', trained: false },
-	escapeArtist: { ability: 'dex', trained: false },
-	fly: { ability: 'dex', trained: false },
-	handleAnimal: { ability: 'cha', trained: true },
-	heal: { ability: 'wis', trained: false },
-	intimidate: { ability: 'cha', trained: false },
-	knowledgeArcana: { ability: 'int', trained: true },
-	knowledgeDungeoneering: { ability: 'int', trained: true },
-	knowledgeEngineering: { ability: 'int', trained: true },
-	knowledgeGeography: { ability: 'int', trained: true },
-	knowledgeHistory: { ability: 'int', trained: true },
-	knowledgeLocal: { ability: 'int', trained: true },
-	knowledgeNature: { ability: 'int', trained: true },
-	knowledgeNobility: { ability: 'int', trained: true },
-	knowledgePlanes: { ability: 'int', trained: true },
-	knowledgeReligion: { ability: 'int', trained: true },
-	linguistics: { ability: 'int', trained: true },
-	perception: { ability: 'wis', trained: false },
-	perform: { ability: 'cha', trained: false },
-	profession: { ability: 'wis', trained: true },
-	ride: { ability: 'dex', trained: false },
-	senseMotive: { ability: 'wis', trained: false },
-	sleightOfHand: { ability: 'dex', trained: true },
-	spellcraft: { ability: 'int', trained: true },
-	stealth: { ability: 'dex', trained: false },
-	survival: { ability: 'wis', trained: false },
-	swim: { ability: 'str', trained: false },
-	useMagicDevice: { ability: 'cha', trained: true }
+	acrobatics: { ability: 'dex', trained: false, penalty: true },
+	appraise: { ability: 'int', trained: false, penalty: false },
+	bluff: { ability: 'cha', trained: false, penalty: false },
+	climb: { ability: 'str', trained: false, penalty: false },
+	craft: { ability: 'int', trained: false, penalty: false },
+	diplomacy: { ability: 'cha', trained: false, penalty: false },
+	disableDevice: { ability: 'dex', trained: true, penalty: true },
+	disguise: { ability: 'cha', trained: false, penalty: false },
+	escapeArtist: { ability: 'dex', trained: false, penalty: true },
+	fly: { ability: 'dex', trained: false, penalty: true },
+	handleAnimal: { ability: 'cha', trained: true, penalty: false },
+	heal: { ability: 'wis', trained: false, penalty: false },
+	intimidate: { ability: 'cha', trained: false, penalty: false },
+	knowledgeArcana: { ability: 'int', trained: true, penalty: false },
+	knowledgeDungeoneering: { ability: 'int', trained: true, penalty: false },
+	knowledgeEngineering: { ability: 'int', trained: true, penalty: false },
+	knowledgeGeography: { ability: 'int', trained: true, penalty: false },
+	knowledgeHistory: { ability: 'int', trained: true, penalty: false },
+	knowledgeLocal: { ability: 'int', trained: true, penalty: false },
+	knowledgeNature: { ability: 'int', trained: true, penalty: false },
+	knowledgeNobility: { ability: 'int', trained: true, penalty: false },
+	knowledgePlanes: { ability: 'int', trained: true, penalty: false },
+	knowledgeReligion: { ability: 'int', trained: true, penalty: false },
+	linguistics: { ability: 'int', trained: true, penalty: false },
+	perception: { ability: 'wis', trained: false, penalty: false },
+	perform: { ability: 'cha', trained: false, penalty: false },
+	profession: { ability: 'wis', trained: true, penalty: false },
+	ride: { ability: 'dex', trained: false, penalty: true },
+	senseMotive: { ability: 'wis', trained: false, penalty: false },
+	sleightOfHand: { ability: 'dex', trained: true, penalty: true },
+	spellcraft: { ability: 'int', trained: true, penalty: false },
+	stealth: { ability: 'dex', trained: false, penalty: true },
+	survival: { ability: 'wis', trained: false, penalty: false },
+	swim: { ability: 'str', trained: false, penalty: false },
+	useMagicDevice: { ability: 'cha', trained: true, penalty: false }
 } as const;
 export const SKILL_KEYS = Object.keys(SKILLS);
 export type SkillKey = keyof typeof SKILLS;
@@ -52,7 +52,7 @@ export class Skill {
 	ability: AbilityKey = 'str';
 
 	@autoserialize
-	acPenalty = true;
+	penalty = false;
 
 	@autoserialize
 	ranks = 0;
@@ -81,6 +81,7 @@ export class Skill {
 	constructor(key?: SkillKey) {
 		if (key) {
 			this.ability = SKILLS[key].ability;
+			this.penalty = SKILLS[key].penalty;
 		}
 	}
 }

@@ -43,6 +43,13 @@
 	</div>
 </div>
 
+<div class="form-control">
+	<label class="label cursor-pointer pb-0">
+		<span class="label-text">Armor Penalty?</span>
+		<input type="checkbox" class="toggle" bind:checked={$c.skills[key].skills[index].penalty} />
+	</label>
+</div>
+
 <div class="flex flex-row gap-2">
 	<Integer bind:value={$c.skills[key].skills[index].ranks} name="skillRanks" label="Ranks" />
 	<MacroInteger bind:value={$c.skills[key].skills[index].misc.expr} name="skillMisc" label="Misc" />
