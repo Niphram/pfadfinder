@@ -1,4 +1,5 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
+import { nanoid } from 'nanoid';
 
 import { Derive, Macro, macro } from '../macros';
 import type { AbilityKey } from './abilities';
@@ -121,6 +122,8 @@ export class Damage {
 }
 
 export class Attack {
+	id = nanoid();
+
 	@autoserialize
 	name = 'Unnamed Attack';
 

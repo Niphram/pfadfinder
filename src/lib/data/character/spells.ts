@@ -1,4 +1,5 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
+import { nanoid } from 'nanoid';
 import { Derive } from '../macros';
 
 export const SPELL_LEVELS = [
@@ -70,6 +71,8 @@ export class SpellSave {
 }
 
 export class Spell {
+	id = nanoid();
+
 	@autoserialize
 	name = 'Unnamed Spell';
 

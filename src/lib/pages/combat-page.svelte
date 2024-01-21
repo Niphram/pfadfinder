@@ -10,6 +10,8 @@
 	import SrDialog from '$lib/components/dialogs/sr-dialog.svelte';
 	import { macroNotify } from '$lib/utils/notes';
 	import AttackDialog from '$lib/components/dialogs/attack-dialog.svelte';
+	import SortableList from '$lib/components/sortable-list.svelte';
+	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 
 	function addAttack() {
 		$c.combat.attacks.push(new Attack());
@@ -61,29 +63,50 @@
 	</div>
 
 	{#if $c.combat.attacks.length > 0}
-		<table class="table">
+		<table class="table border-separate border-spacing-y-2">
 			<thead>
-				<tr class=" text-center">
+				<tr class="border-none text-center">
+					<th class="w-4"></th>
 					<th>Name</th>
 					<th>Atk</th>
 					<th>Crit Range</th>
 					<th>Damage</th>
 				</tr>
 			</thead>
-			<tbody>
-				{#each $c.combat.attacks as attack, idx}
-					<tr
-						class="hover cursor-pointer rounded-3xl bg-base-200 text-center"
+			<SortableList
+				element="tbody"
+				options={{
+					group: 'attack',
+					handle: '.drag-handle',
+					animation: 150,
+					easing: 'cubic-bezier(1, 0, 0, 1)'
+				}}
+				bind:items={$c.combat.attacks}
+				keyProp="id"
+				let:item={attack}
+				let:index
+			>
+				<tr class=" border-none text-center">
+					<td class="drag-handle items-center justify-center"><DragHandle /></td>
+
+					<button
+						class="join join-horizontal contents cursor-pointer"
 						on:click={() => macroNotify(attack.name, attack.notes, $c)}
-						on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index: idx })}
+						on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
 					>
-						<td>{attack.name}</td>
-						<td>{attack.hasAttack ? withSign(attack.attackBonus.eval($c)) : '-'}</td>
-						<td>{attack.hasAttack ? attack.attack.critRange.eval($c) : '-'}</td>
-						<td>{(attack.hasDamage && attack.damage.damage) || '-'}</td>
-					</tr>
-				{/each}
-			</tbody>
+						<td class="join-item bg-base-200">{attack.name}</td>
+						<td class="join-item bg-base-200"
+							>{attack.hasAttack ? withSign(attack.attackBonus.eval($c)) : '-'}</td
+						>
+						<td class="join-item bg-base-200"
+							>{attack.hasAttack ? attack.attack.critRange.eval($c) : '-'}</td
+						>
+						<td class="join-item bg-base-200"
+							>{(attack.hasDamage && attack.damage.damage) || '-'}</td
+						>
+					</button>
+				</tr>
+			</SortableList>
 		</table>
 	{/if}
 </div>

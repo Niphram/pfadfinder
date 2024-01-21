@@ -17,7 +17,9 @@
 	let className = '';
 	export { className as class };
 
-	let listEl: HTMLDivElement;
+	export let element = 'div';
+
+	let listEl: HTMLElement;
 
 	onMount(() => {
 		let sortableInstance = Sortable.create(listEl, {
@@ -32,8 +34,12 @@
 	});
 </script>
 
-<div class={className} bind:this={listEl}>
+<svelte:element this={element} class={className} bind:this={listEl}>
 	{#each items as item, index (item[keyProp])}
 		<slot {item} {index} />
 	{/each}
-</div>
+
+	{#if items.length === 0}
+		<slot name="fallback" />
+	{/if}
+</svelte:element>

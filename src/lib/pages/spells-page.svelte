@@ -2,6 +2,8 @@
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import SpellDialog from '$lib/components/dialogs/spell-dialog.svelte';
 	import SpellLevelDialog from '$lib/components/dialogs/spell-level-dialog.svelte';
+	import DragHandle from '$lib/components/icons/drag-handle.svelte';
+	import SortableList from '$lib/components/sortable-list.svelte';
 	import { c, Spell, SPELL_LEVELS, type SpellLevel } from '$lib/data';
 	import { count } from '$lib/utils';
 
@@ -24,19 +26,35 @@
 					>{count(idx)} Level - {$c.spells[level].totalPerDay.eval($c)} per day</button
 				>
 			</div>
-			<div class="flex flex-col items-center gap-1">
-				{#each $c.spells[level].spells as spell, spellIdx (spellIdx)}
+
+			<SortableList
+				class="flex flex-col items-center gap-1"
+				options={{
+					group: 'spells',
+					handle: '.drag-handle',
+					animation: 150,
+					easing: 'cubic-bezier(1, 0, 0, 1)'
+				}}
+				bind:items={$c.spells[level].spells}
+				keyProp="id"
+				let:item={spell}
+				let:index={spellIdx}
+			>
+				<div slot="fallback">No Spells</div>
+
+				<div class="flex w-full flex-row items-stretch">
+					<div class="drag-handle flex w-8 items-center justify-center md:w-12">
+						<DragHandle />
+					</div>
 					<button
-						class="btn w-full"
+						class="btn grow"
 						on:click={() => openDialog(SpellDialog, { spellIdx, spellLevel: level })}
 						on:contextmenu|preventDefault={() =>
 							openDialog(SpellDialog, { spellIdx, spellLevel: level })}
 						>{spell.name}
 					</button>
-				{:else}
-					<div>No Spells</div>
-				{/each}
-			</div>
+				</div>
+			</SortableList>
 		{/if}
 	{/each}
 </div>
