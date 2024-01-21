@@ -17,27 +17,33 @@
 
 <div class="divider">Danger</div>
 
-<Steps
-	steps={[
-		{ label: 'Delete Character', style: { warning: true, outline: true } },
-		{ label: 'Are you sure?', style: { warning: true } },
-		{ label: 'REALLY SURE???', style: { error: true }, onClick: resetChar }
-	]}
-	let:props={{ label, onClick, style }}
-	let:next
->
+<div class="flex flex-col gap-4">
 	<button
-		class="btn w-full"
-		class:btn-warning={style.warning}
-		class:btn-outline={style.outline}
-		class:btn-error={style.error}
-		on:click={onClick ??
-			((ev) => {
-				ev.preventDefault();
-				next();
-			})}
-		on:contextmenu|preventDefault={() => openDialog(ImportExportDialog, {})}
+		class="btn btn-secondary w-full"
+		on:click|preventDefault={() => openDialog(ImportExportDialog, {})}>Import/Export</button
 	>
-		{label}
-	</button>
-</Steps>
+
+	<Steps
+		steps={[
+			{ label: 'Delete Character', style: { warning: true, outline: true } },
+			{ label: 'Are you sure?', style: { warning: true } },
+			{ label: 'REALLY SURE???', style: { error: true }, onClick: resetChar }
+		]}
+		let:props={{ label, onClick, style }}
+		let:next
+	>
+		<button
+			class="btn w-full"
+			class:btn-warning={style.warning}
+			class:btn-outline={style.outline}
+			class:btn-error={style.error}
+			on:click={onClick ??
+				((ev) => {
+					ev.preventDefault();
+					next();
+				})}
+		>
+			{label}
+		</button>
+	</Steps>
+</div>
