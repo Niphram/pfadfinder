@@ -12,6 +12,7 @@
 	import AttackDialog from '$lib/components/dialogs/attack-dialog.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
+	import { parseTextWithMacros } from '$lib/macro/text';
 
 	function addAttack() {
 		$c.combat.attacks.push(new Attack());
@@ -102,7 +103,7 @@
 							>{attack.hasAttack ? attack.attack.critRange.eval($c) : '-'}</td
 						>
 						<td class="join-item bg-base-200"
-							>{(attack.hasDamage && attack.damage.damage) || '-'}</td
+							>{(attack.hasDamage && parseTextWithMacros(attack.damage.damage, $c)) || '-'}</td
 						>
 					</button>
 				</tr>
