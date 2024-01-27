@@ -58,39 +58,39 @@
 						<div class="collapse-title min-h-0 text-sm font-semibold">{spell.name}</div>
 						<div class="collapse-content">
 							<div
-								class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold"
+								class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
 							>
 								{#if spell.school}
-									<div>School:</div>
+									<div>School</div>
 									<div>{spell.school}</div>
 								{/if}
 								{#if spell.castingTime}
-									<div>Casting Time:</div>
+									<div>Casting Time</div>
 									<div>{spell.castingTime}</div>
 								{/if}
 
 								{#if spell.components}
-									<div>Components:</div>
+									<div>Components</div>
 									<div>{spell.components}</div>
 								{/if}
 
 								{#if spell.range}
-									<div>Range:</div>
+									<div>Range</div>
 									<div>{spell.range}</div>
 								{/if}
 
 								{#if spell.targets}
-									<div>Targets:</div>
+									<div>Targets</div>
 									<div>{spell.targets}</div>
 								{/if}
 
 								{#if spell.duration}
-									<div>Duration:</div>
+									<div>Duration</div>
 									<div>{spell.duration}</div>
 								{/if}
 
 								{#if spell.effect}
-									<div>Effect:</div>
+									<div>Effect</div>
 									<div>{spell.effect}</div>
 								{/if}
 
@@ -99,12 +99,12 @@
 									{@const abilityDc =
 										(dcAbility ? $c[dcAbility].mod.eval($c) : 0) + $c.spells.dcBonus.eval($c)}
 									{@const saveDc = 10 + idx + spell.savingThrow.dcMod + abilityDc}
-									<div>Saving Throw:</div>
+									<div>Saving Throw</div>
 									<div>{spell.savingThrow.effect} (DC {saveDc})</div>
 								{/if}
 
 								{#if spell.spellResistance}
-									<div>Spell Resistance:</div>
+									<div>Spell Resistance</div>
 									<div>{spell.spellResistance}</div>
 								{/if}
 							</div>

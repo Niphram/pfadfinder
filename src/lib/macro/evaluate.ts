@@ -44,16 +44,25 @@ function calcBinary(op: '+' | '-' | '*' | '/' | '%', left: number, right: number
 	}
 }
 
-function calcFunc(func: undefined | 'floor' | 'round' | 'ceil', value: number): number {
+function calcFunc(
+	func: undefined | 'floor' | 'round' | 'ceil' | 'min' | 'max' | 'clamp',
+	values: number[]
+): number {
 	switch (func) {
 		case undefined:
-			return value;
+			return values[0];
 		case 'floor':
-			return Math.floor(value);
+			return Math.floor(values[0]);
 		case 'round':
-			return Math.round(value);
+			return Math.round(values[0]);
 		case 'ceil':
-			return Math.ceil(value);
+			return Math.ceil(values[0]);
+		case 'min':
+			return Math.min(...values);
+		case 'max':
+			return Math.max(...values);
+		case 'clamp':
+			return Math.min(Math.max(values[0], values[1]), values[2]);
 	}
 }
 
@@ -70,7 +79,10 @@ export function calculateNode(node: Node, char: Character): number {
 		case NodeType.Binary:
 			return calcBinary(node.op, calculateNode(node.left, char), calculateNode(node.right, char));
 		case NodeType.Func:
-			return calcFunc(node.func, calculateNode(node.node, char));
+			return calcFunc(
+				node.func,
+				node.nodes.map((n) => calculateNode(n, char))
+			);
 	}
 }
 
@@ -87,6 +99,6 @@ export function printNode(node: Node, char: Character): string {
 		case NodeType.Binary:
 			return `${printNode(node.left, char)} ${node.op} ${printNode(node.right, char)}`;
 		case NodeType.Func:
-			return `${node.func ?? ''}( ${printNode(node.node, char)} )`;
+			return `${node.func ?? ''}( ${node.nodes.map((n) => printNode(n, char)).join()} )`;
 	}
 }

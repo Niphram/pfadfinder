@@ -1,8 +1,12 @@
 import {
 	alt,
+	alt_sc,
 	apply,
+	expectEOF,
+	expectSingleResult,
 	kmid,
 	kright,
+	list,
 	list_sc,
 	lrec_sc,
 	opt,
@@ -10,11 +14,8 @@ import {
 	seq,
 	str,
 	tok,
-	type Parser,
 	type Token as ParsecToken,
-	expectSingleResult,
-	expectEOF,
-	alt_sc
+	type Parser
 } from 'typescript-parsec';
 
 import { TokenKind, tokenize } from './tokenizer';
@@ -62,8 +63,8 @@ type BinaryNode = {
 
 type FuncNode = {
 	type: NodeType.Func;
-	func?: 'floor' | 'round' | 'ceil';
-	node: Node;
+	func?: 'floor' | 'round' | 'ceil' | 'min' | 'max' | 'clamp';
+	nodes: Node[];
 };
 
 function applyConstant(token: Token): ConstantNode {
@@ -112,20 +113,34 @@ function applyBinary(left: Node, [token, right]: [Token, Node]): BinaryNode {
 	}
 }
 
-function applyFunc([func, node]: [Token | undefined, Node]): FuncNode {
+function applyFunc([func, nodes]: [Token | undefined, Node[]]): FuncNode {
 	switch (func?.text) {
 		case undefined:
 		case 'floor':
 		case 'round':
 		case 'ceil':
-			return {
-				type: NodeType.Func,
-				func: func?.text,
-				node
-			};
+			if (nodes.length !== 1)
+				throw new Error(`Function ${func?.text} expected 1 argument, got ${nodes.length}`);
+			break;
+
+		case 'min':
+		case 'max':
+			break;
+
+		case 'clamp':
+			if (nodes.length !== 3)
+				throw new Error(`Function ${func?.text} expected 3 argument, got ${nodes.length}`);
+			break;
+
 		default:
 			throw new Error(`Unknown function type: ${func?.text}`);
 	}
+
+	return {
+		type: NodeType.Func,
+		func: func?.text,
+		nodes
+	};
 }
 
 /**
@@ -162,10 +177,13 @@ const unaryParser: Parser<TokenKind, UnaryNode> = apply(
 /**
  * FUNC = [ "floor" | "round" | "ceil" ] "(" EXPR ")"
  */
-const funcParser = apply(seq(opt(tok(TokenKind.String)), kmid(str('('), EXP, str(')'))), applyFunc);
+const funcParser = apply(
+	seq(opt(tok(TokenKind.String)), kmid(str('('), list(EXP, tok(TokenKind.Comma)), str(')'))),
+	applyFunc
+);
 
 /**
- * TERM = CONSTANT | ATTRIBUTE | UNARY | FUNC
+ * TERM = CONSTANT | ATTRIBUTE | UNARY | FUNC | BINARY_FUNC
  */
 TERM.setPattern(alt(constantParser, attributeParser, unaryParser, funcParser));
 
