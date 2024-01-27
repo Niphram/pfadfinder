@@ -277,7 +277,6 @@
 		<TextArea
 			name="spellDescription"
 			label="Description"
-			rows={3}
 			bind:value={$c.spells[spellLevel].spells[spellIdx].description}
 		/>
 	{/if}

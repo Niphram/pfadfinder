@@ -25,7 +25,7 @@
 		name="abilityNotes"
 		placeholder="Enter Notes"
 		class="textarea textarea-bordered w-full max-w-xs"
-		rows="3"
+		rows="10"
 		bind:value={$c[key].notes}
 	/>
 </div>
