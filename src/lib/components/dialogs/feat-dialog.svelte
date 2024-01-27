@@ -85,7 +85,7 @@
 				name="featSpecial"
 				placeholder="Enter Special"
 				class="textarea textarea-bordered w-full"
-				rows="10"
+				rows="5"
 				bind:value={$c.feats[index].special}
 			/>
 		</div>
