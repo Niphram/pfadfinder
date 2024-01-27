@@ -5,10 +5,11 @@
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import { c, Spell, SPELL_LEVELS, type SpellLevel } from '$lib/data';
+	import { parseTextWithMacros } from '$lib/macro/text';
 	import { count } from '$lib/utils';
 
 	function addSpell(level: SpellLevel) {
-		$c.spells[level].spells.push(new Spell($c.spells[level]));
+		$c.spells[level].spells.push(new Spell());
 		$c.spells[level].spells = $c.spells[level].spells;
 	}
 </script>
@@ -42,17 +43,77 @@
 			>
 				<div slot="fallback">No Spells</div>
 
-				<div class="flex w-full flex-row items-stretch">
+				<div class="flex w-full flex-row">
 					<div class="drag-handle flex w-8 items-center justify-center md:w-12">
 						<DragHandle />
 					</div>
-					<button
-						class="btn grow"
-						on:click={() => openDialog(SpellDialog, { spellIdx, spellLevel: level })}
-						on:contextmenu|preventDefault={() =>
-							openDialog(SpellDialog, { spellIdx, spellLevel: level })}
-						>{spell.name}
-					</button>
+
+					<div class="collapse bg-base-200">
+						<input
+							type="checkbox"
+							on:contextmenu|preventDefault={() =>
+								openDialog(SpellDialog, { spellIdx, spellLevel: level })}
+						/>
+						<div class="collapse-title">
+							<div class="align-middle font-bold">
+								{spell.name}
+							</div>
+						</div>
+						<div class="collapse-content">
+							<div
+								class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold"
+							>
+								{#if spell.school}
+									<div>School:</div>
+									<div>{spell.school}</div>
+								{/if}
+								{#if spell.castingTime}
+									<div>Casting Time:</div>
+									<div>{spell.castingTime}</div>
+								{/if}
+
+								{#if spell.components}
+									<div>Components:</div>
+									<div>{spell.components}</div>
+								{/if}
+
+								{#if spell.range}
+									<div>Range:</div>
+									<div>{spell.range}</div>
+								{/if}
+
+								{#if spell.targets}
+									<div>Targets:</div>
+									<div>{spell.targets}</div>
+								{/if}
+
+								{#if spell.duration}
+									<div>Duration:</div>
+									<div>{spell.duration}</div>
+								{/if}
+
+								{#if spell.effect}
+									<div>Effect:</div>
+									<div>{spell.effect}</div>
+								{/if}
+
+								{#if spell.savingThrow.hasSave}
+									{@const dcAbility = $c.spells.dcAbility}
+									{@const abilityDc =
+										(dcAbility ? $c[dcAbility].mod.eval($c) : 0) + $c.spells.dcBonus.eval($c)}
+									{@const saveDc = 10 + idx + spell.savingThrow.dcMod + abilityDc}
+									<div>Saving Throw:</div>
+									<div>{spell.savingThrow.effect} (DC {saveDc})</div>
+								{/if}
+
+								{#if spell.spellResistance}
+									<div>Spell Resistance:</div>
+									<div>{spell.spellResistance}</div>
+								{/if}
+							</div>
+							<p>{parseTextWithMacros(spell.description, $c)}</p>
+						</div>
+					</div>
 				</div>
 			</SortableList>
 		{/if}

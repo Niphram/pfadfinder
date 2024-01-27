@@ -1,6 +1,7 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
 import { nanoid } from 'nanoid';
-import { Derive } from '../macros';
+import { Derive, Macro, macro } from '../macros';
+import type { AbilityKey } from '.';
 
 export const SPELL_LEVELS = [
 	'level_0',
@@ -64,10 +65,6 @@ export class SpellSave {
 
 	@autoserialize
 	dcMod = 0;
-
-	readonly dc = new Derive((c) => 10 + /*spellMod*/ this.parent.dc.eval(c) + this.dcMod);
-
-	constructor(private parent: Spell) {}
 }
 
 export class Spell {
@@ -110,7 +107,7 @@ export class Spell {
 	duration = '';
 
 	@autoserializeAs(SpellSave)
-	savingThrow: SpellSave;
+	savingThrow = new SpellSave();
 
 	@autoserialize
 	spellResistance = '';
@@ -126,14 +123,6 @@ export class Spell {
 
 	@autoserialize
 	notes = '';
-
-	get dc() {
-		return this.parent.dc;
-	}
-
-	constructor(private parent: SpellLevelList) {
-		this.savingThrow = new SpellSave(this);
-	}
 }
 
 export class SpellLevelList {
@@ -162,6 +151,12 @@ export class SpellLevelList {
 }
 
 export class Spells {
+	@autoserialize
+	dcAbility?: AbilityKey;
+
+	@macro
+	dcBonus = new Macro('0');
+
 	@autoserializeAs(SpellLevelList)
 	level_0 = new SpellLevelList('level_0');
 
