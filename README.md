@@ -54,6 +54,7 @@ Macros inside text fields can be optionally formatted. The syntax needs to follo
 | Flag | Result                                                       |
 | ---- | ------------------------------------------------------------ |
 | `+`  | Will always display the sign, even if the number is positive |
+| `z`  | Don't display anything, if the result is zero                |
 
 ## Data sources
 

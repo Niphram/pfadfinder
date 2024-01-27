@@ -1,4 +1,5 @@
 import type { Character } from '$lib/data';
+import { withSign } from '$lib/utils';
 import { calculateNode } from './evaluate';
 import { parse } from './parser';
 
@@ -14,13 +15,18 @@ export function parseTextWithMacros(input: string, char: Character): string {
 			const format = macro.substring(1, split);
 			const result = calculateNode(parse(macro.substring(split)), char);
 
-			const signed = format.at(0) === '+';
+			const signed = format.includes('+');
+			const hideZero = format.includes('z');
+
+			if (hideZero && result === 0) {
+				return '';
+			}
 
 			if (signed) {
-				return result < 0 ? result.toString() : `+${result}`;
-			} else {
-				return result.toString();
+				return result >= 0 ? `+${result}` : `${result}`;
 			}
+
+			return `${result}`;
 		} else {
 			return `[${calculateNode(parse(macro), char).toString()}]`;
 		}
