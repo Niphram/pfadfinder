@@ -109,8 +109,12 @@
 								{/if}
 							</div>
 							{#if spell.description}
+								{@const parsedDescription = parseTextWithMacros(spell.description, $c)}
+
 								<div class="divider">Description</div>
-								<p>{parseTextWithMacros(spell.description, $c)}</p>
+								{#each parsedDescription.split('\n') as line}
+									<p>{line}</p>
+								{/each}
 							{/if}
 						</div>
 					</div>

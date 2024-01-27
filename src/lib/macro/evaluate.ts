@@ -45,7 +45,7 @@ function calcBinary(op: '+' | '-' | '*' | '/' | '%', left: number, right: number
 }
 
 function calcFunc(
-	func: undefined | 'floor' | 'round' | 'ceil' | 'min' | 'max' | 'clamp',
+	func: undefined | 'floor' | 'round' | 'ceil' | 'min' | 'max' | 'clamp' | 'abs',
 	values: number[]
 ): number {
 	switch (func) {
@@ -63,6 +63,8 @@ function calcFunc(
 			return Math.max(...values);
 		case 'clamp':
 			return Math.min(Math.max(values[0], values[1]), values[2]);
+		case 'abs':
+			return Math.abs(values[0]);
 	}
 }
 

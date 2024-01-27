@@ -63,7 +63,7 @@ type BinaryNode = {
 
 type FuncNode = {
 	type: NodeType.Func;
-	func?: 'floor' | 'round' | 'ceil' | 'min' | 'max' | 'clamp';
+	func?: 'floor' | 'round' | 'ceil' | 'min' | 'max' | 'clamp' | 'abs';
 	nodes: Node[];
 };
 
@@ -119,6 +119,7 @@ function applyFunc([func, nodes]: [Token | undefined, Node[]]): FuncNode {
 		case 'floor':
 		case 'round':
 		case 'ceil':
+		case 'abs':
 			if (nodes.length !== 1)
 				throw new Error(`Function ${func?.text} expected 1 argument, got ${nodes.length}`);
 			break;
@@ -175,7 +176,7 @@ const unaryParser: Parser<TokenKind, UnaryNode> = apply(
 );
 
 /**
- * FUNC = [ "floor" | "round" | "ceil" ] "(" EXPR ")"
+ * FUNC = [ "floor" | "round" | "ceil" | "min" | "max" | "clamp" | "abs" ] "(" EXPR ["," EXPR]* ")"
  */
 const funcParser = apply(
 	seq(opt(tok(TokenKind.String)), kmid(str('('), list(EXP, tok(TokenKind.Comma)), str(')'))),
@@ -183,7 +184,7 @@ const funcParser = apply(
 );
 
 /**
- * TERM = CONSTANT | ATTRIBUTE | UNARY | FUNC | BINARY_FUNC
+ * TERM = CONSTANT | ATTRIBUTE | UNARY | FUNC
  */
 TERM.setPattern(alt(constantParser, attributeParser, unaryParser, funcParser));
 
