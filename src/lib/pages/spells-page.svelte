@@ -50,13 +50,12 @@
 
 					<div class="collapse bg-base-200">
 						<input
+							class="min-h-0"
 							type="checkbox"
 							on:contextmenu|preventDefault={() =>
 								openDialog(SpellDialog, { spellIdx, spellLevel: level })}
 						/>
-						<div class="collapse-title flex items-center font-bold">
-							{spell.name}
-						</div>
+						<div class="collapse-title min-h-0 text-sm font-semibold">{spell.name}</div>
 						<div class="collapse-content">
 							<div
 								class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold"
@@ -109,7 +108,10 @@
 									<div>{spell.spellResistance}</div>
 								{/if}
 							</div>
-							<p>{parseTextWithMacros(spell.description, $c)}</p>
+							{#if spell.description}
+								<div class="divider">Description</div>
+								<p>{parseTextWithMacros(spell.description, $c)}</p>
+							{/if}
 						</div>
 					</div>
 				</div>
