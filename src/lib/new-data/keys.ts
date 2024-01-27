@@ -1,0 +1,41 @@
+export const ABILITY_KEYS = ['str', 'dex', 'con', 'int', 'wis', 'cha'] as const;
+export type AbilityKey = (typeof ABILITY_KEYS)[number];
+
+export const SKILL_KEYS = [
+	'acrobatics',
+	'appraise',
+	'bluff',
+	'climb',
+	'craft',
+	'diplomacy',
+	'disableDevice',
+	'disguise',
+	'escapeArtist',
+	'fly',
+	'handleAnimal',
+	'heal',
+	'intimidate',
+	'knowledgeArcana',
+	'knowledgeDungeoneering',
+	'knowledgeEngineering',
+	'knowledgeGeography',
+	'knowledgeHistory',
+	'knowledgeLocal',
+	'knowledgeNature',
+	'knowledgeNobility',
+	'knowledgePlanes',
+	'knowledgeReligion',
+	'linguistics',
+	'perception',
+	'perform',
+	'profession',
+	'ride',
+	'senseMotive',
+	'sleightOfHand',
+	'spellcraft',
+	'stealth',
+	'survival',
+	'swim',
+	'useMagicDevice'
+] as const;
+export type SkillKey = (typeof SKILL_KEYS)[number];

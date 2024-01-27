@@ -1,4 +1,4 @@
-export function mapSum<T>(arr: T[], get: (v: T) => number) {
+export function mapSum<T>(arr: readonly T[], get: (v: T) => number) {
 	return arr.reduce((sum, v) => sum + get(v), 0);
 }
 
