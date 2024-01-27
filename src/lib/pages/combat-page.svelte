@@ -100,7 +100,7 @@
 							>{attack.hasAttack ? withSign(attack.attackBonus.eval($c)) : '-'}</td
 						>
 						<td class="join-item bg-base-200"
-							>{attack.hasAttack ? attack.attack.critRange.eval($c) : '-'}</td
+							>{(attack.hasAttack && attack.attack.critRange) || '-'}</td
 						>
 						<td class="join-item bg-base-200"
 							>{(attack.hasDamage && parseTextWithMacros(attack.damage.damage, $c)) || '-'}</td

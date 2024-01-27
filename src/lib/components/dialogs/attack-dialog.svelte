@@ -68,12 +68,17 @@
 			</div>
 
 			<div class="flex flex-row gap-1">
-				<MacroInteger
-					placeholder="20"
-					label="Critical Range"
-					name="critRange"
-					bind:value={$c.combat.attacks[index].attack.critRange.expr}
-				></MacroInteger>
+				<div class="form-control w-full">
+					<label for="attackCritRange" class="label pb-0">
+						<span class="label-text">Critical Range</span>
+					</label>
+					<input
+						name="attackCritRange"
+						placeholder="19-20"
+						class="input input-bordered w-full"
+						bind:value={$c.combat.attacks[index].attack.critRange}
+					/>
+				</div>
 
 				<div class="form-control w-full">
 					<label for="attackRange" class="label pb-0">

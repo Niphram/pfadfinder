@@ -93,8 +93,8 @@ export class AttackRoll {
 	@autoserialize
 	versus = 'AC';
 
-	@macro
-	critRange = new Macro('20');
+	@autoserialize
+	critRange = '20';
 
 	@autoserialize
 	range = '';

@@ -1,5 +1,4 @@
 import type { Character } from '$lib/data';
-import { withSign } from '$lib/utils';
 import { calculateNode } from './evaluate';
 import { parse } from './parser';
 
