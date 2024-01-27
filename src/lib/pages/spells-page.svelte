@@ -48,9 +48,9 @@
 						<DragHandle />
 					</div>
 
-					<div class="collapse bg-base-200">
+					<div class="collapse collapse-arrow bg-base-200">
 						<input
-							class="min-h-0"
+							class="row-span-2 min-h-0"
 							type="checkbox"
 							on:contextmenu|preventDefault={() =>
 								openDialog(SpellDialog, { spellIdx, spellLevel: level })}
