@@ -54,10 +54,8 @@
 							on:contextmenu|preventDefault={() =>
 								openDialog(SpellDialog, { spellIdx, spellLevel: level })}
 						/>
-						<div class="collapse-title">
-							<div class="align-middle font-bold">
-								{spell.name}
-							</div>
+						<div class="collapse-title flex items-center font-bold">
+							{spell.name}
 						</div>
 						<div class="collapse-content">
 							<div
