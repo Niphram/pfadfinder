@@ -43,7 +43,6 @@
 				name="traitDescription"
 				placeholder="Enter Description"
 				class="textarea textarea-bordered w-full"
-				rows="5"
 				bind:value={$c.traits[index].description}
 			/>
 		</div>

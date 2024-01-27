@@ -67,7 +67,6 @@
 			name="itemNotes"
 			placeholder="Description"
 			label="Description"
-			rows={10}
 		/>
 	{/if}
 

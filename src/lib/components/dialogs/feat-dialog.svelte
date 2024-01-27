@@ -36,7 +36,7 @@
 				name="featPrerequisites"
 				placeholder="Enter Prerequisites"
 				class="textarea textarea-bordered w-full"
-				rows="3"
+				rows="5"
 				bind:value={$c.feats[index].prerequisites}
 			/>
 		</div>
@@ -59,7 +59,7 @@
 				name="featBenefits"
 				placeholder="Enter Benefits"
 				class="textarea textarea-bordered w-full"
-				rows="3"
+				rows="5"
 				bind:value={$c.feats[index].benefits}
 			/>
 		</div>
@@ -72,7 +72,7 @@
 				name="featNormal"
 				placeholder="Enter Normal"
 				class="textarea textarea-bordered w-full"
-				rows="3"
+				rows="5"
 				bind:value={$c.feats[index].normal}
 			/>
 		</div>
@@ -85,7 +85,7 @@
 				name="featSpecial"
 				placeholder="Enter Special"
 				class="textarea textarea-bordered w-full"
-				rows="3"
+				rows="10"
 				bind:value={$c.feats[index].special}
 			/>
 		</div>

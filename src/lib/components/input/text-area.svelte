@@ -5,7 +5,7 @@
 	export let label: string | undefined = undefined;
 	export let placeholder: string | undefined = undefined;
 
-	export let rows = 3;
+	export let rows = 10;
 </script>
 
 <div class="form-control w-full">
