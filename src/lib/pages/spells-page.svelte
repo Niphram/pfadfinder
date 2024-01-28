@@ -126,7 +126,7 @@
 							<div class="divider">Description</div>
 							<MultilineMacro
 								text={spell.description}
-								class="mb-4 hyphens-auto text-justify last:mb-0"
+								class="mb-4 hyphens-auto text-justify text-sm last:mb-0"
 							/>
 						{/if}
 					</Collapse>
@@ -219,7 +219,10 @@
 				</div>
 				{#if sla.description}
 					<div class="divider">Description</div>
-					<MultilineMacro text={sla.description} class="mb-4 hyphens-auto text-justify last:mb-0" />
+					<MultilineMacro
+						text={sla.description}
+						class="mb-4 hyphens-auto text-justify text-sm last:mb-0"
+					/>
 				{/if}
 			</Collapse>
 		</div>
