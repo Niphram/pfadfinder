@@ -68,15 +68,15 @@
 				<div class="flex flex-col gap-2">
 					{#if item.benefits}
 						<div class="divider my-0">Benefits</div>
-						<MultilineMacro text={item.benefits} />
+						<MultilineMacro text={item.benefits} class="mb-4 hyphens-auto text-justify last:mb-0" />
 					{/if}
 					{#if item.normal}
 						<div class="divider my-0">Normal</div>
-						<MultilineMacro text={item.normal} />
+						<MultilineMacro text={item.normal} class="mb-4 hyphens-auto text-justify last:mb-0" />
 					{/if}
 					{#if item.special}
 						<div class="divider my-0">Special</div>
-						<MultilineMacro text={item.special} />
+						<MultilineMacro text={item.special} class="mb-4 hyphens-auto text-justify last:mb-0" />
 					{/if}
 				</div>
 			</Collapse>
