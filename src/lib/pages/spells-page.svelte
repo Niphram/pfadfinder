@@ -48,7 +48,7 @@
 			<SortableList
 				class="flex flex-col items-center gap-1"
 				options={{
-					group: 'spells',
+					group: `spells_${idx}`,
 					handle: '.drag-handle',
 					animation: 150,
 					easing: 'cubic-bezier(1, 0, 0, 1)'
@@ -105,7 +105,7 @@
 	<SortableList
 		class="flex flex-col items-center gap-1"
 		options={{
-			group: 'spells',
+			group: 'spellLikeAbilities',
 			handle: '.drag-handle',
 			animation: 150,
 			easing: 'cubic-bezier(1, 0, 0, 1)'
