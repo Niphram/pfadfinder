@@ -2,46 +2,80 @@
 	import { Character, c } from '$lib/data';
 	import { DeserializeInto, Serialize } from 'cerialize';
 	import { title } from '../dialog.svelte';
-	import TextArea from '../input/text-area.svelte';
 	import Steps from '../steps.svelte';
 
 	$title = 'Import/Export';
 
-	let value = JSON.stringify(Serialize($c));
-
-	function importChar() {
-		const newChar = new Character();
-		DeserializeInto(JSON.parse(value), Character, newChar);
-		$c = newChar;
-	}
-
-	function shareJson() {
-		const file = new File([`{"foof": "bar"}`], 'test.json', {
+	function download() {
+		const file = new File([JSON.stringify(Serialize($c))], `${$c.name}.json`, {
 			type: 'application/json'
 		});
 
-		navigator.share({ files: [file], title: 'title.json' });
+		const link = document.createElement('a');
+		const url = URL.createObjectURL(file);
+
+		link.href = url;
+		link.download = file.name;
+		document.body.appendChild(link);
+		link.click();
+
+		document.body.removeChild(link);
+		window.URL.revokeObjectURL(url);
 	}
 
-	function shareTxt() {
-		const file = new File([`{"foof": "bar"}`], 'test.txt', {
-			type: 'text/plain'
-		});
+	let files: FileList | null;
+	$: validInputFile = files?.length === 1 && files[0].type === 'application/json';
 
-		navigator.share({ files: [file], title: 'title.json' });
+	async function importFromFIle() {
+		if (files?.length !== 1) {
+			return alert('No file selected!');
+		}
+
+		try {
+			const file = files[0];
+
+			const fileContent = await file.text();
+
+			const newChar = new Character();
+			DeserializeInto(JSON.parse(fileContent), Character, newChar);
+			$c = newChar;
+
+			files = null;
+		} catch (err) {
+			alert('Could not import character!');
+		}
 	}
 </script>
 
 <div class="flex flex-col gap-4">
-	<TextArea bind:value name="data" label="Character Data" placeholder="Character Data" rows={10} />
+	<p>This software might be unstable so it is recommended to regularly backup your character.</p>
+
+	<div class="divider">Export</div>
+
+	<p>Download the character as a file</p>
+
+	<button class="btn btn-info w-full" on:click|preventDefault={download}> Export </button>
+
+	<div class="divider">Import</div>
+
+	<p>Load character from file. This will replace the current character.</p>
+
+	<label class="form-control w-full">
+		<input
+			type="file"
+			bind:files
+			accept=".json, application/json"
+			class="file-input file-input-bordered w-full"
+		/>
+	</label>
 
 	<Steps
 		steps={[
-			{ label: 'Import', style: { warning: true, outline: true } },
+			{ label: 'Import', style: { warning: true } },
 			{
 				label: 'This will overwrite the current character!',
 				style: { error: true },
-				onClick: importChar
+				onClick: importFromFIle
 			}
 		]}
 		let:props={{ label, onClick, style }}
@@ -50,8 +84,9 @@
 		<button
 			class="btn w-full"
 			class:btn-warning={style.warning}
-			class:btn-outline={style.outline}
 			class:btn-error={style.error}
+			class:btn-disabled={!validInputFile}
+			disabled={!validInputFile}
 			on:click={onClick ??
 				((ev) => {
 					ev.preventDefault();
@@ -61,11 +96,4 @@
 			{label}
 		</button>
 	</Steps>
-
-	<button class="btn btn-error w-full" on:click|preventDefault={shareJson}>
-		DO NOT USE - WORK IN PROGRESS
-	</button>
-	<button class="btn btn-error w-full" on:click|preventDefault={shareTxt}>
-		DO NOT USE - WORK IN PROGRESS
-	</button>
 </div>
