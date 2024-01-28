@@ -14,6 +14,22 @@
 		DeserializeInto(JSON.parse(value), Character, newChar);
 		$c = newChar;
 	}
+
+	function shareJson() {
+		const file = new File([`{"foof": "bar"}`], 'test.json', {
+			type: 'application/json'
+		});
+
+		navigator.share({ files: [file], title: 'title.json' });
+	}
+
+	function shareTxt() {
+		const file = new File([`{"foof": "bar"}`], 'test.txt', {
+			type: 'text/plain'
+		});
+
+		navigator.share({ files: [file], title: 'title.json' });
+	}
 </script>
 
 <div class="flex flex-col gap-4">
@@ -45,4 +61,11 @@
 			{label}
 		</button>
 	</Steps>
+
+	<button class="btn btn-error w-full" on:click|preventDefault={shareJson}>
+		DO NOT USE - WORK IN PROGRESS
+	</button>
+	<button class="btn btn-error w-full" on:click|preventDefault={shareTxt}>
+		DO NOT USE - WORK IN PROGRESS
+	</button>
 </div>
