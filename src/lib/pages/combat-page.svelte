@@ -64,10 +64,10 @@
 	</div>
 
 	{#if $c.combat.attacks.length > 0}
-		<table class="table border-separate border-spacing-y-2">
+		<table class="table ml-2 border-separate border-spacing-y-2">
 			<thead>
 				<tr class="border-none text-center">
-					<th class="w-4"></th>
+					<th class="px-0"></th>
 					<th>Name</th>
 					<th>Atk</th>
 					<th>Crit Range</th>
@@ -87,8 +87,8 @@
 				let:item={attack}
 				let:index
 			>
-				<tr class=" border-none text-center">
-					<td class="drag-handle items-center justify-center" role="button" tabindex="0">
+				<tr class="border-none text-center">
+					<td class="drag-handle w-6 items-center justify-center px-0" role="button" tabindex="0">
 						<DragHandle />
 					</td>
 

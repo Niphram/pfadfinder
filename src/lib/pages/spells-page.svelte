@@ -45,7 +45,7 @@
 
 				<div class="flex w-full flex-row">
 					<div
-						class="drag-handle flex w-8 items-center justify-center md:w-12"
+						class="drag-handle ml-2 flex w-6 items-center justify-center"
 						role="button"
 						tabindex="0"
 					>
