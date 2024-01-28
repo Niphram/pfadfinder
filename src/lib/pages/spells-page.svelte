@@ -44,7 +44,11 @@
 				<div slot="fallback">No Spells</div>
 
 				<div class="flex w-full flex-row">
-					<div class="drag-handle flex w-8 items-center justify-center md:w-12">
+					<div
+						class="drag-handle flex w-8 items-center justify-center md:w-12"
+						role="button"
+						tabindex="0"
+					>
 						<DragHandle />
 					</div>
 

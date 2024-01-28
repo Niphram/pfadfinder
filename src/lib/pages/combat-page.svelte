@@ -88,7 +88,9 @@
 				let:index
 			>
 				<tr class=" border-none text-center">
-					<td class="drag-handle items-center justify-center"><DragHandle /></td>
+					<td class="drag-handle items-center justify-center" role="button" tabindex="0">
+						<DragHandle />
+					</td>
 
 					<button
 						class="join join-horizontal contents cursor-pointer"

@@ -59,7 +59,11 @@
 		{@const featSpecial = item.special ? `Special: ${item.special}\n` : ''}
 
 		<div class="flex w-full flex-row">
-			<div class="drag-handle flex w-8 items-center justify-center md:w-12">
+			<div
+				class="drag-handle flex w-8 items-center justify-center md:w-12"
+				role="button"
+				tabindex="0"
+			>
 				<DragHandle />
 			</div>
 			<button
@@ -93,7 +97,11 @@
 		let:index
 	>
 		<div class="flex w-full flex-row items-stretch">
-			<div class="drag-handle flex w-8 items-center justify-center md:w-12">
+			<div
+				class="drag-handle flex w-8 items-center justify-center md:w-12"
+				role="button"
+				tabindex="0"
+			>
 				<DragHandle />
 			</div>
 			<div class="flex grow flex-row items-stretch gap-2">
