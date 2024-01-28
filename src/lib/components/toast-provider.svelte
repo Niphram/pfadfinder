@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
 	import { writable } from 'svelte/store';
 	import { fly } from 'svelte/transition';
 
@@ -26,9 +27,7 @@
 			<span class="text-lg">{$notification.title}</span>
 			{#if $notification.content}
 				<div class="border-t pt-4">
-					{#each $notification.content.split('\n') as line}
-						<span class="block">{line}</span>
-					{/each}
+					<MultilineMacro class="block" element="span" text={$notification.content} />
 				</div>
 			{/if}
 		</div>

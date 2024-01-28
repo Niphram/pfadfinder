@@ -1,12 +1,12 @@
 <script lang="ts">
 	import Collapse from '$lib/atoms/collapse.svelte';
+	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import SpellDialog from '$lib/components/dialogs/spell-dialog.svelte';
 	import SpellLevelDialog from '$lib/components/dialogs/spell-level-dialog.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import { c, Spell, SPELL_LEVELS, type SpellLevel } from '$lib/data';
-	import { parseTextWithMacros } from '$lib/macro/text';
 	import { count } from '$lib/utils';
 
 	function addSpell(level: SpellLevel) {
@@ -111,12 +111,8 @@
 							{/if}
 						</div>
 						{#if spell.description}
-							{@const parsedDescription = parseTextWithMacros(spell.description, $c)}
-
 							<div class="divider">Description</div>
-							{#each parsedDescription.split('\n') as line}
-								<p>{line}</p>
-							{/each}
+							<MultilineMacro text={spell.description} />
 						{/if}
 					</Collapse>
 				</div>

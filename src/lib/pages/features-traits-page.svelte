@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Collapse from '$lib/atoms/collapse.svelte';
+	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import FeatDialog from '$lib/components/dialogs/feat-dialog.svelte';
 	import TraitDialog from '$lib/components/dialogs/trait-dialog.svelte';
@@ -7,7 +8,6 @@
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import { Feat, Trait, c } from '$lib/data';
 	import { t } from '$lib/i18n';
-	import { parseTextWithMacros } from '$lib/macro/text';
 	import { macroNotify } from '$lib/utils/notes';
 
 	function addFeat() {
@@ -71,25 +71,16 @@
 
 				<div class="flex flex-col gap-2">
 					{#if item.benefits}
-						{@const parsed = parseTextWithMacros(item.benefits, $c)}
 						<div class="divider my-0">Benefits</div>
-						{#each parsed.split('\n') as line}
-							<p>{line}</p>
-						{/each}
+						<MultilineMacro text={item.benefits} />
 					{/if}
 					{#if item.normal}
-						{@const parsed = parseTextWithMacros(item.normal, $c)}
 						<div class="divider my-0">Normal</div>
-						{#each parsed.split('\n') as line}
-							<p>{line}</p>
-						{/each}
+						<MultilineMacro text={item.normal} />
 					{/if}
 					{#if item.special}
-						{@const parsed = parseTextWithMacros(item.special, $c)}
 						<div class="divider my-0">Special</div>
-						{#each parsed.split('\n') as line}
-							<p>{line}</p>
-						{/each}
+						<MultilineMacro text={item.special} />
 					{/if}
 				</div>
 			</Collapse>
