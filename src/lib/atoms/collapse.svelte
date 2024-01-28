@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let open = false;
 
-	export let icon: 'arrow' | 'plus' | undefined;
+	export let icon: 'arrow' | 'plus' | undefined = undefined;
 
 	function toggleOpen() {
 		open = !open;
@@ -38,7 +38,7 @@
 	on:keyup={keyupHandler}
 >
 	{#if $$slots.title}
-		<div class="collapse-title h-min min-h-0 py-2 md:py-4">
+		<div class="collapse-title h-min min-h-0 py-2 md:py-4" class:pe-4={!icon}>
 			<slot name="title" />
 		</div>
 	{/if}
