@@ -56,10 +56,6 @@
 		let:item
 		let:index
 	>
-		{@const featBenefits = item.benefits ? `Benefits: ${item.benefits}\n` : ''}
-		{@const featNormal = item.normal ? `Normal: ${item.normal}\n` : ''}
-		{@const featSpecial = item.special ? `Special: ${item.special}\n` : ''}
-
 		<div class="flex w-full flex-row">
 			<div class="drag-handle ml-2 flex w-6 items-center justify-center" role="button" tabindex="0">
 				<DragHandle />
