@@ -64,52 +64,54 @@
 	</div>
 
 	{#if $c.combat.attacks.length > 0}
-		<table class="table ml-2 border-separate border-spacing-y-2">
-			<thead>
-				<tr class="border-none text-center">
-					<th class="px-0"></th>
-					<th>Name</th>
-					<th>Atk</th>
-					<th>Crit Range</th>
-					<th>Damage</th>
-				</tr>
-			</thead>
-			<SortableList
-				element="tbody"
-				options={{
-					group: 'attack',
-					handle: '.drag-handle',
-					animation: 150,
-					easing: 'cubic-bezier(1, 0, 0, 1)'
-				}}
-				bind:items={$c.combat.attacks}
-				keyProp="id"
-				let:item={attack}
-				let:index
-			>
-				<tr class="border-none text-center">
-					<td class="drag-handle w-6 items-center justify-center px-0" role="button" tabindex="0">
-						<DragHandle />
-					</td>
+		<div class="ml-2">
+			<table class="table border-separate border-spacing-y-2">
+				<thead>
+					<tr class="border-none text-center">
+						<th class="px-0"></th>
+						<th>Name</th>
+						<th>Atk</th>
+						<th>Crit Range</th>
+						<th>Damage</th>
+					</tr>
+				</thead>
+				<SortableList
+					element="tbody"
+					options={{
+						group: 'attack',
+						handle: '.drag-handle',
+						animation: 150,
+						easing: 'cubic-bezier(1, 0, 0, 1)'
+					}}
+					bind:items={$c.combat.attacks}
+					keyProp="id"
+					let:item={attack}
+					let:index
+				>
+					<tr class="border-none text-center">
+						<td class="drag-handle w-6 items-center justify-center px-0" role="button" tabindex="0">
+							<DragHandle />
+						</td>
 
-					<button
-						class="join join-horizontal contents cursor-pointer"
-						on:click={() => macroNotify(attack.name, attack.notes, $c)}
-						on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
-					>
-						<td class="join-item bg-base-200">{attack.name}</td>
-						<td class="join-item bg-base-200"
-							>{attack.hasAttack ? withSign(attack.attackBonus.eval($c)) : '-'}</td
+						<button
+							class="join join-horizontal contents cursor-pointer"
+							on:click={() => macroNotify(attack.name, attack.notes, $c)}
+							on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
 						>
-						<td class="join-item bg-base-200"
-							>{(attack.hasAttack && attack.attack.critRange) || '-'}</td
-						>
-						<td class="join-item bg-base-200"
-							>{(attack.hasDamage && parseTextWithMacros(attack.damage.damage, $c)) || '-'}</td
-						>
-					</button>
-				</tr>
-			</SortableList>
-		</table>
+							<td class="join-item bg-base-200">{attack.name}</td>
+							<td class="join-item bg-base-200"
+								>{attack.hasAttack ? withSign(attack.attackBonus.eval($c)) : '-'}</td
+							>
+							<td class="join-item bg-base-200"
+								>{(attack.hasAttack && attack.attack.critRange) || '-'}</td
+							>
+							<td class="join-item bg-base-200"
+								>{(attack.hasDamage && parseTextWithMacros(attack.damage.damage, $c)) || '-'}</td
+							>
+						</button>
+					</tr>
+				</SortableList>
+			</table>
+		</div>
 	{/if}
 </div>

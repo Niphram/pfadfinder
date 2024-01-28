@@ -18,13 +18,24 @@
 		outline: 'btn-outline'
 	};
 
+	const SIZES = {
+		default: '',
+		xs: 'btn-xs',
+		sm: 'btn-sm'
+	};
+
 	let className: string = '';
 	export { className as class };
 
 	export let color: keyof typeof COLORS = 'default';
 	export let style: keyof typeof STYLES = 'default';
+	export let size: keyof typeof SIZES = 'default';
 </script>
 
-<button class="btn {COLORS[color]} {STYLES[style]} {className}" on:click on:contextmenu>
+<button
+	class="btn {COLORS[color]} {STYLES[style]} {SIZES[size]} {className}"
+	on:click
+	on:contextmenu
+>
 	<slot />
 </button>

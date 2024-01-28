@@ -24,14 +24,12 @@
 	}
 </script>
 
-<div
-	class="collapse bg-base-200"
+<button
+	class="collapse bg-base-200 text-left"
 	class:collapse-arrow={icon === 'arrow'}
 	class:collapse-plus={icon === 'plus'}
 	class:collapse-open={open}
 	class:collapse-close={!open}
-	tabindex="0"
-	role="button"
 	on:click={toggleOpen}
 	on:contextmenu|preventDefault
 	on:keydown={keydownHandler}
@@ -46,7 +44,7 @@
 	<div class="collapse-content">
 		<slot />
 	</div>
-</div>
+</button>
 
 <style>
 	.collapse-arrow > .collapse-title::after {

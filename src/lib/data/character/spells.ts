@@ -1,7 +1,7 @@
 import { autoserialize, autoserializeAs, inheritSerialization } from 'cerialize';
 import { nanoid } from 'nanoid';
+import type { AbilityKey, Character } from '.';
 import { Derive, Macro, macro } from '../macros';
-import type { AbilityKey } from '.';
 
 export const SPELL_LEVELS = [
 	'level_0',
@@ -126,6 +126,25 @@ export class Spell extends SpellCommonProps {
 
 	@autoserialize
 	components = '';
+
+	details(level: number, c: Character) {
+		const dcAbility = c.spells.dcAbility;
+		const abilityDc = (dcAbility ? c[dcAbility].mod.eval(c) : 0) + c.spells.dcBonus.eval(c);
+		const saveDc = 10 + level + this.savingThrow.dcMod + abilityDc;
+
+		return [
+			['School', this.school],
+			['Casting Time', this.castingTime],
+			['Components', this.components],
+			['Range', this.range],
+			['Area', this.area],
+			['Targets', this.targets],
+			['Duration', this.duration],
+			['Effect', this.effect],
+			['Saving Throw', this.savingThrow.hasSave && `${this.savingThrow.effect} (DC ${saveDc})`],
+			['Spell Resistance', this.spellResistance]
+		].filter((e) => !!e[1]);
+	}
 }
 
 export const SPELL_LIKE_COUNT_TYPES = ['constant', 'atWill', 'perDay'] as const;
@@ -141,6 +160,23 @@ export class SpellLikeAbility extends SpellCommonProps {
 
 	@autoserialize
 	remaining = 0;
+
+	get details() {
+		return [
+			['School', this.school],
+			['Casting Time', this.castingTime],
+			['Range', this.range],
+			['Area', this.area],
+			['Targets', this.targets],
+			['Duration', this.duration],
+			['Effect', this.effect],
+			[
+				'Saving Throw',
+				this.savingThrow.hasSave && `${this.savingThrow.effect} (DC ${this.savingThrow.dcMod})`
+			],
+			['Spell Resistance', this.spellResistance]
+		].filter((e) => !!e[1]);
+	}
 
 	recharge() {
 		if (this.type === 'perDay') this.remaining = this.perDay;
