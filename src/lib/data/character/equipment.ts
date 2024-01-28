@@ -6,6 +6,9 @@ import { mapSum } from '$lib/utils';
 export const ARMOR_TYPES = ['light', 'medium', 'heavy', 'shield', 'misc'] as const;
 export type ArmorType = (typeof ARMOR_TYPES)[number];
 
+export const CHARGE_TYPES = ['none', 'perDay', 'total'] as const;
+export type ChargeType = (typeof CHARGE_TYPES)[number];
+
 export class Item {
 	id = nanoid();
 
@@ -22,16 +25,25 @@ export class Item {
 	weight = 0;
 
 	@autoserialize
-	hasCharges = false;
+	chargeType: ChargeType = 'none';
 
 	@autoserialize
-	charges = 0;
+	remaining = 0;
+
+	@autoserialize
+	perDay = 1;
 
 	@autoserialize
 	description = '';
 
 	get totalWeight() {
 		return this.quantity * this.weight;
+	}
+
+	recharge() {
+		if (this.chargeType === 'perDay') {
+			this.remaining = this.perDay;
+		}
 	}
 }
 

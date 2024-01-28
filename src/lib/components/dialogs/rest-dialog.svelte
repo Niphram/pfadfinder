@@ -7,6 +7,7 @@
 	let heal = true;
 	let addConToHeal = false;
 	let rechargeTraits = true;
+	let rechargeItems = true;
 
 	function rest8Hours() {
 		// Heal
@@ -15,6 +16,9 @@
 
 		// Recharge all features/traits
 		if (rechargeTraits) $c.traits.forEach((t) => t.recharge($c));
+
+		// Recharge all items
+		if (rechargeTraits) $c.equipment.items.forEach((t) => t.recharge());
 
 		$c = $c;
 	}
@@ -41,6 +45,13 @@
 		<label class="label cursor-pointer pb-0">
 			<span class="label-text">Recharge traits</span>
 			<input type="checkbox" class="toggle" bind:checked={rechargeTraits} />
+		</label>
+	</div>
+
+	<div class="form-control">
+		<label class="label cursor-pointer pb-0">
+			<span class="label-text">Recharge items</span>
+			<input type="checkbox" class="toggle" bind:checked={rechargeItems} />
 		</label>
 	</div>
 

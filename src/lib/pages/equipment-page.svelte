@@ -71,13 +71,15 @@
 				>
 					{item.quantity}x <span class:underline={item.equipped}>{item.name}</span>
 				</button>
-				{#if item.hasCharges}
+				{#if item.chargeType !== 'none'}
 					<button
-						class="btn btn-accent btn-sm w-24 md:btn-md"
-						on:click={() => $c.equipment.items[index].charges--}
-						on:contextmenu|preventDefault={() => $c.equipment.items[index].charges++}
+						class="btn btn-accent btn-sm w-28 px-2 md:btn-md"
+						on:click={() =>
+							$c.equipment.items[index].remaining > 0 && $c.equipment.items[index].remaining--}
 					>
-						{item.charges} charges
+						{item.remaining}{#if item.chargeType === 'perDay'}
+							/{item.perDay}
+						{/if} charges
 					</button>
 				{/if}
 			</div>

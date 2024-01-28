@@ -129,6 +129,11 @@ export default {
 				short: 'SPL',
 				full: 'Spell Failure'
 			}
+		},
+		chargeType: {
+			none: 'None',
+			perDay: 'Per Day',
+			total: 'Total'
 		}
 	},
 	spell: {
