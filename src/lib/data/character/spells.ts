@@ -1,4 +1,4 @@
-import { autoserialize, autoserializeAs } from 'cerialize';
+import { autoserialize, autoserializeAs, inheritSerialization } from 'cerialize';
 import { nanoid } from 'nanoid';
 import { Derive, Macro, macro } from '../macros';
 import type { AbilityKey } from '.';
@@ -67,17 +67,11 @@ export class SpellSave {
 	dcMod = 0;
 }
 
-export class Spell {
+export class SpellCommonProps {
 	id = nanoid();
 
 	@autoserialize
 	name = 'Unnamed Spell';
-
-	@autoserialize
-	prepared = 0;
-
-	@autoserialize
-	isDomainSpell = false;
 
 	@autoserialize
 	school = '';
@@ -87,9 +81,6 @@ export class Spell {
 
 	@autoserialize
 	castingTime = '';
-
-	@autoserialize
-	components = '';
 
 	@autoserialize
 	range = '';
@@ -123,6 +114,37 @@ export class Spell {
 
 	@autoserialize
 	notes = '';
+}
+
+@inheritSerialization(SpellCommonProps)
+export class Spell extends SpellCommonProps {
+	@autoserialize
+	prepared = 0;
+
+	@autoserialize
+	isDomainSpell = false;
+
+	@autoserialize
+	components = '';
+}
+
+export const SPELL_LIKE_COUNT_TYPES = ['constant', 'atWill', 'perDay'] as const;
+export type SpellLikeCountTypes = (typeof SPELL_LIKE_COUNT_TYPES)[number];
+
+@inheritSerialization(SpellCommonProps)
+export class SpellLikeAbility extends SpellCommonProps {
+	@autoserialize
+	type: SpellLikeCountTypes = 'atWill';
+
+	@autoserialize
+	perDay = 1;
+
+	@autoserialize
+	remaining = 0;
+
+	recharge() {
+		if (this.type === 'perDay') this.remaining = this.perDay;
+	}
 }
 
 export class SpellLevelList {
@@ -186,4 +208,7 @@ export class Spells {
 
 	@autoserializeAs(SpellLevelList)
 	level_9 = new SpellLevelList('level_9');
+
+	@autoserializeAs(SpellLikeAbility)
+	spellLikeAbilities: SpellLikeAbility[] = [];
 }

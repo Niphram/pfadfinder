@@ -148,6 +148,11 @@ export default {
 			int: 'Intelligence',
 			cha: 'Charisma',
 			none: '-'
+		},
+		slaType: {
+			constant: 'Constant',
+			atWill: 'At Will',
+			perDay: 'Per Day'
 		}
 	},
 	texts: {

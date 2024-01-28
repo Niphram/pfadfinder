@@ -4,14 +4,26 @@
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import SpellDialog from '$lib/components/dialogs/spell-dialog.svelte';
 	import SpellLevelDialog from '$lib/components/dialogs/spell-level-dialog.svelte';
+	import SpellLikeAbilityDialog from '$lib/components/dialogs/spell-like-ability-dialog.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
-	import { c, Spell, SPELL_LEVELS, type SpellLevel } from '$lib/data';
+	import { SPELL_LEVELS, Spell, SpellLikeAbility, c, type SpellLevel } from '$lib/data';
+	import { t } from '$lib/i18n';
 	import { count } from '$lib/utils';
 
 	function addSpell(level: SpellLevel) {
 		$c.spells[level].spells.push(new Spell());
 		$c.spells[level].spells = $c.spells[level].spells;
+	}
+
+	function addSLA() {
+		$c.spells.spellLikeAbilities.push(new SpellLikeAbility());
+		$c.spells.spellLikeAbilities = $c.spells.spellLikeAbilities;
+	}
+
+	function castSla(index: number) {
+		if ($c.spells.spellLikeAbilities[index].remaining > 0)
+			$c.spells.spellLikeAbilities[index].remaining--;
 	}
 </script>
 
@@ -119,4 +131,94 @@
 			</SortableList>
 		{/if}
 	{/each}
+
+	<div class="divider">
+		<button class="btn btn-secondary btn-xs" on:click={() => addSLA()}>Spell-Like Abilities</button>
+	</div>
+
+	<SortableList
+		class="flex flex-col items-center gap-1"
+		options={{
+			group: 'spells',
+			handle: '.drag-handle',
+			animation: 150,
+			easing: 'cubic-bezier(1, 0, 0, 1)'
+		}}
+		bind:items={$c.spells.spellLikeAbilities}
+		keyProp="id"
+		let:item={sla}
+		let:index={slaIndex}
+	>
+		<div slot="fallback">No Spell-Like Abilities</div>
+
+		<div class="flex w-full flex-row">
+			<div class="drag-handle ml-2 flex w-6 items-center justify-center" role="button" tabindex="0">
+				<DragHandle />
+			</div>
+
+			<Collapse
+				icon="arrow"
+				on:contextmenu={() => openDialog(SpellLikeAbilityDialog, { slaIndex })}
+			>
+				<div slot="title" class="flex flex-row items-center">
+					<div class="grow text-sm font-semibold">{sla.name}</div>
+					<button
+						class="btn btn-accent btn-xs w-16"
+						on:click|stopPropagation={() => castSla(slaIndex)}
+					>
+						{sla.type === 'perDay' ?
+							`${sla.remaining} of ${sla.perDay}`
+						:	$t(`spell.slaType.${sla.type}`)}
+					</button>
+				</div>
+
+				<div
+					class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
+				>
+					{#if sla.school}
+						<div>School</div>
+						<div>{sla.school}</div>
+					{/if}
+					{#if sla.castingTime}
+						<div>Casting Time</div>
+						<div>{sla.castingTime}</div>
+					{/if}
+
+					{#if sla.range}
+						<div>Range</div>
+						<div>{sla.range}</div>
+					{/if}
+
+					{#if sla.targets}
+						<div>Targets</div>
+						<div>{sla.targets}</div>
+					{/if}
+
+					{#if sla.duration}
+						<div>Duration</div>
+						<div>{sla.duration}</div>
+					{/if}
+
+					{#if sla.effect}
+						<div>Effect</div>
+						<div>{sla.effect}</div>
+					{/if}
+
+					{#if sla.savingThrow.hasSave}
+						<div>Saving Throw</div>
+						<div>{sla.savingThrow.effect} (DC {sla.savingThrow.dcMod})</div>
+					{/if}
+
+					{#if sla.spellResistance}
+						<div>Spell Resistance</div>
+						<div>{sla.spellResistance}</div>
+					{/if}
+				</div>
+				{#if sla.description}
+					<div class="divider">Description</div>
+					<MultilineMacro text={sla.description} />
+				{/if}
+			</Collapse>
+		</div>
+	</SortableList>
 </div>
