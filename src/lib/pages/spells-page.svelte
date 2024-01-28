@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Collapse from '$lib/atoms/collapse.svelte';
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import SpellDialog from '$lib/components/dialogs/spell-dialog.svelte';
 	import SpellLevelDialog from '$lib/components/dialogs/spell-level-dialog.svelte';
@@ -52,76 +53,72 @@
 						<DragHandle />
 					</div>
 
-					<div class="collapse collapse-arrow bg-base-200">
-						<input
-							class="row-span-2 min-h-0"
-							type="checkbox"
-							on:contextmenu|preventDefault={() =>
-								openDialog(SpellDialog, { spellIdx, spellLevel: level })}
-						/>
-						<div class="collapse-title min-h-0 text-sm font-semibold">{spell.name}</div>
-						<div class="collapse-content">
-							<div
-								class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
-							>
-								{#if spell.school}
-									<div>School</div>
-									<div>{spell.school}</div>
-								{/if}
-								{#if spell.castingTime}
-									<div>Casting Time</div>
-									<div>{spell.castingTime}</div>
-								{/if}
+					<Collapse
+						icon="arrow"
+						on:contextmenu={() => openDialog(SpellDialog, { spellIdx, spellLevel: level })}
+					>
+						<span slot="title" class="text-sm font-semibold">{spell.name}</span>
 
-								{#if spell.components}
-									<div>Components</div>
-									<div>{spell.components}</div>
-								{/if}
+						<div
+							class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
+						>
+							{#if spell.school}
+								<div>School</div>
+								<div>{spell.school}</div>
+							{/if}
+							{#if spell.castingTime}
+								<div>Casting Time</div>
+								<div>{spell.castingTime}</div>
+							{/if}
 
-								{#if spell.range}
-									<div>Range</div>
-									<div>{spell.range}</div>
-								{/if}
+							{#if spell.components}
+								<div>Components</div>
+								<div>{spell.components}</div>
+							{/if}
 
-								{#if spell.targets}
-									<div>Targets</div>
-									<div>{spell.targets}</div>
-								{/if}
+							{#if spell.range}
+								<div>Range</div>
+								<div>{spell.range}</div>
+							{/if}
 
-								{#if spell.duration}
-									<div>Duration</div>
-									<div>{spell.duration}</div>
-								{/if}
+							{#if spell.targets}
+								<div>Targets</div>
+								<div>{spell.targets}</div>
+							{/if}
 
-								{#if spell.effect}
-									<div>Effect</div>
-									<div>{spell.effect}</div>
-								{/if}
+							{#if spell.duration}
+								<div>Duration</div>
+								<div>{spell.duration}</div>
+							{/if}
 
-								{#if spell.savingThrow.hasSave}
-									{@const dcAbility = $c.spells.dcAbility}
-									{@const abilityDc =
-										(dcAbility ? $c[dcAbility].mod.eval($c) : 0) + $c.spells.dcBonus.eval($c)}
-									{@const saveDc = 10 + idx + spell.savingThrow.dcMod + abilityDc}
-									<div>Saving Throw</div>
-									<div>{spell.savingThrow.effect} (DC {saveDc})</div>
-								{/if}
+							{#if spell.effect}
+								<div>Effect</div>
+								<div>{spell.effect}</div>
+							{/if}
 
-								{#if spell.spellResistance}
-									<div>Spell Resistance</div>
-									<div>{spell.spellResistance}</div>
-								{/if}
-							</div>
-							{#if spell.description}
-								{@const parsedDescription = parseTextWithMacros(spell.description, $c)}
+							{#if spell.savingThrow.hasSave}
+								{@const dcAbility = $c.spells.dcAbility}
+								{@const abilityDc =
+									(dcAbility ? $c[dcAbility].mod.eval($c) : 0) + $c.spells.dcBonus.eval($c)}
+								{@const saveDc = 10 + idx + spell.savingThrow.dcMod + abilityDc}
+								<div>Saving Throw</div>
+								<div>{spell.savingThrow.effect} (DC {saveDc})</div>
+							{/if}
 
-								<div class="divider">Description</div>
-								{#each parsedDescription.split('\n') as line}
-									<p>{line}</p>
-								{/each}
+							{#if spell.spellResistance}
+								<div>Spell Resistance</div>
+								<div>{spell.spellResistance}</div>
 							{/if}
 						</div>
-					</div>
+						{#if spell.description}
+							{@const parsedDescription = parseTextWithMacros(spell.description, $c)}
+
+							<div class="divider">Description</div>
+							{#each parsedDescription.split('\n') as line}
+								<p>{line}</p>
+							{/each}
+						{/if}
+					</Collapse>
 				</div>
 			</SortableList>
 		{/if}
