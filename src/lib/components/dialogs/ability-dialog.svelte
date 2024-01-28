@@ -17,14 +17,14 @@
 />
 <MacroInteger bind:value={$c[key].bonus.expr} name="abilityBonus" label="Temp" />
 
-<div class="form-control w-full max-w-xs">
+<div class="form-control w-full">
 	<label for="abilityNotes" class="label pb-0">
 		<span class="label-text">Notes</span>
 	</label>
 	<textarea
 		name="abilityNotes"
 		placeholder="Enter Notes"
-		class="textarea textarea-bordered w-full max-w-xs"
+		class="textarea textarea-bordered w-full"
 		rows="10"
 		bind:value={$c[key].notes}
 	/>

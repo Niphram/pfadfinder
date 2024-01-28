@@ -256,13 +256,13 @@
 				<input
 					name="spellDamage"
 					placeholder="1d6"
-					class="input input-bordered w-full max-w-xs"
+					class="input input-bordered w-full"
 					bind:value={damage.damage}
 				/>
 				<input
 					name="damageType"
 					placeholder="Fire"
-					class="input input-bordered w-full max-w-xs"
+					class="input input-bordered w-full"
 					bind:value={damage.type}
 				/>
 				<button

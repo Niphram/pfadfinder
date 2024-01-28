@@ -30,14 +30,14 @@
 <div class="flex flex-col gap-2">
 	{#if classIndex < $c.classes.list.length}
 		<div class="flex flex-row gap-2">
-			<div class="form-control w-full max-w-xs">
+			<div class="form-control w-full">
 				<label for="className" class="label pb-0">
 					<span class="label-text">Name</span>
 				</label>
 				<input
 					name="className"
 					placeholder="Type here"
-					class="input input-bordered w-full max-w-xs"
+					class="input input-bordered w-full"
 					bind:value={$c.classes.list[classIndex].name}
 				/>
 			</div>
