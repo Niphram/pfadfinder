@@ -1,9 +1,17 @@
 <script lang="ts">
 	import { CHARGE_TYPES, c } from '$lib/data';
 	import { t } from '$lib/i18n';
+
+	import Button from '$lib/atoms/button.svelte';
+	import Divider from '$lib/atoms/divider.svelte';
+	import Number from '$lib/atoms/input/number.svelte';
+	import Select from '$lib/atoms/input/select.svelte';
+	import TextInput from '$lib/atoms/input/text-input.svelte';
+	import Toggle from '$lib/atoms/input/toggle.svelte';
+	import Column from '$lib/atoms/layout/column.svelte';
+	import Row from '$lib/atoms/layout/row.svelte';
+
 	import { title } from '../dialog.svelte';
-	import Integer from '../input/integer.svelte';
-	import Number from '../input/number.svelte';
 	import TextArea from '../input/text-area.svelte';
 
 	export let index: number;
@@ -16,73 +24,67 @@
 	$title = 'Item';
 </script>
 
-<div class="flex flex-col gap-2">
+<Column>
 	{#if index < $c.equipment.items.length}
-		<div class="form-control w-full">
-			<label for="className" class="label pb-0">
-				<span class="label-text">Name</span>
-			</label>
-			<input
-				name="className"
-				placeholder="Type here"
-				class="input input-bordered w-full"
-				bind:value={$c.equipment.items[index].name}
-			/>
-		</div>
+		<TextInput
+			name="itemName"
+			label="Name"
+			placeholder="Item Name"
+			bind:value={$c.equipment.items[index].name}
+		/>
 
-		<div class="flex flex-row gap-2">
-			<Integer
+		<Row>
+			<Number
 				bind:value={$c.equipment.items[index].quantity}
 				name="itemQuantity"
 				label="Quantity"
-				noNegatives
+				min={0}
+				step={1}
 			/>
-			<Number bind:value={$c.equipment.items[index].weight} name="itemWeight" label="Weight" />
-		</div>
 
-		<div class="form-control">
-			<label class="label cursor-pointer pb-0">
-				<span class="label-text">Equipped?</span>
-				<input type="checkbox" class="toggle" bind:checked={$c.equipment.items[index].equipped} />
-			</label>
-		</div>
+			<Number
+				min={0}
+				bind:value={$c.equipment.items[index].weight}
+				name="itemWeight"
+				label="Weight"
+			/>
+		</Row>
 
-		<div class="divider mb-0">
-			<div class="flex flex-row items-center gap-2">
-				<span>Charges</span>
-				<select
-					name="itemChargeType"
-					class="select select-bordered select-sm"
-					bind:value={$c.equipment.items[index].chargeType}
-				>
-					{#each CHARGE_TYPES as chargeType}
-						<option value={chargeType}>
-							{$t(`equipment.chargeType.${chargeType}`)}
-						</option>
-					{/each}
-				</select>
-			</div>
-		</div>
+		<Toggle id="itemEquipped" bind:checked={$c.equipment.items[index].equipped}>Equipped?</Toggle>
+
+		<Divider>
+			Charges
+			<Select
+				name="itemChargeType"
+				size="sm"
+				bind:value={$c.equipment.items[index].chargeType}
+				options={CHARGE_TYPES}
+				let:option
+			>
+				<option value={option}>{$t(`equipment.chargeType.${option}`)}</option>
+			</Select>
+		</Divider>
 
 		{#if $c.equipment.items[index].chargeType !== 'none'}
-			<div class="flex flex-row gap-2">
-				<Integer
+			<Row>
+				<Number
 					label="Remaining charges"
 					name="itemCharges"
-					noNegatives
+					min={0}
+					step={1}
 					bind:value={$c.equipment.items[index].remaining}
 				/>
 
 				{#if $c.equipment.items[index].chargeType === 'perDay'}
-					<Integer
+					<Number
 						label="Per Day"
 						name="itemChargesPerDay"
-						noNegatives
-						noZero
+						min={1}
+						step={1}
 						bind:value={$c.equipment.items[index].perDay}
 					/>
 				{/if}
-			</div>
+			</Row>
 		{/if}
 
 		<TextArea
@@ -93,7 +95,7 @@
 		/>
 	{/if}
 
-	<button on:click={deleteItem} class="btn btn-error mt-4 w-max self-center uppercase">
-		Delete
-	</button>
-</div>
+	<Divider />
+
+	<Button color="error" class="self-center uppercase" wide on:click={deleteItem}>Delete</Button>
+</Column>

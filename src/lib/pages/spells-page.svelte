@@ -1,16 +1,20 @@
 <script lang="ts">
+	import { SPELL_LEVELS, Spell, SpellLikeAbility, c, type SpellLevel } from '$lib/data';
+	import { t } from '$lib/i18n';
+
 	import Button from '$lib/atoms/button.svelte';
 	import Collapse from '$lib/atoms/collapse.svelte';
 	import Divider from '$lib/atoms/divider.svelte';
+	import Column from '$lib/atoms/layout/column.svelte';
+	import Row from '$lib/atoms/layout/row.svelte';
 	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
+
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import SpellDialog from '$lib/components/dialogs/spell-dialog.svelte';
 	import SpellLevelDialog from '$lib/components/dialogs/spell-level-dialog.svelte';
 	import SpellLikeAbilityDialog from '$lib/components/dialogs/spell-like-ability-dialog.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
-	import { SPELL_LEVELS, Spell, SpellLikeAbility, c, type SpellLevel } from '$lib/data';
-	import { t } from '$lib/i18n';
 
 	function openConfigDialog() {
 		openDialog(SpellLevelDialog, {});
@@ -32,7 +36,7 @@
 	}
 </script>
 
-<div>
+<Column gap="lg">
 	<Divider>
 		Spells
 		<Button size="xs" color="primary" on:click={openConfigDialog}>Config</Button>
@@ -60,7 +64,7 @@
 			>
 				<div slot="fallback">No Spells</div>
 
-				<div class="flex w-full flex-row">
+				<Row>
 					<div
 						class="drag-handle ml-2 flex w-6 items-center justify-center"
 						role="button"
@@ -75,24 +79,26 @@
 					>
 						<span slot="title" class="text-sm font-semibold">{spell.name}</span>
 
-						<div
-							class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
-						>
-							{#each spell.details(idx, $c) as [label, value]}
-								<div>{label}</div>
-								<div>{value}</div>
-							{/each}
-						</div>
+						<Column gap="md">
+							<div
+								class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
+							>
+								{#each spell.details(idx, $c) as [label, value]}
+									<div>{label}</div>
+									<div>{value}</div>
+								{/each}
+							</div>
 
-						{#if spell.description}
-							<div class="divider">Description</div>
-							<MultilineMacro
-								text={spell.description}
-								class="mb-4 hyphens-auto text-justify text-sm last:mb-0"
-							/>
-						{/if}
+							{#if spell.description}
+								<Divider>Description</Divider>
+								<MultilineMacro
+									text={spell.description}
+									class="mb-4 hyphens-auto text-justify text-sm last:mb-0"
+								/>
+							{/if}
+						</Column>
 					</Collapse>
-				</div>
+				</Row>
 			</SortableList>
 		{/if}
 	{/each}
@@ -117,7 +123,7 @@
 	>
 		<div slot="fallback">No Spell-Like Abilities</div>
 
-		<div class="flex w-full flex-row">
+		<Row>
 			<div class="drag-handle ml-2 flex w-6 items-center justify-center" role="button" tabindex="0">
 				<DragHandle />
 			</div>
@@ -126,7 +132,7 @@
 				icon="arrow"
 				on:contextmenu={() => openDialog(SpellLikeAbilityDialog, { slaIndex })}
 			>
-				<div slot="title" class="flex flex-row items-center">
+				<Row slot="title" class="items-center">
 					<div class="grow text-sm font-semibold">{sla.name}</div>
 					<button
 						class="btn btn-accent btn-xs w-16"
@@ -136,24 +142,27 @@
 							`${sla.remaining} of ${sla.perDay}`
 						:	$t(`spell.slaType.${sla.type}`)}
 					</button>
-				</div>
+				</Row>
 
-				<div
-					class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
-				>
-					{#each sla.details as [label, value]}
-						<div>{label}</div>
-						<div>{value}</div>
-					{/each}
-				</div>
-				{#if sla.description}
-					<div class="divider">Description</div>
-					<MultilineMacro
-						text={sla.description}
-						class="mb-4 hyphens-auto text-justify text-sm last:mb-0"
-					/>
-				{/if}
+				<Column gap="md">
+					<div
+						class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
+					>
+						{#each sla.details as [label, value]}
+							<div>{label}</div>
+							<div>{value}</div>
+						{/each}
+					</div>
+
+					{#if sla.description}
+						<Divider>Description</Divider>
+						<MultilineMacro
+							text={sla.description}
+							class="mb-4 hyphens-auto text-justify text-sm last:mb-0"
+						/>
+					{/if}
+				</Column>
 			</Collapse>
-		</div>
+		</Row>
 	</SortableList>
-</div>
+</Column>

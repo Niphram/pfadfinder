@@ -1,5 +1,9 @@
 <script lang="ts">
+	import Button from '$lib/atoms/button.svelte';
 	import Collapse from '$lib/atoms/collapse.svelte';
+	import Divider from '$lib/atoms/divider.svelte';
+	import Column from '$lib/atoms/layout/column.svelte';
+	import Row from '$lib/atoms/layout/row.svelte';
 	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import FeatDialog from '$lib/components/dialogs/feat-dialog.svelte';
@@ -35,13 +39,11 @@
 	}
 </script>
 
-<div class="flex flex-col gap-2">
-	<div class="divider">
-		<div class="flex flex-row gap-2">
-			Feats
-			<button class="btn btn-secondary btn-xs" on:click={addFeat}>Add</button>
-		</div>
-	</div>
+<Column gap="lg">
+	<Divider>
+		Feats
+		<button class="btn btn-secondary btn-xs" on:click={addFeat}>Add</button>
+	</Divider>
 
 	<SortableList
 		bind:items={$c.feats}
@@ -56,48 +58,47 @@
 		let:item
 		let:index
 	>
-		<div class="flex w-full flex-row">
+		<Row>
 			<div class="drag-handle ml-2 flex w-6 items-center justify-center" role="button" tabindex="0">
 				<DragHandle />
 			</div>
-			<Collapse icon="arrow" on:contextmenu={() => openDialog(FeatDialog, { index })}>
-				<span slot="title" class="text-sm font-semibold"
-					>{item.name} ({$t(`feats.type.${item.type}`)})</span
-				>
 
-				<div class="flex flex-col gap-2">
+			<Collapse icon="arrow" on:contextmenu={() => openDialog(FeatDialog, { index })}>
+				<span slot="title" class="text-sm font-semibold">
+					{item.name} ({$t(`feats.type.${item.type}`)})
+				</span>
+
+				<Column gap="md">
 					{#if item.benefits}
-						<div class="divider my-0">Benefits</div>
+						<Divider>Benefits</Divider>
 						<MultilineMacro
 							text={item.benefits}
-							class="mb-4 hyphens-auto text-justify text-sm last:mb-0"
+							class="hyphens-auto text-justify text-sm last:mb-0"
 						/>
 					{/if}
 					{#if item.normal}
-						<div class="divider my-0">Normal</div>
+						<Divider>Normal</Divider>
 						<MultilineMacro
 							text={item.normal}
-							class="mb-4 hyphens-auto text-justify text-sm last:mb-0"
+							class="hyphens-auto text-justify text-sm last:mb-0"
 						/>
 					{/if}
 					{#if item.special}
-						<div class="divider my-0">Special</div>
+						<Divider>Special</Divider>
 						<MultilineMacro
 							text={item.special}
-							class="mb-4 hyphens-auto text-justify text-sm last:mb-0"
+							class="hyphens-auto text-justify text-sm last:mb-0"
 						/>
 					{/if}
-				</div>
+				</Column>
 			</Collapse>
-		</div>
+		</Row>
 	</SortableList>
 
-	<div class="divider">
-		<div class="flex flex-row gap-2">
-			Features/Traits
-			<button class="btn btn-secondary btn-xs" on:click={addTrait}>Add</button>
-		</div>
-	</div>
+	<Divider>
+		Features/Traits
+		<button class="btn btn-secondary btn-xs" on:click={addTrait}>Add</button>
+	</Divider>
 
 	<SortableList
 		bind:items={$c.traits}
@@ -112,18 +113,20 @@
 		let:item
 		let:index
 	>
-		<div class="flex w-full flex-row items-stretch">
+		<Row>
 			<div class="drag-handle ml-2 flex w-6 items-center justify-center" role="button" tabindex="0">
 				<DragHandle />
 			</div>
-			<div class="flex grow flex-row items-stretch gap-2">
+
+			<Row gap="md" class="grow">
 				<button
-					class="btn btn-sm flex-1 md:btn-md"
+					class="btn btn-sm grow md:btn-md"
 					on:click={() => macroNotify(item.name, item.description, $c)}
 					on:contextmenu|preventDefault={() => openDialog(TraitDialog, { index })}
 				>
 					{item.name}
 				</button>
+
 				{#if item.perDay.expr}
 					<button
 						class="btn btn-accent btn-sm w-32 md:btn-md"
@@ -133,7 +136,7 @@
 						{item.remaining}/{item.perDay.eval($c)} per day
 					</button>
 				{/if}
-			</div>
-		</div>
+			</Row>
+		</Row>
 	</SortableList>
-</div>
+</Column>

@@ -30,10 +30,13 @@
 	export let color: keyof typeof COLORS = 'default';
 	export let style: keyof typeof STYLES = 'default';
 	export let size: keyof typeof SIZES = 'default';
+
+	export let wide = false;
 </script>
 
 <button
 	class="btn {COLORS[color]} {STYLES[style]} {SIZES[size]} {className}"
+	class:btn-wide={wide}
 	on:click
 	on:contextmenu
 >
