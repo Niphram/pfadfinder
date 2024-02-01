@@ -42,6 +42,23 @@
 			/>
 		</div>
 
+		<div class="divider">Preperation</div>
+
+		<div class="flex flex-row gap-2">
+			<Integer
+				label="Used today"
+				name="spellUsage"
+				bind:value={$c.spells[spellLevel].spells[spellIdx].used}
+			/>
+			<Integer
+				label="Prepared today"
+				name="spellPrepared"
+				bind:value={$c.spells[spellLevel].spells[spellIdx].prepared}
+			/>
+		</div>
+
+		<div class="divider">Details</div>
+
 		<div class="form-control">
 			<label class="label cursor-pointer pb-0">
 				<span class="label-text">Domain?</span>

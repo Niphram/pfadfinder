@@ -1,3 +1,4 @@
+import { mapSum } from '$lib/utils';
 import { autoserialize, autoserializeAs, inheritSerialization } from 'cerialize';
 import { nanoid } from 'nanoid';
 import type { AbilityKey, Character } from '.';
@@ -122,6 +123,9 @@ export class Spell extends SpellCommonProps {
 	prepared = 0;
 
 	@autoserialize
+	used = 0;
+
+	@autoserialize
 	isDomainSpell = false;
 
 	@autoserialize
@@ -201,6 +205,14 @@ export class SpellLevelList {
 	readonly totalPerDay = new Derive(
 		(c) => c.spells[this.level].perDay + c.spells[this.level].perDayBonus
 	);
+
+	get prepared() {
+		return mapSum(this.spells, (s) => s.prepared);
+	}
+
+	get used() {
+		return mapSum(this.spells, (s) => s.used);
+	}
 
 	@autoserializeAs(Spell)
 	spells: Spell[] = [];

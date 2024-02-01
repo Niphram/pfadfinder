@@ -1,28 +1,34 @@
 <script lang="ts">
-	import { c } from '$lib/data';
+	import { SPELL_LEVELS, c } from '$lib/data';
 	import { title } from '../dialog.svelte';
 
 	$title = 'Rest';
 
-	let heal = true;
-	let addConToHeal = false;
-	let rechargeSLA = true;
-	let rechargeTraits = true;
-	let rechargeItems = true;
-
 	function rest8Hours() {
 		// Heal
-		if (heal) $c.hp.heal($c.classes.levels);
-		if (addConToHeal) $c.hp.heal(Math.max(0, $c.con.mod.eval($c)));
+		if ($c.settings.heal) $c.hp.heal($c.classes.levels);
+		if ($c.settings.addConToHeal) $c.hp.heal(Math.max(0, $c.con.mod.eval($c)));
 
 		// Recharge all SLAs
-		if (rechargeSLA) $c.spells.spellLikeAbilities.forEach((sla) => sla.recharge());
+		if ($c.settings.rechargeSLA) $c.spells.spellLikeAbilities.forEach((sla) => sla.recharge());
 
 		// Recharge all features/traits
-		if (rechargeTraits) $c.traits.forEach((trait) => trait.recharge($c));
+		if ($c.settings.rechargeTraits) $c.traits.forEach((trait) => trait.recharge($c));
 
 		// Recharge all items
-		if (rechargeItems) $c.equipment.items.forEach((item) => item.recharge());
+		if ($c.settings.rechargeItems) $c.equipment.items.forEach((item) => item.recharge());
+
+		// Reset spell usage
+		if ($c.settings.resetSpellUsage) {
+			SPELL_LEVELS.forEach((level) => $c.spells[level].spells.forEach((spell) => (spell.used = 0)));
+		}
+
+		// Reset prepared spells
+		if ($c.settings.resetPreparedSpells) {
+			SPELL_LEVELS.forEach((level) =>
+				$c.spells[level].spells.forEach((spell) => (spell.prepared = 0))
+			);
+		}
 
 		$c = $c;
 	}
@@ -34,35 +40,49 @@
 	<div class="form-control">
 		<label class="label cursor-pointer pb-0">
 			<span class="label-text">Heal for 1 HP per level ({$c.classes.levels} HP)</span>
-			<input type="checkbox" class="toggle" bind:checked={heal} />
+			<input type="checkbox" class="toggle" bind:checked={$c.settings.heal} />
 		</label>
 	</div>
 
 	<div class="form-control">
 		<label class="label cursor-pointer pb-0">
 			<span class="label-text">Add CON when healing ({Math.max(0, $c.con.mod.eval($c))} HP)</span>
-			<input type="checkbox" class="toggle" bind:checked={addConToHeal} />
+			<input type="checkbox" class="toggle" bind:checked={$c.settings.addConToHeal} />
 		</label>
 	</div>
 
 	<div class="form-control">
 		<label class="label cursor-pointer pb-0">
 			<span class="label-text">Recharge Spell-Like Abilities</span>
-			<input type="checkbox" class="toggle" bind:checked={rechargeSLA} />
+			<input type="checkbox" class="toggle" bind:checked={$c.settings.rechargeSLA} />
 		</label>
 	</div>
 
 	<div class="form-control">
 		<label class="label cursor-pointer pb-0">
 			<span class="label-text">Recharge traits</span>
-			<input type="checkbox" class="toggle" bind:checked={rechargeTraits} />
+			<input type="checkbox" class="toggle" bind:checked={$c.settings.rechargeTraits} />
 		</label>
 	</div>
 
 	<div class="form-control">
 		<label class="label cursor-pointer pb-0">
 			<span class="label-text">Recharge items</span>
-			<input type="checkbox" class="toggle" bind:checked={rechargeItems} />
+			<input type="checkbox" class="toggle" bind:checked={$c.settings.rechargeItems} />
+		</label>
+	</div>
+
+	<div class="form-control">
+		<label class="label cursor-pointer pb-0">
+			<span class="label-text">Reset spell usage</span>
+			<input type="checkbox" class="toggle" bind:checked={$c.settings.resetSpellUsage} />
+		</label>
+	</div>
+
+	<div class="form-control">
+		<label class="label cursor-pointer pb-0">
+			<span class="label-text">Reset prepared spells</span>
+			<input type="checkbox" class="toggle" bind:checked={$c.settings.resetPreparedSpells} />
 		</label>
 	</div>
 
