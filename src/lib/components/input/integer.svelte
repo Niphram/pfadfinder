@@ -9,6 +9,8 @@
 	export let label: string;
 	export let placeholder: string | undefined = undefined;
 
+	export let small = false;
+
 	let current = value;
 
 	$: valid =
@@ -31,6 +33,7 @@
 		type="number"
 		{placeholder}
 		class="input input-bordered w-full"
+		class:input-xs={small}
 		class:input-error={!valid}
 		bind:value={current}
 	/>

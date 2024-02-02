@@ -1,3 +1,4 @@
+import { mapSum, withSign } from '$lib/utils';
 import { autoserialize, autoserializeAs, inheritSerialization } from 'cerialize';
 import { nanoid } from 'nanoid';
 import type { AbilityKey, Character } from '.';
@@ -122,6 +123,9 @@ export class Spell extends SpellCommonProps {
 	prepared = 0;
 
 	@autoserialize
+	used = 0;
+
+	@autoserialize
 	isDomainSpell = false;
 
 	@autoserialize
@@ -131,6 +135,29 @@ export class Spell extends SpellCommonProps {
 		const dcAbility = c.spells.dcAbility;
 		const abilityDc = (dcAbility ? c[dcAbility].mod.eval(c) : 0) + c.spells.dcBonus.eval(c);
 		const saveDc = 10 + level + this.savingThrow.dcMod + abilityDc;
+
+		let attackBonus = this.attack.mod;
+
+		switch (this.attack.type) {
+			case 'touch':
+				attackBonus += c.combat.bab.mod.eval(c) + c.str.mod.eval(c);
+				break;
+			case 'rangedTouch':
+				attackBonus += c.combat.bab.mod.eval(c) + c.dex.mod.eval(c);
+				break;
+			case 'cmb':
+				attackBonus += c.combat.cmb.mod.eval(c);
+				break;
+			case 'str':
+			case 'dex':
+			case 'con':
+			case 'wis':
+			case 'int':
+			case 'cha':
+				attackBonus += c[this.attack.type].mod.eval(c);
+				break;
+			case 'none':
+		}
 
 		return [
 			['School', this.school],
@@ -142,7 +169,15 @@ export class Spell extends SpellCommonProps {
 			['Duration', this.duration],
 			['Effect', this.effect],
 			['Saving Throw', this.savingThrow.hasSave && `${this.savingThrow.effect} (DC ${saveDc})`],
-			['Spell Resistance', this.spellResistance]
+			['Spell Resistance', this.spellResistance],
+			[
+				'Attack',
+				this.attack.hasAttack &&
+					`${withSign(attackBonus)} (${this.attack.type}) (Crit ≥${this.attack.critRange} for x${
+						this.attack.critMultiplier
+					})`
+			],
+			...this.damage.map((d, i) => [`Damage #${i + 1}`, `${d.damage} ${d.type}`])
 		].filter((e) => !!e[1]);
 	}
 }
@@ -201,6 +236,14 @@ export class SpellLevelList {
 	readonly totalPerDay = new Derive(
 		(c) => c.spells[this.level].perDay + c.spells[this.level].perDayBonus
 	);
+
+	get prepared() {
+		return mapSum(this.spells, (s) => s.prepared);
+	}
+
+	get used() {
+		return mapSum(this.spells, (s) => s.used);
+	}
 
 	@autoserializeAs(Spell)
 	spells: Spell[] = [];

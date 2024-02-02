@@ -11,6 +11,7 @@ import { Initiative } from './initiative';
 import { Money } from './money';
 import { Race } from './race';
 import { Save } from './saves';
+import { Settings } from './settings';
 import { SkillList } from './skills';
 import { Spells } from './spells';
 import { Trait } from './trait';
@@ -77,4 +78,7 @@ export class Character {
 
 	@autoserializeAs(Money)
 	money = new Money();
+
+	@autoserializeAs(Settings)
+	settings = new Settings();
 }

@@ -30,6 +30,10 @@
 		$c.spells.spellLikeAbilities = $c.spells.spellLikeAbilities;
 	}
 
+	function castSpell(level: SpellLevel, index: number) {
+		$c.spells[level].spells[index].used++;
+	}
+
 	function castSla(index: number) {
 		if ($c.spells.spellLikeAbilities[index].remaining > 0)
 			$c.spells.spellLikeAbilities[index].remaining--;
@@ -45,9 +49,19 @@
 	{#each SPELL_LEVELS as level, idx (level)}
 		{#if $c.spells[level].perDay > 0}
 			<Divider>
-				{$t(`spell.level.${level}`)} ({$c.spells[level].totalPerDay.eval($c)} per day)
+				{$t(`spell.level.${level}`)}
 				<Button size="xs" color="secondary" on:click={() => addSpell(level)}>Add</Button>
 			</Divider>
+
+			<div class="mb-2 flex flex-row justify-center gap-2">
+				<div class="badge badge-primary">Used: {$c.spells[level].used}</div>
+				<div class="badge badge-secondary">
+					Per Day: {$c.spells[level].totalPerDay.eval($c)}
+				</div>
+				<div class="badge badge-neutral badge-outline">
+					Prepared: {$c.spells[level].prepared}
+				</div>
+			</div>
 
 			<SortableList
 				class="flex flex-col items-center gap-1"
@@ -77,7 +91,17 @@
 						icon="arrow"
 						on:contextmenu={() => openDialog(SpellDialog, { spellIdx, spellLevel: level })}
 					>
-						<span slot="title" class="text-sm font-semibold">{spell.name}</span>
+						<div slot="title" class="flex flex-row">
+							<span class="grow text-sm font-semibold">{spell.name}</span>
+							{#if spell.prepared > 0}
+								<button
+									class="btn btn-accent btn-xs w-16"
+									on:click|preventDefault|stopPropagation={() => castSpell(level, spellIdx)}
+								>
+									{spell.prepared - spell.used} / {spell.prepared}
+								</button>
+							{/if}
+						</div>
 
 						<Column gap="md">
 							<div
