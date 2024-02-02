@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { cx } from 'cva';
+
 	export let open = false;
 
 	export let icon: 'arrow' | 'plus' | undefined = undefined;
@@ -22,10 +24,13 @@
 			toggleOpen();
 		}
 	}
+
+	let className: string | undefined = undefined;
+	export { className as class };
 </script>
 
 <div
-	class="collapse bg-base-200 text-left"
+	class={cx('collapse bg-base-200 text-left', className)}
 	class:collapse-arrow={icon === 'arrow'}
 	class:collapse-plus={icon === 'plus'}
 	class:collapse-open={open}

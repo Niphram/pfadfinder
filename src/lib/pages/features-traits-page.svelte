@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Button from '$lib/atoms/button.svelte';
 	import Collapse from '$lib/atoms/collapse.svelte';
 	import Divider from '$lib/atoms/divider.svelte';
 	import Column from '$lib/atoms/layout/column.svelte';

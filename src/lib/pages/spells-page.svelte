@@ -78,7 +78,7 @@
 			>
 				<div slot="fallback">No Spells</div>
 
-				<Row>
+				<Row class="w-full">
 					<div
 						class="drag-handle ml-2 flex w-6 items-center justify-center"
 						role="button"

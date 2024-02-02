@@ -18,6 +18,13 @@
 	import HpDialog from '$lib/components/dialogs/hp-dialog.svelte';
 	import PageDialog from '$lib/components/dialogs/page-dialog.svelte';
 	import EquipmentPage from '$lib/pages/equipment-page.svelte';
+	import MagicIcon from '$lib/atoms/icons/magic-icon.svelte';
+	import SwordIcon from '$lib/atoms/icons/sword-icon.svelte';
+	import AbilitiesIcon from '$lib/atoms/icons/abilities-icon.svelte';
+	import CharacterIcon from '$lib/atoms/icons/character-icon.svelte';
+	import BagIcon from '$lib/atoms/icons/bag-icon.svelte';
+	import BookIcon from '$lib/atoms/icons/book-icon.svelte';
+	import HomeIcon from '$lib/atoms/icons/home-icon.svelte';
 
 	const pages = [
 		{ key: 'abilities', component: AbilitiesPage },
@@ -28,6 +35,22 @@
 		{ key: 'equipment', component: EquipmentPage },
 		{ key: 'character', component: CharacterPage }
 	] as const;
+
+	let navButtons = [
+		{ key: 'abilities', icon: HomeIcon },
+		{ key: 'combat', icon: SwordIcon },
+		{ key: 'skills', icon: AbilitiesIcon },
+		{ key: 'spells', icon: MagicIcon },
+		{ key: 'features_traits', icon: BookIcon },
+		{ key: 'equipment', icon: BagIcon },
+		{ key: 'character', icon: CharacterIcon }
+	] as const;
+
+	let pageScroll: number = 0;
+	let pageWidth: number = 0;
+	$: currentPage = Math.floor((pageScroll + pageWidth / 2) / pageWidth);
+
+	$: console.log(pageWidth);
 </script>
 
 <svelte:head>
@@ -35,6 +58,8 @@
 		{$c.name}{$dirty ? ` (${$t('texts.general.unsaved')})` : ''}
 	</title>
 </svelte:head>
+
+<svelte:window bind:innerWidth={pageWidth} />
 
 <div class="flex h-screen flex-col">
 	<div class="sticky top-0 z-40 w-full bg-base-200 drop-shadow-xl">
@@ -54,16 +79,32 @@
 	</div>
 
 	<div
-		class="flex flex-grow snap-x snap-mandatory flex-row flex-nowrap overflow-x-scroll scroll-smooth"
+		class="scrollbar-hide flex flex-grow snap-x snap-mandatory flex-row flex-nowrap overflow-x-scroll scroll-smooth"
+		class:pb-16={$c.settings.experimentalNav}
+		on:scroll={(event) => (pageScroll = event.currentTarget.scrollLeft)}
 	>
 		{#each pages as { key, component } (key)}
-			<div id={key} class="w-full flex-none snap-center snap-always overflow-y-scroll p-4">
+			<div
+				id={key}
+				class="w-full flex-none snap-center snap-always overflow-y-scroll p-4"
+				class:pb-20={!$c.settings.experimentalNav}
+			>
 				<svelte:component this={component} />
-				<div class="h-16" />
 			</div>
 		{/each}
 	</div>
 </div>
+
+{#if $c.settings.experimentalNav}
+	<div class="btm-nav bg-neutral">
+		{#each navButtons as { key, icon }, idx (key)}
+			<a href="#{key}" class="text-primary" class:active={currentPage === idx}>
+				<svelte:component this={icon} />
+				<span class="btm-nav-label">{$t(`texts.pages.${key}`)}</span>
+			</a>
+		{/each}
+	</div>
+{/if}
 
 <!-- Floating Action Button -->
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { resetChar } from '$lib/data';
+	import { c, resetChar } from '$lib/data';
 	import { openDialog, title } from '../dialog.svelte';
 	import Steps from '../steps.svelte';
 	import { isDarkMode, toggleDarkMode } from '../theme-changer.svelte';
@@ -12,6 +12,13 @@
 	<label class="label cursor-pointer">
 		<span class="label-text">Dark Mode</span>
 		<input type="checkbox" class="toggle" checked={$isDarkMode} on:change={toggleDarkMode} />
+	</label>
+</div>
+
+<div class="form-control">
+	<label class="label cursor-pointer">
+		<span class="label-text">Experimental Nav</span>
+		<input type="checkbox" class="toggle" bind:checked={$c.settings.experimentalNav} />
 	</label>
 </div>
 
