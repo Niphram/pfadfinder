@@ -24,7 +24,7 @@
 	}
 </script>
 
-<button
+<div
 	class="collapse bg-base-200 text-left"
 	class:collapse-arrow={icon === 'arrow'}
 	class:collapse-plus={icon === 'plus'}
@@ -34,6 +34,8 @@
 	on:contextmenu|preventDefault
 	on:keydown={keydownHandler}
 	on:keyup={keyupHandler}
+	role="button"
+	tabindex="0"
 >
 	{#if $$slots.title}
 		<div class="collapse-title h-min min-h-0 py-2 md:py-4" class:pe-4={!icon}>
@@ -44,7 +46,7 @@
 	<div class="collapse-content">
 		<slot />
 	</div>
-</button>
+</div>
 
 <style>
 	.collapse-arrow > .collapse-title::after {
