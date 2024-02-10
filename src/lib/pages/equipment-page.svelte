@@ -10,12 +10,13 @@
 	import Integer from '$lib/components/input/integer.svelte';
 	import TextArea from '$lib/components/input/text-area.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
+	import NestedEquipmentList from '$lib/nested-equipment-list.svelte';
 
 	function addItem() {
 		$c.equipment.items.push(new Item());
 		$c.equipment.items = $c.equipment.items;
 
-		openDialog(ItemDialog, { index: $c.equipment.items.length - 1 });
+		openDialog(ItemDialog, { list: $c.equipment.items, index: $c.equipment.items.length - 1 });
 	}
 
 	function addAcItem() {
@@ -25,6 +26,8 @@
 		openDialog(AcItemDialog, { index: $c.equipment.acItems.length - 1 });
 	}
 </script>
+
+<NestedEquipmentList bind:items={$c.equipment.items}></NestedEquipmentList>
 
 <div class="flex flex-col gap-2">
 	<div class="divider mb-0">Money</div>
@@ -59,30 +62,31 @@
 		let:item
 		let:index
 	>
-		<div class="flex w-full flex-row items-stretch">
+		<div class="flex w-full flex-row">
 			<div class="drag-handle ml-2 flex w-6 items-center justify-center" role="button" tabindex="0">
 				<DragHandle />
 			</div>
-			<div class="flex grow flex-row items-stretch gap-2">
-				<button
-					class="btn btn-sm flex-1 md:btn-md"
-					on:click={() => macroNotify(item.name, item.description, $c)}
-					on:contextmenu|preventDefault={() => openDialog(ItemDialog, { index })}
-				>
+			<button
+				class="btn btn-sm min-w-0 flex-auto truncate md:btn-md"
+				on:click={() => macroNotify(item.name, item.description, $c)}
+				on:contextmenu|preventDefault={() =>
+					openDialog(ItemDialog, { list: $c.equipment.items, index })}
+			>
+				<span class="truncate">
 					{item.quantity}x <span class:underline={item.equipped}>{item.name}</span>
+				</span>
+			</button>
+			{#if item.chargeType !== 'none'}
+				<button
+					class="btn btn-accent btn-sm ml-2 w-28 px-2 md:btn-md"
+					on:click={() =>
+						$c.equipment.items[index].remaining > 0 && $c.equipment.items[index].remaining--}
+				>
+					{item.remaining}{#if item.chargeType === 'perDay'}
+						/{item.perDay}
+					{/if} charges
 				</button>
-				{#if item.chargeType !== 'none'}
-					<button
-						class="btn btn-accent btn-sm w-28 px-2 md:btn-md"
-						on:click={() =>
-							$c.equipment.items[index].remaining > 0 && $c.equipment.items[index].remaining--}
-					>
-						{item.remaining}{#if item.chargeType === 'perDay'}
-							/{item.perDay}
-						{/if} charges
-					</button>
-				{/if}
-			</div>
+			{/if}
 		</div>
 	</SortableList>
 

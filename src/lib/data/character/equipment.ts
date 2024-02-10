@@ -19,7 +19,7 @@ export class Item {
 	quantity = 1;
 
 	@autoserialize
-	equipped = false;
+	equipped = true;
 
 	@autoserialize
 	weight = 0;
@@ -36,8 +36,17 @@ export class Item {
 	@autoserialize
 	description = '';
 
-	get totalWeight() {
-		return this.quantity * this.weight;
+	@autoserialize
+	isContainer = false;
+
+	@autoserializeAs(Item)
+	children: Item[] = [];
+
+	get totalWeight(): number {
+		return (
+			this.quantity * this.weight +
+			(this.isContainer ? mapSum(this.children, (item) => item.totalWeight) : 0)
+		);
 	}
 
 	recharge() {
@@ -100,6 +109,6 @@ export class Equipment {
 	}
 
 	get totalWeight() {
-		return mapSum(this.items, (i) => (i.equipped ? i.totalWeight : 0));
+		return mapSum(this.items, (i) => (!i.isContainer || i.equipped ? i.totalWeight : 0));
 	}
 }

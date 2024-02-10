@@ -3,6 +3,9 @@
 
 	export let icon: 'arrow' | 'plus' | undefined = undefined;
 
+	let className: string = "";
+	export {className as class}
+
 	function toggleOpen() {
 		open = !open;
 	}
@@ -25,7 +28,7 @@
 </script>
 
 <div
-	class="collapse bg-base-200 text-left"
+	class="collapse bg-base-200 text-left {className}"
 	class:collapse-arrow={icon === 'arrow'}
 	class:collapse-plus={icon === 'plus'}
 	class:collapse-open={open}
@@ -44,7 +47,7 @@
 	{/if}
 
 	<div class="collapse-content">
-		<slot />
+		<slot {open} />
 	</div>
 </div>
 
