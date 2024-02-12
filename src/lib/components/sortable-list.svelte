@@ -2,14 +2,17 @@
 	// Needed to satisfy eslint
 	type T = unknown;
 
-	const listMap = new WeakMap<HTMLElement, T[]>();
+	export const listMap = new WeakMap<HTMLElement, T[]>();
 </script>
 
 <script lang="ts" generics="T">
 	import Sortable from 'sortablejs';
 	import { onMount } from 'svelte';
 
-	type Options = Omit<Sortable.SortableOptions, 'onUpdate' | 'onAdd' | 'onRemove' | "disabled">;
+	type Options = Omit<
+		Sortable.SortableOptions,
+		'onUpdate' | 'onAdd' | 'onRemove' | 'onMove' | 'onChoose' | 'disabled'
+	>;
 
 	export let items: T[];
 	export let options: Options | undefined = undefined;
@@ -21,12 +24,21 @@
 	let className = '';
 	export { className as class };
 
+	export let keyPrefix: string = '';
+
 	export let element = 'div';
+
+	export let onMove: ((item: T, targetArray: T[]) => boolean) | undefined = undefined;
 
 	let listEl: HTMLElement;
 
-	let sortableInstance: Sortable |undefined;
-	$: sortableInstance?.option("disabled", disabled);
+	let sortableInstance: Sortable | undefined;
+
+	// Update 'disabled' if it changes
+	$: sortableInstance?.option('disabled', disabled);
+
+	// The that was selected last
+	let lastSelectedItem: T;
 
 	onMount(() => {
 		listMap.set(listEl, items);
@@ -47,6 +59,13 @@
 				items.splice(oldIndex, 1);
 				items = items;
 			},
+			onMove({ to }) {
+				const targetList = listMap.get(to) as T[];
+				return onMove?.(lastSelectedItem, targetList);
+			},
+			onChoose({ oldIndex = 0 }) {
+				lastSelectedItem = items[oldIndex];
+			},
 			disabled,
 			...options
 		});
@@ -59,7 +78,7 @@
 </script>
 
 <svelte:element this={element} class={className} bind:this={listEl}>
-	{#each items as item, index (item[keyProp])}
+	{#each items as item, index (keyPrefix + item[keyProp])}
 		<slot {item} {index} />
 	{/each}
 

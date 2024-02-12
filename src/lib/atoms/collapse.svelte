@@ -3,8 +3,8 @@
 
 	export let icon: 'arrow' | 'plus' | undefined = undefined;
 
-	let className: string = "";
-	export {className as class}
+	let className: string = '';
+	export { className as class };
 
 	function toggleOpen() {
 		open = !open;

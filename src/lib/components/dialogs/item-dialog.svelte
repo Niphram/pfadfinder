@@ -45,7 +45,12 @@
 		<div class="form-control">
 			<label class="label cursor-pointer pb-0">
 				<span class="label-text">Container?</span>
-				<input type="checkbox" class="toggle" bind:checked={list[index].isContainer} />
+				<input
+					type="checkbox"
+					class="toggle"
+					bind:checked={list[index].isContainer}
+					disabled={list[index].children.length > 0}
+				/>
 			</label>
 		</div>
 

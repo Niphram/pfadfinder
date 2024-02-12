@@ -1,3 +1,11 @@
+function count(word: string, amount: number) {
+	if (amount === 1) {
+		return `${amount} ${word}`;
+	} else {
+		return `${amount} ${word}s`;
+	}
+}
+
 export default {
 	hp: {
 		text: {
@@ -134,7 +142,8 @@ export default {
 			none: 'None',
 			perDay: 'Per Day',
 			total: 'Total'
-		}
+		},
+		items: (amount: number) => count('item', amount)
 	},
 	spell: {
 		attackType: {
