@@ -4,6 +4,13 @@
 
 	$title = 'Rest';
 
+	function rechargeItems(items: Item[]) {
+		items.forEach((item) => {
+			item.recharge();
+			rechargeItems(item.children);
+		});
+	}
+
 	function rest8Hours() {
 		// Heal
 		if ($c.settings.heal) $c.hp.heal($c.classes.levels);
@@ -16,7 +23,7 @@
 		if ($c.settings.rechargeTraits) $c.traits.forEach((trait) => trait.recharge($c));
 
 		// Recharge all items
-		if ($c.settings.rechargeItems) $c.equipment.items.forEach((item) => item.recharge());
+		if ($c.settings.rechargeItems) rechargeItems($c.equipment.items);
 
 		// Reset spell usage
 		if ($c.settings.resetSpellUsage) {
