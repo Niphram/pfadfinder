@@ -62,7 +62,7 @@
 				<button
 					class="btn btn-accent btn-sm ml-2 w-28 px-2 md:btn-md"
 					on:click|stopPropagation={() =>
-						$c.equipment.items[index].remaining > 0 && $c.equipment.items[index].remaining--}
+						items[index].remaining > 0 && items[index].remaining--}
 				>
 					{item.remaining}{#if item.chargeType === 'perDay'}
 						/{item.perDay}
