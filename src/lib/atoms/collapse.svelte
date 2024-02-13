@@ -46,7 +46,7 @@
 		</div>
 	{/if}
 
-	<div class="collapse-content">
+	<div class="collapse-content min-w-0">
 		<slot {open} />
 	</div>
 </div>
