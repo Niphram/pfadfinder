@@ -87,7 +87,7 @@
 
 				<svelte:self
 					bind:items={items[index].children}
-					keyPrefix={item.id}
+					parentId={item.id}
 					disabled={!open}
 					class="rounded-lg bg-base-100 p-2 pl-0"
 				/>
