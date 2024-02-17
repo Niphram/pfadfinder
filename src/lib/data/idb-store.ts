@@ -74,6 +74,10 @@ export function idbWritable<T extends VersionedObject>(
 		});
 	}
 
+	async function overwriteSave(data: T) {
+		await idbKeyVal.set(key, Serialize(data));
+	}
+
 	return {
 		data: {
 			set,
@@ -81,6 +85,7 @@ export function idbWritable<T extends VersionedObject>(
 			subscribe: store.subscribe
 		} satisfies Writable<T>,
 		loaded: readonly(loaded),
-		dirty: readonly(dirty)
+		dirty: readonly(dirty),
+		overwriteSave
 	};
 }

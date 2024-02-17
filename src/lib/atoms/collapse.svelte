@@ -5,6 +5,9 @@
 
 	export let icon: 'arrow' | 'plus' | undefined = undefined;
 
+	let className: string = '';
+	export { className as class };
+
 	function toggleOpen() {
 		open = !open;
 	}
@@ -24,9 +27,6 @@
 			toggleOpen();
 		}
 	}
-
-	let className: string | undefined = undefined;
-	export { className as class };
 </script>
 
 <div
@@ -48,8 +48,8 @@
 		</div>
 	{/if}
 
-	<div class="collapse-content">
-		<slot />
+	<div class="collapse-content min-w-0">
+		<slot {open} />
 	</div>
 </div>
 

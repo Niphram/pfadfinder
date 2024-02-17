@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Character, c } from '$lib/data';
+	import { Character, c, overwriteSave } from '$lib/data';
 	import { DeserializeInto, Serialize } from 'cerialize';
 	import { title } from '../dialog.svelte';
 	import Steps from '../steps.svelte';
@@ -38,9 +38,10 @@
 
 			const newChar = new Character();
 			DeserializeInto(JSON.parse(fileContent), Character, newChar);
-			$c = newChar;
 
-			files = null;
+			await overwriteSave(newChar);
+
+			location.reload();
 		} catch (err) {
 			alert('Could not import character!');
 		}

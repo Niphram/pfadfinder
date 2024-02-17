@@ -20,7 +20,8 @@ upgrades.set(2, (char) => {
 export const {
 	data: c,
 	dirty,
-	loaded
+	loaded,
+	overwriteSave
 } = idbWritable<Character>('character', Character, {
 	loadError(err) {
 		alert('Character data was corrupted and lost! Sorry!');
