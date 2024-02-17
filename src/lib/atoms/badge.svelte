@@ -1,4 +1,6 @@
 <script lang="ts" context="module">
+	import { cva } from 'cva';
+
 	const badge = cva('badge', {
 		variants: {
 			color: {
@@ -21,20 +23,17 @@
 				sm: 'badge-sm',
 				md: 'badge-md',
 				lg: 'badge-lg'
-			},
-			test: {
-				true: ''
 			}
 		}
 	});
 </script>
 
 <script lang="ts">
-	import { cva, type VariantProps } from 'cva';
+	import type { CVAProps } from './helper-types';
 
-	interface $$Props extends VariantProps<typeof badge> {}
+	interface $$Props extends CVAProps<HTMLSpanElement, typeof badge> {}
 
-	let className: string | undefined = undefined;
+	let className: string | undefined | null = undefined;
 	export { className as class };
 
 	export let color: $$Props['color'] = undefined;
