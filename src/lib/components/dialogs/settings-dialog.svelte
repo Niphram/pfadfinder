@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resetChar } from '$lib/data';
+	import { persisted } from '$lib/data/storage';
 	import { openDialog, title } from '../dialog.svelte';
 	import Steps from '../steps.svelte';
 	import { isDarkMode, toggleDarkMode } from '../theme-changer.svelte';
@@ -14,6 +15,8 @@
 		<input type="checkbox" class="toggle" checked={$isDarkMode} on:change={toggleDarkMode} />
 	</label>
 </div>
+
+<div>Persistent storage: {$persisted}</div>
 
 <div class="divider">Danger</div>
 
