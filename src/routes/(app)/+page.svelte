@@ -18,15 +18,17 @@
 	import HpDialog from '$lib/components/dialogs/hp-dialog.svelte';
 	import PageDialog from '$lib/components/dialogs/page-dialog.svelte';
 	import EquipmentPage from '$lib/pages/equipment-page.svelte';
+	import PersonaPage from '$lib/pages/persona-page.svelte';
 
-	const pages = [
-		{ key: 'abilities', component: AbilitiesPage },
-		{ key: 'combat', component: CombatPage },
-		{ key: 'skills', component: SkillsPage },
-		{ key: 'spells', component: SpellsPage },
-		{ key: 'features_traits', component: FeaturesTraitsPage },
-		{ key: 'equipment', component: EquipmentPage },
-		{ key: 'character', component: CharacterPage }
+	$: pages = [
+		{ key: 'abilities', component: AbilitiesPage, active: true },
+		{ key: 'combat', component: CombatPage, active: true },
+		{ key: 'skills', component: SkillsPage, active: true },
+		{ key: 'spells', component: SpellsPage, active: true },
+		{ key: 'features_traits', component: FeaturesTraitsPage, active: true },
+		{ key: 'equipment', component: EquipmentPage, active: true },
+		{ key: 'character', component: CharacterPage, active: true },
+		{ key: 'persona', component: PersonaPage, active: $c.settings.usePersonaSystem }
 	] as const;
 </script>
 
@@ -56,11 +58,13 @@
 	<div
 		class="flex flex-grow snap-x snap-mandatory flex-row flex-nowrap overflow-x-scroll scroll-smooth"
 	>
-		{#each pages as { key, component } (key)}
-			<div id={key} class="w-full flex-none snap-center snap-always overflow-y-scroll p-4">
-				<svelte:component this={component} />
-				<div class="h-16" />
-			</div>
+		{#each pages as { key, component, active } (key)}
+			{#if active}
+				<div id={key} class="w-full flex-none snap-center snap-always overflow-y-scroll p-4">
+					<svelte:component this={component} />
+					<div class="h-16" />
+				</div>
+			{/if}
 		{/each}
 	</div>
 </div>

@@ -21,4 +21,7 @@ export class Settings {
 
 	@autoserialize
 	resetPreparedSpells = true;
+
+	@autoserialize
+	usePersonaSystem = false;
 }

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { c } from '$lib/data';
 	import { t } from '$lib/i18n';
 
 	import { closeDialog, openDialog, title } from '../dialog.svelte';
@@ -6,22 +7,25 @@
 	import RestDialog from './rest-dialog.svelte';
 	import SettingsDialog from './settings-dialog.svelte';
 
-	let navButtons = [
-		'abilities',
-		'combat',
-		'skills',
-		'spells',
-		'features_traits',
-		'equipment',
-		'character'
+	$: navButtons = [
+		{ key: 'abilities', active: true },
+		{ key: 'combat', active: true },
+		{ key: 'skills', active: true },
+		{ key: 'spells', active: true },
+		{ key: 'features_traits', active: true },
+		{ key: 'equipment', active: true },
+		{ key: 'character', active: true },
+		{ key: 'persona', active: $c.settings.usePersonaSystem }
 	] as const;
 
 	$title = '';
 </script>
 
 <div class="flex h-full flex-col gap-2">
-	{#each navButtons as key (key)}
-		<a href="#{key}" class="btn w-full" on:click={closeDialog}>{$t(`texts.pages.${key}`)}</a>
+	{#each navButtons as { key, active } (key)}
+		{#if active}
+			<a href="#{key}" class="btn w-full" on:click={closeDialog}>{$t(`texts.pages.${key}`)}</a>
+		{/if}
 	{/each}
 
 	<div class="grow" />

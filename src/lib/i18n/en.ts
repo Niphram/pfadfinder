@@ -184,7 +184,8 @@ export default {
 			equipment: 'Equipment',
 			spells: 'Spells',
 			skills: 'Skills',
-			features_traits: 'Features/Traits'
+			features_traits: 'Features/Traits',
+			persona: 'Persona'
 		},
 		general: {
 			unsaved: 'unsaved',
@@ -234,5 +235,13 @@ export default {
 			teamwork: 'Teamwork',
 			misc: 'Misc'
 		}
+	},
+	persona: {
+		charm: 'Charm',
+		genius: 'Genius',
+		heroism: 'Heroism',
+		sacrifice: 'Sacrifice',
+		sagacity: 'Sagacity',
+		subterfuge: 'Subterfuge'
 	}
 };

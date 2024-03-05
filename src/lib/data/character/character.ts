@@ -9,6 +9,7 @@ import { Feat } from './feat';
 import { HitPoints } from './hitpoints';
 import { Initiative } from './initiative';
 import { Money } from './money';
+import { Persona } from './persona';
 import { Race } from './race';
 import { Save } from './saves';
 import { Settings } from './settings';
@@ -78,6 +79,9 @@ export class Character {
 
 	@autoserializeAs(Money)
 	money = new Money();
+
+	@autoserializeAs(Persona)
+	persona = new Persona();
 
 	@autoserializeAs(Settings)
 	settings = new Settings();
