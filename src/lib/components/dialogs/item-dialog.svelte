@@ -49,7 +49,7 @@
 					type="checkbox"
 					class="toggle"
 					bind:checked={list[index].isContainer}
-					disabled={list[index].children.length > 0}
+					disabled={list[index].children.length > 0 || list !== $c.equipment.items}
 				/>
 			</label>
 		</div>
