@@ -20,5 +20,7 @@ export class ArmorClass {
 
 	readonly touch = new Derive((c) => 10 + c.ac.abilityMod.eval(c));
 
-	readonly flatFooted = new Derive((c) => 10 + c.equipment.acBonus);
+	readonly flatFooted = new Derive(
+		(c) => 10 + c.equipment.acBonus + Math.min(c.ac.abilityMod.eval(c), 0)
+	);
 }
