@@ -57,6 +57,8 @@ export class Item {
 }
 
 export class AcItem {
+	id = nanoid();
+
 	@autoserialize
 	name = 'Unnamed Item';
 

@@ -1,13 +1,16 @@
 <script lang="ts">
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import { AcItem, Item, c } from '$lib/data';
+	import { t } from '$lib/i18n';
 	import { macroNotify } from '$lib/utils/notes';
 
 	import AcItemDialog from '$lib/components/dialogs/ac-item-dialog.svelte';
 	import ItemDialog from '$lib/components/dialogs/item-dialog.svelte';
 
+	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import Integer from '$lib/components/input/integer.svelte';
 	import TextArea from '$lib/components/input/text-area.svelte';
+	import SortableList from '$lib/components/sortable-list.svelte';
 	import NestedEquipmentList from '$lib/nested-equipment-list.svelte';
 
 	function addItem() {
@@ -54,16 +57,34 @@
 		</div>
 	</div>
 
-	<div class="flex flex-col gap-2">
-		{#each $c.equipment.acItems as item, idx}
+	<SortableList
+		bind:items={$c.equipment.acItems}
+		options={{
+			group: 'ac-items',
+			handle: '.drag-handle',
+			animation: 150,
+			easing: 'cubic-bezier(1, 0, 0, 1)',
+			fallbackOnBody: true,
+			swapThreshold: 0.65
+		}}
+		keyProp="id"
+		class="ml-2 flex flex-col gap-2"
+		let:item
+		let:index
+	>
+		<div class="flex w-full flex-auto flex-row">
+			<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
+				<DragHandle />
+			</div>
 			<button
-				class="btn btn-sm"
-				class:underline={item.equipped}
+				class="btn btn-sm min-w-0 flex-auto truncate md:btn-md"
 				on:click={() => macroNotify(item.name, item.notes, $c)}
-				on:contextmenu|preventDefault={() => openDialog(AcItemDialog, { index: idx })}
+				on:contextmenu|preventDefault={() => openDialog(AcItemDialog, { index })}
 			>
-				{item.name}
+				<span class="truncate" class:underline={item.equipped}>
+					{item.name} ({$t(`equipment.armorType.${item.type}`)})
+				</span>
 			</button>
-		{/each}
-	</div>
+		</div>
+	</SortableList>
 </div>
