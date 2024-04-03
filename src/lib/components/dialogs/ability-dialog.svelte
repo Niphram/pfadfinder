@@ -15,7 +15,8 @@
 	label="Base Ability Score"
 	noNegatives
 />
-<MacroInteger bind:value={$c[key].bonus.expr} name="abilityBonus" label="Temp" />
+<MacroInteger bind:value={$c[key].bonus.expr} name="abilityBonus" label="Bonus" />
+<MacroInteger bind:value={$c[key].temp.expr} name="abilityTemp" label="Temp" />
 
 <div class="form-control w-full">
 	<label for="abilityNotes" class="label pb-0">
