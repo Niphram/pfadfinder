@@ -4,10 +4,10 @@
  * @param timeout Time in milliseconds to wait after the last event
  */
 export function debounce<A extends unknown[]>(func: (...args: A) => void, timeout = 1000) {
-	let timeoutId: number | undefined;
+	let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
 	return (...args: A) => {
 		timeoutId && clearTimeout(timeoutId);
-		timeoutId = window.setTimeout(() => func(...args), timeout);
+		timeoutId = setTimeout(() => func(...args), timeout);
 	};
 }

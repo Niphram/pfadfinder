@@ -22,4 +22,4 @@
 
 <br />
 
-<a href="/" class="btn btn-secondary">Back to stable</a>
+<a href={base} class="btn btn-secondary">Back to stable</a>
