@@ -1,4 +1,5 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
+import { nanoid } from 'nanoid';
 
 import { Ability } from './abilities';
 import { ArmorClass } from './armorclass';
@@ -18,6 +19,9 @@ import { Spells } from './spells';
 import { Trait } from './trait';
 
 export class Character {
+	@autoserialize
+	id = nanoid();
+
 	@autoserialize
 	version = 2;
 

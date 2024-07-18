@@ -40,6 +40,12 @@
 <script lang="ts">
 	$: themeColor = $isDarkMode ? '#20222C' : '#DBCA9A';
 	$: backgroundColor = $isDarkMode ? '#0B0B0F' : '#ECE3CE';
+
+	$: {
+		if (browser) {
+			document.body.setAttribute('data-theme', $isDarkMode ? darkTheme : lightTheme);
+		}
+	}
 </script>
 
 <svelte:head>
@@ -47,6 +53,4 @@
 	<meta name="background-color" content={backgroundColor} />
 </svelte:head>
 
-<div data-theme={$isDarkMode ? darkTheme : lightTheme}>
-	<slot />
-</div>
+<slot />

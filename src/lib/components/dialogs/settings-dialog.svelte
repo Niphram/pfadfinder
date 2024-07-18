@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { c, resetChar } from '$lib/data';
 	import { persisted } from '$lib/data/storage';
 	import { openDialog, title } from '../dialog.svelte';
@@ -25,9 +26,20 @@
 
 <div>Persistent storage: {$persisted}</div>
 
+<div class="form-control">
+	<label class="label cursor-pointer">
+		<span class="label-text">Enable experimental features</span>
+		<input type="checkbox" class="toggle" bind:checked={$c.settings.experimentalFeatures} />
+	</label>
+</div>
+
 <div class="divider">Danger</div>
 
 <div class="flex flex-col gap-4">
+	{#if $c.settings.experimentalFeatures}
+		<a href="{base}/preview" class="btn btn-warning w-full">Preview Site (Very W.I.P)</a>
+	{/if}
+
 	<button
 		class="btn btn-secondary w-full"
 		on:click|preventDefault={() => openDialog(ImportExportDialog, {})}>Import/Export</button

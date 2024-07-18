@@ -24,4 +24,7 @@ export class Settings {
 
 	@autoserialize
 	usePersonaSystem = false;
+
+	@autoserialize
+	experimentalFeatures = false;
 }
