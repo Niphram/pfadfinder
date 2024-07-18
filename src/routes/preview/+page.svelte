@@ -10,7 +10,7 @@
 {:then characters}
 	{#each characters as char}
 		<li>
-			<a href="{base}/preview/character/{char.id}">{char.name} ({char.id})</a>
+			<a href="{base}/preview/character?id={char.id}">{char.name} ({char.id})</a>
 			<button on:click={() => deleteCharacter(char.id)} class="btn btn-warning btn-sm"
 				>Delete</button
 			>
