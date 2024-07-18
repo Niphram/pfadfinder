@@ -18,7 +18,10 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Run Tests
+        run: npm run test
 
       - name: Download Pathfinder Data
         run: curl https://docs.google.com/spreadsheets/d/1cuwb3QSvWDD7GG5McdvyyRBpqycYuKMRsXgyrvxvLFI/gviz/tq?tqx=out:csv --create-dirs -o data/spells.csv
