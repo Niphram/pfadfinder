@@ -7,15 +7,7 @@ import {
 } from './systems/pathfinder/data/character';
 import { lazy } from './utils/lazy';
 import { debounce } from './utils/debounce';
-
-export type CharacterBase = {
-	readonly id: string;
-	readonly system: string;
-	readonly version: number;
-	name: string;
-};
-
-export type CharacterMigrationFn = (data: CharacterBase & object) => CharacterBase & object;
+import type { CharacterBase, CharacterMigrationFn } from './types/character';
 
 function migrateCharacter(data: CharacterBase & object, migrations: CharacterMigrationFn[]) {
 	return migrations

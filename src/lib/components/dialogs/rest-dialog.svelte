@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { SPELL_LEVELS, c } from '$lib/data';
+	import { Item, SPELL_LEVELS, c } from '$lib/data';
 	import { title } from '../dialog.svelte';
 
 	$title = 'Rest';

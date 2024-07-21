@@ -23,6 +23,9 @@ jobs:
       - name: Run Tests
         run: npm run test
 
+      - name: Lint
+        run: npm run lint
+
       - name: Download Pathfinder Data
         run: curl https://docs.google.com/spreadsheets/d/1cuwb3QSvWDD7GG5McdvyyRBpqycYuKMRsXgyrvxvLFI/gviz/tq?tqx=out:csv --create-dirs -o data/spells.csv
 

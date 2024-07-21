@@ -1,7 +1,7 @@
 import { autoserialize } from 'cerialize';
 import { nanoid } from 'nanoid';
 
-import type { CharacterBase, CharacterMigrationFn } from '$lib/preview/character-store';
+import type { CharacterBase, CharacterMigrationFn } from '$lib/preview/types/character';
 
 export const PATHFINDER_CHAR_MIGRATIONS: CharacterMigrationFn[] = [];
 

@@ -61,8 +61,7 @@
 			{#if item.chargeType !== 'none'}
 				<button
 					class="btn btn-accent btn-sm ml-2 w-28 px-2 md:btn-md"
-					on:click|stopPropagation={() =>
-						items[index].remaining > 0 && items[index].remaining--}
+					on:click|stopPropagation={() => items[index].remaining > 0 && items[index].remaining--}
 				>
 					{item.remaining}{#if item.chargeType === 'perDay'}
 						/{item.perDay}
