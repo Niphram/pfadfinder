@@ -55,10 +55,3 @@ Macros inside text fields can be optionally formatted. The syntax needs to follo
 | ---- | ------------------------------------------------------------ |
 | `+`  | Will always display the sign, even if the number is positive |
 | `z`  | Don't display anything, if the result is zero                |
-
-## Data sources
-
-Section 15: Copyright Notice - Paizo Spells Database
-Paizo Spells Database. Copyright 2020 Mike Chopswil
-
-https://home.pathfindercommunity.net/home/databases/spells
