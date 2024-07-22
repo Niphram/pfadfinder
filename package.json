@@ -49,6 +49,7 @@
 		"idb-keyval": "^6.2.1",
 		"moosmann-svelte": "^0.4.1",
 		"nanoid": "^5.0.4",
+		"proxy-deep": "^4.0.1",
 		"sortablejs": "^1.15.2",
 		"typescript-parsec": "^0.3.4"
 	}
