@@ -2,12 +2,18 @@
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
+	import { beforeUpdate } from 'svelte';
 
 	import { loadCharacter } from '$lib/preview/character-store';
 
-	const id = $page.url.searchParams.get('id');
+	let id: string | null;
+	beforeUpdate(() => {
+		id = $page.url.searchParams.get('my-parameter');
 
-	if (!id) goto(`${base}/preview`);
+		if (!id) {
+			goto(`${base}/preview`);
+		}
+	});
 </script>
 
 {#if id}
@@ -16,8 +22,4 @@
 	{:then { character, SheetComponent }}
 		<svelte:component this={SheetComponent} {character} />
 	{/await}
-{:else}
-	Character not found!
-
-	<a href="{base}/preview">Back to selection</a>
 {/if}
