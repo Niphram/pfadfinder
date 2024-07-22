@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import { openDialog } from '$lib/components/dialog.svelte';
-	import { deleteCharacter, listCharacters, saveCharacter } from '$lib/preview/character-store';
-	import { SYSTEM_MAP, type SystemName } from '$lib/preview/systems';
+	import { deleteCharacter, listCharacters } from '$lib/preview/character-store';
 	import CreateCharacter from './create-character.svelte';
 
 	let selectedSystem: string | undefined;

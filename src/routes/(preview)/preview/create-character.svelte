@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import { title } from '$lib/components/dialog.svelte';
-	import Select from '$lib/components/input/select.svelte';
 	import { saveCharacter } from '$lib/preview/character-store';
 	import { SYSTEM_MAP, type SystemName } from '$lib/preview/systems';
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import DeepProxy from 'proxy-deep';
 import { Derive } from './derive';
 import { Macro } from './macro';
@@ -18,12 +19,14 @@ export function macroProxy<O extends NonNullable<unknown>>(obj: O) {
 			}
 		},
 		set(target, p, value, receiver) {
+			// @ts-expect-error WIP
 			target[p] = value;
 
 			return true;
 		},
 		apply(target, thisArg, argArray) {
 			console.log(this.path);
+			// @ts-expect-error WIP
 			return target(this.rootTarget);
 		}
 	});
