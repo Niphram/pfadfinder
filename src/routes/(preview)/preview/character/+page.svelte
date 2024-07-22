@@ -8,7 +8,7 @@
 
 	let id: string | null;
 	beforeUpdate(() => {
-		id = $page.url.searchParams.get('my-parameter');
+		id = $page.url.searchParams.get('id');
 
 		if (!id) {
 			goto(`${base}/preview`);
