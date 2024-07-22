@@ -1,22 +1,14 @@
-import { autoserialize } from 'cerialize';
-import { nanoid } from 'nanoid';
+import { autoserialize, inheritSerialization } from 'cerialize';
 
-import type { CharacterBase, CharacterMigrationFn } from '$lib/preview/types/character';
+import { VersionedCharacter, type CharacterMigrationFn } from '../../versioned-character';
 
 export const PATHFINDER_CHAR_MIGRATIONS: CharacterMigrationFn[] = [];
 
-export class PathfinderCharacter implements CharacterBase {
-	@autoserialize
-	readonly id = nanoid();
-
-	@autoserialize
-	readonly system = 'pathfinder';
-
-	@autoserialize
-	readonly version = PATHFINDER_CHAR_MIGRATIONS.length;
-
-	@autoserialize
-	name = 'Unnamed Character';
+@inheritSerialization(VersionedCharacter)
+export class PathfinderCharacter extends VersionedCharacter {
+	constructor() {
+		super('pathfinder', PATHFINDER_CHAR_MIGRATIONS.length);
+	}
 
 	@autoserialize
 	dex = 10;

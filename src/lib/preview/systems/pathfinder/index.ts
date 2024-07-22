@@ -1,5 +1,4 @@
-import type { SystemData } from '$lib/preview/types/system';
-
+import type { SystemData } from '../system';
 import Page from './components/page.svelte';
 import { PATHFINDER_CHAR_MIGRATIONS, PathfinderCharacter } from './data/character';
 

@@ -1,15 +1,14 @@
 import { GenericDeserializeInto, Serialize } from 'cerialize';
 import { writable, type Writable } from 'svelte/store';
-import { initDB } from './idb-store';
-import {
-	PATHFINDER_CHAR_MIGRATIONS,
-	PathfinderCharacter
-} from './systems/pathfinder/data/character';
-import { lazy } from './utils/lazy';
-import { debounce } from './utils/debounce';
-import type { CharacterBase, CharacterMigrationFn } from './types/character';
 
-function migrateCharacter(data: CharacterBase & object, migrations: CharacterMigrationFn[]) {
+import { initDB } from './idb-store';
+import { SYSTEM_MAP } from './systems';
+import { PathfinderCharacter } from './systems/pathfinder/data/character';
+import type { CharacterMigrationFn, VersionedCharacter } from './systems/versioned-character';
+import { debounce } from './utils/debounce';
+import { lazy } from './utils/lazy';
+
+function migrateCharacter(data: VersionedCharacter, migrations: CharacterMigrationFn[]) {
 	return migrations
 		.slice(data.version)
 		.reduce((previousCharData, migrateFunction) => migrateFunction(previousCharData), data);
@@ -18,9 +17,10 @@ function migrateCharacter(data: CharacterBase & object, migrations: CharacterMig
 type DBTypes = {
 	characters: {
 		key: string;
-		value: CharacterBase;
+		value: VersionedCharacter;
 		indexes: {
 			id_idx: string;
+			updated_idx: Date;
 		};
 	};
 };
@@ -28,19 +28,20 @@ type DBTypes = {
 const dbInstance = lazy(() =>
 	initDB<DBTypes>('data', [
 		(db) => {
-			db.createObjectStore('characters', { keyPath: 'id' }).createIndex('id_idx', 'id', {
-				unique: true
-			});
+			const characterStore = db.createObjectStore('characters', { keyPath: 'id' });
+
+			characterStore.createIndex('id_idx', 'id', { unique: true });
+			characterStore.createIndex('updated_idx', 'updated');
 		}
 	])
 );
 
-export async function listCharacters() {
+export async function listCharacters(system?: string) {
 	const db = await dbInstance();
 
-	const characters = await db.getAll('characters');
+	const characters = await db.getAllFromIndex('characters', 'updated_idx');
 
-	return characters;
+	return (system ? characters.filter((char) => char.system === system) : characters).reverse();
 }
 
 export async function addCharacter() {
@@ -51,46 +52,60 @@ export async function addCharacter() {
 	return result;
 }
 
+export async function saveCharacter<C extends VersionedCharacter>(character: C) {
+	const db = await dbInstance();
+
+	const result = await db.add('characters', Serialize(character));
+
+	return result;
+}
+
 export async function deleteCharacter(id: string) {
 	const db = await dbInstance();
 
 	await db.delete('characters', id);
 }
 
-const CHARACTER_TYPES: Record<string, [new () => CharacterBase, CharacterMigrationFn[]]> = {
-	pathfinder: [PathfinderCharacter, PATHFINDER_CHAR_MIGRATIONS]
-};
-
-function determineSystem(char: CharacterBase) {
-	const types = CHARACTER_TYPES[char.system];
-
-	if (!types) throw new Error('Unknown System!');
-
-	return types;
-}
-
 export async function loadCharacter(id: string) {
 	const db = await dbInstance();
 
 	const char = await db.getFromIndex('characters', 'id_idx', id);
-	if (!char) throw new Error('Not Found');
+	if (!char) throw new Error('Not Found'); // TODO: Error Page?
 
-	const [CharConstructor, migrations] = determineSystem(char);
+	if (!(char.system in SYSTEM_MAP)) throw new Error('Unknown System'); // TODO: Error Page?
+
+	const system = SYSTEM_MAP[char.system];
+
+	if (char.version > system.migrations.length) throw new Error('Unknown Version'); // TODO: Error Page?
 
 	const w = writable(
 		GenericDeserializeInto(
-			migrateCharacter(char, migrations),
-			CharConstructor,
-			new CharConstructor()
+			migrateCharacter(char, system.migrations),
+			system.character,
+			new system.character()
 		)
 	);
 
-	const debouncedSave = debounce(async (v: CharacterBase) => {
+	const debouncedSave = debounce(async (v: VersionedCharacter) => {
 		console.log('SAVE!!!');
 		await db.put('characters', Serialize(v));
 	}, 1000);
 
 	w.subscribe(debouncedSave);
 
-	return w as Writable<PathfinderCharacter>;
+	// TODO: Fix this mess
+	type SYSTEMS = typeof SYSTEM_MAP;
+	type RETURN = {
+		[Property in keyof SYSTEMS]: {
+			character: Writable<SYSTEMS[Property]['character']['prototype']>;
+			Character: SYSTEMS[Property]['character']['prototype'];
+			SheetComponent: SYSTEMS[Property]['page']['prototype'];
+		};
+	}[keyof SYSTEMS];
+
+	return {
+		character: w,
+		Character: system.character,
+		SheetComponent: system.page
+	} as unknown as RETURN;
 }

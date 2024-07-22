@@ -1,18 +1,20 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 
 	import { loadCharacter } from '$lib/preview/character-store';
-	import Pathfinder from './pathfinder.svelte';
 
 	const id = $page.url.searchParams.get('id');
+
+	if (!id) goto(`${base}/preview`);
 </script>
 
 {#if id}
 	{#await loadCharacter(id)}
 		loading
-	{:then character}
-		<Pathfinder {character} />
+	{:then { character, SheetComponent }}
+		<svelte:component this={SheetComponent} {character} />
 	{/await}
 {:else}
 	Character not found!

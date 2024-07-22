@@ -1,5 +1,4 @@
-import type { SystemData } from '$lib/preview/types/system';
-
+import type { SystemData } from '../system';
 import { KidsOnBikesCharacter } from './character';
 import { MIGRATION } from './migration';
 import KidsOnBikesPage from './page.svelte';

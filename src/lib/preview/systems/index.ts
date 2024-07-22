@@ -1,6 +1,6 @@
-import type { SystemData } from '../types/system';
 import { KidsOnBikes } from './kids-on-bikes';
 import { Pathfinder } from './pathfinder';
+import type { SystemData } from './system';
 
 export const SYSTEM_MAP = {
 	pathfinder: Pathfinder,
