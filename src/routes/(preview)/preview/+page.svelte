@@ -40,7 +40,9 @@
 							<p class="flex-grow truncate text-lg">
 								{char.name}
 							</p>
-							<p class="badge badge-neutral badge-outline badge-md">{char.system}</p>
+							<p class="badge badge-neutral badge-outline badge-md whitespace-nowrap">
+								{char.system}
+							</p>
 						</a>
 
 						<button on:click={() => deleteChar(char.id)} class="btn-xl btn btn-warning">
