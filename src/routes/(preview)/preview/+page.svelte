@@ -33,11 +33,14 @@
 			<div class="flex flex-col gap-4">
 				{#each characters as char}
 					<div class="flex flex-row gap-2">
-						<a href="{base}/preview/character?id={char.id}" class="flex-grow">
-							<div class="btn flex flex-row">
-								<p class="flex-grow text-lg">{char.name}</p>
-								<p class="badge badge-neutral badge-outline badge-lg">{char.system}</p>
-							</div>
+						<a
+							href="{base}/preview/character?id={char.id}"
+							class="btn flex min-w-0 flex-auto flex-row flex-nowrap"
+						>
+							<p class="flex-grow truncate text-lg">
+								{char.name}
+							</p>
+							<p class="badge badge-neutral badge-outline badge-md">{char.system}</p>
 						</a>
 
 						<button on:click={() => deleteChar(char.id)} class="btn-xl btn btn-warning">
