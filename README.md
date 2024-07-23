@@ -33,6 +33,7 @@ Macros currently support the following things:
 | Rounding    | `round(<value>)`, `ceil(<value>)`, `floor(<value>)`                                                      |
 | Min/Max     | `max(<a>, <b>, ...)`, `min(<a>, <b>, ...)` Takes any number of arguments, calculates the minimum/maximum |
 | Clamp       | `clamp(<value>, <min>, <max>)` Clamps `value` between `min` and `max`                                    |
+| Step        | `step(<value>, <threshold>)` Is `0` if `value < threshold` and `1` otherwise                             |
 
 ### Character Data
 

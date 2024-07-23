@@ -63,7 +63,7 @@ type BinaryNode = {
 
 type FuncNode = {
 	type: NodeType.Func;
-	func?: 'floor' | 'round' | 'ceil' | 'min' | 'max' | 'clamp' | 'abs';
+	func?: 'floor' | 'round' | 'ceil' | 'min' | 'max' | 'clamp' | 'abs' | 'step';
 	nodes: Node[];
 };
 
@@ -131,6 +131,11 @@ function applyFunc([func, nodes]: [Token | undefined, Node[]]): FuncNode {
 		case 'clamp':
 			if (nodes.length !== 3)
 				throw new Error(`Function ${func?.text} expected 3 argument, got ${nodes.length}`);
+			break;
+
+		case 'step':
+			if (nodes.length !== 2)
+				throw new Error(`Function ${func?.text} expected 2 argument, got ${nodes.length}`);
 			break;
 
 		default:
