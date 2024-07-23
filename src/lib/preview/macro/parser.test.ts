@@ -19,6 +19,7 @@ describe('Macro', () => {
 			['max(1)', NodeType.Func],
 			['max(1,2)', NodeType.Func],
 			['clamp(1,2,3)', NodeType.Func],
+			['step(1,2)', NodeType.Func],
 			['(1234)', NodeType.Func]
 		];
 
@@ -44,6 +45,8 @@ describe('Macro', () => {
 			'min()',
 			'max()',
 			'clamp(1,2)',
+			'step(1)',
+			'step(1,2,3)',
 			'fake(1)'
 		];
 
