@@ -14,10 +14,14 @@
 	}
 </script>
 
-<div class="flex h-full flex-col gap-2">
-	{#each Object.keys(SYSTEM_MAP) as system}
-		<button class="btn btn-primary" on:click={() => createAndOpenCharacter(system)}>
-			{system}
-		</button>
-	{/each}
+<div class="flex flex-col gap-4">
+	<div class="divider">Select a system</div>
+
+	<div class="flex h-full flex-col gap-2">
+		{#each Object.keys(SYSTEM_MAP) as system}
+			<button class="btn btn-primary" on:click={() => createAndOpenCharacter(system)}>
+				{system}
+			</button>
+		{/each}
+	</div>
 </div>

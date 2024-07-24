@@ -7,5 +7,5 @@ import type { CharacterMigrationFn, VersionedCharacter } from './versioned-chara
 export type SystemData<C extends VersionedCharacter = any> = {
 	character: new () => C;
 	migrations: CharacterMigrationFn[];
-	page: ComponentType<SvelteComponent<{ character: Writable<C> }>>;
+	page: ComponentType<SvelteComponent<{ c: Writable<C> }>>;
 };

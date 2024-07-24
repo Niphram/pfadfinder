@@ -3,9 +3,9 @@
 
 	import type { KidsOnBikesCharacter } from './character';
 
-	export let character: Writable<KidsOnBikesCharacter>;
+	export let c: Writable<KidsOnBikesCharacter>;
 </script>
 
 <h1>Kids on Bikes</h1>
 
-<input bind:value={$character.name} />
+<input bind:value={$c.name} />
