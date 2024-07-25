@@ -1,4 +1,4 @@
-import { autoserializeAs, inheritSerialization } from 'cerialize';
+import { autoserialize, autoserializeAs, inheritSerialization } from 'cerialize';
 
 import { VersionedCharacter, type CharacterMigrationFn } from '../../versioned-character';
 
@@ -85,6 +85,9 @@ export class PathfinderCharacter extends VersionedCharacter {
 
 	@autoserializeAs(Persona)
 	persona = new Persona();
+
+	@autoserialize
+	heropoints = 0;
 
 	@autoserializeAs(Settings)
 	settings = new Settings();

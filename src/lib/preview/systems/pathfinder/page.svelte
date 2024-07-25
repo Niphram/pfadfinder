@@ -13,7 +13,7 @@
 <div class="min-h-screen">
 	<div class="sticky top-0 z-40 w-full bg-base-200 drop-shadow-xl">
 		<div class="flex flex-row items-stretch justify-between gap-2 p-2">
-			<button class="btn btn-ghost h-auto min-w-0 flex-shrink px-2">
+			<button class="btn btn-ghost h-auto min-w-0 flex-auto justify-start px-2">
 				<div class="flex min-w-0 flex-col">
 					<div class="flex flex-row flex-nowrap items-center justify-start gap-2">
 						<span class="truncate text-lg font-bold">{$c.name}</span>
@@ -22,6 +22,14 @@
 					<div class="truncate text-sm">
 						{$c.classes.list.map((c) => `${c.name} ${c.level}`).join(', ')}
 					</div>
+				</div>
+			</button>
+			<button
+				class="btn btn-outline btn-neutral hidden h-auto min-h-0 flex-col justify-center gap-0 px-2 py-1 text-center sm:flex"
+			>
+				<div class="text-xs">Heropoints</div>
+				<div class="text-lg">
+					{$c.heropoints}/3
 				</div>
 			</button>
 			<button
