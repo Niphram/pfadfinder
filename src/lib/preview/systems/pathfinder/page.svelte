@@ -4,10 +4,12 @@
 	import CharacterPage from './page/character-page.svelte';
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import PageDialog from './dialogs/page-dialog.svelte';
+	import { setChar } from './context';
 
 	$: pages = [{ key: 'character', component: CharacterPage, active: true }] as const;
 
 	export let c: Writable<PathfinderCharacter>;
+	setChar(c);
 </script>
 
 <div class="min-h-screen">

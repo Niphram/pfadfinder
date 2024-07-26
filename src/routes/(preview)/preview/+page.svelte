@@ -2,6 +2,7 @@
 	import { base } from '$app/paths';
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import { deleteCharacter, listCharacters } from '$lib/preview/character-store';
+	import { t } from '$lib/preview/i18n';
 	import CreateCharacter from './create-character.svelte';
 
 	let selectedSystem: string | undefined;
@@ -18,7 +19,7 @@
 <div class="flex flex-col">
 	<div class="sticky top-0 z-40 flex h-20 w-full flex-col bg-base-200 drop-shadow-xl">
 		<div class="flex flex-row items-stretch gap-2 p-2 align-middle">
-			<p class="text-lg font-bold">Pfadfinder</p>
+			<p class="text-lg font-bold">Preview (Work in Progress)</p>
 		</div>
 	</div>
 
@@ -38,7 +39,7 @@
 							class="btn flex min-w-0 flex-auto flex-row flex-nowrap"
 						>
 							<p class="flex-grow truncate text-lg">
-								{char.name}
+								{char.name || $t('general.character.unnamed_character')}
 							</p>
 							<p class="badge badge-neutral badge-outline badge-md whitespace-nowrap">
 								{char.system}

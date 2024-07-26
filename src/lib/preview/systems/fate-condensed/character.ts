@@ -1,0 +1,101 @@
+import { autoserialize, autoserializeAs, inheritSerialization } from 'cerialize';
+import { nanoid } from 'nanoid';
+
+import { VersionedCharacter, type CharacterMigrationFn } from '../versioned-character';
+
+export const FATE_CONDENSED_CHAR_MIGRATIONS: CharacterMigrationFn[] = [];
+
+export class Aspect {
+	id = nanoid();
+
+	@autoserialize
+	name;
+
+	constructor(name: string) {
+		this.name = name;
+	}
+}
+
+export class Skill {
+	id = nanoid();
+
+	@autoserialize
+	name;
+
+	@autoserialize
+	bonus = 0;
+
+	constructor(name: string) {
+		this.name = name;
+	}
+}
+
+@inheritSerialization(VersionedCharacter)
+export class FateCondensedCharacter extends VersionedCharacter {
+	constructor() {
+		super('fate-condensed', FATE_CONDENSED_CHAR_MIGRATIONS.length);
+	}
+
+	@autoserialize
+	pronouns = '';
+
+	@autoserialize
+	high_concept = '';
+	@autoserialize
+	trouble = '';
+	@autoserialize
+	relationship = '';
+	@autoserializeAs(Aspect)
+	additional_aspects = [new Aspect(''), new Aspect('')];
+
+	@autoserialize
+	physical_stress = 0;
+	@autoserialize
+	mental_stress = 0;
+
+	@autoserialize
+	physical_stress_skill = 'Physique';
+	get physical_stress_max() {
+		const skill = this.skills.find(({ name }) => name === this.physical_stress_skill);
+		return 3 + Math.min(3, Math.ceil((skill?.bonus || 0) / 2));
+	}
+
+	@autoserialize
+	mental_stress_skill = 'Will';
+	get mental_stress_max() {
+		const skill = this.skills.find(({ name }) => name === this.mental_stress_skill);
+		return 3 + Math.min(3, Math.ceil((skill?.bonus || 0) / 2));
+	}
+
+	@autoserialize
+	stunts = '';
+
+	@autoserializeAs(Skill)
+	skills = [
+		new Skill('Academics'),
+		new Skill('Athletics'),
+		new Skill('Burglary'),
+		new Skill('Contacts'),
+		new Skill('Crafts'),
+		new Skill('Deceive'),
+		new Skill('Drive'),
+		new Skill('Empathy'),
+		new Skill('Fight'),
+		new Skill('Investigate'),
+		new Skill('Lore'),
+		new Skill('Notice'),
+		new Skill('Physique'),
+		new Skill('Provoke'),
+		new Skill('Rapport'),
+		new Skill('Resources'),
+		new Skill('Shoot'),
+		new Skill('Stealth'),
+		new Skill('Will')
+	];
+
+	@autoserialize
+	refresh = 3;
+
+	@autoserialize
+	fate_points = 0;
+}

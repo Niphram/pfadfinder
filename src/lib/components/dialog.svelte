@@ -26,9 +26,13 @@
 	}
 
 	export const title = writable('');
+
+	function clearStore() {
+		dialogContent.set({ props: {} });
+	}
 </script>
 
-<dialog class="modal" bind:this={dialog}>
+<dialog class="modal" bind:this={dialog} on:close={clearStore}>
 	<form
 		method="dialog"
 		class="modal-box h-full max-h-none w-full max-w-none rounded-none pt-16 md:h-min md:max-h-[calc(100vh-5em)] md:max-w-lg md:rounded-md"
