@@ -9,6 +9,7 @@
 	import Add from '$lib/preview/icons/add.svelte';
 	import Trash from '$lib/preview/icons/trash.svelte';
 	import { Skill, type FateCondensedCharacter } from '../character';
+	import IntegerInput from '$lib/preview/atoms/integer-input.svelte';
 
 	$title = $t('fate_condensed.skills_config');
 
@@ -53,13 +54,8 @@
 			/>
 		</div>
 
-		<div class="form-control w-32">
-			<input
-				name="bonus"
-				type="number"
-				class="input input-bordered input-sm w-full"
-				bind:value={$c.skills[index].bonus}
-			/>
+		<div class="w-32">
+			<IntegerInput name="bonus" min={0} max={10} bind:value={$c.skills[index].bonus} small />
 		</div>
 
 		<button

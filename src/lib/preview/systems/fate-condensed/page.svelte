@@ -18,8 +18,8 @@
 	export let c: Writable<FateCondensedCharacter>;
 
 	$: invalid_vitals =
-		!$c.skills.find((s) => s.name === $c.physical_stress_skill) ||
-		!$c.skills.find((s) => s.name === $c.mental_stress_skill);
+		($c.physical_stress_skill && !$c.skills.find((s) => s.name === $c.physical_stress_skill)) ||
+		($c.mental_stress_skill && !$c.skills.find((s) => s.name === $c.mental_stress_skill));
 </script>
 
 <div class="flex flex-col items-stretch">
@@ -41,26 +41,35 @@
 					name="high_concept"
 					label={$t('fate_condensed.high_concept')}
 					bind:value={$c.high_concept}
+					small
 				/>
 
-				<TextInput name="trouble" label={$t('fate_condensed.trouble')} bind:value={$c.trouble} />
+				<TextInput
+					name="trouble"
+					label={$t('fate_condensed.trouble')}
+					bind:value={$c.trouble}
+					small
+				/>
 
 				<TextInput
 					name="relationship"
 					label={$t('fate_condensed.relationship')}
 					bind:value={$c.relationship}
+					small
 				/>
 
 				<TextInput
 					name="other_ascpect_1"
 					label={$t('fate_condensed.other_aspect')}
 					bind:value={$c.other_aspect_1}
+					small
 				/>
 
 				<TextInput
 					name="other_ascpect_2"
 					label={$t('fate_condensed.other_aspect')}
 					bind:value={$c.other_aspect_2}
+					small
 				/>
 			</div>
 
@@ -81,8 +90,8 @@
 					</button>
 				</Divider>
 
-				<div class="flex flex-row justify-center gap-4">
-					<table class="m-0 w-min border-separate border-spacing-x-2 p-0 align-middle">
+				<div class="flex flex-col items-center justify-center">
+					<table class="m-0 w-min border-separate border-spacing-2 p-0 align-middle">
 						<tr>
 							<td class="m-0 p-0 text-right">
 								<button
@@ -114,6 +123,33 @@
 							</td>
 						</tr>
 					</table>
+
+					<TextInput
+						name="mild_consequence"
+						label={$t('fate_condensed.mild_consequence')}
+						bind:value={$c.mild_consequence}
+						small
+					/>
+					{#if $c.physical_stress_max > 5 || $c.mental_stress_max > 5}
+						<TextInput
+							name="mild_consequence_extra"
+							label={$t('fate_condensed.mild_consequence')}
+							bind:value={$c.mild_consequence_extra}
+							small
+						/>
+					{/if}
+					<TextInput
+						name="moderate_consequence"
+						label={$t('fate_condensed.moderate_consequence')}
+						bind:value={$c.moderate_consequence}
+						small
+					/>
+					<TextInput
+						name="severe_consequence"
+						label={$t('fate_condensed.severe_consequence')}
+						bind:value={$c.severe_consequence}
+						small
+					/>
 				</div>
 			</div>
 

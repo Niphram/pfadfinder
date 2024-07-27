@@ -45,6 +45,15 @@ export class FateCondensedCharacter extends VersionedCharacter {
 	mental_stress = 0;
 
 	@autoserialize
+	mild_consequence = '';
+	@autoserialize
+	mild_consequence_extra = '';
+	@autoserialize
+	moderate_consequence = '';
+	@autoserialize
+	severe_consequence = '';
+
+	@autoserialize
 	physical_stress_skill = 'Physique';
 	get physical_stress_max() {
 		const skill = this.skills.find(({ name }) => name === this.physical_stress_skill);

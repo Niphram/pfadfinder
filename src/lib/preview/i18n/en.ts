@@ -29,6 +29,10 @@ export default {
 		bonus: 'Bonus',
 
 		physical: 'Physical',
-		mental: 'Mental'
+		mental: 'Mental',
+
+		mild_consequence: 'Mild Consequence (2 Stress)',
+		moderate_consequence: 'Moderate Consequence (4 Stress)',
+		severe_consequence: 'Severe Consequence (6 Stress)'
 	}
 };

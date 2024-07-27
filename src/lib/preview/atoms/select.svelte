@@ -23,6 +23,8 @@
 		</label>
 	{/if}
 	<select {name} class="select select-bordered w-full" class:select-error={error} bind:value>
+		<slot name="once" />
+
 		{#each options as option (option)}
 			<slot {option} />
 		{/each}
