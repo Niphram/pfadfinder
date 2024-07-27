@@ -22,6 +22,7 @@ export default {
 		vitals: 'Vitals',
 		stunts: 'Stunts',
 		skills: 'Skills',
+		refresh: 'Refresh',
 
 		high_concept: 'High Concept',
 		trouble: 'Trouble',

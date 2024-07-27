@@ -5,15 +5,15 @@
 	import Divider from '$lib/preview/atoms/divider.svelte';
 	import Header from '$lib/preview/atoms/header.svelte';
 	import TextArea from '$lib/preview/atoms/text-area.svelte';
+	import TextInput from '$lib/preview/atoms/text-input.svelte';
 	import { t } from '$lib/preview/i18n';
 	import { withSign } from '$lib/preview/utils/format';
-
 	import { type FateCondensedCharacter } from './character';
+	import RefreshTracker from './components/refresh-tracker.svelte';
 	import StressMeter from './components/stress-meter.svelte';
 	import NameDialog from './dialogs/name-dialog.svelte';
 	import SkillConfigDialog from './dialogs/skill-config-dialog.svelte';
 	import VitalsDialog from './dialogs/vitals-dialog.svelte';
-	import TextInput from '$lib/preview/atoms/text-input.svelte';
 
 	export let c: Writable<FateCondensedCharacter>;
 
@@ -38,7 +38,7 @@
 		</button>
 	</Header>
 
-	<div class="flex w-full flex-col gap-2 self-center p-4 md:max-w-6xl md:flex-row">
+	<div class="flex w-full max-w-xl flex-col gap-2 self-center p-4 md:max-w-6xl md:flex-row">
 		<div class="flex flex-grow flex-col gap-2">
 			<div class="flex flex-col">
 				<Divider>{$t('fate_condensed.aspects')}</Divider>
@@ -168,28 +168,39 @@
 
 		<div class="divider divider-horizontal hidden md:flex" />
 
-		<div class="flex flex-grow flex-col gap-2">
-			<Divider>
-				{$t('fate_condensed.skills')}
-				<button class="btn btn-outline btn-xs" on:click={() => openDialog(SkillConfigDialog, { c })}
-					>{$t('general.ui.config')}</button
-				>
-			</Divider>
+		<div class="flex flex-grow flex-col justify-start">
+			<div class="flex flex-col gap-2">
+				<Divider>
+					{$t('fate_condensed.skills')}
+					<button
+						class="btn btn-outline btn-xs"
+						on:click={() => openDialog(SkillConfigDialog, { c })}>{$t('general.ui.config')}</button
+					>
+				</Divider>
 
-			{#each $c.skills as { id, name, bonus } (id)}
-				<button class="btn btn-ghost join btn-sm flex flex-row justify-stretch gap-1 p-0">
-					<span
-						class="join-item flex flex-auto items-center justify-center bg-base-200 pl-16 text-center text-base-content"
-					>
-						{name || $t('fate_condensed.unnamed_skill')}
-					</span>
-					<span
-						class="join-item flex w-16 items-center justify-center bg-accent text-accent-content"
-					>
-						{withSign(bonus)}
-					</span>
-				</button>
-			{/each}
+				{#each $c.skills as { id, name, bonus } (id)}
+					<button class="btn btn-ghost join btn-sm flex flex-row justify-stretch gap-1 p-0">
+						<span
+							class="join-item flex flex-auto items-center justify-center bg-base-200 pl-16 text-center text-base-content"
+						>
+							{name || $t('fate_condensed.unnamed_skill')}
+						</span>
+						<span
+							class="join-item flex w-16 items-center justify-center bg-accent text-accent-content"
+						>
+							{withSign(bonus)}
+						</span>
+					</button>
+				{/each}
+			</div>
+
+			<div class="flex flex-grow flex-col items-center gap-2">
+				<Divider>
+					{$t('fate_condensed.refresh')}
+				</Divider>
+
+				<RefreshTracker bind:value={$c.refresh} />
+			</div>
 		</div>
 	</div>
 </div>
