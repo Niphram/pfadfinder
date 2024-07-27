@@ -4,12 +4,12 @@
 	import { title } from '$lib/components/dialog.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import Divider from '$lib/preview/atoms/divider.svelte';
+	import IntegerInput from '$lib/preview/atoms/integer-input.svelte';
 	import SortableList from '$lib/preview/components/sortable-list.svelte';
 	import { t } from '$lib/preview/i18n';
 	import Add from '$lib/preview/icons/add.svelte';
 	import Trash from '$lib/preview/icons/trash.svelte';
 	import { Skill, type FateCondensedCharacter } from '../character';
-	import IntegerInput from '$lib/preview/atoms/integer-input.svelte';
 
 	$title = $t('fate_condensed.skills_config');
 
@@ -38,7 +38,7 @@
 	keyProp="id"
 	let:index
 >
-	<div slot="fallback">No Skills</div>
+	<div slot="fallback">{$t('fate_condensed.no_skills')}</div>
 
 	<div class="flex w-full flex-row gap-2">
 		<div class="drag-handle ml-2 flex w-6 items-center justify-center" role="button" tabindex="0">

@@ -20,6 +20,12 @@
 	$: invalid_vitals =
 		($c.physical_stress_skill && !$c.skills.find((s) => s.name === $c.physical_stress_skill)) ||
 		($c.mental_stress_skill && !$c.skills.find((s) => s.name === $c.mental_stress_skill));
+
+	$: show_additional_consequence = {
+		never: false,
+		always: true,
+		auto: $c.physical_stress_max > 5 || $c.mental_stress_max > 5
+	}[$c.show_additional_consequence];
 </script>
 
 <div class="flex flex-col items-stretch">
@@ -130,7 +136,7 @@
 						bind:value={$c.mild_consequence}
 						small
 					/>
-					{#if $c.physical_stress_max > 5 || $c.mental_stress_max > 5}
+					{#if show_additional_consequence}
 						<TextInput
 							name="mild_consequence_extra"
 							label={$t('fate_condensed.mild_consequence')}

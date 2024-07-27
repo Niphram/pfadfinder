@@ -5,6 +5,9 @@ import { VersionedCharacter, type CharacterMigrationFn } from '../versioned-char
 
 export const FATE_CONDENSED_CHAR_MIGRATIONS: CharacterMigrationFn[] = [];
 
+export const SHOW_OPTIONS = ['never', 'always', 'auto'] as const;
+export type ShowOption = (typeof SHOW_OPTIONS)[number];
+
 export class Skill {
 	id = nanoid();
 
@@ -54,17 +57,28 @@ export class FateCondensedCharacter extends VersionedCharacter {
 	severe_consequence = '';
 
 	@autoserialize
+	show_additional_consequence: ShowOption = 'auto';
+
+	@autoserialize
 	physical_stress_skill = 'Physique';
+
+	@autoserialize
+	physical_stress_base = 3;
+
 	get physical_stress_max() {
 		const skill = this.skills.find(({ name }) => name === this.physical_stress_skill);
-		return 3 + Math.min(3, Math.ceil((skill?.bonus || 0) / 2));
+		return this.physical_stress_base + Math.min(3, Math.ceil((skill?.bonus || 0) / 2));
 	}
 
 	@autoserialize
 	mental_stress_skill = 'Will';
+
+	@autoserialize
+	mental_stress_base = 3;
+
 	get mental_stress_max() {
 		const skill = this.skills.find(({ name }) => name === this.mental_stress_skill);
-		return 3 + Math.min(3, Math.ceil((skill?.bonus || 0) / 2));
+		return this.mental_stress_base + Math.min(3, Math.ceil((skill?.bonus || 0) / 2));
 	}
 
 	@autoserialize

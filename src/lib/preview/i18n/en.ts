@@ -10,7 +10,11 @@ export default {
 			delete: 'Delete',
 			add: 'Add',
 			config: 'Config',
-			invalid: 'invalid'
+			invalid: 'invalid',
+
+			never: 'Never',
+			always: 'Always',
+			auto: 'Auto'
 		}
 	},
 	fate_condensed: {
@@ -31,8 +35,18 @@ export default {
 		physical: 'Physical',
 		mental: 'Mental',
 
+		physical_stress: 'Physical Stress',
+		mental_stress: 'Mental Stress',
+		base: 'Base',
+		skill: 'Skill',
+
+		consequences: 'Consequences',
+		show_additional_mild_consequence: 'Show additional mild consequence',
+
 		mild_consequence: 'Mild Consequence (2 Stress)',
 		moderate_consequence: 'Moderate Consequence (4 Stress)',
-		severe_consequence: 'Severe Consequence (6 Stress)'
+		severe_consequence: 'Severe Consequence (6 Stress)',
+
+		no_skills: 'No Skills'
 	}
 };
