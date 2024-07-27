@@ -5,17 +5,6 @@ import { VersionedCharacter, type CharacterMigrationFn } from '../versioned-char
 
 export const FATE_CONDENSED_CHAR_MIGRATIONS: CharacterMigrationFn[] = [];
 
-export class Aspect {
-	id = nanoid();
-
-	@autoserialize
-	name;
-
-	constructor(name: string) {
-		this.name = name;
-	}
-}
-
 export class Skill {
 	id = nanoid();
 
@@ -45,8 +34,10 @@ export class FateCondensedCharacter extends VersionedCharacter {
 	trouble = '';
 	@autoserialize
 	relationship = '';
-	@autoserializeAs(Aspect)
-	additional_aspects = [new Aspect(''), new Aspect('')];
+	@autoserialize
+	other_aspect_1 = '';
+	@autoserialize
+	other_aspect_2 = '';
 
 	@autoserialize
 	physical_stress = 0;

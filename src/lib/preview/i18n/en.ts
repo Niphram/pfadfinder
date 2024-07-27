@@ -19,6 +19,11 @@ export default {
 		stunts: 'Stunts',
 		skills: 'Skills',
 
+		high_concept: 'High Concept',
+		trouble: 'Trouble',
+		relationship: 'Relationship',
+		other_aspect: 'Other Aspect',
+
 		unnamed_skill: 'Unnamed Skill',
 		skills_config: 'Skills config',
 		bonus: 'Bonus',

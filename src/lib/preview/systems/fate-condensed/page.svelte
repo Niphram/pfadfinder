@@ -13,6 +13,7 @@
 	import NameDialog from './dialogs/name-dialog.svelte';
 	import SkillConfigDialog from './dialogs/skill-config-dialog.svelte';
 	import VitalsDialog from './dialogs/vitals-dialog.svelte';
+	import TextInput from '$lib/preview/atoms/text-input.svelte';
 
 	export let c: Writable<FateCondensedCharacter>;
 
@@ -33,7 +34,35 @@
 
 	<div class="flex w-full flex-col gap-2 self-center p-4 md:max-w-6xl md:flex-row">
 		<div class="flex flex-grow flex-col gap-2">
-			<Divider>{$t('fate_condensed.aspects')}</Divider>
+			<div class="flex flex-col">
+				<Divider>{$t('fate_condensed.aspects')}</Divider>
+
+				<TextInput
+					name="high_concept"
+					label={$t('fate_condensed.high_concept')}
+					bind:value={$c.high_concept}
+				/>
+
+				<TextInput name="trouble" label={$t('fate_condensed.trouble')} bind:value={$c.trouble} />
+
+				<TextInput
+					name="relationship"
+					label={$t('fate_condensed.relationship')}
+					bind:value={$c.relationship}
+				/>
+
+				<TextInput
+					name="other_ascpect_1"
+					label={$t('fate_condensed.other_aspect')}
+					bind:value={$c.other_aspect_1}
+				/>
+
+				<TextInput
+					name="other_ascpect_2"
+					label={$t('fate_condensed.other_aspect')}
+					bind:value={$c.other_aspect_2}
+				/>
+			</div>
 
 			<div class="flex flex-col gap-2">
 				<Divider>
