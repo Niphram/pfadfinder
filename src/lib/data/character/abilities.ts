@@ -21,6 +21,10 @@ export class Ability {
 	@autoserialize
 	notes = '';
 
+	get damageMod() {
+		return Math.trunc(this.damage / 2);
+	}
+
 	readonly total = new Derive(
 		(c) =>
 			c[this.key].base.eval(c) +
@@ -33,9 +37,7 @@ export class Ability {
 		(c) => c[this.key].base.eval(c) + c.race[this.key].eval(c) + c[this.key].bonus.eval(c)
 	);
 
-	readonly mod = new Derive(
-		(c) => Math.floor(c[this.key].total.eval(c) / 2) - 5 - Math.floor(this.damage / 2)
-	);
+	readonly mod = new Derive((c) => Math.floor(c[this.key].total.eval(c) / 2) - 5 - this.damageMod);
 
 	constructor(private key: AbilityKey) {}
 }

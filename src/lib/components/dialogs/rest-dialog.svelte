@@ -18,7 +18,7 @@
 
 		// Heal ability damage
 		if ($c.settings.healAbilityDamage)
-			ABILITY_KEYS.forEach((key) => ($c[key].damage = Math.max(0, $c[key].damage - 1)));
+			ABILITY_KEYS.forEach((key) => ($c[key].damage -= Math.sign($c[key].damage)));
 
 		// Recharge all SLAs
 		if ($c.settings.rechargeSLA) $c.spells.spellLikeAbilities.forEach((sla) => sla.recharge());
