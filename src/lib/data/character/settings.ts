@@ -8,6 +8,9 @@ export class Settings {
 	addConToHeal = false;
 
 	@autoserialize
+	healAbilityDamage = true;
+
+	@autoserialize
 	rechargeSLA = true;
 
 	@autoserialize

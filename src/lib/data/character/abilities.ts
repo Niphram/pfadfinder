@@ -16,6 +16,9 @@ export class Ability {
 	temp = new Macro('0');
 
 	@autoserialize
+	damage = 0;
+
+	@autoserialize
 	notes = '';
 
 	readonly total = new Derive(
@@ -30,7 +33,9 @@ export class Ability {
 		(c) => c[this.key].base.eval(c) + c.race[this.key].eval(c) + c[this.key].bonus.eval(c)
 	);
 
-	readonly mod = new Derive((c) => Math.floor(c[this.key].total.eval(c) / 2) - 5);
+	readonly mod = new Derive(
+		(c) => Math.floor(c[this.key].total.eval(c) / 2) - 5 - Math.floor(this.damage / 2)
+	);
 
 	constructor(private key: AbilityKey) {}
 }

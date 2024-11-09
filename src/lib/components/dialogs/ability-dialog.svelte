@@ -2,6 +2,7 @@
 	import { c, type AbilityKey } from '$lib/data';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
+	import Integer from '../input/integer.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
 
 	export let key: AbilityKey = 'str';
@@ -17,6 +18,7 @@
 />
 <MacroInteger bind:value={$c[key].bonus.expr} name="abilityBonus" label="Bonus" />
 <MacroInteger bind:value={$c[key].temp.expr} name="abilityTemp" label="Temp" />
+<Integer bind:value={$c[key].damage} name="abilityDamage" label="Damage" noNegatives />
 
 <div class="form-control w-full">
 	<label for="abilityNotes" class="label pb-0">

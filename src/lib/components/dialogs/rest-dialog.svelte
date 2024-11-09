@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Item, SPELL_LEVELS, c } from '$lib/data';
+	import { ABILITY_KEYS, Item, SPELL_LEVELS, c } from '$lib/data';
 	import { title } from '../dialog.svelte';
 
 	$title = 'Rest';
@@ -15,6 +15,10 @@
 		// Heal
 		if ($c.settings.heal) $c.hp.heal($c.classes.levels);
 		if ($c.settings.addConToHeal) $c.hp.heal(Math.max(0, $c.con.mod.eval($c)));
+
+		// Heal ability damage
+		if ($c.settings.healAbilityDamage)
+			ABILITY_KEYS.forEach((key) => ($c[key].damage = Math.max(0, $c[key].damage - 1)));
 
 		// Recharge all SLAs
 		if ($c.settings.rechargeSLA) $c.spells.spellLikeAbilities.forEach((sla) => sla.recharge());
@@ -55,6 +59,13 @@
 		<label class="label cursor-pointer pb-0">
 			<span class="label-text">Add CON when healing ({Math.max(0, $c.con.mod.eval($c))} HP)</span>
 			<input type="checkbox" class="toggle" bind:checked={$c.settings.addConToHeal} />
+		</label>
+	</div>
+
+	<div class="form-control">
+		<label class="label cursor-pointer pb-0">
+			<span class="label-text">Heal ability damage</span>
+			<input type="checkbox" class="toggle" bind:checked={$c.settings.healAbilityDamage} />
 		</label>
 	</div>
 
