@@ -10,11 +10,15 @@ export class ArmorClass {
 	@autoserialize
 	secondaryAbility?: AbilityKey;
 
-	readonly abilityMod = new Derive(
-		(c) =>
-			c[this.primaryAbility].mod.eval(c) +
-			(this.secondaryAbility ? c[this.secondaryAbility].mod.eval(c) : 0)
-	);
+	readonly abilityMod = new Derive((c) => {
+		const primaryMax = this.primaryAbility === 'dex' ? c.equipment.maxDexBonus : Infinity;
+		const secondaryMax = this.secondaryAbility === 'dex' ? c.equipment.maxDexBonus : Infinity;
+
+		return (
+			Math.min(c[this.primaryAbility].mod.eval(c), primaryMax) +
+			(this.secondaryAbility ? Math.min(c[this.secondaryAbility].mod.eval(c), secondaryMax) : 0)
+		);
+	});
 
 	readonly total = new Derive((c) => 10 + c.ac.abilityMod.eval(c) + c.equipment.acBonus);
 

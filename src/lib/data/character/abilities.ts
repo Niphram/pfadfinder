@@ -39,5 +39,11 @@ export class Ability {
 
 	readonly mod = new Derive((c) => Math.floor(c[this.key].total.eval(c) / 2) - 5 - this.damageMod);
 
-	constructor(private key: AbilityKey) {}
+	readonly skillCheckMod = this.mod;
+
+	constructor(private key: AbilityKey) {
+		if (this.key === 'dex' || this.key === 'str') {
+			this.skillCheckMod = new Derive((c) => this.mod.eval(c) + c.equipment.armorCheckPenalty);
+		}
+	}
 }

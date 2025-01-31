@@ -71,7 +71,7 @@ export class Skill {
 
 	readonly mod = new Derive(
 		(c) =>
-			c[this.ability].mod.eval(c) +
+			c[this.ability].skillCheckMod.eval(c) +
 			this.ranks +
 			this.misc.eval(c) +
 			this.temp.eval(c) +

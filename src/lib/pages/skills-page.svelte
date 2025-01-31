@@ -18,17 +18,28 @@
 
 	{#each SKILL_KEYS as key (key)}
 		{#each $c.skills[key].skills as variant, index}
-			{@const skillTags = [variant.classSkill && 'c', variant.ranks > 0 && 't']
+			{@const ability = $c.skills[key].skills[index].ability}
+			{@const penalty = $p[ability].skillCheckMod !== $p[ability].mod}
+
+			{@const skillTags = [penalty && '!', variant.classSkill && 'c', variant.ranks > 0 && 't']
 				.filter(Boolean)
 				.join(', ')}
 
 			<button
 				class="w-full"
-				on:click={() => macroNotify($t(`skills.${key}`), variant.notes, $c)}
+				on:click={() =>
+					macroNotify(
+						$t(`skills.${key}`),
+						variant.notes + (penalty ? '\n\nApplied penalty due to armor' : ''),
+						$c
+					)}
 				on:contextmenu|preventDefault={() => openDialog(SkillDialog, { key, index })}
 			>
 				<div class="btn btn-ghost join btn-sm flex flex-row gap-1 p-0">
-					<div class="join-item flex items-center bg-accent text-accent-content">
+					<div
+						class="join-item flex items-center bg-accent text-accent-content"
+						class:bg-warning={penalty}
+					>
 						<span class="w-16">{skillTags}</span>
 					</div>
 					<div class="join-item flex flex-grow items-center bg-base-200 text-base-content">
@@ -38,7 +49,10 @@
 							>{$t(`skills.${key}`)}{variant.name ? ` (${variant.name})` : ''}</span
 						>
 					</div>
-					<div class="join-item flex items-center bg-accent text-accent-content">
+					<div
+						class="join-item flex items-center bg-accent text-accent-content"
+						class:bg-warning={penalty}
+					>
 						<span class="join-item w-16 align-middle"
 							>{withSign($p.skills[key].skills[index].mod)}</span
 						>

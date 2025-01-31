@@ -3,6 +3,7 @@
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
 	import Integer from '../input/integer.svelte';
+	import OptionalInteger from '../input/optional-integer.svelte';
 	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
 
@@ -69,13 +70,22 @@
 		</Select>
 
 		<div class="grid grid-cols-3 gap-2">
-			{#each penaltyKeys as key}
-				<Integer
-					bind:value={$c.equipment.acItems[index][key]}
-					name="class{key}"
-					label={$t(`equipment.penalties.${key}.short`)}
-				/>
-			{/each}
+			<Integer
+				bind:value={$c.equipment.acItems[index].chkPenalty}
+				noPositive
+				name="chkPenalty"
+				label={$t(`equipment.penalties.chkPenalty.short`)}
+			/>
+			<OptionalInteger
+				bind:value={$c.equipment.acItems[index].maxDexBonus}
+				name="maxDexBonus"
+				label={$t(`equipment.penalties.maxDexBonus.short`)}
+			/>
+			<Integer
+				bind:value={$c.equipment.acItems[index].spellFailure}
+				name="spellFailure"
+				label={$t(`equipment.penalties.spellFailure.short`)}
+			/>
 		</div>
 
 		<TextArea

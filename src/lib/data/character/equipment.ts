@@ -1,7 +1,7 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
 import { nanoid } from 'nanoid';
 
-import { mapSum } from '$lib/utils';
+import { mapMin, mapSum } from '$lib/utils';
 
 export const ARMOR_TYPES = ['light', 'medium', 'heavy', 'shield', 'misc'] as const;
 export type ArmorType = (typeof ARMOR_TYPES)[number];
@@ -90,7 +90,7 @@ export class AcItem {
 	chkPenalty = 0;
 
 	@autoserialize
-	maxDexBonus = 0;
+	maxDexBonus?: number = undefined;
 
 	@autoserialize
 	spellFailure = 0;
@@ -108,6 +108,14 @@ export class Equipment {
 
 	get acBonus() {
 		return mapSum(this.acItems, (i) => (i.equipped ? i.acBonus : 0));
+	}
+
+	get maxDexBonus() {
+		return mapMin(this.acItems, (i) => i.maxDexBonus ?? Infinity) ?? Infinity;
+	}
+
+	get armorCheckPenalty() {
+		return mapSum(this.acItems, (i) => i.chkPenalty);
 	}
 
 	get totalWeight() {
