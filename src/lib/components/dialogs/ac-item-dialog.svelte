@@ -18,8 +18,6 @@
 		'dodBonus'
 	] as const;
 
-	const penaltyKeys = ['chkPenalty', 'maxDexBonus', 'spellFailure'] as const;
-
 	function deleteAcItem() {
 		$c.equipment.acItems.splice(index, 1);
 		$c.equipment.acItems = $c.equipment.acItems;
