@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import { c, resetChar } from '$lib/data';
 	import { persisted } from '$lib/data/storage';
 	import { openDialog, title } from '../dialog.svelte';
 	import Steps from '../steps.svelte';
 	import { isDarkMode, toggleDarkMode } from '../theme-changer.svelte';
+	import MacroDebugDialog from './debug/macro-debug-dialog.svelte';
 	import ImportExportDialog from './import-export-dialog.svelte';
 
 	$title = 'Settings';
@@ -37,7 +37,10 @@
 
 <div class="flex flex-col gap-4">
 	{#if $c.settings.experimentalFeatures}
-		<a href="{base}/preview" class="btn btn-warning w-full">Preview Site (Very W.I.P)</a>
+		<button
+			class="btn btn-secondary w-full"
+			on:click|preventDefault={() => openDialog(MacroDebugDialog, {})}>Macro debugger</button
+		>
 	{/if}
 
 	<button

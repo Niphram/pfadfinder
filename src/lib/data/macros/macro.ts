@@ -17,7 +17,7 @@ export class Macro {
 	private oldExpr?: string;
 
 	private _node?: Node;
-	private get node() {
+	public get node() {
 		if (!this._node || this.expr !== this.oldExpr) {
 			this._node = parse(this.expr);
 			this.oldExpr = this.expr;
