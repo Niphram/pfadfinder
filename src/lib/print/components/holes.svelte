@@ -30,7 +30,7 @@
 
 <div class="flex h-full items-center" style="width: {pattern.margin};">
 	<div class="relative flex h-0 justify-end" style="width: {pattern.holeMargin};">
-		{#each pattern.holes as hole}
+		{#each pattern.holes as hole (hole)}
 			<div
 				class="absolute rounded-full border border-black"
 				style="top: {hole}; width: {pattern.holeSize}; height: {pattern.holeSize}; transform: translate(50%, -50%);"

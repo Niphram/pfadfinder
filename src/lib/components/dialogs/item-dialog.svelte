@@ -71,7 +71,7 @@
 					class="select select-bordered select-sm"
 					bind:value={list[index].chargeType}
 				>
-					{#each CHARGE_TYPES as chargeType}
+					{#each CHARGE_TYPES as chargeType (chargeType)}
 						<option value={chargeType}>
 							{$t(`equipment.chargeType.${chargeType}`)}
 						</option>

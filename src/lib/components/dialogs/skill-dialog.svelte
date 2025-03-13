@@ -36,7 +36,7 @@
 			class="select select-bordered select-sm w-full"
 			bind:value={$c.skills[key].skills[index].ability}
 		>
-			{#each ABILITY_KEYS as key}
+			{#each ABILITY_KEYS as key (key)}
 				<option value={key}>{$t(`abilities.${key}.full`)}</option>
 			{/each}
 		</select>

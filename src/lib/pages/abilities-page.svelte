@@ -15,7 +15,7 @@
 	<div class="divider">Abilities</div>
 
 	<div class="grid w-full grid-cols-3 gap-2 md:grid-cols-6">
-		{#each ABILITY_KEYS as key}
+		{#each ABILITY_KEYS as key (key)}
 			<AbilityButton {key} />
 		{/each}
 	</div>
@@ -31,7 +31,7 @@
 	<div class="divider">Saves</div>
 
 	<div class="grid w-full grid-cols-3 gap-2">
-		{#each SAVE_KEYS as key}
+		{#each SAVE_KEYS as key (key)}
 			<SaveButton {key} />
 		{/each}
 	</div>

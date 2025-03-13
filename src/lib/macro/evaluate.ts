@@ -20,7 +20,7 @@ function calcAttribute(path: string[], char: Character): number {
 			default:
 				return NaN;
 		}
-	} catch (err) {
+	} catch (_err) {
 		return NaN;
 	}
 }

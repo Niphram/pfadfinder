@@ -21,7 +21,7 @@
 	</div>
 
 	<div class="grid grid-cols-3 gap-2">
-		{#each ABILITY_KEYS as key}
+		{#each ABILITY_KEYS as key (key)}
 			<MacroInteger
 				bind:value={$c.race[key].expr}
 				name="race{key}"

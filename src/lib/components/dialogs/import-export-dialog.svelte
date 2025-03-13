@@ -42,7 +42,7 @@
 			await overwriteSave(newChar);
 
 			location.reload();
-		} catch (err) {
+		} catch (_err) {
 			alert('Could not import character!');
 		}
 	}

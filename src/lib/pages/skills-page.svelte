@@ -17,7 +17,7 @@
 	<div class="divider">Skills (Ranks {skillRanks}/{$c.classes.ranks.eval($c)})</div>
 
 	{#each SKILL_KEYS as key (key)}
-		{#each $c.skills[key].skills as variant, index}
+		{#each $c.skills[key].skills as variant, index (index)}
 			{@const ability = $c.skills[key].skills[index].ability}
 			{@const penalty = $p[ability].skillCheckMod !== $p[ability].mod}
 

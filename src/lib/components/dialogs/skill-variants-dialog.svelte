@@ -20,10 +20,10 @@
 </script>
 
 <div class="flex flex-col gap-2">
-	{#each skills as key}
+	{#each skills as key (key)}
 		<div class="divider">{$t(`skills.${key}`)}</div>
 
-		{#each $c.skills[key].skills as skill, idx}
+		{#each $c.skills[key].skills as skill, idx (idx)}
 			<div class="flex w-full flex-row gap-2">
 				<div>
 					<input class="input input-bordered w-full" bind:value={skill.name} />

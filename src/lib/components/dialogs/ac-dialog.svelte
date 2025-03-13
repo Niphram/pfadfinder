@@ -15,7 +15,7 @@
 		class="select select-bordered w-full"
 		bind:value={$c.ac.primaryAbility}
 	>
-		{#each ABILITY_KEYS as key}
+		{#each ABILITY_KEYS as key (key)}
 			<option value={key}>
 				{$t(`abilities.${key}.full`)}
 			</option>
@@ -33,7 +33,7 @@
 		bind:value={$c.ac.secondaryAbility}
 	>
 		<option value={undefined}>None</option>
-		{#each ABILITY_KEYS as key}
+		{#each ABILITY_KEYS as key (key)}
 			<option value={key}>
 				{$t(`abilities.${key}.full`)}
 			</option>

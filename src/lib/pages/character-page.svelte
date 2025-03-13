@@ -28,7 +28,7 @@
 	<div class="divider">Classes</div>
 
 	<div class="flex flex-col gap-4">
-		{#each $c.classes.list as { name, level }, classIndex}
+		{#each $c.classes.list as { name, level }, classIndex (classIndex)}
 			<CaptionedButton
 				label={name}
 				caption="Level {level}"

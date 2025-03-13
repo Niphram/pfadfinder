@@ -15,7 +15,7 @@
 		<span class="label-text">Base Ability</span>
 	</label>
 	<select name="saveBaseAbility" class="select select-bordered w-full" bind:value={$c[key].ability}>
-		{#each ABILITY_KEYS as key}
+		{#each ABILITY_KEYS as key (key)}
 			<option value={key}>{$t(`abilities.${key}.full`)}</option>
 		{/each}
 	</select>

@@ -19,7 +19,7 @@
 		</label>
 		<select name="dcAbility" class="select select-bordered w-full" bind:value={$c.spells.dcAbility}>
 			<option value={undefined}>-</option>
-			{#each ABILITY_KEYS as key}
+			{#each ABILITY_KEYS as key (key)}
 				<option value={key}>
 					{$t(`abilities.${key}.full`)}
 				</option>
@@ -36,7 +36,7 @@
 </div>
 
 <div>
-	{#each SPELL_LEVELS as level, idx}
+	{#each SPELL_LEVELS as level, idx (level)}
 		<div class="divider">Level {idx}</div>
 		<div class="flex flex-row gap-1">
 			<Integer bind:value={$c.spells[level].known} label="Known" name="known" noNegatives />

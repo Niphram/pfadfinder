@@ -102,7 +102,7 @@
 						<div
 							class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
 						>
-							{#each spell.details(idx, $c) as [label, value]}
+							{#each spell.details(idx, $c) as [label, value], i (i)}
 								<div>{label}</div>
 								<div>{value}</div>
 							{/each}
@@ -165,7 +165,7 @@
 				<div
 					class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
 				>
-					{#each sla.details as [label, value]}
+					{#each sla.details as [label, value], i (i)}
 						<div>{label}</div>
 						<div>{value}</div>
 					{/each}

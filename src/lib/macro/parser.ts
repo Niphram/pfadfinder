@@ -206,7 +206,7 @@ EXP.setPattern(lrec_sc(FACTOR, seq(alt(str('+'), str('-')), FACTOR), applyBinary
 export function parse(expr: string): Node {
 	try {
 		return expectSingleResult(expectEOF(EXP.parse(tokenize(expr))));
-	} catch (err) {
+	} catch (_err) {
 		return {
 			type: NodeType.Error,
 			message: `Could not parse input: ${expr}`

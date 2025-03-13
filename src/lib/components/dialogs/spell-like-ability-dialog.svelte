@@ -49,7 +49,7 @@
 					class="select select-bordered select-sm"
 					bind:value={$c.spells.spellLikeAbilities[slaIndex].type}
 				>
-					{#each SPELL_LIKE_COUNT_TYPES as slaType}
+					{#each SPELL_LIKE_COUNT_TYPES as slaType (slaType)}
 						<option value={slaType}>
 							{$t(`spell.slaType.${slaType}`)}
 						</option>

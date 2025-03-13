@@ -60,7 +60,7 @@
 			<Integer bind:value={$c.classes.list[classIndex].speed} name="classSpeed" label="Speed" />
 		</div>
 		<div class="grid grid-cols-3 gap-2">
-			{#each SAVE_KEYS as key}
+			{#each SAVE_KEYS as key (key)}
 				<Integer
 					bind:value={$c.classes.list[classIndex][key]}
 					name="class{key}"

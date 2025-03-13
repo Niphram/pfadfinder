@@ -12,6 +12,6 @@
 	$: lines = parsed.split('\n').filter((line) => line.trim().length > 0);
 </script>
 
-{#each lines as line}
+{#each lines as line, i (i)}
 	<svelte:element this={element} class={className}>{line}</svelte:element>
 {/each}

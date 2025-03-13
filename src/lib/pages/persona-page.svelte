@@ -12,7 +12,7 @@
 	<div class="divider">Facets</div>
 
 	<div class="grid w-full grid-cols-2 gap-2 md:grid-cols-3">
-		{#each FACET_KEYS as key}
+		{#each FACET_KEYS as key (key)}
 			<button
 				class="btn h-min p-0"
 				on:click={() => macroNotify($t(`persona.${key}`), $c.persona[key].notes, $c)}

@@ -48,7 +48,7 @@
 		</div>
 
 		<div class="grid grid-cols-3 gap-2">
-			{#each bonusKeys as key}
+			{#each bonusKeys as key (key)}
 				<Integer
 					bind:value={$c.equipment.acItems[index][key]}
 					name="class{key}"
