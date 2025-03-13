@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ABILITY_KEYS, c, SpellLikeAbility, type SkillKey } from '$lib/data';
+	import { ABILITY_KEYS, c, type SkillKey } from '$lib/data';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
 	import Checkbox from '../input/checkbox.svelte';

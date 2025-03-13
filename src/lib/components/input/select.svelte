@@ -11,8 +11,6 @@
 </script>
 
 <script lang="ts" generics="V, T">
-	import { stringify } from 'postcss';
-
 	import Fieldset from './fieldset.svelte';
 
 	export let name: string;

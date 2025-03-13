@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { ABILITY_KEYS, ATTACK_TYPES, c } from '$lib/data';
-	import { combine } from 'typescript-parsec';
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';

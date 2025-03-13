@@ -11,12 +11,7 @@
 	$title = 'Settings';
 </script>
 
-<Toggle
-	name="darkMode"
-	label="Dark mode"
-	checked={$c.settings.usePersonaSystem}
-	on:change={toggleDarkMode}
-/>
+<Toggle name="darkMode" label="Dark mode" checked={$isDarkMode} on:change={toggleDarkMode} />
 
 <Toggle
 	name="personaSystem"
