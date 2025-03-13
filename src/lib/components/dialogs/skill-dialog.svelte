@@ -4,6 +4,7 @@
 	import { title } from '../dialog.svelte';
 	import Integer from '../input/integer.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
+	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
 
 	export let key: SkillKey = 'acrobatics';
@@ -27,20 +28,16 @@
 		/>
 	</div>
 
-	<div class="form-control w-full">
-		<label for="skillBaseAbility" class="label pb-0">
-			<span class="label-text">Base Ability</span>
-		</label>
-		<select
-			name="skillBaseAbility"
-			class="select select-bordered select-sm w-full"
-			bind:value={$c.skills[key].skills[index].ability}
-		>
-			{#each ABILITY_KEYS as key (key)}
-				<option value={key}>{$t(`abilities.${key}.full`)}</option>
-			{/each}
-		</select>
-	</div>
+	<Select
+		name="skillBaseAbility"
+		label="Base Ability"
+		options={ABILITY_KEYS}
+		bind:value={$c.skills[key].skills[index].ability}
+		let:option={key}
+		size="small"
+	>
+		<option value={key}>{$t(`abilities.${key}.full`)}</option>
+	</Select>
 </div>
 
 <div class="form-control">

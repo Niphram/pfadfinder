@@ -44,17 +44,17 @@
 		<div class="divider mb-0">
 			<div class="flex flex-row items-center gap-2">
 				<span>Type</span>
-				<select
+				<Select
 					name="slaType"
-					class="select select-bordered select-sm"
+					options={SPELL_LIKE_COUNT_TYPES}
 					bind:value={$c.spells.spellLikeAbilities[slaIndex].type}
+					size="small"
+					let:option={slaType}
 				>
-					{#each SPELL_LIKE_COUNT_TYPES as slaType (slaType)}
-						<option value={slaType}>
-							{$t(`spell.slaType.${slaType}`)}
-						</option>
-					{/each}
-				</select>
+					<option value={slaType}>
+						{$t(`spell.slaType.${slaType}`)}
+					</option>
+				</Select>
 			</div>
 		</div>
 

@@ -2,6 +2,12 @@
 	// Needed to satisfy eslint
 	type V = unknown;
 	type T = unknown;
+
+	const SIZES = {
+		small: 'select-sm',
+		medium: 'select-md',
+		large: 'select-lg'
+	};
 </script>
 
 <script lang="ts" generics="V, T">
@@ -12,6 +18,8 @@
 	export let options: readonly T[] = [];
 
 	export let value: V;
+
+	export let size: keyof typeof SIZES = 'medium';
 </script>
 
 <div class="form-control w-full">
@@ -20,7 +28,7 @@
 			<span class="label-text">{label}</span>
 		</label>
 	{/if}
-	<select {name} class="select select-bordered w-full min-w-min" bind:value>
+	<select {name} class={['select select-bordered w-full min-w-min', SIZES[size]]} bind:value>
 		{#each options as option (option)}
 			<slot {option} />
 		{/each}

@@ -3,6 +3,7 @@
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
+	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
 
 	export let key: SaveKey = 'fort';
@@ -10,16 +11,15 @@
 	$title = $t(`saves.${key}.full`);
 </script>
 
-<div class="form-control w-full">
-	<label for="saveBaseAbility" class="label pb-0">
-		<span class="label-text">Base Ability</span>
-	</label>
-	<select name="saveBaseAbility" class="select select-bordered w-full" bind:value={$c[key].ability}>
-		{#each ABILITY_KEYS as key (key)}
-			<option value={key}>{$t(`abilities.${key}.full`)}</option>
-		{/each}
-	</select>
-</div>
+<Select
+	name="saveBaseAbility"
+	label="Base Ability"
+	options={ABILITY_KEYS}
+	bind:value={$c[key].ability}
+	let:option={key}
+>
+	<option value={key}>{$t(`abilities.${key}.full`)}</option>
+</Select>
 
 <MacroInteger bind:value={$c[key].misc.expr} name="saveMisc" label="Misc" />
 <MacroInteger bind:value={$c[key].bonus.expr} name="saveBonus" label="Temp Mod" />
