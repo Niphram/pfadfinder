@@ -24,7 +24,15 @@
 <div class="flex h-full flex-col gap-2">
 	{#each navButtons as { key, active } (key)}
 		{#if active}
-			<a href="#{key}" class="btn w-full" on:click={closeDialog}>{$t(`texts.pages.${key}`)}</a>
+			<button
+				class="btn w-full"
+				on:click={() => {
+					// Quick fix after switching to hash-routing.
+					const page = document.getElementById(key);
+					page?.parentElement?.scrollTo({ behavior: 'smooth', left: page?.offsetLeft, top: 0 });
+					closeDialog();
+				}}>{$t(`texts.pages.${key}`)}</button
+			>
 		{/if}
 	{/each}
 
