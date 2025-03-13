@@ -37,12 +37,12 @@
 			>
 				<div class="btn btn-ghost join btn-sm flex flex-row gap-1 p-0">
 					<div
-						class="join-item flex items-center bg-accent text-accent-content"
+						class="join-item bg-accent text-accent-content flex items-center"
 						class:bg-warning={penalty}
 					>
 						<span class="w-16">{skillTags}</span>
 					</div>
-					<div class="join-item flex grow items-center bg-base-200 text-base-content">
+					<div class="join-item bg-base-200 text-base-content flex grow items-center">
 						<span
 							class="join-item grow align-middle decoration-wavy"
 							class:underline={variant.notes}
@@ -50,7 +50,7 @@
 						>
 					</div>
 					<div
-						class="join-item flex items-center bg-accent text-accent-content"
+						class="join-item bg-accent text-accent-content flex items-center"
 						class:bg-warning={penalty}
 					>
 						<span class="join-item w-16 align-middle"

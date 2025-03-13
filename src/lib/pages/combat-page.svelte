@@ -94,25 +94,25 @@
 						</td>
 
 						<td
-							class="join-item cursor-pointer rounded-l-md bg-base-200"
+							class="join-item bg-base-200 cursor-pointer rounded-l-md"
 							on:click={() => macroNotify(attack.name, attack.notes, $c)}
 							on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
 							>{attack.name}</td
 						>
 						<td
-							class="join-item cursor-pointer bg-base-200"
+							class="join-item bg-base-200 cursor-pointer"
 							on:click={() => macroNotify(attack.name, attack.notes, $c)}
 							on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
 							>{attack.hasAttack ? withSign(attack.attackBonus.eval($c)) : '-'}</td
 						>
 						<td
-							class="join-item cursor-pointer bg-base-200"
+							class="join-item bg-base-200 cursor-pointer"
 							on:click={() => macroNotify(attack.name, attack.notes, $c)}
 							on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
 							>{(attack.hasAttack && attack.attack.critRange) || '-'}</td
 						>
 						<td
-							class="join-item cursor-pointer rounded-r-md bg-base-200"
+							class="join-item bg-base-200 cursor-pointer rounded-r-md"
 							on:click={() => macroNotify(attack.name, attack.notes, $c)}
 							on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
 							>{(attack.hasDamage && parseTextWithMacros(attack.damage.damage, $c)) || '-'}</td

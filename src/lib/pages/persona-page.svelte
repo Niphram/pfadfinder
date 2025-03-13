@@ -18,7 +18,7 @@
 				on:click={() => macroNotify($t(`persona.${key}`), $c.persona[key].notes, $c)}
 				on:contextmenu|preventDefault={() => openDialog(PersonaScoreDialog, { key })}
 			>
-				<div class="flex w-full flex-col divide-y-2 divide-base-100 text-center">
+				<div class="divide-base-100 flex w-full flex-col divide-y-2 text-center">
 					<div class="py-1 text-3xl font-extrabold">{$c.persona[key].rank}</div>
 					<div class="py-1 uppercase decoration-wavy" class:underline={!!$c.persona[key].notes}>
 						{$t(`persona.${key}`)}

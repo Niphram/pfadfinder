@@ -11,7 +11,7 @@
 	<Dialog />
 	<ToastProvider />
 
-	<div class="h-screen w-screen bg-base-100">
+	<div class="bg-base-100 h-screen w-screen">
 		{#if $loaded && $loaded}
 			<slot />
 		{:else}

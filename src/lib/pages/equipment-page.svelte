@@ -77,7 +77,7 @@
 				<DragHandle />
 			</div>
 			<button
-				class="btn btn-sm min-w-0 flex-auto truncate md:btn-md"
+				class="btn btn-sm md:btn-md min-w-0 flex-auto truncate"
 				on:click={() => macroNotify(item.name, item.notes, $c)}
 				on:contextmenu|preventDefault={() => openDialog(AcItemDialog, { index })}
 			>

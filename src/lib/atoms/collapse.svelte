@@ -28,7 +28,7 @@
 </script>
 
 <div
-	class="collapse bg-base-200 text-left {className}"
+	class="bg-base-200 collapse text-left {className}"
 	class:collapse-arrow={icon === 'arrow'}
 	class:collapse-plus={icon === 'plus'}
 	class:collapse-open={open}

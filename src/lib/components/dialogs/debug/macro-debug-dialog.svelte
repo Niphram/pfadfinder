@@ -30,7 +30,7 @@
 		</Button>
 	</Divider>
 
-	<ul class="menu menu-sm w-full rounded-md bg-base-200">
+	<ul class="menu menu-sm bg-base-200 w-full rounded-md">
 		<li>
 			<MacroAstTree node={testMacro.node} open={astOpen} />
 		</li>

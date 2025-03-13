@@ -39,7 +39,7 @@
 </svelte:head>
 
 <div class="flex h-screen flex-col">
-	<div class="sticky top-0 z-40 w-full bg-base-200 drop-shadow-xl">
+	<div class="bg-base-200 sticky top-0 z-40 w-full drop-shadow-xl">
 		<div class="flex flex-row items-stretch gap-2 p-2 align-middle">
 			<button class="grow text-left" on:click={() => openDialog(CharacterInfoDialog, {})}>
 				<div class="flex flex-col">
@@ -55,9 +55,7 @@
 		</div>
 	</div>
 
-	<div
-		class="flex grow snap-x snap-mandatory flex-row flex-nowrap overflow-x-scroll scroll-smooth"
-	>
+	<div class="flex grow snap-x snap-mandatory flex-row flex-nowrap overflow-x-scroll scroll-smooth">
 		{#each pages as { key, component, active } (key)}
 			{#if active}
 				<div id={key} class="w-full flex-none snap-center snap-always overflow-y-scroll p-4">
@@ -71,7 +69,7 @@
 
 <!-- Floating Action Button -->
 
-<div class="fixed bottom-4 right-4">
+<div class="fixed right-4 bottom-4">
 	<button
 		aria-label="Navigation"
 		class="btn btn-circle btn-primary"

@@ -49,7 +49,7 @@
 
 		{#if !item.isContainer}
 			<button
-				class="btn btn-sm min-w-0 flex-auto truncate md:btn-md"
+				class="btn btn-sm md:btn-md min-w-0 flex-auto truncate"
 				on:click|stopPropagation={() => macroNotify(item.name, item.description, $c)}
 				on:contextmenu|preventDefault|stopPropagation={() =>
 					openDialog(ItemDialog, { list: items, index })}
@@ -60,7 +60,7 @@
 			</button>
 			{#if item.chargeType !== 'none'}
 				<button
-					class="btn btn-accent btn-sm ml-2 w-28 px-2 md:btn-md"
+					class="btn btn-accent btn-sm md:btn-md ml-2 w-28 px-2"
 					on:click|stopPropagation={() => items[index].remaining > 0 && items[index].remaining--}
 				>
 					{item.remaining}{#if item.chargeType === 'perDay'}
@@ -88,7 +88,7 @@
 					bind:items={items[index].children}
 					parentId={item.id}
 					disabled={!open}
-					class="rounded-lg bg-base-100 p-2 pl-0"
+					class="bg-base-100 rounded-lg p-2 pl-0"
 				/>
 			</Collapse>
 		{/if}

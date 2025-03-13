@@ -14,5 +14,6 @@
 			<span class="label-text">{label}</span>
 		</label>
 	{/if}
-	<textarea {name} {placeholder} class="textarea textarea-bordered w-full" {rows} bind:value></textarea>
+	<textarea {name} {placeholder} class="textarea textarea-bordered w-full" {rows} bind:value
+	></textarea>
 </div>

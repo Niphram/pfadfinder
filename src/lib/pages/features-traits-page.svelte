@@ -70,21 +70,21 @@
 						<div class="divider my-0">Benefits</div>
 						<MultilineMacro
 							text={item.benefits}
-							class="mb-4 hyphens-auto text-justify text-sm last:mb-0"
+							class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
 						/>
 					{/if}
 					{#if item.normal}
 						<div class="divider my-0">Normal</div>
 						<MultilineMacro
 							text={item.normal}
-							class="mb-4 hyphens-auto text-justify text-sm last:mb-0"
+							class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
 						/>
 					{/if}
 					{#if item.special}
 						<div class="divider my-0">Special</div>
 						<MultilineMacro
 							text={item.special}
-							class="mb-4 hyphens-auto text-justify text-sm last:mb-0"
+							class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
 						/>
 					{/if}
 				</div>
@@ -118,7 +118,7 @@
 			</div>
 			<div class="flex grow flex-row items-stretch gap-2">
 				<button
-					class="btn btn-sm flex-1 md:btn-md"
+					class="btn btn-sm md:btn-md flex-1"
 					on:click={() => macroNotify(item.name, item.description, $c)}
 					on:contextmenu|preventDefault={() => openDialog(TraitDialog, { index })}
 				>
@@ -126,7 +126,7 @@
 				</button>
 				{#if item.perDay.expr}
 					<button
-						class="btn btn-accent btn-sm w-32 md:btn-md"
+						class="btn btn-accent btn-sm md:btn-md w-32"
 						on:click={() => useTrait(index)}
 						on:contextmenu|preventDefault={() => refillTrait(index)}
 					>

@@ -1,57 +1,59 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark;
+	themes:
+		light --default,
+		dark --prefersdark;
 }
 
 @plugin "daisyui/theme" {
-  name: "light";
-  default: false;
-  prefersdark: false;
-  color-scheme: "light";
+	name: 'light';
+	default: false;
+	prefersdark: false;
+	color-scheme: 'light';
 
-  --radius-selector: 0.4rem;
-  --radius-field: 0.4rem;
-  --radius-box: 0.4rem;
+	--radius-selector: 0.4rem;
+	--radius-field: 0.4rem;
+	--radius-box: 0.4rem;
 
-  --color-base-100: #ECE3CE;
-  --color-base-200: #DBCA9A;
-  --color-base-content: #282425;
-  --color-primary: #EF9995;
-  --color-primary-content: #282425;
-  --color-secondary: #A4CBB4;
-  --color-secondary-content: #282425;
-  --color-accent: #DC8850;
-  --color-accent-content: #282425;
-  --color-neutral: #2E282A;
-  --color-neutral-content: #EDE6D4;
-  --color-info: #2563EB;
-  --color-success: #16A34A;
-  --color-warning: #D97706;
-  --color-error: oklch(65.72% 0.199 27.33);
+	--color-base-100: #ece3ce;
+	--color-base-200: #dbca9a;
+	--color-base-content: #282425;
+	--color-primary: #ef9995;
+	--color-primary-content: #282425;
+	--color-secondary: #a4cbb4;
+	--color-secondary-content: #282425;
+	--color-accent: #dc8850;
+	--color-accent-content: #282425;
+	--color-neutral: #2e282a;
+	--color-neutral-content: #ede6d4;
+	--color-info: #2563eb;
+	--color-success: #16a34a;
+	--color-warning: #d97706;
+	--color-error: oklch(65.72% 0.199 27.33);
 }
 
 @plugin "daisyui/theme" {
-  name: "dark";
-  default: false;
-  prefersdark: true;
-  color-scheme: "dark";
+	name: 'dark';
+	default: false;
+	prefersdark: true;
+	color-scheme: 'dark';
 
-  --radius-selector: 0.4rem;
-  --radius-field: 0.4rem;
-  --radius-box: 0.4rem;
+	--radius-selector: 0.4rem;
+	--radius-field: 0.4rem;
+	--radius-box: 0.4rem;
 
-  --color-primary: #FF79C6;
-  --color-secondary: #BD93F9;
-  --color-accent: #FFB86C;
-  --color-neutral: #616584;
-  --color-base-100: #0B0B0F;
-  --color-base-200: #20222C;
-  --color-base-300: #363849;
-  --color-base-content: #F8F8F2;
-  --color-info: #93C5FD;
-  --color-success: #50FA7B;
-  --color-warning: #FCD34D;
-  --color-error: FF5555;
+	--color-primary: #ff79c6;
+	--color-secondary: #bd93f9;
+	--color-accent: #ffb86c;
+	--color-neutral: #616584;
+	--color-base-100: #0b0b0f;
+	--color-base-200: #20222c;
+	--color-base-300: #363849;
+	--color-base-content: #f8f8f2;
+	--color-info: #93c5fd;
+	--color-success: #50fa7b;
+	--color-warning: #fcd34d;
+	--color-error: FF5555;
 }
 
 * {
