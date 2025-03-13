@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ABILITY_KEYS, Item, SPELL_LEVELS, c } from '$lib/data';
 	import { title } from '../dialog.svelte';
+	import Toggle from '../input/toggle.svelte';
 
 	$title = 'Rest';
 
@@ -48,61 +49,45 @@
 <div class="flex flex-col">
 	<div class="divider">Options</div>
 
-	<div class="form-control">
-		<label class="label cursor-pointer pb-0">
-			<span class="label-text">Heal for 1 HP per level ({$c.classes.levels} HP)</span>
-			<input type="checkbox" class="toggle" bind:checked={$c.settings.heal} />
-		</label>
-	</div>
+	<Toggle
+		name="healLevel"
+		label="Heal for 1 HP per level ({$c.classes.levels} HP)"
+		bind:checked={$c.settings.heal}
+	/>
 
-	<div class="form-control">
-		<label class="label cursor-pointer pb-0">
-			<span class="label-text">Add CON when healing ({Math.max(0, $c.con.mod.eval($c))} HP)</span>
-			<input type="checkbox" class="toggle" bind:checked={$c.settings.addConToHeal} />
-		</label>
-	</div>
+	<Toggle
+		name="addCon"
+		label="Add CON when healing ({Math.max(0, $c.con.mod.eval($c))} HP)"
+		bind:checked={$c.settings.addConToHeal}
+	/>
 
-	<div class="form-control">
-		<label class="label cursor-pointer pb-0">
-			<span class="label-text">Heal ability damage</span>
-			<input type="checkbox" class="toggle" bind:checked={$c.settings.healAbilityDamage} />
-		</label>
-	</div>
+	<Toggle
+		name="healAbilityDamage"
+		label="Heal ability damage"
+		bind:checked={$c.settings.healAbilityDamage}
+	/>
 
-	<div class="form-control">
-		<label class="label cursor-pointer pb-0">
-			<span class="label-text">Recharge Spell-Like Abilities</span>
-			<input type="checkbox" class="toggle" bind:checked={$c.settings.rechargeSLA} />
-		</label>
-	</div>
+	<Toggle
+		name="rechargeSLA"
+		label="Recharge Spell-Like Abilities"
+		bind:checked={$c.settings.rechargeSLA}
+	/>
 
-	<div class="form-control">
-		<label class="label cursor-pointer pb-0">
-			<span class="label-text">Recharge traits</span>
-			<input type="checkbox" class="toggle" bind:checked={$c.settings.rechargeTraits} />
-		</label>
-	</div>
+	<Toggle name="rechargeTraits" label="Recharge traits" bind:checked={$c.settings.rechargeTraits} />
 
-	<div class="form-control">
-		<label class="label cursor-pointer pb-0">
-			<span class="label-text">Recharge items</span>
-			<input type="checkbox" class="toggle" bind:checked={$c.settings.rechargeItems} />
-		</label>
-	</div>
+	<Toggle name="rechargeItems" label="Recharge items" bind:checked={$c.settings.rechargeItems} />
 
-	<div class="form-control">
-		<label class="label cursor-pointer pb-0">
-			<span class="label-text">Reset spell usage</span>
-			<input type="checkbox" class="toggle" bind:checked={$c.settings.resetSpellUsage} />
-		</label>
-	</div>
+	<Toggle
+		name="resetSpellsUsage"
+		label="Reset spell usage"
+		bind:checked={$c.settings.resetSpellUsage}
+	/>
 
-	<div class="form-control">
-		<label class="label cursor-pointer pb-0">
-			<span class="label-text">Reset prepared spells</span>
-			<input type="checkbox" class="toggle" bind:checked={$c.settings.resetPreparedSpells} />
-		</label>
-	</div>
+	<Toggle
+		name="resetPreparedSpells"
+		label="Reset prepared spells"
+		bind:checked={$c.settings.resetPreparedSpells}
+	/>
 
 	<div class="divider"></div>
 

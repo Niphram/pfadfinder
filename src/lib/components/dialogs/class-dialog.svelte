@@ -5,6 +5,8 @@
 	import Integer from '../input/integer.svelte';
 	import { title } from '../dialog.svelte';
 	import { SAVE_KEYS, c } from '$lib/data';
+	import Input from '../input/input.svelte';
+	import Toggle from '../input/toggle.svelte';
 
 	export let classIndex: number;
 
@@ -30,17 +32,13 @@
 <div class="flex flex-col gap-2">
 	{#if classIndex < $c.classes.list.length}
 		<div class="flex flex-row gap-2">
-			<div class="form-control w-full">
-				<label for="className" class="label pb-0">
-					<span class="label-text">Name</span>
-				</label>
-				<input
-					name="className"
-					placeholder="Type here"
-					class="input input-bordered w-full"
-					bind:value={$c.classes.list[classIndex].name}
-				/>
-			</div>
+			<Input
+				name="className"
+				label="Name"
+				placeholder="Type here"
+				bind:value={$c.classes.list[classIndex].name}
+			/>
+
 			<Integer
 				bind:value={$c.classes.list[classIndex].level}
 				name="classLevel"
@@ -49,12 +47,13 @@
 				noZero
 			/>
 		</div>
-		<div class="form-control">
-			<label class="label cursor-pointer pb-0">
-				<span class="label-text">Favored Class</span>
-				<input type="checkbox" class="toggle" bind:checked={$c.classes.list[classIndex].favored} />
-			</label>
-		</div>
+
+		<Toggle
+			name="favoredClass"
+			label="Favored Class"
+			bind:checked={$c.classes.list[classIndex].favored}
+		/>
+
 		<div class="grid grid-cols-2 gap-4">
 			<Integer bind:value={$c.classes.list[classIndex].bab} name="bab" label="Base Attack Bonus" />
 			<Integer bind:value={$c.classes.list[classIndex].speed} name="classSpeed" label="Speed" />

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Fieldset from './fieldset.svelte';
+
 	export let noNegatives = false;
 	export let noZero = false;
 	export let noPositive = false;
@@ -26,10 +28,7 @@
 	}
 </script>
 
-<div class="form-control w-full">
-	<label for={name} class="label pb-0">
-		<span class="label-text">{label}</span>
-	</label>
+<Fieldset legend={label}>
 	<input
 		{name}
 		type="number"
@@ -39,4 +38,4 @@
 		class:input-error={!valid}
 		bind:value={current}
 	/>
-</div>
+</Fieldset>

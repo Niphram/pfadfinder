@@ -2,6 +2,7 @@
 	import Button from '$lib/atoms/button.svelte';
 	import Divider from '$lib/atoms/divider.svelte';
 	import { title } from '$lib/components/dialog.svelte';
+	import Input from '$lib/components/input/input.svelte';
 	import { c } from '$lib/data';
 	import { Macro } from '$lib/data/macros';
 	import MacroAstTree from './macro-ast-tree.svelte';
@@ -14,12 +15,7 @@
 </script>
 
 <div class="flex flex-col gap-2">
-	<div class="form-control w-full">
-		<label for="testMacro" class="label pb-0">
-			<span class="label-text">Debug Macro</span>
-		</label>
-		<input name="testMacro" class="input input-bordered w-full" bind:value={testMacro.expr} />
-	</div>
+	<Input name="testMacro" label="Debug Macro" bind:value={testMacro.expr} />
 
 	<p>Evaluates to: {testMacro.eval($c)}</p>
 

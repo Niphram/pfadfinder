@@ -11,26 +11,30 @@
 </script>
 
 <script lang="ts" generics="V, T">
+	import { stringify } from 'postcss';
+
+	import Fieldset from './fieldset.svelte';
+
 	export let name: string;
 
 	export let label: string | undefined = undefined;
 
 	export let options: readonly T[] = [];
 
+	export let noneOption: string | undefined = undefined;
+
 	export let value: V;
 
 	export let size: keyof typeof SIZES = 'medium';
 </script>
 
-<div class="form-control w-full">
-	{#if label}
-		<label for={name} class="label pb-0">
-			<span class="label-text">{label}</span>
-		</label>
-	{/if}
-	<select {name} class={['select select-bordered w-full min-w-min', SIZES[size]]} bind:value>
+<Fieldset legend={label}>
+	<select {name} class={['select w-full', SIZES[size]]} bind:value>
+		{#if noneOption}
+			<option value={undefined}>{noneOption}</option>
+		{/if}
 		{#each options as option (option)}
 			<slot {option} />
 		{/each}
 	</select>
-</div>
+</Fieldset>

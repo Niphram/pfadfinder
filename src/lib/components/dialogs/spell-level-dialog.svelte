@@ -4,6 +4,7 @@
 	import { title } from '../dialog.svelte';
 	import Integer from '../input/integer.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
+	import Select from '../input/select.svelte';
 
 	title.set('Spells Config');
 </script>
@@ -13,19 +14,19 @@
 </div>
 
 <div class="flex flex-row gap-1">
-	<div class="form-control w-full">
-		<label for="dcAbility" class="label pb-0">
-			<span class="label-text">DC Ability</span>
-		</label>
-		<select name="dcAbility" class="select select-bordered w-full" bind:value={$c.spells.dcAbility}>
-			<option value={undefined}>-</option>
-			{#each ABILITY_KEYS as key (key)}
-				<option value={key}>
-					{$t(`abilities.${key}.full`)}
-				</option>
-			{/each}
-		</select>
-	</div>
+	<Select
+		name="dcAbility"
+		label="DC Ability"
+		options={ABILITY_KEYS}
+		noneOption="-"
+		bind:value={$c.spells.dcAbility}
+		let:option={key}
+	>
+		<option value={key}>
+			{$t(`abilities.${key}.full`)}
+		</option>
+	</Select>
+
 	<MacroInteger
 		optional
 		placeholder="0"

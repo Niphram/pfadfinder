@@ -2,10 +2,12 @@
 	import { ARMOR_TYPES, c } from '$lib/data';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
+	import Input from '../input/input.svelte';
 	import Integer from '../input/integer.svelte';
 	import OptionalInteger from '../input/optional-integer.svelte';
 	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
+	import Toggle from '../input/toggle.svelte';
 
 	export let index: number;
 
@@ -28,24 +30,18 @@
 
 <div class="flex flex-col gap-2">
 	{#if index < $c.equipment.acItems.length}
-		<div class="form-control w-full">
-			<label for="className" class="label pb-0">
-				<span class="label-text">Name</span>
-			</label>
-			<input
-				name="className"
-				placeholder="Type here"
-				class="input input-bordered w-full"
-				bind:value={$c.equipment.acItems[index].name}
-			/>
-		</div>
+		<Input
+			name="className"
+			label="Name"
+			placeholder="Type here"
+			bind:value={$c.equipment.acItems[index].name}
+		/>
 
-		<div class="form-control">
-			<label class="label cursor-pointer pb-0">
-				<span class="label-text">Equipped?</span>
-				<input type="checkbox" class="toggle" bind:checked={$c.equipment.acItems[index].equipped} />
-			</label>
-		</div>
+		<Toggle
+			name="itemEquipped"
+			label="Equipped?"
+			bind:checked={$c.equipment.acItems[index].equipped}
+		/>
 
 		<div class="grid grid-cols-3 gap-2">
 			{#each bonusKeys as key (key)}

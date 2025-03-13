@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { c } from '$lib/data';
 	import { title } from '../dialog.svelte';
+	import Input from '../input/input.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
+	import TextArea from '../input/text-area.svelte';
 
 	export let index: number;
 
@@ -15,17 +17,12 @@
 
 <div class="flex flex-col gap-2">
 	{#if index < $c.traits.length}
-		<div class="form-control w-full">
-			<label for="traitName" class="label pb-0">
-				<span class="label-text">Name</span>
-			</label>
-			<input
-				name="traitName"
-				placeholder="Type here"
-				class="input input-bordered w-full"
-				bind:value={$c.traits[index].name}
-			/>
-		</div>
+		<Input
+			name="traitName"
+			label="Name"
+			placeholder="Type here"
+			bind:value={$c.traits[index].name}
+		/>
 
 		<MacroInteger
 			bind:value={$c.traits[index].perDay.expr}
@@ -35,18 +32,12 @@
 			optional
 		/>
 
-		<div class="form-control w-full">
-			<label for="traitDescription" class="label pb-0">
-				<span class="label-text">Description</span>
-			</label>
-			<textarea
-				name="traitDescription"
-				placeholder="Enter Description"
-				class="textarea textarea-bordered w-full"
-				rows="10"
-				bind:value={$c.traits[index].description}
-			></textarea>
-		</div>
+		<TextArea
+			name="traitDescription"
+			label="Description"
+			rows={10}
+			bind:value={$c.traits[index].description}
+		/>
 	{/if}
 
 	<button on:click={deleteTrait} class="btn btn-error mt-4 w-max self-center uppercase">

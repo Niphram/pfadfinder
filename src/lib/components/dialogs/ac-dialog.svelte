@@ -2,41 +2,32 @@
 	import { ABILITY_KEYS, c } from '$lib/data';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
+	import Select from '../input/select.svelte';
 
 	$title = 'Armor Class';
 </script>
 
-<div class="form-control w-full">
-	<label for="acPrimaryAbility" class="label pb-0">
-		<span class="label-text">Primary Ability</span>
-	</label>
-	<select
-		name="acPrimaryAbility"
-		class="select select-bordered w-full"
-		bind:value={$c.ac.primaryAbility}
-	>
-		{#each ABILITY_KEYS as key (key)}
-			<option value={key}>
-				{$t(`abilities.${key}.full`)}
-			</option>
-		{/each}
-	</select>
-</div>
+<Select
+	name="acPrimaryAbility"
+	label="Primary Ability"
+	options={ABILITY_KEYS}
+	bind:value={$c.ac.primaryAbility}
+	let:option={key}
+>
+	<option value={key}>
+		{$t(`abilities.${key}.full`)}
+	</option>
+</Select>
 
-<div class="form-control w-full">
-	<label for="acSecondaryAbility" class="label pb-0">
-		<span class="label-text">Secondary Ability</span>
-	</label>
-	<select
-		name="acSecondaryAbility"
-		class="select select-bordered w-full"
-		bind:value={$c.ac.secondaryAbility}
-	>
-		<option value={undefined}>None</option>
-		{#each ABILITY_KEYS as key (key)}
-			<option value={key}>
-				{$t(`abilities.${key}.full`)}
-			</option>
-		{/each}
-	</select>
-</div>
+<Select
+	name="acSecondaryAbility"
+	label="Secondary Ability"
+	options={ABILITY_KEYS}
+	noneOption="None"
+	bind:value={$c.ac.secondaryAbility}
+	let:option={key}
+>
+	<option value={key}>
+		{$t(`abilities.${key}.full`)}
+	</option>
+</Select>

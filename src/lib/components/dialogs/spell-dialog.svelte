@@ -2,10 +2,12 @@
 	import { c, SPELL_ATTACK_TYPE, SpellAttackDamage, type SpellLevel } from '$lib/data';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
+	import Input from '../input/input.svelte';
 	import Integer from '../input/integer.svelte';
 
 	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
+	import Toggle from '../input/toggle.svelte';
 
 	export let spellLevel: SpellLevel;
 	export let spellIdx: number;
@@ -30,17 +32,12 @@
 
 <div class="flex flex-col gap-2">
 	{#if spellIdx < $c.spells[spellLevel].spells.length}
-		<div class="form-control w-full">
-			<label for="spellName" class="label pb-0">
-				<span class="label-text">Name</span>
-			</label>
-			<input
-				name="spellName"
-				placeholder="Name"
-				class="input input-bordered w-full"
-				bind:value={$c.spells[spellLevel].spells[spellIdx].name}
-			/>
-		</div>
+		<Input
+			name="spellName"
+			label="Name"
+			placeholder="Name"
+			bind:value={$c.spells[spellLevel].spells[spellIdx].name}
+		/>
 
 		<div class="divider">Preperation</div>
 
@@ -59,141 +56,90 @@
 
 		<div class="divider">Details</div>
 
-		<div class="form-control">
-			<label class="label cursor-pointer pb-0">
-				<span class="label-text">Domain?</span>
-				<input
-					type="checkbox"
-					class="toggle"
-					bind:checked={$c.spells[spellLevel].spells[spellIdx].isDomainSpell}
-				/>
-			</label>
-		</div>
+		<Toggle
+			name="domainSpell"
+			label="Domain?"
+			bind:checked={$c.spells[spellLevel].spells[spellIdx].isDomainSpell}
+		/>
 
-		<div class="form-control w-full">
-			<label for="spellSchool" class="label pb-0">
-				<span class="label-text">School</span>
-			</label>
-			<input
-				name="spellSchool"
-				placeholder="School/Domain/Elemental"
-				class="input input-bordered w-full"
-				bind:value={$c.spells[spellLevel].spells[spellIdx].school}
-			/>
-		</div>
+		<Input
+			name="spellSchool"
+			label="School"
+			placeholder="School/Domain/Elemental"
+			bind:value={$c.spells[spellLevel].spells[spellIdx].school}
+		/>
 
-		<div class="form-control w-full">
-			<label for="classAndLevel" class="label pb-0">
-				<span class="label-text">Class/Level</span>
-			</label>
-			<input
-				name="classAndLevel"
-				placeholder="Sorcerer/Wizard 3"
-				class="input input-bordered w-full"
-				bind:value={$c.spells[spellLevel].spells[spellIdx].classAndLevel}
-			/>
-		</div>
+		<Input
+			name="classAndLevel"
+			label="Class/Level"
+			placeholder="Sorcerer/Wizard 3"
+			bind:value={$c.spells[spellLevel].spells[spellIdx].classAndLevel}
+		/>
 
-		<div class="form-control w-full">
-			<label for="castingTime" class="label pb-0">
-				<span class="label-text">Casting Time</span>
-			</label>
-			<input
-				name="castingTime"
-				placeholder="1 standard action"
-				class="input input-bordered w-full"
-				bind:value={$c.spells[spellLevel].spells[spellIdx].castingTime}
-			/>
-		</div>
+		<Input
+			name="castingTime"
+			label="Casting Time"
+			placeholder="1 standard action"
+			bind:value={$c.spells[spellLevel].spells[spellIdx].castingTime}
+		/>
 
-		<div class="form-control w-full">
-			<label for="components" class="label pb-0">
-				<span class="label-text">Components</span>
-			</label>
-			<input
-				name="components"
-				placeholder="V, S, M (a ball of bat guano and sulfur)"
-				class="input input-bordered w-full"
-				bind:value={$c.spells[spellLevel].spells[spellIdx].components}
-			/>
-		</div>
+		<Input
+			name="components"
+			label="Components"
+			placeholder="V, S, M (a ball of bat guano and sulfur)"
+			bind:value={$c.spells[spellLevel].spells[spellIdx].components}
+		/>
 
-		<div class="form-control w-full">
-			<label for="range" class="label pb-0">
-				<span class="label-text">Range</span>
-			</label>
-			<input
-				name="range"
-				placeholder="Long (400 ft. + 40 ft./level)"
-				class="input input-bordered w-full"
-				bind:value={$c.spells[spellLevel].spells[spellIdx].range}
-			/>
-		</div>
+		<Input
+			name="range"
+			label="Range"
+			placeholder="Long (400 ft. + 40 ft./level)"
+			bind:value={$c.spells[spellLevel].spells[spellIdx].range}
+		/>
 
-		<div class="form-control w-full">
-			<label for="area" class="label pb-0">
-				<span class="label-text">Area</span>
-			</label>
-			<input
-				name="area"
-				placeholder="20-ft.-radius spread"
-				class="input input-bordered w-full"
-				bind:value={$c.spells[spellLevel].spells[spellIdx].area}
-			/>
-		</div>
+		<Input
+			name="area"
+			label="Area"
+			placeholder="20-ft.-radius spread"
+			bind:value={$c.spells[spellLevel].spells[spellIdx].area}
+		/>
 
-		<div class="form-control w-full">
-			<label for="targets" class="label pb-0">
-				<span class="label-text">Targets</span>
-			</label>
-			<input
-				name="targets"
-				placeholder="up to five creatures"
-				class="input input-bordered w-full"
-				bind:value={$c.spells[spellLevel].spells[spellIdx].targets}
-			/>
-		</div>
+		<Input
+			name="targets"
+			label="Targets"
+			placeholder="up to five creatures"
+			bind:value={$c.spells[spellLevel].spells[spellIdx].targets}
+		/>
 
-		<div class="form-control w-full">
-			<label for="effect" class="label pb-0">
-				<span class="label-text">Effect</span>
-			</label>
-			<input
-				name="effect"
-				placeholder="Heal 1d6+CasterLevel"
-				class="input input-bordered w-full"
-				bind:value={$c.spells[spellLevel].spells[spellIdx].effect}
-			/>
-		</div>
+		<Input
+			name="effect"
+			label="Effect"
+			placeholder="Heal 1d6+CasterLevel"
+			bind:value={$c.spells[spellLevel].spells[spellIdx].effect}
+		/>
 
-		<div class="form-control w-full">
-			<label for="duration" class="label pb-0">
-				<span class="label-text">Duration</span>
-			</label>
-			<input
-				name="duration"
-				placeholder="Instantaneous"
-				class="input input-bordered w-full"
-				bind:value={$c.spells[spellLevel].spells[spellIdx].duration}
-			/>
-		</div>
+		<Input
+			name="duration"
+			label="Duration"
+			placeholder="Instantaneous"
+			bind:value={$c.spells[spellLevel].spells[spellIdx].duration}
+		/>
 
 		<div class="divider">
 			<div class="flex flex-row gap-2">
 				Saving Throw
-				<input
-					type="checkbox"
-					class="toggle"
+				<Toggle
+					name="savingThrow"
 					bind:checked={$c.spells[spellLevel].spells[spellIdx].savingThrow.hasSave}
 				/>
 			</div>
 		</div>
 
 		{#if $c.spells[spellLevel].spells[spellIdx].savingThrow.hasSave}
-			<input
-				name="duration"
+			<Input
+				name="savingThrowEffect"
+				label="Effect"
 				placeholder="Reflex Half"
-				class="input input-bordered w-full"
 				bind:value={$c.spells[spellLevel].spells[spellIdx].savingThrow.effect}
 			/>
 
@@ -204,24 +150,17 @@
 			/>
 		{/if}
 
-		<div class="form-control w-full">
-			<label for="duration" class="label pb-0">
-				<span class="label-text">Spell Resistance</span>
-			</label>
-			<input
-				name="duration"
-				placeholder=""
-				class="input input-bordered w-full"
-				bind:value={$c.spells[spellLevel].spells[spellIdx].spellResistance}
-			/>
-		</div>
+		<Input
+			name="sr"
+			label="Spell Resistance"
+			bind:value={$c.spells[spellLevel].spells[spellIdx].spellResistance}
+		/>
 
 		<div class="divider">
 			<div class="flex flex-row gap-2">
 				Attack
-				<input
-					type="checkbox"
-					class="toggle"
+				<Toggle
+					name="attack"
 					bind:checked={$c.spells[spellLevel].spells[spellIdx].attack.hasAttack}
 				/>
 			</div>

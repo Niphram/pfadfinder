@@ -1,11 +1,13 @@
 <script lang="ts">
-	import { ABILITY_KEYS, c, type SkillKey } from '$lib/data';
+	import { ABILITY_KEYS, c, SpellLikeAbility, type SkillKey } from '$lib/data';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
+	import Checkbox from '../input/checkbox.svelte';
 	import Integer from '../input/integer.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
 	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
+	import Toggle from '../input/toggle.svelte';
 
 	export let key: SkillKey = 'acrobatics';
 	export let index = 0;
@@ -16,17 +18,12 @@
 </script>
 
 <div class="flex flex-row gap-2">
-	<div class="form-control">
-		<label for="classSkill" class="label cursor-pointer pb-0">
-			<span class="label-text">C?</span>
-		</label>
-		<input
-			name="classSkill"
-			type="checkbox"
-			bind:checked={$c.skills[key].skills[index].classSkill}
-			class="checkbox checkbox-lg"
-		/>
-	</div>
+	<Checkbox
+		classname="max-w-min"
+		name="classSkill"
+		label="C?"
+		bind:checked={$c.skills[key].skills[index].classSkill}
+	/>
 
 	<Select
 		name="skillBaseAbility"
@@ -40,12 +37,11 @@
 	</Select>
 </div>
 
-<div class="form-control">
-	<label class="label cursor-pointer pb-0">
-		<span class="label-text">Armor Penalty?</span>
-		<input type="checkbox" class="toggle" bind:checked={$c.skills[key].skills[index].penalty} />
-	</label>
-</div>
+<Toggle
+	name="armorPenalty"
+	label="Armor Penalty?"
+	bind:checked={$c.skills[key].skills[index].penalty}
+/>
 
 <div class="flex flex-row gap-2">
 	<Integer bind:value={$c.skills[key].skills[index].ranks} name="skillRanks" label="Ranks" />

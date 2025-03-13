@@ -2,6 +2,7 @@
 	import { c } from '$lib/data';
 	import { calculateNode } from '$lib/macro/evaluate';
 	import { parse } from '$lib/macro/parser';
+	import Fieldset from './fieldset.svelte';
 
 	export let noNegatives = false;
 	export let noZero = false;
@@ -30,10 +31,7 @@
 	}
 </script>
 
-<div class="form-control w-full">
-	<label for={name} class="label pb-0">
-		<span class="label-text">{label}</span>
-	</label>
+<Fieldset legend={label}>
 	<input
 		{name}
 		{placeholder}
@@ -41,4 +39,4 @@
 		class:input-error={!valid}
 		bind:value={current}
 	/>
-</div>
+</Fieldset>

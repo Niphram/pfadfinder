@@ -2,6 +2,7 @@
 	import { c, resetChar } from '$lib/data';
 	import { persisted } from '$lib/data/storage';
 	import { openDialog, title } from '../dialog.svelte';
+	import Toggle from '../input/toggle.svelte';
 	import Steps from '../steps.svelte';
 	import { isDarkMode, toggleDarkMode } from '../theme-changer.svelte';
 	import MacroDebugDialog from './debug/macro-debug-dialog.svelte';
@@ -10,28 +11,26 @@
 	$title = 'Settings';
 </script>
 
-<div class="form-control">
-	<label class="label cursor-pointer">
-		<span class="label-text">Dark Mode</span>
-		<input type="checkbox" class="toggle" checked={$isDarkMode} on:change={toggleDarkMode} />
-	</label>
-</div>
+<Toggle
+	name="darkMode"
+	label="Dark mode"
+	checked={$c.settings.usePersonaSystem}
+	on:change={toggleDarkMode}
+/>
 
-<div class="form-control">
-	<label class="label cursor-pointer">
-		<span class="label-text">Use Persona System</span>
-		<input type="checkbox" class="toggle" bind:checked={$c.settings.usePersonaSystem} />
-	</label>
-</div>
+<Toggle
+	name="personaSystem"
+	label="Use Persona System"
+	bind:checked={$c.settings.usePersonaSystem}
+/>
 
 <div>Persistent storage: {$persisted}</div>
 
-<div class="form-control">
-	<label class="label cursor-pointer">
-		<span class="label-text">Enable experimental features</span>
-		<input type="checkbox" class="toggle" bind:checked={$c.settings.experimentalFeatures} />
-	</label>
-</div>
+<Toggle
+	name="experimental"
+	label="Enable experimental features"
+	bind:checked={$c.settings.experimentalFeatures}
+/>
 
 <div class="divider">Danger</div>
 

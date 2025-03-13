@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { ABILITY_KEYS, ATTACK_TYPES, c } from '$lib/data';
+	import { combine } from 'typescript-parsec';
 	import { title } from '../dialog.svelte';
+	import Input from '../input/input.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
 	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
@@ -19,17 +21,12 @@
 
 <div class="flex flex-col gap-2">
 	{#if index < $c.combat.attacks.length}
-		<div class="form-control w-full">
-			<label for="className" class="label pb-0">
-				<span class="label-text">Name</span>
-			</label>
-			<input
-				name="className"
-				placeholder="Type here"
-				class="input input-bordered w-full"
-				bind:value={$c.combat.attacks[index].name}
-			/>
-		</div>
+		<Input
+			name="className"
+			label="Name"
+			placeholder="Type here"
+			bind:value={$c.combat.attacks[index].name}
+		/>
 
 		<div class="divider">
 			<div class="flex flex-row gap-2">
@@ -68,29 +65,19 @@
 			</div>
 
 			<div class="flex flex-row gap-1">
-				<div class="form-control w-full">
-					<label for="attackCritRange" class="label pb-0">
-						<span class="label-text">Critical Range</span>
-					</label>
-					<input
-						name="attackCritRange"
-						placeholder="19-20"
-						class="input input-bordered w-full"
-						bind:value={$c.combat.attacks[index].attack.critRange}
-					/>
-				</div>
+				<Input
+					name="attackCritRange"
+					label="Critical Range"
+					placeholder="19-20"
+					bind:value={$c.combat.attacks[index].attack.critRange}
+				/>
 
-				<div class="form-control w-full">
-					<label for="attackRange" class="label pb-0">
-						<span class="label-text">Range</span>
-					</label>
-					<input
-						name="attackRange"
-						placeholder="5 feet"
-						class="input input-bordered w-full"
-						bind:value={$c.combat.attacks[index].attack.range}
-					/>
-				</div>
+				<Input
+					name="attackRange"
+					label="Range"
+					placeholder="5 feet"
+					bind:value={$c.combat.attacks[index].attack.range}
+				/>
 			</div>
 		{/if}
 
@@ -102,17 +89,12 @@
 		</div>
 
 		{#if $c.combat.attacks[index].hasDamage}
-			<div class="form-control w-full">
-				<label for="damage" class="label pb-0">
-					<span class="label-text">Damage</span>
-				</label>
-				<input
-					name="damage"
-					placeholder="1d6 Piercing + STR"
-					class="input input-bordered w-full"
-					bind:value={$c.combat.attacks[index].damage.damage}
-				/>
-			</div>
+			<Input
+				name="damage"
+				label="Damage"
+				placeholder="1d6 Piercing + STR"
+				bind:value={$c.combat.attacks[index].damage.damage}
+			/>
 		{/if}
 
 		<TextArea

@@ -2,10 +2,12 @@
 	import { CHARGE_TYPES, Item, c } from '$lib/data';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
+	import Input from '../input/input.svelte';
 	import Integer from '../input/integer.svelte';
 	import Number from '../input/number.svelte';
 	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
+	import Toggle from '../input/toggle.svelte';
 
 	export let list: Item[] = [];
 	export let index: number;
@@ -26,42 +28,22 @@
 
 <div class="flex flex-col gap-2">
 	{#if index < list.length}
-		<div class="form-control w-full">
-			<label for="className" class="label pb-0">
-				<span class="label-text">Name</span>
-			</label>
-			<input
-				name="className"
-				placeholder="Type here"
-				class="input input-bordered w-full"
-				bind:value={list[index].name}
-			/>
-		</div>
+		<Input name="itemName" label="Name" placeholder="Type here" bind:value={list[index].name} />
 
 		<div class="flex flex-row gap-2">
 			<Integer bind:value={list[index].quantity} name="itemQuantity" label="Quantity" noNegatives />
 			<Number bind:value={list[index].weight} name="itemWeight" label="Weight" />
 		</div>
 
-		<div class="form-control">
-			<label class="label cursor-pointer pb-0">
-				<span class="label-text">Container?</span>
-				<input
-					type="checkbox"
-					class="toggle"
-					bind:checked={list[index].isContainer}
-					disabled={list[index].children.length > 0 || list !== $c.equipment.items}
-				/>
-			</label>
-		</div>
+		<Toggle
+			name="isContainer"
+			label="Container?"
+			bind:checked={list[index].isContainer}
+			disabled={list[index].children.length > 0 || list !== $c.equipment.items}
+		/>
 
 		{#if list[index].isContainer}
-			<div class="form-control">
-				<label class="label cursor-pointer pb-0">
-					<span class="label-text">Equipped?</span>
-					<input type="checkbox" class="toggle" bind:checked={list[index].equipped} />
-				</label>
-			</div>
+			<Toggle name="isEquipped" label="Equipped?" bind:checked={list[index].equipped} />
 		{/if}
 
 		<div class="divider mb-0">

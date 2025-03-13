@@ -2,10 +2,12 @@
 	import { c, SPELL_ATTACK_TYPE, SPELL_LIKE_COUNT_TYPES, SpellAttackDamage } from '$lib/data';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
+	import Input from '../input/input.svelte';
 	import Integer from '../input/integer.svelte';
 
 	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
+	import Toggle from '../input/toggle.svelte';
 
 	export let slaIndex: number;
 
@@ -29,17 +31,12 @@
 
 <div class="flex flex-col gap-2">
 	{#if slaIndex < $c.spells.spellLikeAbilities.length}
-		<div class="form-control w-full">
-			<label for="spellName" class="label pb-0">
-				<span class="label-text">Name</span>
-			</label>
-			<input
-				name="spellName"
-				placeholder="Name"
-				class="input input-bordered w-full"
-				bind:value={$c.spells.spellLikeAbilities[slaIndex].name}
-			/>
-		</div>
+		<Input
+			name="slaName"
+			label="Name"
+			placeholder="Name"
+			bind:value={$c.spells.spellLikeAbilities[slaIndex].name}
+		/>
 
 		<div class="divider mb-0">
 			<div class="flex flex-row items-center gap-2">
@@ -77,118 +74,77 @@
 			</div>
 		{/if}
 
-		<div class="form-control w-full">
-			<label for="spellSchool" class="label pb-0">
-				<span class="label-text">School</span>
-			</label>
-			<input
-				name="spellSchool"
-				placeholder="School/Domain/Elemental"
-				class="input input-bordered w-full"
-				bind:value={$c.spells.spellLikeAbilities[slaIndex].school}
-			/>
-		</div>
+		<Input
+			name="spellSchool"
+			label="School"
+			placeholder="School/Domain/Elemental"
+			bind:value={$c.spells.spellLikeAbilities[slaIndex].school}
+		/>
 
-		<div class="form-control w-full">
-			<label for="classAndLevel" class="label pb-0">
-				<span class="label-text">Class/Level</span>
-			</label>
-			<input
-				name="classAndLevel"
-				placeholder="Sorcerer/Wizard 3"
-				class="input input-bordered w-full"
-				bind:value={$c.spells.spellLikeAbilities[slaIndex].classAndLevel}
-			/>
-		</div>
+		<Input
+			name="classAndLevel"
+			label="Class/Level"
+			placeholder="Sorcerer/Wizard 3"
+			bind:value={$c.spells.spellLikeAbilities[slaIndex].classAndLevel}
+		/>
 
-		<div class="form-control w-full">
-			<label for="castingTime" class="label pb-0">
-				<span class="label-text">Casting Time</span>
-			</label>
-			<input
-				name="castingTime"
-				placeholder="1 standard action"
-				class="input input-bordered w-full"
-				bind:value={$c.spells.spellLikeAbilities[slaIndex].castingTime}
-			/>
-		</div>
+		<Input
+			name="castingTime"
+			label="Casting Time"
+			placeholder="1 standard action"
+			bind:value={$c.spells.spellLikeAbilities[slaIndex].castingTime}
+		/>
 
-		<div class="form-control w-full">
-			<label for="range" class="label pb-0">
-				<span class="label-text">Range</span>
-			</label>
-			<input
-				name="range"
-				placeholder="Long (400 ft. + 40 ft./level)"
-				class="input input-bordered w-full"
-				bind:value={$c.spells.spellLikeAbilities[slaIndex].range}
-			/>
-		</div>
+		<Input
+			name="range"
+			label="Range"
+			placeholder="Long (400 ft. + 40 ft./level)"
+			bind:value={$c.spells.spellLikeAbilities[slaIndex].range}
+		/>
 
-		<div class="form-control w-full">
-			<label for="area" class="label pb-0">
-				<span class="label-text">Area</span>
-			</label>
-			<input
-				name="area"
-				placeholder="20-ft.-radius spread"
-				class="input input-bordered w-full"
-				bind:value={$c.spells.spellLikeAbilities[slaIndex].area}
-			/>
-		</div>
+		<Input
+			name="area"
+			label="Area"
+			placeholder="20-ft.-radius spread"
+			bind:value={$c.spells.spellLikeAbilities[slaIndex].area}
+		/>
 
-		<div class="form-control w-full">
-			<label for="targets" class="label pb-0">
-				<span class="label-text">Targets</span>
-			</label>
-			<input
-				name="targets"
-				placeholder="up to five creatures"
-				class="input input-bordered w-full"
-				bind:value={$c.spells.spellLikeAbilities[slaIndex].targets}
-			/>
-		</div>
+		<Input
+			name="targets"
+			label="Targets"
+			placeholder="up to five creatures"
+			bind:value={$c.spells.spellLikeAbilities[slaIndex].targets}
+		/>
 
-		<div class="form-control w-full">
-			<label for="effect" class="label pb-0">
-				<span class="label-text">Effect</span>
-			</label>
-			<input
-				name="effect"
-				placeholder="Heal 1d6+CasterLevel"
-				class="input input-bordered w-full"
-				bind:value={$c.spells.spellLikeAbilities[slaIndex].effect}
-			/>
-		</div>
+		<Input
+			name="effect"
+			label="Effect"
+			placeholder="Heal 1d6+CasterLevel"
+			bind:value={$c.spells.spellLikeAbilities[slaIndex].effect}
+		/>
 
-		<div class="form-control w-full">
-			<label for="duration" class="label pb-0">
-				<span class="label-text">Duration</span>
-			</label>
-			<input
-				name="duration"
-				placeholder="Instantaneous"
-				class="input input-bordered w-full"
-				bind:value={$c.spells.spellLikeAbilities[slaIndex].duration}
-			/>
-		</div>
+		<Input
+			name="duration"
+			label="Duration"
+			placeholder="Instantaneous"
+			bind:value={$c.spells.spellLikeAbilities[slaIndex].duration}
+		/>
 
 		<div class="divider">
 			<div class="flex flex-row gap-2">
 				Saving Throw
-				<input
-					type="checkbox"
-					class="toggle"
+				<Toggle
+					name="savingThrow"
 					bind:checked={$c.spells.spellLikeAbilities[slaIndex].savingThrow.hasSave}
 				/>
 			</div>
 		</div>
 
 		{#if $c.spells.spellLikeAbilities[slaIndex].savingThrow.hasSave}
-			<input
-				name="duration"
+			<Input
+				name="saveEffect"
+				label="Effect"
 				placeholder="Reflex Half"
-				class="input input-bordered w-full"
 				bind:value={$c.spells.spellLikeAbilities[slaIndex].savingThrow.effect}
 			/>
 
@@ -199,24 +155,17 @@
 			/>
 		{/if}
 
-		<div class="form-control w-full">
-			<label for="duration" class="label pb-0">
-				<span class="label-text">Spell Resistance</span>
-			</label>
-			<input
-				name="duration"
-				placeholder=""
-				class="input input-bordered w-full"
-				bind:value={$c.spells.spellLikeAbilities[slaIndex].spellResistance}
-			/>
-		</div>
+		<Input
+			name="sr"
+			label="Spell Resistance"
+			bind:value={$c.spells.spellLikeAbilities[slaIndex].spellResistance}
+		/>
 
 		<div class="divider">
 			<div class="flex flex-row gap-2">
 				Attack
-				<input
-					type="checkbox"
-					class="toggle"
+				<Toggle
+					name="attack"
 					bind:checked={$c.spells.spellLikeAbilities[slaIndex].attack.hasAttack}
 				/>
 			</div>
@@ -264,19 +213,9 @@
 		</div>
 
 		{#each $c.spells.spellLikeAbilities[slaIndex].damage as damage, damageIdx (damageIdx)}
-			<div class="flex flex-row gap-2">
-				<input
-					name="spellDamage"
-					placeholder="1d6"
-					class="input input-bordered w-full"
-					bind:value={damage.damage}
-				/>
-				<input
-					name="damageType"
-					placeholder="Fire"
-					class="input input-bordered w-full"
-					bind:value={damage.type}
-				/>
+			<div class="flex flex-row items-center gap-2">
+				<Input name="spellDamage" placeholder="1d6" bind:value={damage.damage} />
+				<Input name="damageTyoe" placeholder="Fire" bind:value={damage.type} />
 				<button
 					class="btn btn-warning"
 					on:click|preventDefault={() => {

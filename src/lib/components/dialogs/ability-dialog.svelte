@@ -4,6 +4,7 @@
 	import { title } from '../dialog.svelte';
 	import Integer from '../input/integer.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
+	import TextArea from '../input/text-area.svelte';
 
 	export let key: AbilityKey = 'str';
 
@@ -20,15 +21,10 @@
 <MacroInteger bind:value={$c[key].temp.expr} name="abilityTemp" label="Temp" />
 <Integer bind:value={$c[key].damage} name="abilityDamage" label="Damage" noNegatives />
 
-<div class="form-control w-full">
-	<label for="abilityNotes" class="label pb-0">
-		<span class="label-text">Notes</span>
-	</label>
-	<textarea
-		name="abilityNotes"
-		placeholder="Enter Notes"
-		class="textarea textarea-bordered w-full"
-		rows="10"
-		bind:value={$c[key].notes}
-	></textarea>
-</div>
+<TextArea
+	bind:value={$c[key].notes}
+	label="Notes"
+	name="abilityNotes"
+	placeholder="Enter Notes"
+	rows={10}
+/>
