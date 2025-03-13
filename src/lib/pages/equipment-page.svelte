@@ -48,7 +48,7 @@
 		</div>
 	</div>
 
-	<NestedEquipmentList bind:items={$c.equipment.items} class="ml-2"></NestedEquipmentList>
+	<NestedEquipmentList bind:items={$c.equipment.items}></NestedEquipmentList>
 
 	<div class="divider">
 		<div class="flex flex-row gap-2">
@@ -68,7 +68,7 @@
 			swapThreshold: 0.65
 		}}
 		keyProp="id"
-		class="ml-2 flex flex-col gap-2"
+		class="flex flex-col gap-2"
 		let:item
 		let:index
 	>

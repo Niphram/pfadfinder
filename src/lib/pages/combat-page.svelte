@@ -64,62 +64,60 @@
 	</div>
 
 	{#if $c.combat.attacks.length > 0}
-		<div class="ml-2">
-			<table class="table border-separate border-spacing-y-2">
-				<thead>
-					<tr class="border-none text-center">
-						<th class="px-0"></th>
-						<th>Name</th>
-						<th>Atk</th>
-						<th>Crit Range</th>
-						<th>Damage</th>
-					</tr>
-				</thead>
-				<SortableList
-					element="tbody"
-					options={{
-						group: 'attack',
-						handle: '.drag-handle',
-						animation: 150,
-						easing: 'cubic-bezier(1, 0, 0, 1)'
-					}}
-					bind:items={$c.combat.attacks}
-					keyProp="id"
-					let:item={attack}
-					let:index
-				>
-					<tr class="border-none text-center">
-						<td class="drag-handle w-6 items-center justify-center px-0" role="button" tabindex="0">
-							<DragHandle />
-						</td>
+		<table class="table border-separate border-spacing-y-2">
+			<thead>
+				<tr class="border-none text-center">
+					<th class="px-0"></th>
+					<th>Name</th>
+					<th>Atk</th>
+					<th>Crit Range</th>
+					<th>Damage</th>
+				</tr>
+			</thead>
+			<SortableList
+				element="tbody"
+				options={{
+					group: 'attack',
+					handle: '.drag-handle',
+					animation: 150,
+					easing: 'cubic-bezier(1, 0, 0, 1)'
+				}}
+				bind:items={$c.combat.attacks}
+				keyProp="id"
+				let:item={attack}
+				let:index
+			>
+				<tr class="border-none text-center">
+					<td class="drag-handle w-6 items-center justify-center px-0" role="button" tabindex="0">
+						<DragHandle />
+					</td>
 
-						<td
-							class="join-item bg-base-200 cursor-pointer rounded-l-md"
-							on:click={() => macroNotify(attack.name, attack.notes, $c)}
-							on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
-							>{attack.name}</td
-						>
-						<td
-							class="join-item bg-base-200 cursor-pointer"
-							on:click={() => macroNotify(attack.name, attack.notes, $c)}
-							on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
-							>{attack.hasAttack ? withSign(attack.attackBonus.eval($c)) : '-'}</td
-						>
-						<td
-							class="join-item bg-base-200 cursor-pointer"
-							on:click={() => macroNotify(attack.name, attack.notes, $c)}
-							on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
-							>{(attack.hasAttack && attack.attack.critRange) || '-'}</td
-						>
-						<td
-							class="join-item bg-base-200 cursor-pointer rounded-r-md"
-							on:click={() => macroNotify(attack.name, attack.notes, $c)}
-							on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
-							>{(attack.hasDamage && parseTextWithMacros(attack.damage.damage, $c)) || '-'}</td
-						>
-					</tr>
-				</SortableList>
-			</table>
-		</div>
+					<td
+						class="join-item bg-base-200 cursor-pointer rounded-l-md"
+						on:click={() => macroNotify(attack.name, attack.notes, $c)}
+						on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
+						>{attack.name}</td
+					>
+					<td
+						class="join-item bg-base-200 cursor-pointer"
+						on:click={() => macroNotify(attack.name, attack.notes, $c)}
+						on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
+						>{attack.hasAttack ? withSign(attack.attackBonus.eval($c)) : '-'}</td
+					>
+					<td
+						class="join-item bg-base-200 cursor-pointer"
+						on:click={() => macroNotify(attack.name, attack.notes, $c)}
+						on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
+						>{(attack.hasAttack && attack.attack.critRange) || '-'}</td
+					>
+					<td
+						class="join-item bg-base-200 cursor-pointer rounded-r-md"
+						on:click={() => macroNotify(attack.name, attack.notes, $c)}
+						on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
+						>{(attack.hasDamage && parseTextWithMacros(attack.damage.damage, $c)) || '-'}</td
+					>
+				</tr>
+			</SortableList>
+		</table>
 	{/if}
 </div>
