@@ -20,7 +20,7 @@
 			<span class="label-text">{label}</span>
 		</label>
 	{/if}
-	<select {name} class="select select-bordered w-full" bind:value>
+	<select {name} class="select select-bordered w-full min-w-min" bind:value>
 		{#each options as option (option)}
 			<slot {option} />
 		{/each}

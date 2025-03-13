@@ -4,6 +4,7 @@
 	import { title } from '../dialog.svelte';
 	import Integer from '../input/integer.svelte';
 	import Number from '../input/number.svelte';
+	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
 
 	export let list: Item[] = [];
@@ -66,17 +67,14 @@
 		<div class="divider mb-0">
 			<div class="flex flex-row items-center gap-2">
 				<span>Charges</span>
-				<select
+				<Select
 					name="itemChargeType"
-					class="select select-bordered select-sm"
+					options={CHARGE_TYPES}
 					bind:value={list[index].chargeType}
+					let:option={value}
 				>
-					{#each CHARGE_TYPES as chargeType (chargeType)}
-						<option value={chargeType}>
-							{$t(`equipment.chargeType.${chargeType}`)}
-						</option>
-					{/each}
-				</select>
+					<option {value}>{$t(`equipment.chargeType.${value}`)}</option>
+				</Select>
 			</div>
 		</div>
 
