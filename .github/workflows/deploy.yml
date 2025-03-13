@@ -11,29 +11,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          version: 10
-          run_install: false
-
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
+          cache: npm
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm ci
 
       - name: Lint
-        run: pnpm run lint
+        run: npm run lint
 
       - name: build
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'
         run: |
-          pnpm run build
+          npm run build
           touch build/.nojekyll
 
       - name: Upload Artifacts
