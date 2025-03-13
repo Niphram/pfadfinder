@@ -68,10 +68,10 @@
 			<thead>
 				<tr class="border-none text-center">
 					<th class="px-0"></th>
-					<th>Name</th>
-					<th>Atk</th>
-					<th>Crit Range</th>
-					<th>Damage</th>
+					<th class="p-1">Name</th>
+					<th class="p-1">Atk</th>
+					<th class="p-1">Crit Range</th>
+					<th class="p-1">Damage</th>
 				</tr>
 			</thead>
 			<SortableList
@@ -93,25 +93,25 @@
 					</td>
 
 					<td
-						class="join-item bg-base-200 cursor-pointer rounded-l-md"
+						class="join-item bg-base-200 cursor-pointer rounded-l-md p-1"
 						on:click={() => macroNotify(attack.name, attack.notes, $c)}
 						on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
 						>{attack.name}</td
 					>
 					<td
-						class="join-item bg-base-200 cursor-pointer"
+						class="join-item bg-base-200 cursor-pointer p-1"
 						on:click={() => macroNotify(attack.name, attack.notes, $c)}
 						on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
 						>{attack.hasAttack ? withSign(attack.attackBonus.eval($c)) : '-'}</td
 					>
 					<td
-						class="join-item bg-base-200 cursor-pointer"
+						class="join-item bg-base-200 cursor-pointer p-1"
 						on:click={() => macroNotify(attack.name, attack.notes, $c)}
 						on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
 						>{(attack.hasAttack && attack.attack.critRange) || '-'}</td
 					>
 					<td
-						class="join-item bg-base-200 cursor-pointer rounded-r-md"
+						class="join-item bg-base-200 cursor-pointer rounded-r-md p-1"
 						on:click={() => macroNotify(attack.name, attack.notes, $c)}
 						on:contextmenu|preventDefault={() => openDialog(AttackDialog, { index })}
 						>{(attack.hasDamage && parseTextWithMacros(attack.damage.damage, $c)) || '-'}</td
