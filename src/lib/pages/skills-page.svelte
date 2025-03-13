@@ -42,9 +42,9 @@
 					>
 						<span class="w-16">{skillTags}</span>
 					</div>
-					<div class="join-item flex flex-grow items-center bg-base-200 text-base-content">
+					<div class="join-item flex grow items-center bg-base-200 text-base-content">
 						<span
-							class="join-item flex-grow align-middle decoration-wavy"
+							class="join-item grow align-middle decoration-wavy"
 							class:underline={variant.notes}
 							>{$t(`skills.${key}`)}{variant.name ? ` (${variant.name})` : ''}</span
 						>

@@ -41,7 +41,7 @@
 <div class="flex h-screen flex-col">
 	<div class="sticky top-0 z-40 w-full bg-base-200 drop-shadow-xl">
 		<div class="flex flex-row items-stretch gap-2 p-2 align-middle">
-			<button class="flex-grow text-left" on:click={() => openDialog(CharacterInfoDialog, {})}>
+			<button class="grow text-left" on:click={() => openDialog(CharacterInfoDialog, {})}>
 				<div class="flex flex-col">
 					<p class="text-lg font-bold">
 						{$c.name} <span class="text-sm font-normal">(Lvl. {$c.classes.levels})</span>
@@ -56,7 +56,7 @@
 	</div>
 
 	<div
-		class="flex flex-grow snap-x snap-mandatory flex-row flex-nowrap overflow-x-scroll scroll-smooth"
+		class="flex grow snap-x snap-mandatory flex-row flex-nowrap overflow-x-scroll scroll-smooth"
 	>
 		{#each pages as { key, component, active } (key)}
 			{#if active}

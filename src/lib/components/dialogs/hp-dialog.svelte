@@ -48,7 +48,7 @@
 </div>
 <div class="divider">Modify</div>
 <div class="flex flex-row items-stretch gap-4">
-	<button on:click|preventDefault={damage} class="btn flex-grow bg-red-500 text-2xl">-</button>
+	<button on:click|preventDefault={damage} class="btn grow bg-red-500 text-2xl">-</button>
 	<input
 		type="number"
 		class="input input-bordered w-16 text-center text-2xl"
@@ -56,5 +56,5 @@
 		min="0"
 		bind:value={$amount}
 	/>
-	<button on:click|preventDefault={heal} class="btn flex-grow bg-green-500 text-2xl">+</button>
+	<button on:click|preventDefault={heal} class="btn grow bg-green-500 text-2xl">+</button>
 </div>
