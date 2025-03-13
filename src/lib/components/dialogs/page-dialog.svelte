@@ -28,7 +28,7 @@
 		{/if}
 	{/each}
 
-	<div class="grow" />
+	<div class="grow"></div>
 
 	<button class="btn btn-accent w-full" on:click={() => openDialog(RestDialog, {})}>Rest</button>
 

@@ -104,7 +104,7 @@
 		</label>
 	</div>
 
-	<div class="divider" />
+	<div class="divider"></div>
 
 	<button class="btn" on:click={() => rest8Hours()}>8 hours</button>
 </div>

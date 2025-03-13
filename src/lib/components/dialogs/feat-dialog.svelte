@@ -38,7 +38,7 @@
 				class="textarea textarea-bordered w-full"
 				rows="5"
 				bind:value={$c.feats[index].prerequisites}
-			/>
+			></textarea>
 		</div>
 
 		<Select
@@ -61,7 +61,7 @@
 				class="textarea textarea-bordered w-full"
 				rows="5"
 				bind:value={$c.feats[index].benefits}
-			/>
+			></textarea>
 		</div>
 
 		<div class="form-control w-full">
@@ -74,7 +74,7 @@
 				class="textarea textarea-bordered w-full"
 				rows="5"
 				bind:value={$c.feats[index].normal}
-			/>
+			></textarea>
 		</div>
 
 		<div class="form-control w-full">
@@ -87,7 +87,7 @@
 				class="textarea textarea-bordered w-full"
 				rows="5"
 				bind:value={$c.feats[index].special}
-			/>
+			></textarea>
 		</div>
 	{/if}
 

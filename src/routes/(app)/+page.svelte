@@ -62,7 +62,7 @@
 			{#if active}
 				<div id={key} class="w-full flex-none snap-center snap-always overflow-y-scroll p-4">
 					<svelte:component this={component} />
-					<div class="h-16" />
+					<div class="h-16"></div>
 				</div>
 			{/if}
 		{/each}
@@ -72,7 +72,11 @@
 <!-- Floating Action Button -->
 
 <div class="fixed bottom-4 right-4">
-	<button class="btn btn-circle btn-primary" on:click={() => openDialog(PageDialog, {})}>
+	<button
+		aria-label="Navigation"
+		class="btn btn-circle btn-primary"
+		on:click={() => openDialog(PageDialog, {})}
+	>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			fill="none"

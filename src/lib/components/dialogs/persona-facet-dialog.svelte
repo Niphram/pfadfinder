@@ -22,5 +22,5 @@
 		class="textarea textarea-bordered w-full"
 		rows="10"
 		bind:value={$c.persona[key].notes}
-	/>
+	></textarea>
 </div>

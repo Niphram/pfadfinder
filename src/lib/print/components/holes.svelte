@@ -34,7 +34,7 @@
 			<div
 				class="absolute rounded-full border border-black"
 				style="top: {hole}; width: {pattern.holeSize}; height: {pattern.holeSize}; transform: translate(50%, -50%);"
-			/>
+			></div>
 		{/each}
 	</div>
 </div>

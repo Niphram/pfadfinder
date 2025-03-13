@@ -16,7 +16,7 @@
 			<slot />
 		{:else}
 			<div class="flex h-full w-full items-center justify-center">
-				<span class="loading loading-dots loading-lg" />
+				<span class="loading loading-dots loading-lg"></span>
 			</div>
 		{/if}
 	</div>
