@@ -2,10 +2,13 @@
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import SkillDialog from '$lib/components/dialogs/skill-dialog.svelte';
 	import SkillVariantsDialog from '$lib/components/dialogs/skill-variants-dialog.svelte';
-	import { SKILL_KEYS, c, p } from '$lib/data';
+	import { SKILL_KEYS } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { mapSum, withSign } from '$lib/utils';
 	import { macroNotify } from '$lib/utils/notes';
+
+	const { c, p } = getChar();
 
 	$: skillRanks = mapSum(
 		Object.keys($c.skills).map((k) => $c.skills[k]),

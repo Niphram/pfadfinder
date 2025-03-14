@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { c } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { title } from '../dialog.svelte';
 
 	import TextArea from '../input/text-area.svelte';
+
+	const { c } = getChar();
 
 	$title = 'Base Attack Bonus';
 </script>

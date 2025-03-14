@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { c, resetChar } from '$lib/data';
+	import { Character } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { persisted } from '$lib/data/storage';
 	import { openDialog, title } from '../dialog.svelte';
 	import Toggle from '../input/toggle.svelte';
@@ -7,6 +8,8 @@
 	import { isDarkMode, toggleDarkMode } from '../theme-changer.svelte';
 	import MacroDebugDialog from './debug/macro-debug-dialog.svelte';
 	import ImportExportDialog from './import-export-dialog.svelte';
+
+	const { c } = getChar();
 
 	$title = 'Settings';
 </script>
@@ -46,7 +49,13 @@
 		steps={[
 			{ label: 'Delete Character', style: { warning: true, outline: true } },
 			{ label: 'Are you sure?', style: { warning: true } },
-			{ label: 'REALLY SURE???', style: { error: true }, onClick: resetChar }
+			{
+				label: 'REALLY SURE???',
+				style: { error: true },
+				onClick: () => {
+					c.set(new Character());
+				}
+			}
 		]}
 		let:props={{ label, onClick, style }}
 		let:next

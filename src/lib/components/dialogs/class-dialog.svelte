@@ -4,9 +4,12 @@
 	import { t } from '$lib/i18n';
 	import Integer from '../input/integer.svelte';
 	import { title } from '../dialog.svelte';
-	import { SAVE_KEYS, c } from '$lib/data';
+	import { SAVE_KEYS } from '$lib/data';
 	import Input from '../input/input.svelte';
 	import Toggle from '../input/toggle.svelte';
+	import { getChar } from '$lib/data/context';
+
+	const { c } = getChar();
 
 	export let classIndex: number;
 

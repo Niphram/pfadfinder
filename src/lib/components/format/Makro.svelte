@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { c } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { calculateNode } from '$lib/macro/evaluate';
 	import { parse } from '$lib/macro/parser';
+
+	const { c } = getChar();
 
 	export let expr: string;
 

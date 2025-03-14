@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { c } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { calculateNode } from '$lib/macro/evaluate';
 	import { parse } from '$lib/macro/parser';
 	import Fieldset from './fieldset.svelte';
+
+	const { c } = getChar();
 
 	export let noNegatives = false;
 	export let noZero = false;

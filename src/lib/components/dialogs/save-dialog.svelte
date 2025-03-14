@@ -1,10 +1,13 @@
 <script lang="ts">
-	import { ABILITY_KEYS, c, type SaveKey } from '$lib/data';
+	import { ABILITY_KEYS, type SaveKey } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
 	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
+
+	const { c } = getChar();
 
 	export let key: SaveKey = 'fort';
 

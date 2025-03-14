@@ -6,7 +6,10 @@
 	import { macroNotify } from '$lib/utils/notes';
 	import { openDialog } from '../dialog.svelte';
 	import SaveDialog from '../dialogs/save-dialog.svelte';
-	import { c, p, type SaveKey } from '$lib/data';
+	import { type SaveKey } from '$lib/data';
+	import { getChar } from '$lib/data/context';
+
+	const { c, p } = getChar();
 
 	export let key: SaveKey;
 </script>

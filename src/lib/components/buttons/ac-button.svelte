@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { c } from '$lib/data';
+	import { getChar } from '$lib/data/context';
+
+	const { c } = getChar();
 </script>
 
 <button class="btn h-min px-0" on:click on:contextmenu|preventDefault>

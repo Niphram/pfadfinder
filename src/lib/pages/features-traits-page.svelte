@@ -6,9 +6,12 @@
 	import TraitDialog from '$lib/components/dialogs/trait-dialog.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
-	import { Feat, Trait, c } from '$lib/data';
+	import { Feat, Trait } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { macroNotify } from '$lib/utils/notes';
+
+	const { c } = getChar();
 
 	function addFeat() {
 		$c.feats.push(new Feat());

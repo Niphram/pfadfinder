@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { c } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { deriveValidated, validated } from '$lib/utils/stores';
 	import { integer, positive, positive0 } from '$lib/validators/numbers';
 	import { title } from '../dialog.svelte';
+
+	const { c } = getChar();
 
 	let [amount, amountInvalid] = validated<number>(1, integer, positive);
 

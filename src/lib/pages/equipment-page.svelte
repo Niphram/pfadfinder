@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { openDialog } from '$lib/components/dialog.svelte';
-	import { AcItem, Item, c } from '$lib/data';
+	import { AcItem, Item } from '$lib/data';
 	import { t } from '$lib/i18n';
 	import { macroNotify } from '$lib/utils/notes';
 
@@ -12,6 +12,9 @@
 	import TextArea from '$lib/components/input/text-area.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import NestedEquipmentList from '$lib/nested-equipment-list.svelte';
+	import { getChar } from '$lib/data/context';
+
+	const { c } = getChar();
 
 	function addItem() {
 		$c.equipment.items.push(new Item());

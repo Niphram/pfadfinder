@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { CHARGE_TYPES, Item, c } from '$lib/data';
+	import { CHARGE_TYPES, Item } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
@@ -8,6 +9,8 @@
 	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
 	import Toggle from '../input/toggle.svelte';
+
+	const { c } = getChar();
 
 	export let list: Item[] = [];
 	export let index: number;

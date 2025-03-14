@@ -1,11 +1,13 @@
 <script lang="ts">
-	import { c } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 
 	import { closeDialog, openDialog, title } from '../dialog.svelte';
 
 	import RestDialog from './rest-dialog.svelte';
 	import SettingsDialog from './settings-dialog.svelte';
+
+	const { c } = getChar();
 
 	$: navButtons = [
 		{ key: 'abilities', active: true },

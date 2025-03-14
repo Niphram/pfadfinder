@@ -1,10 +1,13 @@
 <script lang="ts">
-	import { FEAT_TYPES, c } from '$lib/data';
+	import { FEAT_TYPES } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
 	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
+
+	const { c } = getChar();
 
 	export let index: number;
 

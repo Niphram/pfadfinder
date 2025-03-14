@@ -2,10 +2,12 @@
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import PersonaScoreDialog from '$lib/components/dialogs/persona-facet-dialog.svelte';
 	import TextArea from '$lib/components/input/text-area.svelte';
-	import { c } from '$lib/data';
 	import { FACET_KEYS } from '$lib/data/character/persona';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { macroNotify } from '$lib/utils/notes';
+
+	const { c } = getChar();
 </script>
 
 <div class="flex flex-col">

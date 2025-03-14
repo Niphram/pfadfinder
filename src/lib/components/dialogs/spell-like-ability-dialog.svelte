@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { c, SPELL_ATTACK_TYPE, SPELL_LIKE_COUNT_TYPES, SpellAttackDamage } from '$lib/data';
+	import { SPELL_ATTACK_TYPE, SPELL_LIKE_COUNT_TYPES, SpellAttackDamage } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
@@ -8,6 +9,8 @@
 	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
 	import Toggle from '../input/toggle.svelte';
+
+	const { c } = getChar();
 
 	export let slaIndex: number;
 

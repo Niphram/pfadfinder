@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
 
-	import { c, dirty } from '$lib/data';
-
 	import { openDialog } from '$lib/components/dialog.svelte';
 
 	import AbilitiesPage from '$lib/pages/abilities-page.svelte';
@@ -19,6 +17,9 @@
 	import PageDialog from '$lib/components/dialogs/page-dialog.svelte';
 	import EquipmentPage from '$lib/pages/equipment-page.svelte';
 	import PersonaPage from '$lib/pages/persona-page.svelte';
+	import { getChar } from '$lib/data/context';
+
+	const { c, dirty } = getChar();
 
 	$: pages = [
 		{ key: 'abilities', component: AbilitiesPage, active: true },

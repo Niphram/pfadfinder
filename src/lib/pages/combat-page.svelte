@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { withSign } from '$lib/utils/format';
-	import { Attack, c, p } from '$lib/data';
+	import { Attack } from '$lib/data';
 
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
 	import { openDialog } from '$lib/components/dialog.svelte';
@@ -13,6 +13,9 @@
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import { parseTextWithMacros } from '$lib/macro/text';
+	import { getChar } from '$lib/data/context';
+
+	const { c, p } = getChar();
 
 	function addAttack() {
 		$c.combat.attacks.push(new Attack());

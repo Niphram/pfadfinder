@@ -1,7 +1,10 @@
 <script lang="ts">
-	import { ABILITY_KEYS, Item, SPELL_LEVELS, c } from '$lib/data';
+	import { ABILITY_KEYS, Item, SPELL_LEVELS } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { title } from '../dialog.svelte';
 	import Toggle from '../input/toggle.svelte';
+
+	const { c } = getChar();
 
 	$title = 'Rest';
 

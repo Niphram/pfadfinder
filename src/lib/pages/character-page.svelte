@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { openDialog } from '$lib/components/dialog.svelte';
 
-	import { c, Class } from '$lib/data';
+	import { Class } from '$lib/data';
 
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
 
 	import ClassDialog from '$lib/components/dialogs/class-dialog.svelte';
 	import RaceDialog from '$lib/components/dialogs/race-dialog.svelte';
+	import { getChar } from '$lib/data/context';
+
+	const { c } = getChar();
 
 	function addClass() {
 		$c.classes.list.push(new Class());

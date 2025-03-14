@@ -5,7 +5,9 @@
 	import { macroNotify } from '$lib/utils/notes';
 	import { openDialog } from '../dialog.svelte';
 	import InitDialog from '../dialogs/init-dialog.svelte';
-	import { c, p } from '$lib/data';
+	import { getChar } from '$lib/data/context';
+
+	const { c, p } = getChar();
 </script>
 
 <CaptionedButton

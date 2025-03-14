@@ -1,9 +1,11 @@
 <script lang="ts">
-	import { c } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
 	import TextArea from '../input/text-area.svelte';
+
+	const { c } = getChar();
 
 	export let index: number;
 

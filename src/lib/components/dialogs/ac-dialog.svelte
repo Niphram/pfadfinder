@@ -1,8 +1,11 @@
 <script>
-	import { ABILITY_KEYS, c } from '$lib/data';
+	import { ABILITY_KEYS } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
 	import Select from '../input/select.svelte';
+
+	const { c } = getChar();
 
 	$title = 'Armor Class';
 </script>

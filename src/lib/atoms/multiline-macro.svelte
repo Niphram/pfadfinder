@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { c } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { parseTextWithMacros } from '$lib/macro/text';
+
+	const { c } = getChar();
 
 	export let text: string;
 	export let element = 'p';

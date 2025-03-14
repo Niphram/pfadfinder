@@ -1,10 +1,11 @@
 <script lang="ts">
 	import '../../app.css';
 
-	import { loaded } from '$lib/data';
+	const { loaded } = getChar();
 
 	import Dialog from '$lib/components/dialog.svelte';
 	import ToastProvider from '$lib/components/toast-provider.svelte';
+	import { getChar } from '$lib/data/context';
 </script>
 
 <div class="print:hidden">

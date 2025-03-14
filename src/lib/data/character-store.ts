@@ -38,10 +38,6 @@ export const {
 	}
 });
 
-export function resetChar() {
-	c.set(new Character());
-}
-
 const formulaMap = new Map<string, Node>();
 
 export const p = derived(c, (char) => {

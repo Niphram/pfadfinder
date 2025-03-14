@@ -1,10 +1,13 @@
 <script lang="ts">
-	import { c, p, type AbilityKey } from '$lib/data';
+	import { type AbilityKey } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { withSign } from '$lib/utils';
 	import { macroNotify } from '$lib/utils/notes';
 	import { openDialog } from '../dialog.svelte';
 	import AbilityDialog from '../dialogs/ability-dialog.svelte';
+
+	const { c, p } = getChar();
 
 	export let key: AbilityKey;
 

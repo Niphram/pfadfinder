@@ -1,8 +1,11 @@
 <script lang="ts">
-	import { Character, c, overwriteSave } from '$lib/data';
+	import { Character } from '$lib/data';
 	import { DeserializeInto, Serialize } from 'cerialize';
 	import { title } from '../dialog.svelte';
 	import Steps from '../steps.svelte';
+	import { getChar } from '$lib/data/context';
+
+	const { c, overwriteSave } = getChar();
 
 	$title = 'Import/Export';
 

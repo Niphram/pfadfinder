@@ -1,9 +1,11 @@
 <script lang="ts">
-	import { c } from '$lib/data';
 	import { Skill, type SkillKey } from '$lib/data/character/skills';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
+
+	const { c } = getChar();
 
 	function addSkill(skill: SkillKey) {
 		$c.skills[skill].skills.push(new Skill(skill));

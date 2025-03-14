@@ -3,9 +3,11 @@
 	import Divider from '$lib/atoms/divider.svelte';
 	import { title } from '$lib/components/dialog.svelte';
 	import Input from '$lib/components/input/input.svelte';
-	import { c } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { Macro } from '$lib/data/macros';
 	import MacroAstTree from './macro-ast-tree.svelte';
+
+	const { c } = getChar();
 
 	$title = 'Macro debugging';
 

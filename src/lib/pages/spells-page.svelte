@@ -9,8 +9,11 @@
 	import SpellLikeAbilityDialog from '$lib/components/dialogs/spell-like-ability-dialog.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
-	import { SPELL_LEVELS, Spell, SpellLikeAbility, c, type SpellLevel } from '$lib/data';
+	import { SPELL_LEVELS, Spell, SpellLikeAbility, type SpellLevel } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
+
+	const { c } = getChar();
 
 	function openConfigDialog() {
 		openDialog(SpellLevelDialog, {});

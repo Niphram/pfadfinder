@@ -1,10 +1,13 @@
 <script lang="ts">
-	import { ABILITY_KEYS, ATTACK_TYPES, c } from '$lib/data';
+	import { ABILITY_KEYS, ATTACK_TYPES } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
 	import Select from '../input/select.svelte';
 	import TextArea from '../input/text-area.svelte';
+
+	const { c } = getChar();
 
 	export let index: number;
 

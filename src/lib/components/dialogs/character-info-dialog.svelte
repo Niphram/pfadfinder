@@ -1,7 +1,9 @@
 <script>
-	import { c } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
+
+	const { c } = getChar();
 
 	$title = 'Character Details';
 </script>

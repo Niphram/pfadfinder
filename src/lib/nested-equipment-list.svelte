@@ -5,9 +5,12 @@
 	import DragHandle from './components/icons/drag-handle.svelte';
 
 	import SortableList from './components/sortable-list.svelte';
-	import { c, type Item } from './data';
+	import { type Item } from './data';
+	import { getChar } from './data/context';
 	import { t } from './i18n';
 	import { macroNotify } from './utils/notes';
+
+	const { c } = getChar();
 
 	export let items: Item[];
 
