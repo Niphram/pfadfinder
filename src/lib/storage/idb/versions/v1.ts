@@ -21,6 +21,8 @@ interface SchemaV1 extends DBSchema {
 		value: {
 			id: string;
 			name: string;
+			description: string;
+			system: string;
 			updated_at: Date;
 		};
 		indexes: {

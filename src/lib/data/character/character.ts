@@ -28,6 +28,13 @@ export class Character {
 	@autoserialize
 	name = 'Unnamed Character';
 
+	@autoserialize
+	system = 'pathfinder';
+
+	get description() {
+		return this.classes.list.map((c) => `${c.name} ${c.level}`).join(', ');
+	}
+
 	@autoserializeAs(Race)
 	race = new Race();
 

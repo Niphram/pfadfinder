@@ -1,4 +1,3 @@
-import { error } from '@sveltejs/kit';
 import { GenericDeserializeInto, Serialize } from 'cerialize';
 import { openDB, type IDBPDatabase } from 'idb';
 
@@ -44,9 +43,13 @@ export class IDBStorage {
 
 		await Promise.all([
 			tx.objectStore('characters').put(serialized),
-			tx
-				.objectStore('characterMetadata')
-				.put({ id: char.id, name: char.name, updated_at: new Date() }),
+			tx.objectStore('characterMetadata').put({
+				id: char.id,
+				name: char.name,
+				description: char.description,
+				system: char.system,
+				updated_at: new Date()
+			}),
 			tx.done
 		]);
 	}
@@ -60,10 +63,8 @@ export class IDBStorage {
 	async getCharacterById(id: string) {
 		const charData = await this.db.get('characters', id);
 
-		if (!charData) error(404, { message: 'Character not found' });
-
 		// TODO: Upgrading characters
 
-		return GenericDeserializeInto(charData, Character, new Character());
+		return charData && GenericDeserializeInto(charData, Character, new Character());
 	}
 }
