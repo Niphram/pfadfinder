@@ -54,6 +54,18 @@ export class IDBStorage {
 		]);
 	}
 
+	async deleteCharacter(id: string) {
+		const tx = this.db.transaction(['characters', 'characterMetadata'], 'readwrite', {
+			durability: 'default'
+		});
+
+		await Promise.all([
+			tx.objectStore('characters').delete(id),
+			tx.objectStore('characterMetadata').delete(id),
+			tx.done
+		]);
+	}
+
 	async getCharactersMetadata() {
 		const characters = await this.db.getAllFromIndex('characterMetadata', 'last_updated');
 

@@ -62,7 +62,7 @@
 	<Dialog />
 	<ToastProvider />
 
-	<div class="bg-base-100 h-screen w-screen">
+	<div class="h-screen w-screen">
 		{@render children()}
 	</div>
 </div>

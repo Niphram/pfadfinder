@@ -28,7 +28,7 @@
 	<Dialog />
 	<ToastProvider />
 
-	<div class="bg-base-100 h-screen w-screen">
+	<div class="h-screen w-screen">
 		{#if $loaded && $loaded}
 			{@render children?.()}
 		{:else}
