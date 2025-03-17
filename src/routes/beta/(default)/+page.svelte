@@ -46,20 +46,37 @@
 
 <div class="flex w-full justify-center">
 	<div class="flex w-full max-w-3xl flex-col gap-4">
-		<h1>In Development</h1>
+		<div role="alert" class="alert alert-warning">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="h-6 w-6 shrink-0 stroke-current"
+				fill="none"
+				viewBox="0 0 24 24"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+				/>
+			</svg>
+			<span>
+				This version of the app is currently under development. It can be used with characters that
+				are created here, but keep in mind that the character in the main-app will always take
+				precedence (i.e. when you edit that character in the beta version, the changes will be lost)
+			</span>
+		</div>
 
-		<button onclick={() => createChar()} class="btn btn-primary">New Character</button>
-
-		<ul class="list bg-base-100 rounded-box p-4 shadow-xl">
+		<ul class="list bg-base-100 card card-border shadow-sm">
 			<li class="p-4 pb-2 text-xs tracking-wide opacity-60">Characters</li>
 
 			{#each data.characters as { id, name, description, system, updated_at } (id)}
-				<li class="list-row items-center p-2">
+				<li class="list-row items-center gap-2 p-1 md:gap-4 md:p-2">
 					<a
 						href="{base}/#/beta/character/{id}"
 						aria-label="Open {name}"
 						data-sveltekit-preload-data="off"
-						class="focus:bg-base-200 hover:bg-base-200 rounded-box col-span-3 grid grid-cols-subgrid p-2 transition"
+						class="focus:bg-base-200 hover:bg-base-200 rounded-box col-span-3 grid grid-cols-subgrid items-center p-1 align-middle transition md:p-2"
 					>
 						<div class="avatar avatar-placeholder">
 							<div class="bg-neutral text-neutral-content size-10 rounded-full">
@@ -71,23 +88,24 @@
 								</span>
 							</div>
 						</div>
-						<div class="list-col-grow">
-							<div>{name}</div>
-							<div class="text-xs font-semibold uppercase opacity-60">
+						<div class="list-col-grow overflow-hidden">
+							<div class="min-w-0 truncate">{name}</div>
+							<div class="min-w-0 truncate text-xs font-semibold uppercase opacity-60">
 								{description}
 							</div>
 						</div>
 						<div class="flex flex-col items-end justify-center">
 							<div class="badge badge-xs badge-soft badge-neutral uppercase">{system}</div>
-							<div
-								class="flex flex-col justify-end text-right text-xs font-semibold uppercase opacity-60"
-							>
-								{updated_at.toLocaleString()}
+							<div class="text-right text-xs font-semibold uppercase opacity-60">
+								{updated_at.toLocaleDateString()}
+							</div>
+							<div class="text-right text-xs font-semibold uppercase opacity-60">
+								{updated_at.toLocaleTimeString()}
 							</div>
 						</div>
 					</a>
 					<button
-						class="btn btn-square btn-outline btn-warning pointer-events-auto"
+						class="btn btn-square btn-outline btn-warning pointer-events-auto m-1 md:m-2"
 						onclick={(e) => {
 							e.preventDefault();
 							deleteChar(id);
@@ -112,6 +130,8 @@
 				</li>
 			{/each}
 		</ul>
+
+		<button onclick={() => createChar()} class="btn btn-primary">New Character</button>
 
 		<div class="flex flex-row gap-2">
 			<label class="form-control w-full">

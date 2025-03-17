@@ -15,8 +15,9 @@
 	setChar(c, p, dirty, loaded, overwriteSave);
 
 	// Mirror character to new multi-char db
-	const debouncedSave = debounce((char: Character) => {
-		data.db.saveCharacter(char);
+	const debouncedSave = debounce(async (char: Character) => {
+		const db = await data.db;
+		db.saveCharacter(char);
 	}, 1000);
 
 	onMount(() => {
