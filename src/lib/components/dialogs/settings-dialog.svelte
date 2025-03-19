@@ -40,7 +40,7 @@
 			on:click|preventDefault={() => openDialog(MacroDebugDialog, {})}>Macro debugger</button
 		>
 
-		<a href="{base}/#/beta/" class="btn btn-secondary w-full">Beta Page</a>
+		<a href="{base}/beta/" class="btn btn-secondary w-full">Beta Page</a>
 	{/if}
 
 	<button

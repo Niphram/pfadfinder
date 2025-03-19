@@ -26,7 +26,7 @@
 			<p>&copy; Niphram - All rights reserved</p>
 		</aside>
 		<nav class="grid-flow-col gap-4 sm:justify-self-end">
-			<a href="{base}/#/beta/privacy" class="link">Privacy Policy</a>
+			<a href="{base}/beta/privacy" class="link">Privacy Policy</a>
 			<a href="https://github.com/Niphram/pfadfinder" class="link">Github</a>
 		</nav>
 	</footer>

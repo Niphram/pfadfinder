@@ -73,7 +73,7 @@
 			{#each data.characters as { id, name, description, system, updated_at } (id)}
 				<li class="list-row items-center gap-2 p-1 md:gap-4 md:p-2">
 					<a
-						href="{base}/#/beta/character/{id}"
+						href="{base}/beta/character/{id}"
 						aria-label="Open {name}"
 						data-sveltekit-preload-data="off"
 						class="focus:bg-base-200 hover:bg-base-200 rounded-box col-span-3 grid grid-cols-subgrid items-center p-1 align-middle transition md:p-2"

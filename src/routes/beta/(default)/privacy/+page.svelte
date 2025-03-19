@@ -7,7 +7,7 @@
 <article class="prose mx-auto p-4 select-text">
 	<p>
 		&lt;
-		<a href="{base}/#/beta/">Back to home</a>
+		<a href="{base}/beta/">Back to home</a>
 	</p>
 
 	<Heading type="h1" id="privacy-policy">Privacy Policy</Heading>
