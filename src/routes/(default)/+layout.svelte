@@ -10,7 +10,6 @@
 		<div id="header" class="bg-base-200 sticky top-0 z-40 flex w-full flex-col drop-shadow-xl">
 			<div class="flex flex-row items-center gap-2 p-2">
 				<p class="text-lg font-bold">Pfadfinder</p>
-				<div class="badge badge-info badge-soft font-bold">BETA</div>
 			</div>
 		</div>
 
@@ -26,7 +25,7 @@
 			<p>&copy; Niphram - All rights reserved</p>
 		</aside>
 		<nav class="grid-flow-col gap-4 sm:justify-self-end">
-			<a href="{base}/beta/privacy" class="link">Privacy Policy</a>
+			<a href="{base}/privacy" class="link">Privacy Policy</a>
 			<a href="https://github.com/Niphram/pfadfinder" class="link">Github</a>
 		</nav>
 	</footer>

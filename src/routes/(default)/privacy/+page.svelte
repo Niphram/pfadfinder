@@ -7,7 +7,7 @@
 <article class="prose mx-auto p-4 select-text">
 	<p>
 		&lt;
-		<a href="{base}/beta/">Back to home</a>
+		<a href="{base}/">Back to home</a>
 	</p>
 
 	<Heading type="h1" id="privacy-policy">Privacy Policy</Heading>
@@ -20,7 +20,7 @@
 	<Heading type="h2" id="tldr">TLDR</Heading>
 
 	<ul>
-		<li>The website owner doesn't have access to any of your data.</li>
+		<li>The website owner doesn't have access to any of your saved characters.</li>
 		<li>Local storage is used where necessary.</li>
 		<li>The site is hosted by GitHub Pages.</li>
 	</ul>
@@ -61,8 +61,8 @@
 	<Heading type="h2" id="local-storage">Local Storage</Heading>
 
 	<p>
-		This website uses the browser's local storage to save data entered by the user. This data is not
-		available to the website owner, or sent to any third parties.
+		This website uses the browser's local storage to save data entered by the user (i.e. characters
+		and settings). This data is not available to the website owner, or sent to any third parties.
 	</p>
 
 	<Heading type="h2" id="external-links">External links</Heading>

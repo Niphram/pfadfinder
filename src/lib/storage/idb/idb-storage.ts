@@ -1,7 +1,9 @@
 import { GenericDeserializeInto, Serialize } from 'cerialize';
 import { openDB, type IDBPDatabase } from 'idb';
+import { nanoid } from 'nanoid';
 
 import { Character } from '$lib/data';
+import { upgradeCharacter } from '$lib/data/upgrade';
 import { lazy } from '$lib/utils';
 
 import { VERSIONS, type Schema, type UpgradeFunction } from './versions';
@@ -75,8 +77,20 @@ export class IDBStorage {
 	async getCharacterById(id: string) {
 		const charData = await this.db.get('characters', id);
 
-		// TODO: Upgrading characters
+		return (
+			charData && GenericDeserializeInto(upgradeCharacter(charData), Character, new Character())
+		);
+	}
 
-		return charData && GenericDeserializeInto(charData, Character, new Character());
+	async duplicateCharacterById(id: string) {
+		const charData = await this.db.get('characters', id);
+		if (!charData) return;
+
+		const char = GenericDeserializeInto(upgradeCharacter(charData), Character, new Character());
+		if (!char) return;
+
+		char.id = nanoid();
+
+		this.saveCharacter(char);
 	}
 }

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import { Character } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { persisted } from '$lib/data/storage';
@@ -39,8 +38,6 @@
 			class="btn btn-secondary w-full"
 			on:click|preventDefault={() => openDialog(MacroDebugDialog, {})}>Macro debugger</button
 		>
-
-		<a href="{base}/beta/" class="btn btn-secondary w-full">Beta Page</a>
 	{/if}
 
 	<button
