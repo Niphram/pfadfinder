@@ -1,8 +1,19 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-
-	import Heading from './heading.svelte';
 </script>
+
+{#snippet heading(type: 'h1' | 'h2' | 'h3', id: string, content: string)}
+	<svelte:element this={type} {id}>
+		<a aria-hidden="true" tabindex="-1" href="#{id}">
+			<span
+				class="relative -mt-1 mr-1 inline-block align-middle text-base font-bold opacity-20 hover:opacity-60"
+			>
+				#
+			</span>
+		</a>
+		{content}
+	</svelte:element>
+{/snippet}
 
 <article class="prose mx-auto p-4 select-text">
 	<p>
@@ -10,14 +21,14 @@
 		<a href="{base}/">Back to home</a>
 	</p>
 
-	<Heading type="h1" id="privacy-policy">Privacy Policy</Heading>
+	{@render heading('h1', 'privacy-policy', 'Privacy Policy')}
 
 	This policy sets out the different areas where user privacy is concerned and outlines the
 	obligations & requirements of the users, the website and website owner. Furthermore the way this
 	website processes, stores and protects user data and information will also be detailed within this
 	policy.
 
-	<Heading type="h2" id="tldr">TLDR</Heading>
+	{@render heading('h2', 'tldr', 'TLDR')}
 
 	<ul>
 		<li>The website owner doesn't have access to any of your saved characters.</li>
@@ -25,7 +36,7 @@
 		<li>The site is hosted by GitHub Pages.</li>
 	</ul>
 
-	<Heading type="h2" id="github-pages">Hosting: Github Pages</Heading>
+	{@render heading('h2', 'github-pages', 'Hosting: Github Pages')}
 
 	<p>
 		This website is hosted on GitHub Pages. The website owner does not have access to data collected
@@ -58,14 +69,14 @@
 		</cite>
 	</blockquote>
 
-	<Heading type="h2" id="local-storage">Local Storage</Heading>
+	{@render heading('h2', 'local-storage', 'Local Storage')}
 
 	<p>
 		This website uses the browser's local storage to save data entered by the user (i.e. characters
 		and settings). This data is not available to the website owner, or sent to any third parties.
 	</p>
 
-	<Heading type="h2" id="external-links">External links</Heading>
+	{@render heading('h2', 'external-links', 'External links')}
 
 	<p>
 		This website contains links to external sites. If you follow these links, you should become

@@ -20,11 +20,14 @@
 	</div>
 
 	<!-- Footer -->
-	<footer class="footer sm:footer-horizontal bg-neutral text-neutral-content items-center p-4">
+	<footer
+		class="footer sm:footer-horizontal bg-neutral text-neutral-content items-center gap-y-4 p-4"
+	>
 		<aside class="grid-flow-col items-center">
 			<p>&copy; Niphram - All rights reserved</p>
 		</aside>
 		<nav class="grid-flow-col gap-4 sm:justify-self-end">
+			<a href="{base}/changelog" class="link">Changelog</a>
 			<a href="{base}/privacy" class="link">Privacy Policy</a>
 			<a href="https://github.com/Niphram/pfadfinder" class="link">Github</a>
 		</nav>

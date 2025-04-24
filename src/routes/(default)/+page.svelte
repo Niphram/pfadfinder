@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { DeserializeInto, Serialize } from 'cerialize';
 	import { nanoid } from 'nanoid';
-	import { preventDefault } from 'svelte/legacy';
 
 	import { invalidate } from '$app/navigation';
 	import { base } from '$app/paths';
 
 	import { Character } from '$lib/data';
 	import { upgradeCharacter } from '$lib/data/upgrade';
+	import { preventDefault } from '$lib/utils';
 
 	import type { PageProps } from './$types';
 
