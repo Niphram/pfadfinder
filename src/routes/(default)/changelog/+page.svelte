@@ -4,6 +4,8 @@
 	const { data } = $props();
 </script>
 
+<p class="text-xs opacity-30">Build {__BUILD_DATE__}</p>
+
 <article class="prose p-4 select-text">
 	<p>
 		&lt;
