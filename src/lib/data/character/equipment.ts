@@ -39,6 +39,9 @@ export class Item {
 	@autoserialize
 	isContainer = false;
 
+	@autoserialize
+	containerOpen = false;
+
 	@autoserializeAs(Item)
 	children: Item[] = [];
 
