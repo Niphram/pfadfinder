@@ -22,7 +22,7 @@
 
 <div class="flex flex-row gap-2">
 	<Checkbox
-		classname="max-w-min"
+		class="max-w-min"
 		name="classSkill"
 		label="C?"
 		bind:checked={$c.skills[key].skills[index].classSkill}
