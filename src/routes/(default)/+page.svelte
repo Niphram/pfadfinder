@@ -2,7 +2,6 @@
 	import { DeserializeInto, Serialize } from 'cerialize';
 	import { nanoid } from 'nanoid';
 
-	import { invalidate } from '$app/navigation';
 	import { base } from '$app/paths';
 
 	import { Character } from '$lib/data';
@@ -12,21 +11,19 @@
 	import type { PageProps } from './$types';
 
 	const { data }: PageProps = $props();
+	const { characters, db } = data;
 
 	async function createChar() {
 		const char = new Character();
-		await data.db.saveCharacter(char);
-		invalidate('idb:characters');
+		await db.saveCharacter(char);
 	}
 
 	async function deleteChar(id: string) {
-		await data.db.deleteCharacter(id);
-		invalidate('idb:characters');
+		await db.deleteCharacter(id);
 	}
 
 	async function duplicateChar(id: string) {
-		await data.db.duplicateCharacterById(id);
-		invalidate('idb:characters');
+		await db.duplicateCharacterById(id);
 	}
 
 	let files = $state<FileList>();
@@ -45,17 +42,15 @@
 			DeserializeInto(upgradeCharacter(JSON.parse(fileContent)), Character, newChar);
 			newChar.id = nanoid();
 
-			await data.db.saveCharacter(newChar);
+			await db.saveCharacter(newChar);
 			files = undefined;
-
-			invalidate('idb:characters');
 		} catch (_err) {
 			alert('Could not import character!');
 		}
 	}
 
 	async function exportChar(id: string) {
-		const char = await data.db.getCharacterById(id);
+		const char = await db.getCharacterById(id);
 
 		if (!char) return;
 
@@ -115,7 +110,7 @@
 		<ul class="list bg-base-100 card card-border shadow-sm">
 			<li class="p-4 pb-2 text-xs tracking-wide opacity-60">Characters</li>
 
-			{#each data.characters as { id, name, description, system, updated_at } (id)}
+			{#each $characters as { id, name, description, system, updated_at } (id)}
 				<li class="p-2">
 					<a
 						href="{base}/character/{id}"

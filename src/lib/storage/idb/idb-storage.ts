@@ -1,31 +1,23 @@
 import { GenericDeserializeInto, Serialize } from 'cerialize';
-import Dexie, { type EntityTable } from 'dexie';
+import Dexie from 'dexie';
 import { nanoid } from 'nanoid';
 
 import { Character } from '$lib/data';
 import { upgradeCharacter } from '$lib/data/upgrade';
 import { lazy } from '$lib/utils';
 
-import { type Schema } from './versions';
+import { VERSIONS, type Schema } from './versions';
 
 const initIDB = lazy(async () => {
-	const db = new Dexie('pfadfinder') as Dexie & DexieSchema;
+	const db = new Dexie('pfadfinder') as Dexie & Schema;
 
-	db.version(1).stores({
-		characters: 'id',
-		characterMetadata: 'id, updated_at',
-		settings: 'key'
-	});
+	VERSIONS.forEach((v, i) => v(db.version(i + 1)));
 
 	return db;
 });
 
-type DexieSchema = {
-	[K in keyof Schema]: EntityTable<Schema[K]['value'], 'id'>;
-};
-
 export class IDBStorage {
-	private constructor(private readonly db: Dexie & DexieSchema) {}
+	private constructor(private readonly db: Dexie & Schema) {}
 
 	static init = lazy(async () => {
 		const db = await initIDB();
@@ -36,7 +28,7 @@ export class IDBStorage {
 	async saveCharacter(char: Character) {
 		const serialized = Serialize(char);
 
-		await this.db.transaction('rw', [this.db.characters, this.db.characterMetadata], async () =>
+		await this.db.transaction('rw!', [this.db.characters, this.db.characterMetadata], async () =>
 			Promise.all([
 				this.db.characters.put(serialized),
 				this.db.characterMetadata.put({
@@ -51,15 +43,13 @@ export class IDBStorage {
 	}
 
 	async deleteCharacter(id: string) {
-		await this.db.transaction('rw', [this.db.characters, this.db.characterMetadata], async () =>
+		await this.db.transaction('rw!', [this.db.characters, this.db.characterMetadata], async () =>
 			Promise.all([this.db.characters.delete(id), this.db.characterMetadata.delete(id)])
 		);
 	}
 
 	async getCharactersMetadata() {
-		const data = await this.db.characterMetadata.orderBy('updated_at').reverse().toArray();
-
-		return data;
+		return this.db.characterMetadata.orderBy('updated_at').reverse().toArray();
 	}
 
 	async getCharacterById(id: string) {
