@@ -8,7 +8,7 @@ export default defineConfig({
 		__BUILD_DATE__: JSON.stringify(new Date().toISOString().replace(/[^0-9]/g, ''))
 	},
 	test: {
-		workspace: [
+		projects: [
 			{
 				extends: './vite.config.ts',
 				plugins: [svelteTesting()],
