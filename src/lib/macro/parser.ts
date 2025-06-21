@@ -15,7 +15,7 @@ import {
 	str,
 	tok,
 	type Token as ParsecToken,
-	type Parser
+	type Parser,
 } from 'typescript-parsec';
 
 import { TokenKind, tokenize } from './tokenizer';
@@ -28,7 +28,7 @@ export enum NodeType {
 	Attribute,
 	Unary,
 	Binary,
-	Func
+	Func,
 }
 
 export type Node = ErrorNode | ConstantNode | AttributeNode | UnaryNode | BinaryNode | FuncNode;
@@ -70,14 +70,14 @@ type FuncNode = {
 function applyConstant(token: Token): ConstantNode {
 	return {
 		type: NodeType.Constant,
-		constant: Number.parseInt(token.text)
+		constant: Number.parseInt(token.text),
 	};
 }
 
 function applyAttribute(tokens: Token[]): AttributeNode {
 	return {
 		type: NodeType.Attribute,
-		path: tokens.map((t) => t.text)
+		path: tokens.map((t) => t.text),
 	};
 }
 
@@ -88,7 +88,7 @@ function applyUnary([op, node]: [Token, Node]): UnaryNode {
 			return {
 				type: NodeType.Unary,
 				op: op.text,
-				node
+				node,
 			};
 		default:
 			throw new Error(`Unknown unary operator: ${op.text}`);
@@ -106,7 +106,7 @@ function applyBinary(left: Node, [token, right]: [Token, Node]): BinaryNode {
 				type: NodeType.Binary,
 				op: token.text,
 				left,
-				right
+				right,
 			};
 		default:
 			throw new Error(`Unknown binary operator: ${token.text}`);
@@ -145,7 +145,7 @@ function applyFunc([func, nodes]: [Token | undefined, Node[]]): FuncNode {
 	return {
 		type: NodeType.Func,
 		func: func?.text,
-		nodes
+		nodes,
 	};
 }
 
@@ -167,9 +167,9 @@ const constantParser = apply(tok(TokenKind.Number), applyConstant);
 const attributeParser = apply(
 	kright(
 		tok(TokenKind.At),
-		list_sc(alt_sc(tok(TokenKind.String), tok(TokenKind.Number)), tok(TokenKind.Period))
+		list_sc(alt_sc(tok(TokenKind.String), tok(TokenKind.Number)), tok(TokenKind.Period)),
 	),
-	applyAttribute
+	applyAttribute,
 );
 
 /**
@@ -177,7 +177,7 @@ const attributeParser = apply(
  */
 const unaryParser: Parser<TokenKind, UnaryNode> = apply(
 	seq(alt(str('+'), str('-')), TERM),
-	applyUnary
+	applyUnary,
 );
 
 /**
@@ -185,7 +185,7 @@ const unaryParser: Parser<TokenKind, UnaryNode> = apply(
  */
 const funcParser = apply(
 	seq(opt(tok(TokenKind.String)), kmid(str('('), list(EXP, tok(TokenKind.Comma)), str(')'))),
-	applyFunc
+	applyFunc,
 );
 
 /**
@@ -209,7 +209,7 @@ export function parse(expr: string): Node {
 	} catch (_err) {
 		return {
 			type: NodeType.Error,
-			message: `Could not parse input: ${expr}`
+			message: `Could not parse input: ${expr}`,
 		};
 	}
 }

@@ -10,48 +10,48 @@ export default {
 	hp: {
 		text: {
 			heal: 'Heal',
-			damage: 'Damage'
-		}
+			damage: 'Damage',
+		},
 	},
 	abilities: {
 		str: {
 			full: 'Strength',
-			short: 'str'
+			short: 'str',
 		},
 		dex: {
 			full: 'Dexterity',
-			short: 'dex'
+			short: 'dex',
 		},
 		con: {
 			full: 'Constitution',
-			short: 'con'
+			short: 'con',
 		},
 		int: {
 			full: 'Intelligence',
-			short: 'int'
+			short: 'int',
 		},
 		wis: {
 			full: 'Wisdom',
-			short: 'wis'
+			short: 'wis',
 		},
 		cha: {
 			full: 'Charisma',
-			short: 'cha'
-		}
+			short: 'cha',
+		},
 	},
 	saves: {
 		fort: {
 			full: 'Fortitude',
-			short: 'fort'
+			short: 'fort',
 		},
 		ref: {
 			full: 'Reflex',
-			short: 'ref'
+			short: 'ref',
 		},
 		will: {
 			full: 'Will',
-			short: 'will'
-		}
+			short: 'will',
+		},
 	},
 	skills: {
 		acrobatics: 'Acrobatics',
@@ -88,7 +88,7 @@ export default {
 		stealth: 'Stealth',
 		survival: 'Survival',
 		swim: 'Swim',
-		useMagicDevice: 'Use Magic Device'
+		useMagicDevice: 'Use Magic Device',
 	},
 	equipment: {
 		armorType: {
@@ -96,54 +96,54 @@ export default {
 			medium: 'Medium',
 			heavy: 'Heavy',
 			shield: 'Shield',
-			misc: 'Misc'
+			misc: 'Misc',
 		},
 		acBonuses: {
 			acBonus: {
 				short: 'AC',
-				full: 'AC Bonus'
+				full: 'AC Bonus',
 			},
 			ffBonus: {
 				short: 'FF',
-				full: 'Flat-Footed Bonus'
+				full: 'Flat-Footed Bonus',
 			},
 			touchBonus: {
 				short: 'TOU',
-				full: 'Touch Bonus'
+				full: 'Touch Bonus',
 			},
 			natBonus: {
 				short: 'NAT',
-				full: 'Natural Bonus'
+				full: 'Natural Bonus',
 			},
 			defBonus: {
 				short: 'DEF',
-				full: 'Deflection Bonus'
+				full: 'Deflection Bonus',
 			},
 			dodBonus: {
 				short: 'DOD',
-				full: 'Dodge Bonus'
-			}
+				full: 'Dodge Bonus',
+			},
 		},
 		penalties: {
 			chkPenalty: {
 				short: 'CHK',
-				full: 'Check Penalty'
+				full: 'Check Penalty',
 			},
 			maxDexBonus: {
 				short: 'DEX',
-				full: 'Max Dex Bonus'
+				full: 'Max Dex Bonus',
 			},
 			spellFailure: {
 				short: 'SPL',
-				full: 'Spell Failure'
-			}
+				full: 'Spell Failure',
+			},
 		},
 		chargeType: {
 			none: 'None',
 			perDay: 'Per Day',
-			total: 'Total'
+			total: 'Total',
 		},
-		items: (amount: number) => count('item', amount)
+		items: (amount: number) => count('item', amount),
 	},
 	spell: {
 		attackType: {
@@ -156,12 +156,12 @@ export default {
 			wis: 'Wisom',
 			int: 'Intelligence',
 			cha: 'Charisma',
-			none: '-'
+			none: '-',
 		},
 		slaType: {
 			constant: 'Constant',
 			atWill: 'At Will',
-			perDay: 'Per Day'
+			perDay: 'Per Day',
 		},
 		level: {
 			level_0: 'Cantrips',
@@ -173,8 +173,8 @@ export default {
 			level_6: 'Level 6',
 			level_7: 'Level 7',
 			level_8: 'Level 8',
-			level_9: 'Level 9'
-		}
+			level_9: 'Level 9',
+		},
 	},
 	texts: {
 		pages: {
@@ -185,12 +185,12 @@ export default {
 			spells: 'Spells',
 			skills: 'Skills',
 			features_traits: 'Features/Traits',
-			persona: 'Persona'
+			persona: 'Persona',
 		},
 		general: {
 			unsaved: 'unsaved',
-			close: 'close'
-		}
+			close: 'close',
+		},
 	},
 	classes: {
 		sor: 'Sorcerer',
@@ -219,7 +219,7 @@ export default {
 		skald: 'Skald',
 		investigator: 'Investigator',
 		hunter: 'Hunter',
-		summoner_unchained: 'Summoner Unchained'
+		summoner_unchained: 'Summoner Unchained',
 	},
 	feats: {
 		type: {
@@ -233,8 +233,8 @@ export default {
 			performance: 'Performance',
 			style: 'Style',
 			teamwork: 'Teamwork',
-			misc: 'Misc'
-		}
+			misc: 'Misc',
+		},
 	},
 	persona: {
 		charm: 'Charm',
@@ -242,6 +242,6 @@ export default {
 		heroism: 'Heroism',
 		sacrifice: 'Sacrifice',
 		sagacity: 'Sagacity',
-		subterfuge: 'Subterfuge'
-	}
+		subterfuge: 'Subterfuge',
+	},
 };

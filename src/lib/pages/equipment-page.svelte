@@ -68,7 +68,7 @@
 			animation: 150,
 			easing: 'cubic-bezier(1, 0, 0, 1)',
 			fallbackOnBody: true,
-			swapThreshold: 0.65
+			swapThreshold: 0.65,
 		}}
 		keyProp="id"
 		class="flex flex-col gap-2"

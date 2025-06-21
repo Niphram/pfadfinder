@@ -8,20 +8,20 @@
 		info: 'btn-info',
 		success: 'btn-success',
 		warning: 'btn-warning',
-		error: 'btn-error'
+		error: 'btn-error',
 	};
 
 	const STYLES = {
 		default: '',
 		ghost: 'btn-ghost',
 		link: 'btn-link',
-		outline: 'btn-outline'
+		outline: 'btn-outline',
 	};
 
 	const SIZES = {
 		default: '',
 		xs: 'btn-xs',
-		sm: 'btn-sm'
+		sm: 'btn-sm',
 	};
 
 	let className: string = '';

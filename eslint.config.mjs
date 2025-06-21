@@ -21,8 +21,8 @@ export default ts.config(
 			'@typescript-eslint/no-unused-expressions': [
 				'error',
 				{
-					allowShortCircuit: true
-				}
+					allowShortCircuit: true,
+				},
 			],
 			'no-unused-vars': 'off',
 			'@typescript-eslint/no-unused-vars': [
@@ -30,16 +30,16 @@ export default ts.config(
 				{
 					argsIgnorePattern: '^_',
 					caughtErrors: 'all',
-					caughtErrorsIgnorePattern: '^_'
-				}
-			]
-		}
+					caughtErrorsIgnorePattern: '^_',
+				},
+			],
+		},
 	},
 	{
 		languageOptions: {
-			globals: { ...globals.browser, ...globals.node }
+			globals: { ...globals.browser, ...globals.node },
 		},
-		rules: { 'no-undef': 'off' }
+		rules: { 'no-undef': 'off' },
 	},
 	{
 		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
@@ -48,8 +48,8 @@ export default ts.config(
 				projectService: true,
 				extraFileExtensions: ['.svelte'],
 				parser: ts.parser,
-				svelteConfig
-			}
-		}
-	}
+				svelteConfig,
+			},
+		},
+	},
 );

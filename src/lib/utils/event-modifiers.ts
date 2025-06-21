@@ -1,5 +1,5 @@
 export function preventDefault<E extends Event, Args extends unknown[]>(
-	fn: (event: E, ...args: Args) => void
+	fn: (event: E, ...args: Args) => void,
 ): (event: E, ...args: Args) => void {
 	return function (...args) {
 		args[0].preventDefault();

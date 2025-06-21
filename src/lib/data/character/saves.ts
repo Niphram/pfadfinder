@@ -9,7 +9,7 @@ export type SaveKey = (typeof SAVE_KEYS)[number];
 const DefaultBaseAbility = {
 	fort: 'con',
 	ref: 'dex',
-	will: 'wis'
+	will: 'wis',
 } as const;
 
 export class Save {
@@ -30,7 +30,7 @@ export class Save {
 			c.classes[this.key] +
 			c[this.ability].mod.eval(c) +
 			c[this.key].bonus.eval(c) +
-			c[this.key].misc.eval(c)
+			c[this.key].misc.eval(c),
 	);
 
 	constructor(private key: SaveKey) {

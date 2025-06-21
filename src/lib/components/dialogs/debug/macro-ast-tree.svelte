@@ -17,7 +17,7 @@
 		[NodeType.Attribute]: 'Attribute Expression',
 		[NodeType.Unary]: 'Unary Expression',
 		[NodeType.Binary]: 'Binary Expression',
-		[NodeType.Func]: 'Function Expression'
+		[NodeType.Func]: 'Function Expression',
 	};
 
 	const OP_TYPES = {
@@ -25,7 +25,7 @@
 		'-': 'subtract',
 		'*': 'multiply',
 		'/': 'divide',
-		'%': 'modulus'
+		'%': 'modulus',
 	};
 </script>
 

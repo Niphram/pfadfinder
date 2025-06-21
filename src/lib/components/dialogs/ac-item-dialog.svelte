@@ -20,7 +20,7 @@
 		'touchBonus',
 		'natBonus',
 		'defBonus',
-		'dodBonus'
+		'dodBonus',
 	] as const;
 
 	function deleteAcItem() {

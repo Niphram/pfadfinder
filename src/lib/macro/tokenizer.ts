@@ -9,7 +9,7 @@ export enum TokenKind {
 	LParen,
 	RParen,
 	Period,
-	Space
+	Space,
 }
 
 const lexer = buildLexer([
@@ -21,7 +21,7 @@ const lexer = buildLexer([
 	[true, /^\(/g, TokenKind.LParen],
 	[true, /^\)/g, TokenKind.RParen],
 	[true, /^\./g, TokenKind.Period],
-	[false, /^\s+/g, TokenKind.Space]
+	[false, /^\s+/g, TokenKind.Space],
 ]);
 
 export function tokenize(input: string) {

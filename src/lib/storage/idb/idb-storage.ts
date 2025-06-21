@@ -36,15 +36,15 @@ export class IDBStorage {
 					name: char.name,
 					description: char.description,
 					system: char.system,
-					updated_at: new Date()
-				})
-			])
+					updated_at: new Date(),
+				}),
+			]),
 		);
 	}
 
 	async deleteCharacter(id: string) {
 		await this.db.transaction('rw!', [this.db.characters, this.db.characterMetadata], async () =>
-			Promise.all([this.db.characters.delete(id), this.db.characterMetadata.delete(id)])
+			Promise.all([this.db.characters.delete(id), this.db.characterMetadata.delete(id)]),
 		);
 	}
 

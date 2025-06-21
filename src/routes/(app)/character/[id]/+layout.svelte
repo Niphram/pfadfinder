@@ -37,7 +37,7 @@
 							return calculateNode(node, char);
 						}
 					}
-				}
+				},
 			});
 		}
 

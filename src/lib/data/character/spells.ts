@@ -14,7 +14,7 @@ export const SPELL_LEVELS = [
 	'level_6',
 	'level_7',
 	'level_8',
-	'level_9'
+	'level_9',
 ] as const;
 export type SpellLevel = (typeof SPELL_LEVELS)[number];
 
@@ -28,7 +28,7 @@ export const SPELL_ATTACK_TYPE = [
 	'wis',
 	'int',
 	'cha',
-	'none'
+	'none',
 ] as const;
 export type SpellAttackType = (typeof SPELL_ATTACK_TYPE)[number];
 
@@ -175,9 +175,9 @@ export class Spell extends SpellCommonProps {
 				this.attack.hasAttack &&
 					`${withSign(attackBonus)} (${this.attack.type}) (Crit ≥${this.attack.critRange} for x${
 						this.attack.critMultiplier
-					})`
+					})`,
 			],
-			...this.damage.map((d, i) => [`Damage #${i + 1}`, `${d.damage} ${d.type}`])
+			...this.damage.map((d, i) => [`Damage #${i + 1}`, `${d.damage} ${d.type}`]),
 		].filter((e) => !!e[1]);
 	}
 }
@@ -207,9 +207,9 @@ export class SpellLikeAbility extends SpellCommonProps {
 			['Effect', this.effect],
 			[
 				'Saving Throw',
-				this.savingThrow.hasSave && `${this.savingThrow.effect} (DC ${this.savingThrow.dcMod})`
+				this.savingThrow.hasSave && `${this.savingThrow.effect} (DC ${this.savingThrow.dcMod})`,
 			],
-			['Spell Resistance', this.spellResistance]
+			['Spell Resistance', this.spellResistance],
 		].filter((e) => !!e[1]);
 	}
 
@@ -234,7 +234,7 @@ export class SpellLevelList {
 	readonly dc = new Derive((c) => 10 + this.level + c.spells[this.level].known);
 
 	readonly totalPerDay = new Derive(
-		(c) => c.spells[this.level].perDay + c.spells[this.level].perDayBonus
+		(c) => c.spells[this.level].perDay + c.spells[this.level].perDayBonus,
 	);
 
 	get prepared() {

@@ -9,7 +9,7 @@ export enum Dice {
 	D8 = 8,
 	D10 = 10,
 	D12 = 12,
-	D20 = 20
+	D20 = 20,
 }
 
 export class Class {

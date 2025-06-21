@@ -39,7 +39,7 @@ const SKILLS = {
 	stealth: { ability: 'dex', trained: false, penalty: true },
 	survival: { ability: 'wis', trained: false, penalty: false },
 	swim: { ability: 'str', trained: false, penalty: false },
-	useMagicDevice: { ability: 'cha', trained: true, penalty: false }
+	useMagicDevice: { ability: 'cha', trained: true, penalty: false },
 } as const;
 export const SKILL_KEYS = Object.keys(SKILLS);
 export type SkillKey = keyof typeof SKILLS;
@@ -75,7 +75,7 @@ export class Skill {
 			this.ranks +
 			this.misc.eval(c) +
 			this.temp.eval(c) +
-			(this.classSkill && this.ranks > 0 ? 3 : 0)
+			(this.classSkill && this.ranks > 0 ? 3 : 0),
 	);
 
 	constructor(key?: SkillKey) {

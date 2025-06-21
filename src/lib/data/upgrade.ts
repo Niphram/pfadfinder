@@ -5,7 +5,7 @@ const UPGRADES: ((char: any) => void)[] = [
 		for (let i = 0; i <= 9; i++) {
 			char.spells[`level_${i}`] = char.spells[i];
 		}
-	}
+	},
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

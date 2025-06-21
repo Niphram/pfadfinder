@@ -52,7 +52,7 @@
 			group: 'feats',
 			handle: '.drag-handle',
 			animation: 150,
-			easing: 'cubic-bezier(1, 0, 0, 1)'
+			easing: 'cubic-bezier(1, 0, 0, 1)',
 		}}
 		keyProp="id"
 		class="flex flex-col gap-2"
@@ -108,7 +108,7 @@
 			group: 'traits',
 			handle: '.drag-handle',
 			animation: 150,
-			easing: 'cubic-bezier(1, 0, 0, 1)'
+			easing: 'cubic-bezier(1, 0, 0, 1)',
 		}}
 		keyProp="id"
 		class="flex flex-col gap-2"

@@ -6,7 +6,7 @@ export const FACET_KEYS = [
 	'heroism',
 	'sacrifice',
 	'sagacity',
-	'subterfuge'
+	'subterfuge',
 ] as const;
 export type FacetKey = (typeof FACET_KEYS)[number];
 

@@ -6,16 +6,16 @@
 
 	const dialogContent = writable<{ component?: ComponentType; props: object }>({
 		component: undefined,
-		props: {}
+		props: {},
 	});
 
 	export function openDialog<T extends SvelteComponent>(
 		component: ComponentType<T>,
-		props: Omit<ComponentProps<T>, 'title'>
+		props: Omit<ComponentProps<T>, 'title'>,
 	) {
 		dialogContent.set({
 			component,
-			props
+			props,
 		});
 
 		dialog.showModal();

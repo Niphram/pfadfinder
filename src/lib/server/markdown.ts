@@ -9,6 +9,6 @@ export function parseMarkdown(doc: string) {
 	// - Add base to links
 
 	return {
-		html
+		html,
 	};
 }

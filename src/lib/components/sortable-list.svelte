@@ -67,7 +67,7 @@
 				lastSelectedItem = items[oldIndex];
 			},
 			disabled,
-			...options
+			...options,
 		});
 
 		return () => {

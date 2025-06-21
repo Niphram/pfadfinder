@@ -11,7 +11,7 @@
 
 	function download() {
 		const file = new File([JSON.stringify(Serialize($c))], `${$c.name}.json`, {
-			type: 'application/json'
+			type: 'application/json',
 		});
 
 		const link = document.createElement('a');
@@ -79,8 +79,8 @@
 			{
 				label: 'This will overwrite the current character!',
 				style: { error: true },
-				onClick: importFromFIle
-			}
+				onClick: importFromFIle,
+			},
 		]}
 		let:props={{ label, onClick, style }}
 		let:next

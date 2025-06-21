@@ -10,10 +10,10 @@ export const macro = autoserializeAs({
 
 	Deserialize(expr: string): Macro {
 		return new Macro(expr);
-	}
+	},
 });
 
-export class Macro {
+export class Macro<C = Character> {
 	private oldExpr?: string;
 
 	private _node?: Node;
@@ -26,8 +26,8 @@ export class Macro {
 		return this._node;
 	}
 
-	eval(char: Character) {
-		return calculateNode(this.node, char);
+	eval(char: C) {
+		return calculateNode(this.node, char as Character); // TODO
 	}
 
 	constructor(public expr: string) {}

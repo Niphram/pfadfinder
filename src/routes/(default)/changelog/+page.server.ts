@@ -9,7 +9,7 @@ export const load: PageServerLoad = async () => {
 	const changelogPaths = await Array.fromAsync(changelogsIter);
 
 	const changelogs = changelogPaths.map((path) => ({
-		date: basename(path, '.md')
+		date: basename(path, '.md'),
 	}));
 
 	return { changelogs };

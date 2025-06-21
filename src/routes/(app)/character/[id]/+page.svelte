@@ -29,7 +29,7 @@
 		{ key: 'features_traits', component: FeaturesTraitsPage, active: true },
 		{ key: 'equipment', component: EquipmentPage, active: true },
 		{ key: 'character', component: CharacterPage, active: true },
-		{ key: 'persona', component: PersonaPage, active: $c.settings.usePersonaSystem }
+		{ key: 'persona', component: PersonaPage, active: $c.settings.usePersonaSystem },
 	] as const;
 </script>
 

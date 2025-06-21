@@ -54,8 +54,8 @@
 				style: { error: true },
 				onClick: () => {
 					c.set(new Character());
-				}
-			}
+				},
+			},
 		]}
 		let:props={{ label, onClick, style }}
 		let:next

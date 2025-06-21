@@ -12,6 +12,6 @@ export const load: LayoutLoad = async ({ params, parent }) => {
 	if (!char) error(404, { message: 'Character not found!' });
 
 	return {
-		character: writable<Character>(char)
+		character: writable<Character>(char),
 	};
 };

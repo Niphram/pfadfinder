@@ -18,7 +18,7 @@
 		label,
 		class: classname,
 		disabled,
-		onchange
+		onchange,
 	}: Props = $props();
 </script>
 

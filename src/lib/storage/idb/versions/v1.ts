@@ -32,6 +32,6 @@ export function upgradeToV1(version: Version) {
 	version.stores({
 		characters: 'id',
 		characterMetadata: 'id, updated_at',
-		settings: 'key'
+		settings: 'key',
 	});
 }

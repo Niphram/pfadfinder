@@ -15,7 +15,7 @@ export function setChar(
 	p: Readable<any>,
 	dirty: Readable<boolean>,
 	loaded: Readable<boolean>,
-	overwriteSave: (data: Character) => Promise<void>
+	overwriteSave: (data: Character) => Promise<void>,
 ) {
 	setContext(CHAR_KEY, { c, p, dirty, loaded, overwriteSave });
 }

@@ -1,9 +1,9 @@
 import type { Character } from '../character';
 
-export class Derive<R> {
-	eval(char: Character) {
+export class Derive<R, C = Character> {
+	eval(char: C) {
 		return this.cb(char);
 	}
 
-	constructor(private cb: (char: Character) => R) {}
+	constructor(private cb: (char: C) => R) {}
 }

@@ -45,9 +45,9 @@ export function deriveValidated<T, P extends Paths<T>>(
 		{
 			subscribe: sub.subscribe,
 			set,
-			update
+			update,
 		},
-		invalid
+		invalid,
 	];
 }
 
@@ -79,8 +79,8 @@ export function validated<T>(
 		{
 			subscribe: store.subscribe,
 			set,
-			update
+			update,
 		},
-		invalid
+		invalid,
 	];
 }

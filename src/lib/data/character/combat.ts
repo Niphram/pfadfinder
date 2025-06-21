@@ -13,7 +13,7 @@ export const sizeKeys = [
 	'large',
 	'huge',
 	'gargantuan',
-	'colossal'
+	'colossal',
 ];
 export type SizeKey = (typeof sizeKeys)[number];
 
@@ -26,7 +26,7 @@ const sizeModifiers: Record<SizeKey, { mod: number; ability: AbilityKey }> = {
 	large: { ability: 'str', mod: 1 },
 	huge: { ability: 'str', mod: +2 },
 	gargantuan: { ability: 'str', mod: +4 },
-	colossal: { ability: 'str', mod: +8 }
+	colossal: { ability: 'str', mod: +8 },
 };
 
 export class SpellResistance {
@@ -76,7 +76,7 @@ export const ATTACK_TYPES = [
 	'babFull',
 	'babMax',
 	'flurryOfBlows',
-	'none'
+	'none',
 ] as const;
 export type AttackType = (typeof ATTACK_TYPES)[number];
 
@@ -108,11 +108,11 @@ export class AttackRoll {
 		: this.baseModifier === 'meelee' ? c.combat.bab.mod.eval(c) + c.str.mod.eval(c)
 		: this.baseModifier === 'ranged' ? c.combat.bab.mod.eval(c) + c.dex.mod.eval(c)
 		: this.baseModifier === 'flurryOfBlows' ? 0
-		: 0
+		: 0,
 	);
 
 	readonly abilityModValue = new Derive((c) =>
-		this.abilityModifier !== 'none' ? c[this.abilityModifier].mod.eval(c) : 0
+		this.abilityModifier !== 'none' ? c[this.abilityModifier].mod.eval(c) : 0,
 	);
 }
 

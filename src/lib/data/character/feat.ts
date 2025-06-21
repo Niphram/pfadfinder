@@ -12,7 +12,7 @@ export const FEAT_TYPES = [
 	'performance',
 	'style',
 	'teamwork',
-	'misc'
+	'misc',
 ] as const;
 export type FeatType = (typeof FEAT_TYPES)[number];
 

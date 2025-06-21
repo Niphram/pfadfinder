@@ -17,7 +17,7 @@
 		{ key: 'features_traits', active: true },
 		{ key: 'equipment', active: true },
 		{ key: 'character', active: true },
-		{ key: 'persona', active: $c.settings.usePersonaSystem }
+		{ key: 'persona', active: $c.settings.usePersonaSystem },
 	] as const;
 
 	$title = '';

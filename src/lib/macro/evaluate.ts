@@ -46,7 +46,7 @@ function calcBinary(op: '+' | '-' | '*' | '/' | '%', left: number, right: number
 
 function calcFunc(
 	func: undefined | 'floor' | 'round' | 'ceil' | 'min' | 'max' | 'clamp' | 'abs' | 'step',
-	values: number[]
+	values: number[],
 ): number {
 	switch (func) {
 		case undefined:
@@ -85,7 +85,7 @@ export function calculateNode(node: Node, char: Character): number {
 		case NodeType.Func:
 			return calcFunc(
 				node.func,
-				node.nodes.map((n) => calculateNode(n, char))
+				node.nodes.map((n) => calculateNode(n, char)),
 			);
 	}
 }

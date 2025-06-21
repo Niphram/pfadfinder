@@ -41,7 +41,7 @@
 		// Reset prepared spells
 		if ($c.settings.resetPreparedSpells) {
 			SPELL_LEVELS.forEach((level) =>
-				$c.spells[level].spells.forEach((spell) => (spell.prepared = 0))
+				$c.spells[level].spells.forEach((spell) => (spell.prepared = 0)),
 			);
 		}
 

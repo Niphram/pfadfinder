@@ -8,6 +8,6 @@ export const load: PageLoad = async ({ parent }) => {
 
 	return {
 		db,
-		characters
+		characters,
 	};
 };

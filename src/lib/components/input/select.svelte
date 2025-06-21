@@ -6,7 +6,7 @@
 	const SIZES = {
 		small: 'select-sm',
 		medium: 'select-md',
-		large: 'select-lg'
+		large: 'select-lg',
 	};
 </script>
 

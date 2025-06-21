@@ -12,7 +12,7 @@
 
 	$: skillRanks = mapSum(
 		Object.keys($c.skills).map((k) => $c.skills[k]),
-		(sg) => sg.ranks
+		(sg) => sg.ranks,
 	);
 </script>
 
@@ -34,7 +34,7 @@
 					macroNotify(
 						$t(`skills.${key}`),
 						variant.notes + (penalty ? '\n\nApplied penalty due to armor' : ''),
-						$c
+						$c,
 					)}
 				on:contextmenu|preventDefault={() => openDialog(SkillDialog, { key, index })}
 			>

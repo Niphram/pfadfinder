@@ -18,7 +18,7 @@
 
 		if ($c[key].damage > 0) {
 			notifyLines.push(
-				`Ability Damage: ${$c[key].damage} (-${Math.floor($c[key].damage / 2)} to mod)`
+				`Ability Damage: ${$c[key].damage} (-${Math.floor($c[key].damage / 2)} to mod)`,
 			);
 		}
 

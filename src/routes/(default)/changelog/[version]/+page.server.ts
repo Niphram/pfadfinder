@@ -11,7 +11,7 @@ export const entries: EntryGenerator = async () => {
 	const changelogPaths = await Array.fromAsync(changelogsIter);
 
 	return changelogPaths.map((path) => ({
-		version: basename(path, '.md')
+		version: basename(path, '.md'),
 	}));
 };
 
@@ -20,6 +20,6 @@ export const load: PageServerLoad = async ({ params }) => {
 
 	const { html } = parseMarkdown(fileContent);
 	return {
-		changelogHtml: html
+		changelogHtml: html,
 	};
 };

@@ -68,7 +68,7 @@
 					group: `spells_${idx}`,
 					handle: '.drag-handle',
 					animation: 150,
-					easing: 'cubic-bezier(1, 0, 0, 1)'
+					easing: 'cubic-bezier(1, 0, 0, 1)',
 				}}
 				bind:items={$c.spells[level].spells}
 				keyProp="id"
@@ -131,7 +131,7 @@
 			group: 'spellLikeAbilities',
 			handle: '.drag-handle',
 			animation: 150,
-			easing: 'cubic-bezier(1, 0, 0, 1)'
+			easing: 'cubic-bezier(1, 0, 0, 1)',
 		}}
 		bind:items={$c.spells.spellLikeAbilities}
 		keyProp="id"

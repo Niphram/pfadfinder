@@ -55,7 +55,7 @@
 		if (!char) return;
 
 		const file = new File([JSON.stringify(Serialize(char))], `${char.name}.json`, {
-			type: 'application/json'
+			type: 'application/json',
 		});
 
 		const link = document.createElement('a');

@@ -40,7 +40,7 @@ const resizeObserver =
 
 export const fitText: Action<ElementType, Partial<Options> | undefined> = (
 	node,
-	{ maxSize = 16, minSize = 1, step = 0.25 } = {}
+	{ maxSize = 16, minSize = 1, step = 0.25 } = {},
 ) => {
 	texts.set(node, { maxSize, minSize, step });
 	resizeObserver?.observe(node);
@@ -54,6 +54,6 @@ export const fitText: Action<ElementType, Partial<Options> | undefined> = (
 		destroy() {
 			resizeObserver?.unobserve(node);
 			texts.delete(node);
-		}
+		},
 	};
 };
