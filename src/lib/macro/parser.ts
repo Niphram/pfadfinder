@@ -18,10 +18,16 @@ const enum Precedence {
 	UNARY,
 }
 
-function ParserError(message: string): ErrorNode {
+function ParserError(message: string, fromToken?: Token, toToken?: Token): ErrorNode {
+	const span: [number, number] | undefined = fromToken && [
+		fromToken.start,
+		toToken ? toToken.end : fromToken.end,
+	];
+
 	return {
 		type: AstNodeType.Error,
 		message,
+		span,
 	};
 }
 
@@ -46,7 +52,7 @@ export class Parser {
 		const result = yield* this.Expression();
 
 		if (this.lookahead) {
-			return yield ParserError(`Unexpected Token: ${this.lookahead.value}`);
+			return yield ParserError(`Unexpected Token: ${this.lookahead.value}`, this.lookahead);
 		}
 
 		return result;
@@ -72,11 +78,14 @@ export class Parser {
 		const token = this.lookahead;
 
 		if (!token) {
-			return yield ParserError(`Unexpected end of input, expected "${tokenType}".`);
+			return yield ParserError(`Unexpected end of input, expected "${tokenType}".`, token);
 		}
 
 		if (token.type !== tokenType) {
-			return yield ParserError(`Unexpected token: "${token.value}", expected "${tokenType}".`);
+			return yield ParserError(
+				`Unexpected token: "${token.value}", expected "${tokenType}".`,
+				token,
+			);
 		}
 
 		// Advance to the next token
@@ -97,6 +106,7 @@ export class Parser {
 		if (!this.lookahead) {
 			return yield ParserError(
 				`Unexpected end of input, expected one of "${tokenTypes.join(', ')}".`,
+				this.lookahead,
 			);
 		}
 
@@ -107,6 +117,7 @@ export class Parser {
 
 		return yield ParserError(
 			`Unexpected token: "${this.lookahead.value}", expected "${tokenTypes.join(', ')}".`,
+			this.lookahead,
 		);
 	}
 
@@ -148,7 +159,10 @@ export class Parser {
 	 */
 	private *Prefix(): Generator<ErrorNode, AstNode> {
 		if (!this.lookahead) {
-			return yield ParserError(`Unexpected end of input, expected a valid expression.`);
+			return yield ParserError(
+				`Unexpected end of input, expected a valid expression.`,
+				this.lookahead,
+			);
 		}
 
 		switch (this.lookahead?.type) {
@@ -165,7 +179,7 @@ export class Parser {
 				return yield* this.Attribute();
 		}
 
-		return yield ParserError(`Unexpected Token: "${this.lookahead?.value}".`);
+		return yield ParserError(`Unexpected Token: "${this.lookahead?.value}".`, this.lookahead);
 	}
 
 	/**
@@ -173,10 +187,10 @@ export class Parser {
 	 *    = ("+" / "-" / "*" / "/" / "%") Expression
 	 */
 	private *Infix(left: AstNode, operatorType: TokenType): Generator<ErrorNode, BinaryNode> {
-		const op = (yield* this.consume(operatorType)).value;
-		const newPrec = this.getOperatorPrecedence(op);
+		const token = yield* this.consume(operatorType);
+		const newPrec = this.getOperatorPrecedence(token.value);
 
-		switch (op) {
+		switch (token.value) {
 			case '+':
 			case '-':
 			case '*':
@@ -184,13 +198,16 @@ export class Parser {
 			case '%':
 				return {
 					type: AstNodeType.Binary,
-					op,
+					op: token.value,
 					left,
 					right: yield* this.Expression(newPrec),
 				};
 
 			default:
-				return yield ParserError(`Unexpected Operator: "${op}". Valid operators are + - * / %.`);
+				return yield ParserError(
+					`Unexpected Operator: "${token.value}". Valid operators are + - * / %.`,
+					token,
+				);
 		}
 	}
 
@@ -211,19 +228,19 @@ export class Parser {
 	 *    = "-" | "+" Expression
 	 */
 	private *UnaryExpression(): Generator<ErrorNode, UnaryNode> {
-		const op = (yield* this.consume(TokenType.OPERATOR)).value;
+		const token = yield* this.consume(TokenType.OPERATOR);
 
-		switch (op) {
+		switch (token.value) {
 			case '+':
 			case '-':
 				return {
 					type: AstNodeType.Unary,
-					op,
+					op: token.value,
 					node: yield* this.Expression(Precedence.UNARY),
 				};
 
 			default:
-				return yield ParserError(`Unexpected Token: "${op}", expected "+" or "-".`);
+				return yield ParserError(`Unexpected Token: "${token.value}", expected "+" or "-".`, token);
 		}
 	}
 
@@ -269,24 +286,24 @@ export class Parser {
 		ErrorNode,
 		[func: FuncNode['func'], expectedArgs: number | undefined]
 	> {
-		const func = (yield* this.consume(TokenType.IDENTIFIER)).value;
+		const token = yield* this.consume(TokenType.IDENTIFIER);
 
-		switch (func) {
+		switch (token.value) {
 			case 'floor':
 			case 'round':
 			case 'ceil':
 			case 'abs':
-				return [func, 1];
+				return [token.value, 1];
 			case 'min':
 			case 'max':
-				return [func, undefined];
+				return [token.value, undefined];
 			case 'clamp':
-				return [func, 3];
+				return [token.value, 3];
 			case 'step':
-				return [func, 2];
+				return [token.value, 2];
 		}
 
-		return yield ParserError(`Invalid function: "${func}".`);
+		return yield ParserError(`Invalid function: "${token.value}".`, token);
 	}
 
 	/**
@@ -302,12 +319,14 @@ export class Parser {
 	 */
 	private *Function(): Generator<ErrorNode, FuncNode> {
 		const [func, expectedArgs] = yield* this.FunctionNameAndArgsCount();
-		yield* this.consume(TokenType.PARENTHESIS_LEFT);
+		const parenthesisToken = yield* this.consume(TokenType.PARENTHESIS_LEFT);
 		const nodes = yield* this.CommaSeperatedExpressions();
 
 		if (expectedArgs && nodes.length !== expectedArgs) {
 			return yield ParserError(
 				`Function "${func}" expected ${expectedArgs} argument, got ${nodes.length}.`,
+				parenthesisToken,
+				this.lookahead,
 			);
 		}
 

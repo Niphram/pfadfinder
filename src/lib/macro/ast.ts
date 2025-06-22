@@ -12,6 +12,7 @@ export type AstNode = ErrorNode | ConstantNode | AttributeNode | UnaryNode | Bin
 export type ErrorNode = {
 	type: AstNodeType.Error;
 	message: string;
+	span?: [start: number, end: number];
 };
 
 export type ConstantNode = {
