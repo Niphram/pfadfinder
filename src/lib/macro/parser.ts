@@ -48,7 +48,13 @@ export class Parser {
 			return yield ParserError(nextTokenResult.message);
 		}
 
-		return yield* this.Expression();
+		const result = yield* this.Expression();
+
+		if (this.lookahead) {
+			return yield ParserError(`Unexpected Token: ${this.lookahead.value}`);
+		}
+
+		return result;
 	}
 
 	private getOperatorPrecedence(op: string) {

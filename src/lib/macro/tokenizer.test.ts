@@ -22,6 +22,7 @@ describe('Tokenizer', () => {
 		['.', [TokenType.PERIOD]],
 		['123 + 456', [TokenType.INTEGER, TokenType.OPERATOR, TokenType.INTEGER]],
 		['@dex.mod', [TokenType.AT, TokenType.IDENTIFIER, TokenType.PERIOD, TokenType.IDENTIFIER]],
+		[';', [TokenType.INVALID]],
 	])('"%s" should tokenize to "%s"', (input, tokens) => {
 		const tokenizer = new Tokenizer(input);
 
@@ -41,12 +42,5 @@ describe('Tokenizer', () => {
 			ok: true,
 			token: undefined,
 		});
-	});
-
-	test.each([';', '='])('"%s" should fail tokenization', (input) => {
-		const tokenizer = new Tokenizer(input);
-
-		expect(tokenizer.hasMoreTokens()).toBe(true);
-		expect(tokenizer.getNextToken().ok).toBe(false);
 	});
 });

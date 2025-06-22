@@ -1,4 +1,5 @@
 export const enum TokenType {
+	INVALID = 'INVALID',
 	INTEGER = 'INTEGER',
 	DECIMAL = 'DECIMAL',
 	IDENTIFIER = 'IDENTIFIER',
@@ -81,8 +82,15 @@ export class Tokenizer {
 			};
 		}
 
-		// Input could not be parsed
-		return { ok: false, message: `Unexpected token: "${inputSlice[0]}"` };
+		// Input could not be parsed, skip to end and return invalid token
+		this.cursor = this.input.length;
+		return {
+			ok: true,
+			token: {
+				type: TokenType.INVALID,
+				value: inputSlice[0],
+			},
+		};
 	}
 
 	/**
@@ -96,5 +104,16 @@ export class Tokenizer {
 
 		this.cursor += matched[0].length;
 		return matched[0];
+	}
+
+	public allTokens(): Token[] {
+		const tokens: Token[] = [];
+
+		let next: TokenizerResult;
+		while ((next = this.getNextToken()).ok && next.token) {
+			tokens.push(next.token);
+		}
+
+		return tokens;
 	}
 }
