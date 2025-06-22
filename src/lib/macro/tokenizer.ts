@@ -31,89 +31,63 @@ const TokenSpec: [RegExp, TokenType | null][] = [
 
 export type Token = {
 	type: TokenType;
+	start: number;
+	end: number;
 	value: string;
 };
 
-type TokenizerResult =
-	| {
-			ok: true;
-			token: Token | undefined;
-	  }
-	| {
-			ok: false;
-			message: string;
-	  };
-
 export class Tokenizer {
-	private cursor = 0;
-
 	public constructor(public input: string) {}
 
-	public hasMoreTokens() {
-		return this.cursor < this.input.length;
-	}
+	*[Symbol.iterator](): Generator<Token, undefined> {
+		let cursor = 0;
 
-	public getNextToken(): TokenizerResult {
-		if (!this.hasMoreTokens()) {
-			return { ok: true, token: undefined };
-		}
-
-		const inputSlice = this.input.slice(this.cursor);
-
-		for (const [regex, type] of TokenSpec) {
-			const tokenValue = this.match(regex, inputSlice);
-
-			// Rule didn't match, try next rule
-			if (!tokenValue) {
-				continue;
+		const matchAndAdvance = (regex: RegExp, inputSlice: string) => {
+			const matched = regex.exec(inputSlice);
+			if (matched === null) {
+				return undefined;
 			}
 
-			// Matched token is ignored, continue on
-			if (!type) {
-				return this.getNextToken();
-			}
-
-			return {
-				ok: true,
-				token: {
-					type,
-					value: tokenValue,
-				},
-			};
-		}
-
-		// Input could not be parsed, skip to end and return invalid token
-		this.cursor = this.input.length;
-		return {
-			ok: true,
-			token: {
-				type: TokenType.INVALID,
-				value: inputSlice[0],
-			},
+			cursor += matched[0].length;
+			return matched[0];
 		};
-	}
 
-	/**
-	 * Tries to match the regex against the input and advances the cursor on match
-	 */
-	private match(regex: RegExp, inputSlice: string) {
-		const matched = regex.exec(inputSlice);
-		if (matched === null) {
-			return undefined;
+		tokenLoop: while (cursor < this.input.length) {
+			const inputSlice = this.input.slice(cursor);
+
+			for (const [regex, type] of TokenSpec) {
+				const tokenValue = matchAndAdvance(regex, inputSlice);
+
+				// Rule didn't match, try next rule
+				if (!tokenValue) continue;
+
+				// Matched token is ignored, continue on
+				if (!type) continue tokenLoop;
+
+				yield {
+					type,
+					start: cursor - tokenValue.length,
+					end: cursor,
+					value: tokenValue,
+				};
+				continue tokenLoop;
+			}
+
+			// No rule matched, yield invalid token and stop iterator
+			yield {
+				type: TokenType.INVALID,
+				start: cursor,
+				end: cursor + 1,
+				value: inputSlice[0],
+			};
+			cursor += 1;
 		}
 
-		this.cursor += matched[0].length;
-		return matched[0];
+		// Reached end of input
+		return;
 	}
 
 	public allTokens(): Token[] {
-		const tokens: Token[] = [];
-
-		let next: TokenizerResult;
-		while ((next = this.getNextToken()).ok && next.token) {
-			tokens.push(next.token);
-		}
-
-		return tokens;
+		return this[Symbol.iterator]().toArray();
 	}
 }

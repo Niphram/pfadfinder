@@ -26,21 +26,8 @@ describe('Tokenizer', () => {
 	])('"%s" should tokenize to "%s"', (input, tokens) => {
 		const tokenizer = new Tokenizer(input);
 
-		for (const token of tokens) {
-			expect(tokenizer.hasMoreTokens()).toBe(true);
-			expect(tokenizer.getNextToken()).toEqual({
-				ok: true,
-				token: expect.objectContaining({
-					type: token,
-				}),
-			});
-		}
+		const result = tokenizer.allTokens();
 
-		// Make sure no tokens remain
-		expect(tokenizer.hasMoreTokens()).toBe(false);
-		expect(tokenizer.getNextToken()).toEqual({
-			ok: true,
-			token: undefined,
-		});
+		expect(result.map((t) => t.type)).toEqual(tokens);
 	});
 });

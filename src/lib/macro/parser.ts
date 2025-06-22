@@ -26,11 +26,11 @@ function ParserError(message: string): ErrorNode {
 }
 
 export class Parser {
-	private tokenizer: Tokenizer;
+	private tokenIterator: Generator<Token, undefined>;
 	private lookahead: Token | undefined;
 
 	private constructor(input: string) {
-		this.tokenizer = new Tokenizer(input);
+		this.tokenIterator = new Tokenizer(input)[Symbol.iterator]();
 	}
 
 	public static parse(input: string) {
@@ -41,12 +41,7 @@ export class Parser {
 	}
 
 	private *init(): Generator<ErrorNode, AstNode> {
-		const nextTokenResult = this.tokenizer.getNextToken();
-		if (nextTokenResult.ok) {
-			this.lookahead = nextTokenResult.token;
-		} else {
-			return yield ParserError(nextTokenResult.message);
-		}
+		this.lookahead = this.tokenIterator.next().value;
 
 		const result = yield* this.Expression();
 
@@ -85,12 +80,7 @@ export class Parser {
 		}
 
 		// Advance to the next token
-		const nextTokenResult = this.tokenizer.getNextToken();
-		if (nextTokenResult.ok) {
-			this.lookahead = nextTokenResult.token;
-		} else {
-			return yield ParserError(nextTokenResult.message);
-		}
+		this.lookahead = this.tokenIterator.next().value;
 
 		return token;
 	}
