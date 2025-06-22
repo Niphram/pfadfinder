@@ -1,9 +1,9 @@
-import type { Character } from '$lib/data';
 import { Derive } from '$lib/data/macros';
 import { Macro } from '$lib/data/macros/macro';
-import { NodeType, parse, type Node } from './parser';
 
-function calcAttribute(path: string[], char: Character): number {
+import { AstNodeType, type AstNode } from './ast';
+
+function evalAttribute(path: string[], char: object): number {
 	try {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const val: unknown = path.reduce((c, p) => c[p], char as Record<string, any>);
@@ -15,8 +15,6 @@ function calcAttribute(path: string[], char: Character): number {
 		switch (typeof val) {
 			case 'number':
 				return val;
-			case 'string':
-				return calculateNode(parse(val), char);
 			default:
 				return NaN;
 		}
@@ -25,11 +23,11 @@ function calcAttribute(path: string[], char: Character): number {
 	}
 }
 
-function calcUnary(op: '+' | '-', value: number): number {
+function evalUnary(op: '+' | '-', value: number): number {
 	return op === '+' ? value : -value;
 }
 
-function calcBinary(op: '+' | '-' | '*' | '/' | '%', left: number, right: number): number {
+function evalBinary(op: '+' | '-' | '*' | '/' | '%', left: number, right: number): number {
 	switch (op) {
 		case '+':
 			return left + right;
@@ -44,13 +42,11 @@ function calcBinary(op: '+' | '-' | '*' | '/' | '%', left: number, right: number
 	}
 }
 
-function calcFunc(
-	func: undefined | 'floor' | 'round' | 'ceil' | 'min' | 'max' | 'clamp' | 'abs' | 'step',
+function evalFunc(
+	func: 'floor' | 'round' | 'ceil' | 'min' | 'max' | 'clamp' | 'abs' | 'step',
 	values: number[],
 ): number {
 	switch (func) {
-		case undefined:
-			return values[0];
 		case 'floor':
 			return Math.floor(values[0]);
 		case 'round':
@@ -70,39 +66,22 @@ function calcFunc(
 	}
 }
 
-export function calculateNode(node: Node, char: Character): number {
+export function evalNode(node: AstNode, char: object): number {
 	switch (node.type) {
-		case NodeType.Error:
+		case AstNodeType.Error:
 			return NaN;
-		case NodeType.Constant:
+		case AstNodeType.Constant:
 			return node.constant;
-		case NodeType.Attribute:
-			return calcAttribute(node.path, char);
-		case NodeType.Unary:
-			return calcUnary(node.op, calculateNode(node.node, char));
-		case NodeType.Binary:
-			return calcBinary(node.op, calculateNode(node.left, char), calculateNode(node.right, char));
-		case NodeType.Func:
-			return calcFunc(
+		case AstNodeType.Attribute:
+			return evalAttribute(node.path, char);
+		case AstNodeType.Unary:
+			return evalUnary(node.op, evalNode(node.node, char));
+		case AstNodeType.Binary:
+			return evalBinary(node.op, evalNode(node.left, char), evalNode(node.right, char));
+		case AstNodeType.Func:
+			return evalFunc(
 				node.func,
-				node.nodes.map((n) => calculateNode(n, char)),
+				node.nodes.map((n) => evalNode(n, char)),
 			);
-	}
-}
-
-export function printNode(node: Node, char: Character): string {
-	switch (node.type) {
-		case NodeType.Error:
-			return '[ERR]';
-		case NodeType.Constant:
-			return node.constant.toString();
-		case NodeType.Attribute:
-			return `${node.path.join('.')} [${calcAttribute(node.path, char)}]`;
-		case NodeType.Unary:
-			return `${node.op}${printNode(node.node, char)}`;
-		case NodeType.Binary:
-			return `${printNode(node.left, char)} ${node.op} ${printNode(node.right, char)}`;
-		case NodeType.Func:
-			return `${node.func ?? ''}( ${node.nodes.map((n) => printNode(n, char)).join()} )`;
 	}
 }

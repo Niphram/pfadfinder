@@ -4,8 +4,9 @@
 	import type { Character } from '$lib/data';
 	import { setChar } from '$lib/data/context';
 	import { Derive, Macro } from '$lib/data/macros';
-	import { calculateNode } from '$lib/macro/evaluate';
-	import { parse, type Node } from '$lib/macro/parser';
+	import type { AstNode } from '$lib/macro/ast';
+	import { evalNode } from '$lib/macro/evaluate';
+	import { Parser } from '$lib/macro/parser';
 	import { debounce } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import { derived, readable } from 'svelte/store';
@@ -13,7 +14,7 @@
 
 	const { data, children }: LayoutProps = $props();
 
-	const formulaMap = new Map<string, Node>();
+	const formulaMap = new Map<string, AstNode | undefined>();
 
 	// TODO: Lots of cleanup
 
@@ -30,11 +31,11 @@
 						return makeProxy(target[p]);
 					} else if (typeof target[p] === 'string') {
 						if (formulaMap.has(target[p])) {
-							return calculateNode(formulaMap.get(target[p])!, char);
+							return evalNode(formulaMap.get(target[p])!, char);
 						} else {
-							const node = parse(target[p]);
+							const node = Parser.parse(target[p]);
 							formulaMap.set(target[p], node);
-							return calculateNode(node, char);
+							return evalNode(node, char);
 						}
 					}
 				},

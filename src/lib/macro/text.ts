@@ -1,6 +1,7 @@
 import type { Character } from '$lib/data';
-import { calculateNode } from './evaluate';
-import { parse } from './parser';
+
+import { evalNode } from './evaluate';
+import { Parser } from './parser';
 
 const MACRO = /{{(.*?)}}/g;
 
@@ -12,7 +13,7 @@ export function parseTextWithMacros(input: string, char: Character): string {
 		if (macro.startsWith(':')) {
 			const split = macro.indexOf(' ');
 			const format = macro.substring(1, split);
-			const result = calculateNode(parse(macro.substring(split)), char);
+			const result = evalNode(Parser.parse(macro.substring(split)), char);
 
 			const signed = format.includes('+');
 			const hideZero = format.includes('z');
@@ -27,7 +28,7 @@ export function parseTextWithMacros(input: string, char: Character): string {
 
 			return `${result}`;
 		} else {
-			return `[${calculateNode(parse(macro), char).toString()}]`;
+			return `[${evalNode(Parser.parse(macro), char).toString()}]`;
 		}
 	});
 

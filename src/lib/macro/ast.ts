@@ -1,4 +1,5 @@
-export enum AstNodeType {
+export const enum AstNodeType {
+	Error,
 	Constant,
 	Attribute,
 	Unary,
@@ -6,7 +7,12 @@ export enum AstNodeType {
 	Func,
 }
 
-export type AstNode = ConstantNode | AttributeNode | UnaryNode | BinaryNode | FuncNode;
+export type AstNode = ErrorNode | ConstantNode | AttributeNode | UnaryNode | BinaryNode | FuncNode;
+
+export type ErrorNode = {
+	type: AstNodeType.Error;
+	message: string;
+};
 
 export type ConstantNode = {
 	type: AstNodeType.Constant;

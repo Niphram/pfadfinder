@@ -1,25 +1,26 @@
-import { calculateNode } from '$lib/macro/evaluate';
-import { parse, type Node } from '$lib/macro/parser';
 import { autoserializeAs } from 'cerialize';
-import type { Character } from '../character';
+
+import type { AstNode } from '$lib/macro/ast';
+import { evalNode } from '$lib/macro/evaluate';
+import { Parser } from '$lib/macro/parser';
 
 export const macro = autoserializeAs({
-	Serialize(instance: Macro): string {
+	Serialize(instance: Macro<object>): string {
 		return instance.expr;
 	},
 
-	Deserialize(expr: string): Macro {
+	Deserialize(expr: string): Macro<object> {
 		return new Macro(expr);
 	},
 });
 
-export class Macro<C = Character> {
+export class Macro<C extends object = object> {
 	private oldExpr?: string;
 
-	private _node?: Node;
+	private _node?: AstNode;
 	public get node() {
 		if (!this._node || this.expr !== this.oldExpr) {
-			this._node = parse(this.expr);
+			this._node = Parser.parse(this.expr);
 			this.oldExpr = this.expr;
 		}
 
@@ -27,7 +28,7 @@ export class Macro<C = Character> {
 	}
 
 	eval(char: C) {
-		return calculateNode(this.node, char as Character); // TODO
+		return evalNode(this.node, char);
 	}
 
 	constructor(public expr: string) {}

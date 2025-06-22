@@ -27,18 +27,26 @@ describe('Tokenizer', () => {
 
 		for (const token of tokens) {
 			expect(tokenizer.hasMoreTokens()).toBe(true);
-			expect(tokenizer.getNextToken()?.type).toBe(token);
+			expect(tokenizer.getNextToken()).toEqual({
+				ok: true,
+				token: expect.objectContaining({
+					type: token,
+				}),
+			});
 		}
 
 		// Make sure no tokens remain
 		expect(tokenizer.hasMoreTokens()).toBe(false);
-		expect(tokenizer.getNextToken()).toBeNull();
+		expect(tokenizer.getNextToken()).toEqual({
+			ok: true,
+			token: undefined,
+		});
 	});
 
 	test.each([';', '='])('"%s" should fail tokenization', (input) => {
 		const tokenizer = new Tokenizer(input);
 
 		expect(tokenizer.hasMoreTokens()).toBe(true);
-		expect(() => tokenizer.getNextToken()).throws();
+		expect(tokenizer.getNextToken().ok).toBe(false);
 	});
 });

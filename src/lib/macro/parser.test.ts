@@ -22,10 +22,13 @@ describe('Parser', () => {
 	});
 
 	describe('Whitespace', () => {
-		test.each(['', ' ', '\t', '\n'])('should parse %j to "null"', (input) => {
+		test.each(['', ' ', '\t', '\n'])('should parse %j to ErrorNode', (input) => {
 			const parser = Parser.parse(input);
 
-			expect(parser).toBeNull();
+			expect(parser).toEqual({
+				type: AstNodeType.Error,
+				message: 'Unexpected end of input, expected a valid expression',
+			});
 		});
 	});
 });
