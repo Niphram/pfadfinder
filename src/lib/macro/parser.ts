@@ -71,11 +71,11 @@ export class Parser {
 		const token = this.lookahead;
 
 		if (!token) {
-			return yield ParserError(`Unexpected end of input, expected "${tokenType}"`);
+			return yield ParserError(`Unexpected end of input, expected "${tokenType}".`);
 		}
 
 		if (token.type !== tokenType) {
-			return yield ParserError(`Unexpected token: "${token.value}", expected "${tokenType}"`);
+			return yield ParserError(`Unexpected token: "${token.value}", expected "${tokenType}".`);
 		}
 
 		// Advance to the next token
@@ -100,7 +100,7 @@ export class Parser {
 	private *consumeOneOf(...tokenTypes: TokenType[]): Generator<ErrorNode, Token> {
 		if (!this.lookahead) {
 			return yield ParserError(
-				`Unexpected end of input, expected one of "${tokenTypes.join(', ')}"`,
+				`Unexpected end of input, expected one of "${tokenTypes.join(', ')}".`,
 			);
 		}
 
@@ -110,7 +110,7 @@ export class Parser {
 		}
 
 		return yield ParserError(
-			`Unexpected token: "${this.lookahead.value}", expected "${tokenTypes.join(', ')}"`,
+			`Unexpected token: "${this.lookahead.value}", expected "${tokenTypes.join(', ')}".`,
 		);
 	}
 
@@ -152,7 +152,7 @@ export class Parser {
 	 */
 	private *Prefix(): Generator<ErrorNode, AstNode> {
 		if (!this.lookahead) {
-			return yield ParserError(`Unexpected end of input, expected a valid expression`);
+			return yield ParserError(`Unexpected end of input, expected a valid expression.`);
 		}
 
 		switch (this.lookahead?.type) {
@@ -169,7 +169,7 @@ export class Parser {
 				return yield* this.Attribute();
 		}
 
-		return yield ParserError(`Unexpected Token: "${this.lookahead?.value}"`);
+		return yield ParserError(`Unexpected Token: "${this.lookahead?.value}".`);
 	}
 
 	/**
@@ -194,7 +194,7 @@ export class Parser {
 				};
 
 			default:
-				return yield ParserError(`Unexpected Operator: "${op}". Valid operators are + - * / %`);
+				return yield ParserError(`Unexpected Operator: "${op}". Valid operators are + - * / %.`);
 		}
 	}
 
@@ -265,7 +265,14 @@ export class Parser {
 		};
 	}
 
-	private *FunctionName(): Generator<ErrorNode, FuncNode['func']> {
+	/**
+	 * Consumes an identifier and tries to match it to a valid function
+	 * @returns function name and expected argument count (or undefined if count doesn't matter)
+	 */
+	private *FunctionNameAndArgsCount(): Generator<
+		ErrorNode,
+		[func: FuncNode['func'], expectedArgs: number | undefined]
+	> {
 		const func = (yield* this.consume(TokenType.IDENTIFIER)).value;
 
 		switch (func) {
@@ -273,14 +280,17 @@ export class Parser {
 			case 'round':
 			case 'ceil':
 			case 'abs':
+				return [func, 1];
 			case 'min':
 			case 'max':
+				return [func, undefined];
 			case 'clamp':
+				return [func, 3];
 			case 'step':
-				return func;
+				return [func, 2];
 		}
 
-		return yield ParserError(`Invalid function: "${func}"`);
+		return yield ParserError(`Invalid function: "${func}".`);
 	}
 
 	/**
@@ -295,38 +305,17 @@ export class Parser {
 	 * 	  / "step" "(" Expression "," Expression ")"
 	 */
 	private *Function(): Generator<ErrorNode, FuncNode> {
-		const func = yield* this.FunctionName();
+		const [func, expectedArgs] = yield* this.FunctionNameAndArgsCount();
 		yield* this.consume(TokenType.PARENTHESIS_LEFT);
 		const nodes = yield* this.CommaSeperatedExpressions();
-		yield* this.consume(TokenType.PARENTHESIS_RIGHT);
 
-		switch (func) {
-			// Functions that take one argument
-			case 'floor':
-			case 'round':
-			case 'ceil':
-			case 'abs':
-				if (nodes.length !== 1)
-					return yield ParserError(`Function "${func}" expected 1 argument, got ${nodes.length}`);
-				break;
-
-			// Min and Max take any amount of parameters
-			case 'min':
-			case 'max':
-				break;
-
-			// clamp(val, min, max)
-			case 'clamp':
-				if (nodes.length !== 3)
-					return yield ParserError(`Function "${func}" expected 3 argument, got ${nodes.length}`);
-				break;
-
-			// step(val, threshold)
-			case 'step':
-				if (nodes.length !== 2)
-					return yield ParserError(`Function "${func}" expected 2 argument, got ${nodes.length}`);
-				break;
+		if (expectedArgs && nodes.length !== expectedArgs) {
+			return yield ParserError(
+				`Function "${func}" expected ${expectedArgs} argument, got ${nodes.length}.`,
+			);
 		}
+
+		yield* this.consume(TokenType.PARENTHESIS_RIGHT);
 
 		return {
 			type: AstNodeType.Func,
