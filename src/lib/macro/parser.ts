@@ -36,15 +36,8 @@ export class Parser {
 	public static parse(input: string) {
 		const parser = new Parser(input);
 
-		const iter = parser.init();
-		let current = iter.next();
-		while (!current.done) {
-			// Error occured
-			if (current.value) return current.value;
-			current = iter.next();
-		}
-
-		return current.value;
+		// The generator will either yield an error or return the ast
+		return parser.init().next().value;
 	}
 
 	private *init(): Generator<ErrorNode, AstNode> {
@@ -58,10 +51,11 @@ export class Parser {
 		return yield* this.Expression();
 	}
 
-	private getOperatorPrecedence(type: string) {
-		switch (type) {
+	private getOperatorPrecedence(op: string) {
+		switch (op) {
 			case '*':
 			case '/':
+			case '%':
 				return Precedence.MULTIPLICATIVE;
 
 			case '+':
