@@ -3,9 +3,11 @@
 	import Divider from '$lib/atoms/divider.svelte';
 	import { title } from '$lib/components/dialog.svelte';
 	import Fieldset from '$lib/components/input/fieldset.svelte';
+	import RichInput from '$lib/components/input/rich-input.svelte';
 	import { getChar } from '$lib/data/context';
 	import { Macro } from '$lib/data/macros';
 	import { Tokenizer, TokenType } from '$lib/macro/tokenizer';
+	import { computeMacroStyle } from '$lib/text/macro-text-style';
 	import MacroAstTree from './macro-ast-tree.svelte';
 
 	const { c } = getChar();
@@ -29,63 +31,11 @@
 	};
 
 	let astOpen = true;
-
-	function highlight(input: string) {
-		const tokens = new Tokenizer(input).allTokens();
-
-		let cursor = 0;
-		let result = '';
-
-		const TOKEN_FONT_COLORS: Record<TokenType, string> = {
-			[TokenType.AT]: 'text-neutral',
-			[TokenType.PERIOD]: 'text-neutral',
-			[TokenType.COMMA]: 'text-neutral',
-			[TokenType.DECIMAL]: 'text-accent',
-			[TokenType.INTEGER]: 'text-accent',
-			[TokenType.IDENTIFIER]: 'text-info',
-			[TokenType.OPERATOR]: 'text-success',
-			[TokenType.PARENTHESIS_LEFT]: 'text-neutral',
-			[TokenType.PARENTHESIS_RIGHT]: 'text-neutral',
-			[TokenType.INVALID]: 'text-error',
-		};
-
-		for (const token of tokens) {
-			if (token.start > cursor)
-				result += `<span class="whitespace-pre">${' '.repeat(token.start - cursor)}</span>`;
-
-			cursor = token.end;
-			result += `<span class="token ${TOKEN_FONT_COLORS[token.type]}">${token.value}</span>`;
-		}
-
-		return result;
-	}
-
-	let inputEl: HTMLInputElement;
-	let outputEl: HTMLDivElement;
-
-	function updateScroll() {
-		outputEl.scrollTop = inputEl.scrollTop;
-		outputEl.scrollLeft = inputEl.scrollLeft;
-	}
 </script>
 
 <div class="flex flex-col gap-2">
 	<Fieldset legend="Debug Macro">
-		<div class="relative">
-			<input
-				bind:this={inputEl}
-				bind:value={testMacro.expr}
-				on:scroll={updateScroll}
-				class="input input-bordered caret-base-content z-10 w-full bg-transparent text-transparent"
-			/>
-
-			<div class="input input-bordered absolute top-0 left-0 z-0 w-full">
-				<div bind:this={outputEl} class="overflow-hidden whitespace-pre">
-					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-					{@html highlight(testMacro.expr)}
-				</div>
-			</div>
-		</div>
+		<RichInput name="macroTest" bind:value={testMacro.expr} computeTextStyle={computeMacroStyle} />
 	</Fieldset>
 
 	<p>Evaluates to: {testMacro.eval($c)}</p>

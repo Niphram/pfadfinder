@@ -22,6 +22,12 @@
 	bind:checked={$c.settings.usePersonaSystem}
 />
 
+<Toggle
+	name="syntaxHighlighting"
+	label="Enable Macro Highlighting"
+	bind:checked={$c.settings.enableMacroHighlighting}
+/>
+
 <div>Persistent storage: {$persisted}</div>
 
 <Toggle
