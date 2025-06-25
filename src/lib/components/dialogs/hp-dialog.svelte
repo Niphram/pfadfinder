@@ -102,6 +102,20 @@
 		{:else if $c.hp.nonlethalDamage > currentAndTempHp}
 			<Alert level="warning">Nonlethal damage exceeds character's hitpoints</Alert>
 		{/if}
+
+		{#if $c.hp.nonlethalDamage >= $c.hp.max.eval($c)}
+			<Alert level="warning">
+				Unless you have some ability that says otherwise, nonlethal damage is capped at your maximum
+				hitpoints and any additional nonlethal damage should be treated as lethal damage.
+			</Alert>
+		{/if}
+
+		{#if $c.hp.nonlethalDamage > 0}
+			<Alert level="info">
+				Nonlethal damage heals at a rate of 1 hit point per hour per character level. Spells or
+				abilities that restore hitpoints, additionally heal nonlethal damage.
+			</Alert>
+		{/if}
 	</div>
 
 	<div class="contents">
