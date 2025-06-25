@@ -55,7 +55,7 @@
 				/>
 			</div>
 			<div class="flex flex-col items-center">
-				<span class="uppercase">Non Lethal</span>
+				<span class="uppercase">Nonlethal</span>
 				<input
 					type="number"
 					class="input input-bordered w-full text-center text-2xl"
@@ -85,8 +85,8 @@
 					class="btn grow bg-red-500 px-2 text-lg lg:text-xl">Lethal</button
 				>
 				<button
-					onclick={preventDefault(() => ($c.hp.dealNonLethal(modifyAmount), ($c = $c)))}
-					class="btn grow bg-orange-500 px-2 text-lg lg:text-xl">Non-Lethal</button
+					onclick={preventDefault(() => ($c.hp.dealNonlethal(modifyAmount), ($c = $c)))}
+					class="btn grow bg-orange-500 px-2 text-lg lg:text-xl">Nonlethal</button
 				>
 			</div>
 		</div>

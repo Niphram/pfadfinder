@@ -55,7 +55,7 @@ export class HitPoints {
 		this.damageTaken += remaining;
 	}
 
-	dealNonLethal(amount: number) {
+	dealNonlethal(amount: number) {
 		this.nonlethalDamage += amount;
 	}
 }
