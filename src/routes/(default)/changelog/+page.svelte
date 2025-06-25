@@ -15,8 +15,8 @@
 	<h1>Changelogs</h1>
 
 	<ul>
-		{#each data.changelogs as { date } (date)}
-			<li><a href="{base}/changelog/{date}">{date}</a></li>
+		{#each data.changelogs as { title } (title)}
+			<li><a href="{base}/changelog/{title}">{title}</a></li>
 		{/each}
 	</ul>
 </article>

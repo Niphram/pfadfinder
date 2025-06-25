@@ -1,9 +1,9 @@
-import { GenericDeserializeInto, Serialize } from 'cerialize';
+import { Serialize } from 'cerialize';
 import Dexie from 'dexie';
 import { nanoid } from 'nanoid';
 
 import { Character } from '$lib/data';
-import { upgradeCharacter } from '$lib/data/upgrade';
+import { upgradeCharacterAndDeserialize } from '$lib/data/upgrade';
 import { lazy } from '$lib/utils';
 
 import { VERSIONS, type Schema } from './versions';
@@ -55,16 +55,14 @@ export class IDBStorage {
 	async getCharacterById(id: string) {
 		const charData = await this.db.characters.get(id);
 
-		return (
-			charData && GenericDeserializeInto(upgradeCharacter(charData), Character, new Character())
-		);
+		return charData && upgradeCharacterAndDeserialize(charData);
 	}
 
 	async duplicateCharacterById(id: string) {
 		const charData = await this.db.characters.get(id);
 		if (!charData) return;
 
-		const char = GenericDeserializeInto(upgradeCharacter(charData), Character, new Character());
+		const char = upgradeCharacterAndDeserialize(charData);
 		if (!char) return;
 
 		char.id = nanoid();

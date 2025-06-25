@@ -29,6 +29,9 @@ export class Settings {
 	usePersonaSystem = false;
 
 	@autoserialize
+	useAverageHP = false;
+
+	@autoserialize
 	enableMacroHighlighting = true;
 
 	@autoserialize

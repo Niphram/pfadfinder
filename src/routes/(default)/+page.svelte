@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { DeserializeInto, Serialize } from 'cerialize';
+	import { Serialize } from 'cerialize';
 	import { nanoid } from 'nanoid';
 
 	import { base } from '$app/paths';
 
 	import { Character } from '$lib/data';
-	import { upgradeCharacter } from '$lib/data/upgrade';
+	import { upgradeCharacterAndDeserialize } from '$lib/data/upgrade';
 	import { preventDefault } from '$lib/utils';
 
 	import type { PageProps } from './$types';
@@ -38,8 +38,7 @@
 			const file = files[0];
 			const fileContent = await file.text();
 
-			const newChar = new Character();
-			DeserializeInto(upgradeCharacter(JSON.parse(fileContent)), Character, newChar);
+			const newChar = upgradeCharacterAndDeserialize(JSON.parse(fileContent));
 			newChar.id = nanoid();
 
 			await db.saveCharacter(newChar);
