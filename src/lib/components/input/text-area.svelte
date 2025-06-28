@@ -11,6 +11,11 @@
 </script>
 
 <Fieldset legend={label}>
-	<textarea {name} {placeholder} class="textarea textarea-bordered w-full" {rows} bind:value
+	<textarea
+		{name}
+		{placeholder}
+		class="textarea textarea-bordered w-full resize-none"
+		{rows}
+		bind:value
 	></textarea>
 </Fieldset>
