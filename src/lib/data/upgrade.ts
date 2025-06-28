@@ -55,3 +55,5 @@ export function upgradeCharacterAndDeserialize(char: any) {
 
 	return deserializedChar;
 }
+
+export const VERSION_NUMBER = UPGRADES.length + 1;

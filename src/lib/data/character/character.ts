@@ -1,6 +1,7 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
 import { nanoid } from 'nanoid';
 
+import { VERSION_NUMBER } from '../upgrade';
 import { Ability } from './abilities';
 import { ArmorClass } from './armorclass';
 import { Classes } from './class';
@@ -23,7 +24,7 @@ export class Character {
 	id = nanoid();
 
 	@autoserialize
-	version = 2;
+	version = VERSION_NUMBER;
 
 	@autoserialize
 	name = 'Unnamed Character';
