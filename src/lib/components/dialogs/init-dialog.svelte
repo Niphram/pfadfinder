@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { getChar } from '$lib/data/context';
+
 	import { title } from '../dialog.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
-	import TextArea from '../input/text-area.svelte';
+	import MacroTextArea from '../input/macro-text-area.svelte';
 
 	const { c } = getChar();
 
@@ -16,4 +17,4 @@
 	placeholder="Initiative Misc"
 />
 
-<TextArea bind:value={$c.init.notes} name="notes" label="Notes" placeholder="Notes" />
+<MacroTextArea bind:value={$c.init.notes} name="notes" label="Notes" placeholder="Notes" />

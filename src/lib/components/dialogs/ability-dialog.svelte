@@ -2,10 +2,11 @@
 	import { type AbilityKey } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
+
 	import { title } from '../dialog.svelte';
 	import Integer from '../input/integer.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
-	import TextArea from '../input/text-area.svelte';
+	import MacroTextArea from '../input/macro-text-area.svelte';
 
 	const { c } = getChar();
 
@@ -24,7 +25,7 @@
 <MacroInteger bind:value={$c[key].temp.expr} name="abilityTemp" label="Temp" />
 <Integer bind:value={$c[key].damage} name="abilityDamage" label="Damage" noNegatives />
 
-<TextArea
+<MacroTextArea
 	bind:value={$c[key].notes}
 	label="Notes"
 	name="abilityNotes"

@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { ABILITY_KEYS, ATTACK_TYPES } from '$lib/data';
 	import { getChar } from '$lib/data/context';
+
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
+	import MacroTextArea from '../input/macro-text-area.svelte';
 	import Select from '../input/select.svelte';
-	import TextArea from '../input/text-area.svelte';
 
 	const { c } = getChar();
 
@@ -99,7 +100,7 @@
 			/>
 		{/if}
 
-		<TextArea
+		<MacroTextArea
 			bind:value={$c.combat.attacks[index].notes}
 			name="acItemNotes"
 			placeholder="Notes"

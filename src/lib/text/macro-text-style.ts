@@ -46,3 +46,28 @@ export function computeMacroStyle(input: string) {
 
 	return textStyle;
 }
+
+export function computeMacroInTextStyle(input: string) {
+	const textStyle = new RangedProperties<RichInputTextProperties>(input.length);
+
+	const MACRO = /{{(.*?)}}/g;
+	for (const match of input.matchAll(MACRO)) {
+		const content = match[1];
+
+		let subTextStyle: RangedProperties<RichInputTextProperties>;
+		let offset = 0;
+
+		if (content.startsWith(':')) {
+			offset = content.indexOf(' ');
+			const result = content.substring(offset);
+
+			subTextStyle = computeMacroStyle(result);
+		} else {
+			subTextStyle = computeMacroStyle(content);
+		}
+
+		textStyle.add(subTextStyle, match.index + 2 + offset);
+	}
+
+	return textStyle;
+}

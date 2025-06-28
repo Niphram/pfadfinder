@@ -20,6 +20,21 @@ export class RangedProperties<T extends Record<string, string | number>> {
 		}
 	}
 
+	public setProps(props: Partial<T>, start: number, length: number) {
+		const startSpanIdx = this.splitAt(start) ?? 0;
+		const endSpanIdx = this.splitAt(start + length) ?? this.spans.length;
+
+		for (let i = startSpanIdx; i < endSpanIdx; i++) {
+			this.spans[i].props = props;
+		}
+	}
+
+	public add(subProps: RangedProperties<T>, offset = 0) {
+		for (const subSpan of subProps.spans) {
+			this.setProps(subSpan.props, subSpan.start + offset, subSpan.length);
+		}
+	}
+
 	private splitAt(idx: number) {
 		// Get location in spans
 		const location = this.indexToSpan(idx);

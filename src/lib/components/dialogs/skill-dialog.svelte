@@ -2,12 +2,13 @@
 	import { ABILITY_KEYS, type SkillKey } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
+
 	import { title } from '../dialog.svelte';
 	import Checkbox from '../input/checkbox.svelte';
 	import Integer from '../input/integer.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
+	import MacroTextArea from '../input/macro-text-area.svelte';
 	import Select from '../input/select.svelte';
-	import TextArea from '../input/text-area.svelte';
 	import Toggle from '../input/toggle.svelte';
 
 	const { c } = getChar();
@@ -56,7 +57,7 @@
 	/>
 </div>
 
-<TextArea
+<MacroTextArea
 	bind:value={$c.skills[key].skills[index].notes}
 	name="skillNotes"
 	label="Notes"
