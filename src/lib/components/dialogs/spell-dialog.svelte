@@ -5,9 +5,9 @@
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
 	import Integer from '../input/integer.svelte';
+	import MacroTextArea from '../input/macro-text-area.svelte';
 
 	import Select from '../input/select.svelte';
-	import TextArea from '../input/text-area.svelte';
 	import Toggle from '../input/toggle.svelte';
 
 	const { c } = getChar();
@@ -233,7 +233,7 @@
 			</div>
 		{/each}
 
-		<TextArea
+		<MacroTextArea
 			name="spellDescription"
 			label="Description"
 			bind:value={$c.spells[spellLevel].spells[spellIdx].description}

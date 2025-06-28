@@ -2,10 +2,11 @@
 	import { FEAT_TYPES } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
+
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
+	import MacroTextArea from '../input/macro-text-area.svelte';
 	import Select from '../input/select.svelte';
-	import TextArea from '../input/text-area.svelte';
 
 	const { c } = getChar();
 
@@ -23,7 +24,7 @@
 	{#if index < $c.feats.length}
 		<Input name="featName" label="Name" placeholder="Type here" bind:value={$c.feats[index].name} />
 
-		<TextArea
+		<MacroTextArea
 			name="featPrerequisites"
 			label="Prerequisites"
 			placeholder="Enter Prerequisites"
@@ -41,7 +42,7 @@
 			<option value={option}>{$t(`feats.type.${option}`)}</option>
 		</Select>
 
-		<TextArea
+		<MacroTextArea
 			name="featBenefits"
 			label="Benefits"
 			placeholder="Enter Benefits"
@@ -49,7 +50,7 @@
 			bind:value={$c.feats[index].benefits}
 		/>
 
-		<TextArea
+		<MacroTextArea
 			name="featNormal"
 			label="Normal"
 			placeholder="Enter Normal"
@@ -57,7 +58,7 @@
 			bind:value={$c.feats[index].normal}
 		/>
 
-		<TextArea
+		<MacroTextArea
 			name="featSpecial"
 			label="Special"
 			placeholder="Enter Special"

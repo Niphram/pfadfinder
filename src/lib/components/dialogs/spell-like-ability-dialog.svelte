@@ -2,12 +2,12 @@
 	import { SPELL_ATTACK_TYPE, SPELL_LIKE_COUNT_TYPES, SpellAttackDamage } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
+
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
 	import Integer from '../input/integer.svelte';
-
+	import MacroTextArea from '../input/macro-text-area.svelte';
 	import Select from '../input/select.svelte';
-	import TextArea from '../input/text-area.svelte';
 	import Toggle from '../input/toggle.svelte';
 
 	const { c } = getChar();
@@ -228,7 +228,7 @@
 			</div>
 		{/each}
 
-		<TextArea
+		<MacroTextArea
 			name="spellDescription"
 			label="Description"
 			bind:value={$c.spells.spellLikeAbilities[slaIndex].description}
