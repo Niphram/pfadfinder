@@ -60,11 +60,13 @@ export function computeMacroInTextStyle(input: string) {
 		if (content.startsWith(':')) {
 			offset = content.indexOf(' ');
 			const result = content.substring(offset);
-
 			subTextStyle = computeMacroStyle(result);
 		} else {
 			subTextStyle = computeMacroStyle(content);
 		}
+
+		textStyle.setProp('color', 'var(--color-secondary)', match.index, offset + 2);
+		textStyle.setProp('color', 'var(--color-secondary)', match.index + match[0].length - 2, 2);
 
 		textStyle.add(subTextStyle, match.index + 2 + offset);
 	}
