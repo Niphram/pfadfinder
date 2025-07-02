@@ -1,6 +1,6 @@
 import { autoserialize } from 'cerialize';
 
-import { Derive } from '../macros';
+import { Derive, Macro, macro } from '../macros';
 import type { AbilityKey } from './abilities';
 
 export class ArmorClass {
@@ -9,6 +9,18 @@ export class ArmorClass {
 
 	@autoserialize
 	secondaryAbility?: AbilityKey;
+
+	@macro
+	bonusAc = new Macro('0');
+
+	@macro
+	bonusTouch = new Macro('0');
+
+	@macro
+	bonusFf = new Macro('0');
+
+	@autoserialize
+	notes = '';
 
 	readonly abilityMod = new Derive((c) => {
 		const primaryMax = this.primaryAbility === 'dex' ? c.equipment.maxDexBonus : Infinity;
@@ -20,11 +32,13 @@ export class ArmorClass {
 		);
 	});
 
-	readonly total = new Derive((c) => 10 + c.ac.abilityMod.eval(c) + c.equipment.acBonus);
+	readonly total = new Derive(
+		(c) => 10 + c.ac.abilityMod.eval(c) + c.equipment.acBonus + this.bonusAc.eval(c),
+	);
 
-	readonly touch = new Derive((c) => 10 + c.ac.abilityMod.eval(c));
+	readonly touch = new Derive((c) => 10 + c.ac.abilityMod.eval(c) + this.bonusTouch.eval(c));
 
 	readonly flatFooted = new Derive(
-		(c) => 10 + c.equipment.acBonus + Math.min(c.ac.abilityMod.eval(c), 0),
+		(c) => 10 + c.equipment.acBonus + Math.min(c.ac.abilityMod.eval(c), 0) + this.bonusFf.eval(c),
 	);
 }

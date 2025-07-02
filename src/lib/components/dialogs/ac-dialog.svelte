@@ -2,8 +2,13 @@
 	import { ABILITY_KEYS } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
+
+	import Divider from '$lib/atoms/divider.svelte';
+	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+	import Select from '$lib/components/input/select.svelte';
+	import TextArea from '$lib/components/input/text-area.svelte';
+
 	import { title } from '../dialog.svelte';
-	import Select from '../input/select.svelte';
 
 	const { c } = getChar();
 
@@ -34,3 +39,13 @@
 		{$t(`abilities.${key}.full`)}
 	</option>
 </Select>
+
+<Divider />
+
+<MacroInteger name="bonusAc" label="Bonus to AC" bind:value={$c.ac.bonusAc.expr} />
+
+<MacroInteger name="bonusTouch" label="Bonus to touch AC" bind:value={$c.ac.bonusTouch.expr} />
+
+<MacroInteger name="bonusFf" label="Bonus to flat-footed AC" bind:value={$c.ac.bonusFf.expr} />
+
+<TextArea name="acNotes" label="Notes" rows={5} bind:value={$c.ac.notes} />
