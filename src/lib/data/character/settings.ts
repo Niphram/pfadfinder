@@ -26,6 +26,9 @@ export class Settings {
 	resetPreparedSpells = true;
 
 	@autoserialize
+	showMagicPage = true;
+
+	@autoserialize
 	usePersonaSystem = false;
 
 	@autoserialize

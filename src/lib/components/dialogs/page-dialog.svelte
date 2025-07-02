@@ -13,7 +13,7 @@
 		{ key: 'abilities', active: true },
 		{ key: 'combat', active: true },
 		{ key: 'skills', active: true },
-		{ key: 'spells', active: true },
+		{ key: 'spells', active: $c.settings.showMagicPage },
 		{ key: 'features_traits', active: true },
 		{ key: 'equipment', active: true },
 		{ key: 'character', active: true },

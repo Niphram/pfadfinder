@@ -16,6 +16,8 @@
 
 <Toggle name="darkMode" label="Dark mode" checked={$isDarkMode} on:change={toggleDarkMode} />
 
+<Toggle name="magicPage" label="Show Magic Page" bind:checked={$c.settings.showMagicPage} />
+
 <Toggle
 	name="personaSystem"
 	label="Use Persona System"

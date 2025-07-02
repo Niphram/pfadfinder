@@ -1,11 +1,14 @@
 <script lang="ts">
 	import { ABILITY_KEYS, ATTACK_TYPES } from '$lib/data';
 	import { getChar } from '$lib/data/context';
+	import { computeMacroInTextStyle } from '$lib/text/macro-text-style';
 
 	import { title } from '../dialog.svelte';
+	import Fieldset from '../input/fieldset.svelte';
 	import Input from '../input/input.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
 	import MacroTextArea from '../input/macro-text-area.svelte';
+	import RichInput from '../input/rich-input.svelte';
 	import Select from '../input/select.svelte';
 
 	const { c } = getChar();
@@ -92,12 +95,14 @@
 		</div>
 
 		{#if $c.combat.attacks[index].hasDamage}
-			<Input
-				name="damage"
-				label="Damage"
-				placeholder="1d6 Piercing + STR"
-				bind:value={$c.combat.attacks[index].damage.damage}
-			/>
+			<Fieldset legend="Damage">
+				<RichInput
+					name="damage"
+					placeholder="1d6 Piercing + STR"
+					bind:value={$c.combat.attacks[index].damage.damage}
+					computeTextStyle={computeMacroInTextStyle}
+				/>
+			</Fieldset>
 		{/if}
 
 		<MacroTextArea

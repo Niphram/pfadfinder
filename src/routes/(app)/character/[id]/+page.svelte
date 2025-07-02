@@ -25,7 +25,7 @@
 		{ key: 'abilities', component: AbilitiesPage, active: true },
 		{ key: 'combat', component: CombatPage, active: true },
 		{ key: 'skills', component: SkillsPage, active: true },
-		{ key: 'spells', component: SpellsPage, active: true },
+		{ key: 'spells', component: SpellsPage, active: $c.settings.showMagicPage },
 		{ key: 'features_traits', component: FeaturesTraitsPage, active: true },
 		{ key: 'equipment', component: EquipmentPage, active: true },
 		{ key: 'character', component: CharacterPage, active: true },
