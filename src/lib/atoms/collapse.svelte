@@ -1,10 +1,27 @@
 <script lang="ts">
-	export let open = false;
+	import type { ClassValue, MouseEventHandler } from 'svelte/elements';
 
-	export let icon: 'arrow' | 'plus' | undefined = undefined;
+	interface Props {
+		open?: boolean;
+		icon?: 'arrow' | 'plus' | undefined;
+		class?: ClassValue;
+		titleClass?: ClassValue;
+		contentClass?: ClassValue;
+		oncontextmenu?: MouseEventHandler<HTMLDivElement>;
+		title?: import('svelte').Snippet<[{ open: boolean }]>;
+		children?: import('svelte').Snippet<[{ open: boolean }]>;
+	}
 
-	let className: string = '';
-	export { className as class };
+	let {
+		open = $bindable(false),
+		icon = undefined,
+		class: className,
+		titleClass,
+		contentClass,
+		oncontextmenu,
+		title: title_renderer,
+		children: children_renderer,
+	}: Props = $props();
 
 	function toggleOpen() {
 		open = !open;
@@ -28,26 +45,28 @@
 </script>
 
 <div
-	class="bg-base-200 collapse text-left {className}"
-	class:collapse-arrow={icon === 'arrow'}
-	class:collapse-plus={icon === 'plus'}
-	class:collapse-open={open}
-	class:collapse-close={!open}
-	on:click={toggleOpen}
-	on:contextmenu|preventDefault
-	on:keydown={keydownHandler}
-	on:keyup={keyupHandler}
+	class={[
+		'bg-base-200 collapse text-left',
+		icon === 'arrow' && 'collapse-arrow',
+		icon === 'plus' && 'collapse-plus',
+		open ? 'collapse-open' : 'collapse-close',
+		className,
+	]}
+	onclick={toggleOpen}
+	{oncontextmenu}
+	onkeydown={keydownHandler}
+	onkeyup={keyupHandler}
 	role="button"
 	tabindex="0"
 >
-	{#if $$slots.title}
-		<div class="collapse-title h-min min-h-0 py-2 md:py-4" class:pe-4={!icon}>
-			<slot name="title" />
+	{#if title_renderer}
+		<div class={['collapse-title h-min min-h-0 py-2 md:py-4', !icon && 'pe-4', titleClass]}>
+			{@render title_renderer?.({ open })}
 		</div>
 	{/if}
 
-	<div class="collapse-content min-w-0">
-		<slot {open} />
+	<div class={['collapse-content min-w-0', contentClass]}>
+		{@render children_renderer?.({ open })}
 	</div>
 </div>
 

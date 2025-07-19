@@ -14,6 +14,9 @@
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import { parseTextWithMacros } from '$lib/macro/text';
 	import { getChar } from '$lib/data/context';
+	import Collapse from '$lib/atoms/collapse.svelte';
+	import { preventDefault } from '$lib/utils';
+	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
 
 	const { c, p } = getChar();
 
@@ -64,6 +67,71 @@
 			Weapons/Attacks
 			<button class="btn btn-secondary btn-xs" on:click={addAttack}>Add</button>
 		</div>
+	</div>
+
+	<div class="grid w-full grid-flow-row grid-cols-[min-content_repeat(4,auto)] justify-stretch">
+		<div class="col-span-5 grid grid-cols-subgrid text-center text-xs text-neutral-500">
+			<div></div>
+			<div>Name</div>
+			<div>Atk</div>
+			<div>Crit Range</div>
+			<div class="pr-12">Damage</div>
+		</div>
+
+		<SortableList
+			class="col-span-5 grid grid-cols-subgrid gap-y-2"
+			options={{
+				group: 'attack',
+				handle: '.drag-handle',
+				animation: 150,
+				easing: 'cubic-bezier(1, 0, 0, 1)',
+			}}
+			bind:items={$c.combat.attacks}
+			keyProp="id"
+			let:item={attack}
+			let:index
+		>
+			<div class="col-span-5 grid grid-cols-subgrid items-center">
+				<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
+					<DragHandle />
+				</div>
+
+				<Collapse
+					class="col-span-4 grid grid-cols-subgrid"
+					titleClass="col-span-4 grid grid-cols-subgrid"
+					contentClass="col-span-4 "
+					icon="arrow"
+					oncontextmenu={preventDefault(() => openDialog(AttackDialog, { index }))}
+				>
+					{#snippet title({ open })}
+						<div class="col-span-4 grid grid-cols-subgrid items-center gap-x-2">
+							<div
+								class="text-ellipsis"
+								class:overflow-hidden={!open}
+								class:whitespace-nowrap={!open}
+							>
+								{attack.name}
+							</div>
+							<div class="text-center">
+								{attack.hasAttack ? withSign(attack.attackBonus.eval($c)) : '-'}
+							</div>
+							<div class="text-center">{(attack.hasAttack && attack.attack.critRange) || '-'}</div>
+							<div
+								class="text-center text-ellipsis"
+								class:overflow-hidden={!open}
+								class:whitespace-nowrap={!open}
+							>
+								{(attack.hasDamage && parseTextWithMacros(attack.damage.damage, $c)) || '-'}
+							</div>
+						</div>
+					{/snippet}
+
+					{#snippet children()}
+						<MultilineMacro text={attack.notes}></MultilineMacro>
+					{/snippet}
+				</Collapse>
+			</div>
+		</SortableList>
 	</div>
 
 	{#if $c.combat.attacks.length > 0}

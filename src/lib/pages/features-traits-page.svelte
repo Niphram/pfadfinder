@@ -63,34 +63,36 @@
 			<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
 				<DragHandle />
 			</div>
-			<Collapse icon="arrow" on:contextmenu={() => openDialog(FeatDialog, { index })}>
-				<span slot="title" class="text-sm font-semibold"
-					>{item.name} ({$t(`feats.type.${item.type}`)})</span
-				>
+			<Collapse icon="arrow" oncontextmenu={() => openDialog(FeatDialog, { index })}>
+				{#snippet title()}
+					<span class="text-sm font-semibold">{item.name} ({$t(`feats.type.${item.type}`)})</span>
+				{/snippet}
 
-				<div class="flex flex-col gap-2">
-					{#if item.benefits}
-						<div class="divider my-0">Benefits</div>
-						<MultilineMacro
-							text={item.benefits}
-							class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
-						/>
-					{/if}
-					{#if item.normal}
-						<div class="divider my-0">Normal</div>
-						<MultilineMacro
-							text={item.normal}
-							class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
-						/>
-					{/if}
-					{#if item.special}
-						<div class="divider my-0">Special</div>
-						<MultilineMacro
-							text={item.special}
-							class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
-						/>
-					{/if}
-				</div>
+				{#snippet children()}
+					<div class="flex flex-col gap-2">
+						{#if item.benefits}
+							<div class="divider my-0">Benefits</div>
+							<MultilineMacro
+								text={item.benefits}
+								class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
+							/>
+						{/if}
+						{#if item.normal}
+							<div class="divider my-0">Normal</div>
+							<MultilineMacro
+								text={item.normal}
+								class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
+							/>
+						{/if}
+						{#if item.special}
+							<div class="divider my-0">Special</div>
+							<MultilineMacro
+								text={item.special}
+								class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
+							/>
+						{/if}
+					</div>
+				{/snippet}
 			</Collapse>
 		</div>
 	</SortableList>

@@ -76,25 +76,25 @@
 				<Collapse
 					icon="arrow"
 					bind:open={items[index].containerOpen}
-					on:click={() => macroNotify(item.name, item.description, $c)}
-					on:contextmenu={() => openDialog(ItemDialog, { list: items, index })}
-					let:open
+					oncontextmenu={() => openDialog(ItemDialog, { list: items, index })}
 				>
-					<svelte:fragment slot="title">
+					{#snippet title()}
 						<span class="text-sm font-semibold" class:underline={item.equipped}>
 							{item.name}
 						</span>
 						<span class="badge badge-md">
 							{$t('equipment.items', item.children.length)}
 						</span>
-					</svelte:fragment>
+					{/snippet}
 
-					<svelte:self
-						bind:items={items[index].children}
-						parentId={item.id}
-						disabled={!open}
-						class="bg-base-100 rounded-lg p-2 pl-0"
-					/>
+					{#snippet children({ open })}
+						<svelte:self
+							bind:items={items[index].children}
+							parentId={item.id}
+							disabled={!open}
+							class="bg-base-100 rounded-lg p-2 pl-0"
+						/>
+					{/snippet}
 				</Collapse>
 			{/if}
 		</div>

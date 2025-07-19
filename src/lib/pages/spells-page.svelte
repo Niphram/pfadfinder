@@ -84,36 +84,40 @@
 
 					<Collapse
 						icon="arrow"
-						on:contextmenu={() => openDialog(SpellDialog, { spellIdx, spellLevel: level })}
+						oncontextmenu={() => openDialog(SpellDialog, { spellIdx, spellLevel: level })}
 					>
-						<div slot="title" class="flex flex-row">
-							<span class="grow text-sm font-semibold">{spell.name}</span>
-							{#if spell.prepared > 0}
-								<button
-									class="btn btn-accent btn-xs w-16"
-									on:click|preventDefault|stopPropagation={() => castSpell(level, spellIdx)}
-								>
-									{spell.prepared - spell.used} / {spell.prepared}
-								</button>
+						{#snippet title()}
+							<div class="flex flex-row">
+								<span class="grow text-sm font-semibold">{spell.name}</span>
+								{#if spell.prepared > 0}
+									<button
+										class="btn btn-accent btn-xs w-16"
+										on:click|preventDefault|stopPropagation={() => castSpell(level, spellIdx)}
+									>
+										{spell.prepared - spell.used} / {spell.prepared}
+									</button>
+								{/if}
+							</div>
+						{/snippet}
+
+						{#snippet children()}
+							<div
+								class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
+							>
+								{#each spell.details(idx, $c) as [label, value], i (i)}
+									<div>{label}</div>
+									<div>{value}</div>
+								{/each}
+							</div>
+
+							{#if spell.description}
+								<div class="divider">Description</div>
+								<MultilineMacro
+									text={spell.description}
+									class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
+								/>
 							{/if}
-						</div>
-
-						<div
-							class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
-						>
-							{#each spell.details(idx, $c) as [label, value], i (i)}
-								<div>{label}</div>
-								<div>{value}</div>
-							{/each}
-						</div>
-
-						{#if spell.description}
-							<div class="divider">Description</div>
-							<MultilineMacro
-								text={spell.description}
-								class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
-							/>
-						{/if}
+						{/snippet}
 					</Collapse>
 				</div>
 			</SortableList>
@@ -145,37 +149,38 @@
 				<DragHandle />
 			</div>
 
-			<Collapse
-				icon="arrow"
-				on:contextmenu={() => openDialog(SpellLikeAbilityDialog, { slaIndex })}
-			>
-				<div slot="title" class="flex flex-row items-center">
-					<div class="grow text-sm font-semibold">{sla.name}</div>
-					<button
-						class="btn btn-accent btn-xs w-16"
-						on:click|stopPropagation={() => castSla(slaIndex)}
-					>
-						{sla.type === 'perDay' ?
-							`${sla.remaining} of ${sla.perDay}`
-						:	$t(`spell.slaType.${sla.type}`)}
-					</button>
-				</div>
+			<Collapse icon="arrow" oncontextmenu={() => openDialog(SpellLikeAbilityDialog, { slaIndex })}>
+				{#snippet title()}
+					<div class="flex flex-row items-center">
+						<div class="grow text-sm font-semibold">{sla.name}</div>
+						<button
+							class="btn btn-accent btn-xs w-16"
+							on:click|stopPropagation={() => castSla(slaIndex)}
+						>
+							{sla.type === 'perDay' ?
+								`${sla.remaining} of ${sla.perDay}`
+							:	$t(`spell.slaType.${sla.type}`)}
+						</button>
+					</div>
+				{/snippet}
 
-				<div
-					class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
-				>
-					{#each sla.details as [label, value], i (i)}
-						<div>{label}</div>
-						<div>{value}</div>
-					{/each}
-				</div>
-				{#if sla.description}
-					<div class="divider">Description</div>
-					<MultilineMacro
-						text={sla.description}
-						class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
-					/>
-				{/if}
+				{#snippet children()}
+					<div
+						class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
+					>
+						{#each sla.details as [label, value], i (i)}
+							<div>{label}</div>
+							<div>{value}</div>
+						{/each}
+					</div>
+					{#if sla.description}
+						<div class="divider">Description</div>
+						<MultilineMacro
+							text={sla.description}
+							class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
+						/>
+					{/if}
+				{/snippet}
 			</Collapse>
 		</div>
 	</SortableList>
