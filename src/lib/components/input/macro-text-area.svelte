@@ -4,13 +4,15 @@
 	import Fieldset from './fieldset.svelte';
 	import RichTextArea from './rich-text-area.svelte';
 
-	export let value: string;
+	interface Props {
+		value: string;
+		name: string;
+		label?: string | undefined;
+		placeholder?: string | undefined;
+		rows?: number;
+	}
 
-	export let name: string;
-	export let label: string | undefined = undefined;
-	export let placeholder: string | undefined = undefined;
-
-	export let rows = 10;
+	let { value = $bindable(), name, label, placeholder, rows = 10 }: Props = $props();
 </script>
 
 <Fieldset legend={label}>

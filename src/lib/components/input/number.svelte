@@ -1,26 +1,39 @@
 <script lang="ts">
 	import Fieldset from './fieldset.svelte';
 
-	export let noNegatives = false;
-	export let noZero = false;
-	export let noPositive = false;
-
-	export let value: number;
-
-	export let name: string;
-	export let label: string;
-	export let placeholder: string | undefined = undefined;
-
-	export let step: number = 0.001;
-
-	let current = value;
-
-	$: valid =
-		!(noNegatives && current < 0) && !(noZero && current === 0) && !(noPositive && current > 0);
-
-	$: if (valid) {
-		value = current;
+	interface Props {
+		noNegatives?: boolean;
+		noZero?: boolean;
+		noPositive?: boolean;
+		value: number;
+		name: string;
+		label: string;
+		placeholder?: string | undefined;
+		step?: number;
 	}
+
+	let {
+		noNegatives = false,
+		noZero = false,
+		noPositive = false,
+		value = $bindable(),
+		name,
+		label,
+		placeholder = undefined,
+		step = 0.001,
+	}: Props = $props();
+
+	let current = $state(value);
+
+	let valid = $derived(
+		!(noNegatives && current < 0) && !(noZero && current === 0) && !(noPositive && current > 0),
+	);
+
+	$effect.pre(() => {
+		if (valid) {
+			value = current;
+		}
+	});
 </script>
 
 <Fieldset legend={label}>

@@ -1,6 +1,8 @@
-<script lang="ts" context="module">
-	import { browser } from '$app/environment';
+<script lang="ts" module>
+	import type { Snippet } from 'svelte';
 	import { readonly, writable } from 'svelte/store';
+
+	import { browser } from '$app/environment';
 
 	const lightTheme = 'light';
 	const darkTheme = 'dark';
@@ -38,14 +40,20 @@
 </script>
 
 <script lang="ts">
-	$: themeColor = $isDarkMode ? '#20222C' : '#DBCA9A';
-	$: backgroundColor = $isDarkMode ? '#0B0B0F' : '#ECE3CE';
+	interface Props {
+		children?: Snippet;
+	}
 
-	$: {
+	let { children }: Props = $props();
+
+	let themeColor = $derived($isDarkMode ? '#20222C' : '#DBCA9A');
+	let backgroundColor = $derived($isDarkMode ? '#0B0B0F' : '#ECE3CE');
+
+	$effect.pre(() => {
 		if (browser) {
 			document.body.setAttribute('data-theme', $isDarkMode ? darkTheme : lightTheme);
 		}
-	}
+	});
 </script>
 
 <svelte:head>
@@ -53,4 +61,4 @@
 	<meta name="background-color" content={backgroundColor} />
 </svelte:head>
 
-<slot />
+{@render children?.()}

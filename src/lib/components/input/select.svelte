@@ -1,8 +1,4 @@
-<script lang="ts" context="module">
-	// Needed to satisfy eslint
-	type V = unknown;
-	type T = unknown;
-
+<script lang="ts" module>
 	const SIZES = {
 		small: 'select-sm',
 		medium: 'select-md',
@@ -11,19 +7,29 @@
 </script>
 
 <script lang="ts" generics="V, T">
+	import type { Snippet } from 'svelte';
+
 	import Fieldset from './fieldset.svelte';
 
-	export let name: string;
+	interface Props {
+		name: string;
+		label?: string;
+		options?: readonly T[];
+		noneOption?: string;
+		value: V;
+		size?: keyof typeof SIZES;
+		children?: Snippet<[{ option: T }]>;
+	}
 
-	export let label: string | undefined = undefined;
-
-	export let options: readonly T[] = [];
-
-	export let noneOption: string | undefined = undefined;
-
-	export let value: V;
-
-	export let size: keyof typeof SIZES = 'medium';
+	let {
+		name,
+		label,
+		options = [],
+		noneOption,
+		value = $bindable(),
+		size = 'medium',
+		children,
+	}: Props = $props();
 </script>
 
 <Fieldset legend={label}>
@@ -32,7 +38,7 @@
 			<option value={undefined}>{noneOption}</option>
 		{/if}
 		{#each options as option (option)}
-			<slot {option} />
+			{@render children?.({ option })}
 		{/each}
 	</select>
 </Fieldset>

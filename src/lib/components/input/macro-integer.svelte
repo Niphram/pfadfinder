@@ -41,7 +41,7 @@
 				!(noPositive && parsed > 0)),
 	);
 
-	$effect(() => {
+	$effect.pre(() => {
 		if (valid) {
 			value = current;
 		}

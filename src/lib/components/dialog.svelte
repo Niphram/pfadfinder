@@ -1,16 +1,17 @@
-<script lang="ts" context="module">
-	import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
+<script lang="ts" module>
+	import type { Component, ComponentProps, SvelteComponent } from 'svelte';
 	import { writable } from 'svelte/store';
 
 	let dialog: HTMLDialogElement;
 
-	const dialogContent = writable<{ component?: ComponentType; props: object }>({
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const dialogContent = writable<{ component?: Component<any>; props: object }>({
 		component: undefined,
 		props: {},
 	});
 
 	export function openDialog<T extends SvelteComponent>(
-		component: ComponentType<T>,
+		component: Component<T>,
 		props: Omit<ComponentProps<T>, 'title'>,
 	) {
 		dialogContent.set({
@@ -32,7 +33,11 @@
 	}
 </script>
 
-<dialog class="modal" bind:this={dialog} on:close={clearStore}>
+<script>
+	const DialogComponent = $derived($dialogContent.component);
+</script>
+
+<dialog class="modal" bind:this={dialog} onclose={clearStore}>
 	<form
 		method="dialog"
 		class="modal-box h-full max-h-none w-full max-w-none rounded-none pt-16 md:h-min md:max-h-[calc(100vh-5em)] md:max-w-lg md:rounded-md"
@@ -43,7 +48,7 @@
 		</div>
 
 		{#key $dialogContent}
-			<svelte:component this={$dialogContent.component} {...$dialogContent.props} />
+			<DialogComponent {...$dialogContent.props} />
 		{/key}
 	</form>
 	<form method="dialog" class="modal-backdrop">
