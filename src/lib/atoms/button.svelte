@@ -1,4 +1,7 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+	import type { MouseEventHandler } from 'svelte/elements';
+
 	const COLORS = {
 		default: '',
 		neutral: 'btn-neutral',
@@ -24,18 +27,31 @@
 		sm: 'btn-sm',
 	};
 
-	let className: string = '';
-	export { className as class };
+	interface Props {
+		class?: string;
+		color?: keyof typeof COLORS;
+		style?: keyof typeof STYLES;
+		size?: keyof typeof SIZES;
+		onclick?: MouseEventHandler<HTMLButtonElement>;
+		oncontextmenu?: MouseEventHandler<HTMLButtonElement>;
+		children?: Snippet;
+	}
 
-	export let color: keyof typeof COLORS = 'default';
-	export let style: keyof typeof STYLES = 'default';
-	export let size: keyof typeof SIZES = 'default';
+	let {
+		class: className = '',
+		color = 'default',
+		style = 'default',
+		size = 'default',
+		onclick,
+		oncontextmenu,
+		children,
+	}: Props = $props();
 </script>
 
 <button
 	class="btn {COLORS[color]} {STYLES[style]} {SIZES[size]} {className}"
-	on:click
-	on:contextmenu
+	{onclick}
+	{oncontextmenu}
 >
-	<slot />
+	{@render children?.()}
 </button>

@@ -52,7 +52,7 @@
 					</span>
 				</div>
 			</button>
-			<HpButton on:click={() => openDialog(HpDialog, {})} />
+			<HpButton onclick={() => openDialog(HpDialog, {})} />
 		</div>
 	</div>
 

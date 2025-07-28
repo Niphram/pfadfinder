@@ -52,7 +52,7 @@
 
 	<Divider>
 		Abstract Syntax Tree
-		<Button size="xs" color="neutral" on:click={(e) => (e.preventDefault(), (astOpen = !astOpen))}>
+		<Button size="xs" color="neutral" onclick={(e) => (e.preventDefault(), (astOpen = !astOpen))}>
 			toggle all
 		</Button>
 	</Divider>

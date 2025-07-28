@@ -42,14 +42,14 @@
 <div>
 	<Divider>
 		Spells
-		<Button size="xs" color="primary" on:click={openConfigDialog}>Config</Button>
+		<Button size="xs" color="primary" onclick={openConfigDialog}>Config</Button>
 	</Divider>
 
 	{#each SPELL_LEVELS as level, idx (level)}
 		{#if $c.spells[level].perDay > 0}
 			<Divider>
 				{$t(`spell.level.${level}`)}
-				<Button size="xs" color="secondary" on:click={() => addSpell(level)}>Add</Button>
+				<Button size="xs" color="secondary" onclick={() => addSpell(level)}>Add</Button>
 			</Divider>
 
 			<div class="mb-2 flex flex-row justify-center gap-2">
@@ -122,7 +122,7 @@
 
 	<Divider>
 		Spell-Like Abilities
-		<Button size="xs" color="secondary" on:click={() => addSLA()}>Add</Button>
+		<Button size="xs" color="secondary" onclick={() => addSLA()}>Add</Button>
 	</Divider>
 
 	<SortableList
