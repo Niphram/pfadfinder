@@ -1,22 +1,26 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import { withSign } from '$lib/utils';
-
-	import CaptionedButton from '$lib/components/captioned-button.svelte';
-	import { macroNotify } from '$lib/utils/notes';
-	import { openDialog } from '../dialog.svelte';
-	import SaveDialog from '../dialogs/save-dialog.svelte';
 	import { type SaveKey } from '$lib/data';
 	import { getChar } from '$lib/data/context';
+	import { t } from '$lib/i18n';
+	import { withSign } from '$lib/utils';
+	import { macroNotify } from '$lib/utils/notes';
+
+	import CaptionedButton from '../captioned-button.svelte';
+	import { openDialog } from '../dialog.svelte';
+	import SaveDialog from '../dialogs/save-dialog.svelte';
+
+	interface Props {
+		key: SaveKey;
+	}
+
+	let { key }: Props = $props();
 
 	const { c, p } = getChar();
-
-	export let key: SaveKey;
 </script>
 
 <CaptionedButton
-	on:click={() => macroNotify($t(`saves.${key}.full`), $c[key].notes, $c)}
-	on:contextmenu={() => openDialog(SaveDialog, { key })}
+	onclick={() => macroNotify($t(`saves.${key}.full`), $c[key].notes, $c)}
+	oncontextmenu={() => openDialog(SaveDialog, { key })}
 	underline={!!$c[key].notes}
 	label={withSign($p[key].mod)}
 	caption={$t(`saves.${key}.short`)}

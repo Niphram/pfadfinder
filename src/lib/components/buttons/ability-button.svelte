@@ -2,16 +2,21 @@
 	import { type AbilityKey } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
-	import { withSign } from '$lib/utils';
+	import { preventDefault, withSign } from '$lib/utils';
 	import { macroNotify } from '$lib/utils/notes';
+
 	import { openDialog } from '../dialog.svelte';
 	import AbilityDialog from '../dialogs/ability-dialog.svelte';
 
+	interface Props {
+		key: AbilityKey;
+	}
+
+	let { key }: Props = $props();
+
 	const { c, p } = getChar();
 
-	export let key: AbilityKey;
-
-	$: temp = $p[key].temp;
+	let temp = $derived($p[key].temp);
 
 	function notify() {
 		const notifyLines = [];
@@ -29,8 +34,8 @@
 </script>
 
 <button
-	on:click={() => notify()}
-	on:contextmenu|preventDefault={() => openDialog(AbilityDialog, { key })}
+	onclick={() => notify()}
+	oncontextmenu={preventDefault(() => openDialog(AbilityDialog, { key }))}
 	class="btn h-min p-0"
 >
 	<div class="divide-base-100 flex w-full flex-col divide-y-2 text-center">
@@ -51,5 +56,3 @@
 		</div>
 	</div>
 </button>
-
-<style></style>

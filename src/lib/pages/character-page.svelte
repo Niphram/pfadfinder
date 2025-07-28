@@ -25,7 +25,7 @@
 	<CaptionedButton
 		label={$c.race.name}
 		caption="Race"
-		on:contextmenu={() => openDialog(RaceDialog, {})}
+		oncontextmenu={() => openDialog(RaceDialog, {})}
 	/>
 
 	<div class="divider">Classes</div>
@@ -35,9 +35,9 @@
 			<CaptionedButton
 				label={name}
 				caption="Level {level}"
-				on:contextmenu={() => openDialog(ClassDialog, { classIndex })}
+				oncontextmenu={() => openDialog(ClassDialog, { classIndex })}
 			/>
 		{/each}
 	</div>
-	<button on:click={addClass} class="btn btn-secondary self-center">Add Class</button>
+	<button onclick={addClass} class="btn btn-secondary self-center">Add Class</button>
 </div>

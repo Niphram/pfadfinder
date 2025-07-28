@@ -26,7 +26,7 @@
 
 	<div class="divider">Armor Class</div>
 
-	<AcButton on:contextmenu={() => openDialog(AcDialog, {})} />
+	<AcButton oncontextmenu={() => openDialog(AcDialog, {})} />
 
 	<div class="divider">Saves</div>
 
