@@ -4,14 +4,16 @@
 
 	const { c } = getChar();
 
-	export let text: string;
-	export let element = 'p';
+	interface Props {
+		text: string;
+		element?: string;
+		class?: string | undefined;
+	}
 
-	let className: string | undefined = undefined;
-	export { className as class };
+	let { text, element = 'p', class: className = undefined }: Props = $props();
 
-	$: parsed = parseTextWithMacros(text, $c);
-	$: lines = parsed.split('\n').filter((line) => line.trim().length > 0);
+	let parsed = $derived(parseTextWithMacros(text, $c));
+	let lines = $derived(parsed.split('\n').filter((line) => line.trim().length > 0));
 </script>
 
 {#each lines as line, i (i)}
