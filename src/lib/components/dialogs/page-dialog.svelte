@@ -9,7 +9,7 @@
 
 	const { c } = getChar();
 
-	$: navButtons = [
+	let navButtons = $derived([
 		{ key: 'abilities', active: true },
 		{ key: 'combat', active: true },
 		{ key: 'skills', active: true },
@@ -18,7 +18,7 @@
 		{ key: 'equipment', active: true },
 		{ key: 'character', active: true },
 		{ key: 'persona', active: $c.settings.usePersonaSystem },
-	] as const;
+	] as const);
 
 	$title = '';
 </script>
@@ -28,7 +28,7 @@
 		{#if active}
 			<button
 				class="btn w-full"
-				on:click={() => {
+				onclick={() => {
 					// Quick fix after switching to hash-routing.
 					const page = document.getElementById(key);
 					page?.parentElement?.scrollTo({ behavior: 'smooth', left: page?.offsetLeft, top: 0 });
@@ -40,11 +40,11 @@
 
 	<div class="grow"></div>
 
-	<button class="btn btn-accent w-full" on:click={() => openDialog(RestDialog, {})}>Rest</button>
+	<button class="btn btn-accent w-full" onclick={() => openDialog(RestDialog, {})}>Rest</button>
 
 	<div class="divider">Options</div>
 
-	<button class="btn btn-outline btn-accent w-full" on:click={() => openDialog(SettingsDialog, {})}
+	<button class="btn btn-outline btn-accent w-full" onclick={() => openDialog(SettingsDialog, {})}
 		>Settings</button
 	>
 </div>

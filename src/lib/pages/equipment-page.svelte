@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import { AcItem, Item } from '$lib/data';
 	import { t } from '$lib/i18n';
@@ -47,7 +49,7 @@
 		<div class="flex flex-row items-center gap-2">
 			Gear
 			<div class="badge badge-neutral badge-outline">{$c.equipment.totalWeight} lb.</div>
-			<button class="btn btn-secondary btn-xs" on:click={addItem}>Add</button>
+			<button class="btn btn-secondary btn-xs" onclick={addItem}>Add</button>
 		</div>
 	</div>
 
@@ -56,7 +58,7 @@
 	<div class="divider">
 		<div class="flex flex-row gap-2">
 			AC Items
-			<button class="btn btn-secondary btn-xs" on:click={addAcItem}>Add</button>
+			<button class="btn btn-secondary btn-xs" onclick={addAcItem}>Add</button>
 		</div>
 	</div>
 
@@ -72,22 +74,22 @@
 		}}
 		keyProp="id"
 		class="flex flex-col gap-2"
-		let:item
-		let:index
 	>
-		<div class="flex w-full flex-auto flex-row">
-			<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
-				<DragHandle />
+		{#snippet children({ item, index })}
+			<div class="flex w-full flex-auto flex-row">
+				<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
+					<DragHandle />
+				</div>
+				<button
+					class="btn btn-sm md:btn-md min-w-0 flex-auto truncate"
+					onclick={() => macroNotify(item.name, item.notes, $c)}
+					oncontextmenu={preventDefault(() => openDialog(AcItemDialog, { index }))}
+				>
+					<span class="truncate" class:underline={item.equipped}>
+						{item.name} ({$t(`equipment.armorType.${item.type}`)})
+					</span>
+				</button>
 			</div>
-			<button
-				class="btn btn-sm md:btn-md min-w-0 flex-auto truncate"
-				on:click={() => macroNotify(item.name, item.notes, $c)}
-				on:contextmenu|preventDefault={() => openDialog(AcItemDialog, { index })}
-			>
-				<span class="truncate" class:underline={item.equipped}>
-					{item.name} ({$t(`equipment.armorType.${item.type}`)})
-				</span>
-			</button>
-		</div>
+		{/snippet}
 	</SortableList>
 </div>

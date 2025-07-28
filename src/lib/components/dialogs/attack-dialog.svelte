@@ -11,9 +11,13 @@
 	import RichInput from '../input/rich-input.svelte';
 	import Select from '../input/select.svelte';
 
-	const { c } = getChar();
+	interface Props {
+		index: number;
+	}
 
-	export let index: number;
+	let { index }: Props = $props();
+
+	const { c } = getChar();
 
 	const attackAbilities = ['none', ...ABILITY_KEYS];
 
@@ -48,18 +52,20 @@
 					name="attackBaseMod"
 					label="Base"
 					options={ATTACK_TYPES}
-					let:option
 				>
-					<option value={option}>{option}</option>
+					{#snippet children({ option })}
+						<option value={option}>{option}</option>
+					{/snippet}
 				</Select>
 				<Select
 					bind:value={$c.combat.attacks[index].attack.abilityModifier}
 					name="attackAbilityMod"
 					label="Ability"
 					options={attackAbilities}
-					let:option
 				>
-					<option value={option}>{option}</option>
+					{#snippet children({ option })}
+						<option value={option}>{option}</option>
+					{/snippet}
 				</Select>
 				<MacroInteger
 					optional
@@ -113,7 +119,7 @@
 		/>
 	{/if}
 
-	<button on:click={deleteAttack} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button onclick={deleteAttack} class="btn btn-error mt-4 w-max self-center uppercase">
 		Delete
 	</button>
 </div>

@@ -10,10 +10,10 @@
 
 	let { c } = getChar();
 
-	$: conHp = $c.hp.conHp.eval($c);
-	$: currentAndTempHp = $c.hp.current.eval($c) + $c.hp.temp;
+	let conHp = $derived($c.hp.conHp.eval($c));
+	let currentAndTempHp = $derived($c.hp.current.eval($c) + $c.hp.temp);
 
-	let modifyAmount = 1;
+	let modifyAmount = $state(1);
 
 	$title = 'Hitpoints';
 </script>

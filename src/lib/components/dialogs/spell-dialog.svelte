@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import { SPELL_ATTACK_TYPE, SpellAttackDamage, type SpellLevel } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
@@ -10,10 +12,14 @@
 	import Select from '../input/select.svelte';
 	import Toggle from '../input/toggle.svelte';
 
-	const { c } = getChar();
+	interface Props {
+		spellLevel: SpellLevel;
+		spellIdx: number;
+	}
 
-	export let spellLevel: SpellLevel;
-	export let spellIdx: number;
+	let { spellLevel, spellIdx }: Props = $props();
+
+	const { c } = getChar();
 
 	function deleteSpell() {
 		$c.spells[spellLevel].spells.splice(spellIdx, 1);
@@ -176,9 +182,10 @@
 					name="spellAttackType"
 					label="Type"
 					options={SPELL_ATTACK_TYPE}
-					let:option
 				>
-					<option value={option}>{$t(`spell.attackType.${option}`)}</option>
+					{#snippet children({ option })}
+						<option value={option}>{$t(`spell.attackType.${option}`)}</option>
+					{/snippet}
 				</Select>
 				<Integer
 					label="Attack Mod"
@@ -204,7 +211,7 @@
 		<div class="divider mb-0">
 			<div class="flex flex-row gap-2">
 				Damage
-				<button class="btn btn-secondary btn-xs" on:click|preventDefault={addDamageToSpell}
+				<button class="btn btn-secondary btn-xs" onclick={preventDefault(addDamageToSpell)}
 					>Add</button
 				>
 			</div>
@@ -226,9 +233,9 @@
 				/>
 				<button
 					class="btn btn-warning"
-					on:click|preventDefault={() => {
+					onclick={preventDefault(() => {
 						removeDamageFromSpell(damageIdx);
-					}}>Delete</button
+					})}>Delete</button
 				>
 			</div>
 		{/each}
@@ -240,7 +247,7 @@
 		/>
 	{/if}
 
-	<button on:click={deleteSpell} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button onclick={deleteSpell} class="btn btn-error mt-4 w-max self-center uppercase">
 		Delete
 	</button>
 </div>

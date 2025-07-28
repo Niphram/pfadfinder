@@ -8,9 +8,13 @@
 	import MacroTextArea from '../input/macro-text-area.svelte';
 	import Select from '../input/select.svelte';
 
-	const { c } = getChar();
+	interface Props {
+		index: number;
+	}
 
-	export let index: number;
+	let { index }: Props = $props();
+
+	const { c } = getChar();
 
 	function deleteFeat() {
 		$c.feats.splice(index, 1);
@@ -32,14 +36,10 @@
 			bind:value={$c.feats[index].prerequisites}
 		/>
 
-		<Select
-			label="Type"
-			name="featType"
-			bind:value={$c.feats[index].type}
-			options={FEAT_TYPES}
-			let:option
-		>
-			<option value={option}>{$t(`feats.type.${option}`)}</option>
+		<Select label="Type" name="featType" bind:value={$c.feats[index].type} options={FEAT_TYPES}>
+			{#snippet children({ option })}
+				<option value={option}>{$t(`feats.type.${option}`)}</option>
+			{/snippet}
 		</Select>
 
 		<MacroTextArea
@@ -67,7 +67,7 @@
 		/>
 	{/if}
 
-	<button on:click={deleteFeat} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button onclick={deleteFeat} class="btn btn-error mt-4 w-max self-center uppercase">
 		Delete
 	</button>
 </div>

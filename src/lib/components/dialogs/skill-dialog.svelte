@@ -11,10 +11,14 @@
 	import Select from '../input/select.svelte';
 	import Toggle from '../input/toggle.svelte';
 
-	const { c } = getChar();
+	interface Props {
+		key?: SkillKey;
+		index?: number;
+	}
 
-	export let key: SkillKey = 'acrobatics';
-	export let index = 0;
+	let { key = 'acrobatics', index = 0 }: Props = $props();
+
+	const { c } = getChar();
 
 	let variant = $c.skills[key].skills[index].name ? ` (${$c.skills[key].skills[index].name})` : '';
 
@@ -34,10 +38,11 @@
 		label="Base Ability"
 		options={ABILITY_KEYS}
 		bind:value={$c.skills[key].skills[index].ability}
-		let:option={key}
 		size="small"
 	>
-		<option value={key}>{$t(`abilities.${key}.full`)}</option>
+		{#snippet children({ option: key })}
+			<option value={key}>{$t(`abilities.${key}.full`)}</option>
+		{/snippet}
 	</Select>
 </div>
 

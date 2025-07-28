@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { title } from '../dialog.svelte';
 
-	export let message: string;
+	interface Props {
+		message: string;
+	}
+
+	let { message }: Props = $props();
 
 	$title = 'Error';
 </script>

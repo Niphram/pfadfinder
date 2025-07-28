@@ -2,6 +2,7 @@
 	import { Skill, type SkillKey } from '$lib/data/character/skills';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
+	import { preventDefault } from '$lib/utils';
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
 
@@ -30,9 +31,9 @@
 			<div class="flex w-full flex-row items-center gap-2">
 				<Input name="variant-{idx}" bind:value={skill.name} />
 				<button
-					on:click|preventDefault={() => {
+					onclick={preventDefault(() => {
 						removeSkill(key, idx);
-					}}
+					})}
 					class="btn btn-warning join-item">Delete</button
 				>
 			</div>
@@ -40,7 +41,7 @@
 		<div class="flex flex-row justify-center">
 			<button
 				class="btn btn-circle btn-primary btn-sm"
-				on:click|preventDefault={() => addSkill(key)}>+</button
+				onclick={preventDefault(() => addSkill(key))}>+</button
 			>
 		</div>
 	{/each}

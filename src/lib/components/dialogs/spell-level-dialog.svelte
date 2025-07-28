@@ -23,11 +23,12 @@
 		options={ABILITY_KEYS}
 		noneOption="-"
 		bind:value={$c.spells.dcAbility}
-		let:option={key}
 	>
-		<option value={key}>
-			{$t(`abilities.${key}.full`)}
-		</option>
+		{#snippet children({ option: key })}
+			<option value={key}>
+				{$t(`abilities.${key}.full`)}
+			</option>
+		{/snippet}
 	</Select>
 
 	<MacroInteger

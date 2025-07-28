@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Self from './nested-equipment-list.svelte';
+
 	import Collapse from './atoms/collapse.svelte';
 	import { openDialog } from './components/dialog.svelte';
 	import ItemDialog from './components/dialogs/item-dialog.svelte';
@@ -9,17 +11,23 @@
 	import { getChar } from './data/context';
 	import { t } from './i18n';
 	import { macroNotify } from './utils/notes';
+	import { preventDefault, stopPropagation } from './utils';
 
 	const { c } = getChar();
 
-	export let items: Item[];
+	interface Props {
+		items: Item[];
+		class?: string;
+		disabled?: boolean;
+		parentId?: string;
+	}
 
-	let className: string = '';
-	export { className as class };
-
-	export let disabled = false;
-
-	export let parentId = 'items';
+	let {
+		items = $bindable(),
+		class: className = '',
+		disabled = false,
+		parentId = 'items',
+	}: Props = $props();
 
 	// If the moved item is a container and the target is another container, block move
 	function onMove(item: Item, target: Item[]) {
@@ -43,60 +51,66 @@
 		keyProp="id"
 		{disabled}
 		class="flex flex-col gap-2 {className}"
-		let:item
-		let:index
 	>
-		<div class="flex w-full flex-auto flex-row">
-			<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
-				<DragHandle />
-			</div>
+		{#snippet children(props)}
+			<div class="flex w-full flex-auto flex-row">
+				<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
+					<DragHandle />
+				</div>
 
-			{#if !item.isContainer}
-				<button
-					class="btn btn-sm md:btn-md min-w-0 flex-auto truncate"
-					on:click|stopPropagation={() => macroNotify(item.name, item.description, $c)}
-					on:contextmenu|preventDefault|stopPropagation={() =>
-						openDialog(ItemDialog, { list: items, index })}
-				>
-					<span class="truncate">
-						{item.quantity}x {item.name}
-					</span>
-				</button>
-				{#if item.chargeType !== 'none'}
+				{#if !props.item.isContainer}
 					<button
-						class="btn btn-accent btn-sm md:btn-md ml-2 w-28 px-2"
-						on:click|stopPropagation={() => items[index].remaining > 0 && items[index].remaining--}
+						class="btn btn-sm md:btn-md min-w-0 flex-auto truncate"
+						onclick={stopPropagation(() =>
+							macroNotify(props.item.name, props.item.description, $c),
+						)}
+						oncontextmenu={stopPropagation(
+							preventDefault(() => openDialog(ItemDialog, { list: items, index: props.index })),
+						)}
 					>
-						{item.remaining}{#if item.chargeType === 'perDay'}
-							/{item.perDay}
-						{/if} charges
+						<span class="truncate">
+							{props.item.quantity}x {props.item.name}
+						</span>
 					</button>
-				{/if}
-			{:else}
-				<Collapse
-					icon="arrow"
-					bind:open={items[index].containerOpen}
-					on:click={() => macroNotify(item.name, item.description, $c)}
-					on:contextmenu={() => openDialog(ItemDialog, { list: items, index })}
-					let:open
-				>
-					<svelte:fragment slot="title">
-						<span class="text-sm font-semibold" class:underline={item.equipped}>
-							{item.name}
-						</span>
-						<span class="badge badge-md">
-							{$t('equipment.items', item.children.length)}
-						</span>
-					</svelte:fragment>
+					{#if props.item.chargeType !== 'none'}
+						<button
+							class="btn btn-accent btn-sm md:btn-md ml-2 w-28 px-2"
+							onclick={stopPropagation(
+								() => items[props.index].remaining > 0 && items[props.index].remaining--,
+							)}
+						>
+							{props.item.remaining}{#if props.item.chargeType === 'perDay'}
+								/{props.item.perDay}
+							{/if} charges
+						</button>
+					{/if}
+				{:else}
+					<Collapse
+						icon="arrow"
+						open={items[props.index].containerOpen}
+						ontoggle={(open) => (items[props.index].containerOpen = open)}
+						oncontextmenu={() => openDialog(ItemDialog, { list: items, index: props.index })}
+					>
+						{#snippet title()}
+							<span class="text-sm font-semibold" class:underline={props.item.equipped}>
+								{props.item.name}
+							</span>
+							<span class="badge badge-md">
+								{$t('equipment.items', props.item.children.length)}
+							</span>
+						{/snippet}
 
-					<svelte:self
-						bind:items={items[index].children}
-						parentId={item.id}
-						disabled={!open}
-						class="bg-base-100 rounded-lg p-2 pl-0"
-					/>
-				</Collapse>
-			{/if}
-		</div>
+						{#snippet children({ open })}
+							<Self
+								items={props.item.children}
+								parentId={props.item.id}
+								disabled={!open}
+								class="bg-base-100 rounded-lg p-2 pl-0"
+							/>
+						{/snippet}
+					</Collapse>
+				{/if}
+			</div>
+		{/snippet}
 	</SortableList>
 {/key}

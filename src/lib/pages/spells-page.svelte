@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { preventDefault, stopPropagation } from 'svelte/legacy';
+
 	import Button from '$lib/atoms/button.svelte';
 	import Collapse from '$lib/atoms/collapse.svelte';
 	import Divider from '$lib/atoms/divider.svelte';
@@ -72,50 +74,58 @@
 				}}
 				bind:items={$c.spells[level].spells}
 				keyProp="id"
-				let:item={spell}
-				let:index={spellIdx}
 			>
-				<div slot="fallback">No Spells</div>
+				{#snippet fallback()}
+					<div>No Spells</div>
+				{/snippet}
 
-				<div class="flex w-full flex-row">
-					<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
-						<DragHandle />
-					</div>
-
-					<Collapse
-						icon="arrow"
-						on:contextmenu={() => openDialog(SpellDialog, { spellIdx, spellLevel: level })}
-					>
-						<div slot="title" class="flex flex-row">
-							<span class="grow text-sm font-semibold">{spell.name}</span>
-							{#if spell.prepared > 0}
-								<button
-									class="btn btn-accent btn-xs w-16"
-									on:click|preventDefault|stopPropagation={() => castSpell(level, spellIdx)}
-								>
-									{spell.prepared - spell.used} / {spell.prepared}
-								</button>
-							{/if}
-						</div>
-
+				{#snippet children({ item: spell, index: spellIdx })}
+					<div class="flex w-full flex-row">
 						<div
-							class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
+							class="drag-handle flex w-6 items-center justify-center"
+							role="button"
+							tabindex="0"
 						>
-							{#each spell.details(idx, $c) as [label, value], i (i)}
-								<div>{label}</div>
-								<div>{value}</div>
-							{/each}
+							<DragHandle />
 						</div>
 
-						{#if spell.description}
-							<div class="divider">Description</div>
-							<MultilineMacro
-								text={spell.description}
-								class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
-							/>
-						{/if}
-					</Collapse>
-				</div>
+						<Collapse
+							icon="arrow"
+							oncontextmenu={() => openDialog(SpellDialog, { spellIdx, spellLevel: level })}
+						>
+							{#snippet title()}
+								<div class="flex flex-row">
+									<span class="grow text-sm font-semibold">{spell.name}</span>
+									{#if spell.prepared > 0}
+										<button
+											class="btn btn-accent btn-xs w-16"
+											onclick={stopPropagation(preventDefault(() => castSpell(level, spellIdx)))}
+										>
+											{spell.prepared - spell.used} / {spell.prepared}
+										</button>
+									{/if}
+								</div>
+							{/snippet}
+
+							<div
+								class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
+							>
+								{#each spell.details(idx, $c) as [label, value], i (i)}
+									<div>{label}</div>
+									<div>{value}</div>
+								{/each}
+							</div>
+
+							{#if spell.description}
+								<div class="divider">Description</div>
+								<MultilineMacro
+									text={spell.description}
+									class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
+								/>
+							{/if}
+						</Collapse>
+					</div>
+				{/snippet}
 			</SortableList>
 		{/if}
 	{/each}
@@ -135,48 +145,52 @@
 		}}
 		bind:items={$c.spells.spellLikeAbilities}
 		keyProp="id"
-		let:item={sla}
-		let:index={slaIndex}
 	>
-		<div slot="fallback">No Spell-Like Abilities</div>
+		{#snippet fallback()}
+			<div>No Spell-Like Abilities</div>
+		{/snippet}
 
-		<div class="flex w-full flex-row">
-			<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
-				<DragHandle />
-			</div>
-
-			<Collapse
-				icon="arrow"
-				on:contextmenu={() => openDialog(SpellLikeAbilityDialog, { slaIndex })}
-			>
-				<div slot="title" class="flex flex-row items-center">
-					<div class="grow text-sm font-semibold">{sla.name}</div>
-					<button
-						class="btn btn-accent btn-xs w-16"
-						on:click|stopPropagation={() => castSla(slaIndex)}
-					>
-						{sla.type === 'perDay' ?
-							`${sla.remaining} of ${sla.perDay}`
-						:	$t(`spell.slaType.${sla.type}`)}
-					</button>
+		{#snippet children({ item: sla, index: slaIndex })}
+			<div class="flex w-full flex-row">
+				<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
+					<DragHandle />
 				</div>
 
-				<div
-					class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
+				<Collapse
+					icon="arrow"
+					oncontextmenu={() => openDialog(SpellLikeAbilityDialog, { slaIndex })}
 				>
-					{#each sla.details as [label, value], i (i)}
-						<div>{label}</div>
-						<div>{value}</div>
-					{/each}
-				</div>
-				{#if sla.description}
-					<div class="divider">Description</div>
-					<MultilineMacro
-						text={sla.description}
-						class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
-					/>
-				{/if}
-			</Collapse>
-		</div>
+					{#snippet title()}
+						<div class="flex flex-row items-center">
+							<div class="grow text-sm font-semibold">{sla.name}</div>
+							<button
+								class="btn btn-accent btn-xs w-16"
+								onclick={stopPropagation(() => castSla(slaIndex))}
+							>
+								{sla.type === 'perDay' ?
+									`${sla.remaining} of ${sla.perDay}`
+								:	$t(`spell.slaType.${sla.type}`)}
+							</button>
+						</div>
+					{/snippet}
+
+					<div
+						class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
+					>
+						{#each sla.details as [label, value], i (i)}
+							<div>{label}</div>
+							<div>{value}</div>
+						{/each}
+					</div>
+					{#if sla.description}
+						<div class="divider">Description</div>
+						<MultilineMacro
+							text={sla.description}
+							class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
+						/>
+					{/if}
+				</Collapse>
+			</div>
+		{/snippet}
 	</SortableList>
 </div>

@@ -1,12 +1,13 @@
-<script lang="ts" context="module">
-	// Needed to satisfy eslint
-	type T = unknown;
-</script>
-
 <script lang="ts" generics="T">
-	export let steps: T[];
+	import type { Snippet } from 'svelte';
 
-	export let currentStep = 0;
+	interface Props {
+		steps: T[];
+		currentStep?: number;
+		children?: Snippet<[{ props: T; previous: () => void; next: () => void }]>;
+	}
+
+	let { steps, currentStep = $bindable(0), children }: Props = $props();
 
 	function previous() {
 		currentStep > 0 && currentStep--;
@@ -17,4 +18,4 @@
 	}
 </script>
 
-<slot props={steps[currentStep]} {previous} {next} />
+{@render children?.({ props: steps[currentStep], previous, next })}

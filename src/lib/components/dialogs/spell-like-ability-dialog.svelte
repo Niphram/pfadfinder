@@ -2,6 +2,7 @@
 	import { SPELL_ATTACK_TYPE, SPELL_LIKE_COUNT_TYPES, SpellAttackDamage } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
+	import { preventDefault } from '$lib/utils';
 
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
@@ -12,7 +13,11 @@
 
 	const { c } = getChar();
 
-	export let slaIndex: number;
+	interface Props {
+		slaIndex: number;
+	}
+
+	let { slaIndex }: Props = $props();
 
 	function deleteSLA() {
 		$c.spells.spellLikeAbilities.splice(slaIndex, 1);
@@ -49,11 +54,12 @@
 					options={SPELL_LIKE_COUNT_TYPES}
 					bind:value={$c.spells.spellLikeAbilities[slaIndex].type}
 					size="small"
-					let:option={slaType}
 				>
-					<option value={slaType}>
-						{$t(`spell.slaType.${slaType}`)}
-					</option>
+					{#snippet children({ option: slaType })}
+						<option value={slaType}>
+							{$t(`spell.slaType.${slaType}`)}
+						</option>
+					{/snippet}
 				</Select>
 			</div>
 		</div>
@@ -181,9 +187,10 @@
 					name="spellAttackType"
 					label="Type"
 					options={SPELL_ATTACK_TYPE}
-					let:option
 				>
-					<option value={option}>{$t(`spell.attackType.${option}`)}</option>
+					{#snippet children({ option })}
+						<option value={option}>{$t(`spell.attackType.${option}`)}</option>
+					{/snippet}
 				</Select>
 				<Integer
 					label="Attack Mod"
@@ -209,7 +216,7 @@
 		<div class="divider mb-0">
 			<div class="flex flex-row gap-2">
 				Damage
-				<button class="btn btn-secondary btn-xs" on:click|preventDefault={addDamageToSLA}
+				<button class="btn btn-secondary btn-xs" onclick={preventDefault(addDamageToSLA)}
 					>Add</button
 				>
 			</div>
@@ -221,9 +228,9 @@
 				<Input name="damageTyoe" placeholder="Fire" bind:value={damage.type} />
 				<button
 					class="btn btn-warning"
-					on:click|preventDefault={() => {
+					onclick={preventDefault(() => {
 						removeDamageFromSLA(damageIdx);
-					}}>Delete</button
+					})}>Delete</button
 				>
 			</div>
 		{/each}
@@ -235,7 +242,7 @@
 		/>
 	{/if}
 
-	<button on:click={deleteSLA} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button onclick={deleteSLA} class="btn btn-error mt-4 w-max self-center uppercase">
 		Delete
 	</button>
 </div>

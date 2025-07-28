@@ -11,9 +11,13 @@
 	import Select from '../input/select.svelte';
 	import Toggle from '../input/toggle.svelte';
 
-	const { c } = getChar();
+	interface Props {
+		index: number;
+	}
 
-	export let index: number;
+	let { index }: Props = $props();
+
+	const { c } = getChar();
 
 	const bonusKeys = [
 		'acBonus',
@@ -62,9 +66,10 @@
 			name="itemType"
 			label="Type"
 			options={ARMOR_TYPES}
-			let:option
 		>
-			<option value={option}>{$t(`equipment.armorType.${option}`)}</option>
+			{#snippet children({ option })}
+				<option value={option}>{$t(`equipment.armorType.${option}`)}</option>
+			{/snippet}
 		</Select>
 
 		<div class="grid grid-cols-3 gap-2">
@@ -94,7 +99,7 @@
 		/>
 	{/if}
 
-	<button on:click={deleteAcItem} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button onclick={deleteAcItem} class="btn btn-error mt-4 w-max self-center uppercase">
 		Delete
 	</button>
 </div>

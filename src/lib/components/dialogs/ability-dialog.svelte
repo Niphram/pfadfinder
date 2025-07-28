@@ -8,9 +8,13 @@
 	import MacroInteger from '../input/macro-integer.svelte';
 	import MacroTextArea from '../input/macro-text-area.svelte';
 
-	const { c } = getChar();
+	interface Props {
+		key?: AbilityKey;
+	}
 
-	export let key: AbilityKey = 'str';
+	let { key = 'str' }: Props = $props();
+
+	const { c } = getChar();
 
 	$title = $t(`abilities.${key}.full`);
 </script>

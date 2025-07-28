@@ -1,9 +1,12 @@
 <script lang="ts">
-	import { Character } from '$lib/data';
 	import { DeserializeInto, Serialize } from 'cerialize';
+
+	import { Character } from '$lib/data';
+	import { getChar } from '$lib/data/context';
+	import { preventDefault } from '$lib/utils';
+
 	import { title } from '../dialog.svelte';
 	import Steps from '../steps.svelte';
-	import { getChar } from '$lib/data/context';
 
 	const { c, overwriteSave } = getChar();
 
@@ -26,8 +29,8 @@
 		window.URL.revokeObjectURL(url);
 	}
 
-	let files: FileList | null;
-	$: validInputFile = files?.length === 1 && files[0].type === 'application/json';
+	let files: FileList | null | undefined = $state();
+	let validInputFile = $derived(files?.length === 1 && files[0].type === 'application/json');
 
 	async function importFromFIle() {
 		if (files?.length !== 1) {
@@ -58,7 +61,7 @@
 
 	<p>Download the character as a file</p>
 
-	<button class="btn btn-info w-full" on:click|preventDefault={download}> Export </button>
+	<button class="btn btn-info w-full" onclick={preventDefault(download)}> Export </button>
 
 	<div class="divider">Import</div>
 
@@ -82,22 +85,22 @@
 				onClick: importFromFIle,
 			},
 		]}
-		let:props={{ label, onClick, style }}
-		let:next
 	>
-		<button
-			class="btn w-full"
-			class:btn-warning={style.warning}
-			class:btn-error={style.error}
-			class:btn-disabled={!validInputFile}
-			disabled={!validInputFile}
-			on:click={onClick ??
-				((ev) => {
-					ev.preventDefault();
-					next();
-				})}
-		>
-			{label}
-		</button>
+		{#snippet children({ props: { label, onClick, style }, next })}
+			<button
+				class="btn w-full"
+				class:btn-warning={style.warning}
+				class:btn-error={style.error}
+				class:btn-disabled={!validInputFile}
+				disabled={!validInputFile}
+				onclick={onClick ??
+					((ev) => {
+						ev.preventDefault();
+						next();
+					})}
+			>
+				{label}
+			</button>
+		{/snippet}
 	</Steps>
 </div>

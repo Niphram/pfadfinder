@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ABILITY_KEYS, Item, SPELL_LEVELS } from '$lib/data';
 	import { getChar } from '$lib/data/context';
+
 	import { title } from '../dialog.svelte';
 	import Toggle from '../input/toggle.svelte';
 
@@ -94,5 +95,5 @@
 
 	<div class="divider"></div>
 
-	<button class="btn" on:click={() => rest8Hours()}>8 hours</button>
+	<button class="btn" onclick={() => rest8Hours()}>8 hours</button>
 </div>

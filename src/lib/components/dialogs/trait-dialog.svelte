@@ -6,9 +6,13 @@
 	import MacroInteger from '../input/macro-integer.svelte';
 	import MacroTextArea from '../input/macro-text-area.svelte';
 
-	const { c } = getChar();
+	interface Props {
+		index: number;
+	}
 
-	export let index: number;
+	let { index }: Props = $props();
+
+	const { c } = getChar();
 
 	function deleteTrait() {
 		$c.traits.splice(index, 1);
@@ -43,7 +47,7 @@
 		/>
 	{/if}
 
-	<button on:click={deleteTrait} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button onclick={deleteTrait} class="btn btn-error mt-4 w-max self-center uppercase">
 		Delete
 	</button>
 </div>

@@ -7,9 +7,13 @@
 	import Integer from '../input/integer.svelte';
 	import MacroTextArea from '../input/macro-text-area.svelte';
 
-	const { c } = getChar();
+	interface Props {
+		key?: FacetKey;
+	}
 
-	export let key: FacetKey = 'charm';
+	let { key = 'charm' }: Props = $props();
+
+	const { c } = getChar();
 
 	$title = $t(`persona.${key}`);
 </script>

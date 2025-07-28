@@ -9,11 +9,15 @@
 	import Toggle from '../input/toggle.svelte';
 	import { getChar } from '$lib/data/context';
 
+	interface Props {
+		classIndex: number;
+	}
+
+	let { classIndex }: Props = $props();
+
 	const { c } = getChar();
 
-	export let classIndex: number;
-
-	let deleteConfirm = false;
+	let deleteConfirm = $state(false);
 
 	onMount(() => {
 		deleteConfirm = false;
@@ -86,7 +90,7 @@
 	{/if}
 
 	<button
-		on:click={deleteClass}
+		onclick={deleteClass}
 		class="btn btn-error mt-4 w-max self-center uppercase"
 		class:btn-outline={!deleteConfirm}>{deleteConfirm ? 'Are you sure?' : 'Delete'}</button
 	>

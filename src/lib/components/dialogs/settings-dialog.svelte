@@ -2,6 +2,7 @@
 	import { Character } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { persisted } from '$lib/data/storage';
+	import { preventDefault } from '$lib/utils';
 	import { openDialog, title } from '../dialog.svelte';
 	import Toggle from '../input/toggle.svelte';
 	import Steps from '../steps.svelte';
@@ -14,7 +15,7 @@
 	$title = 'Settings';
 </script>
 
-<Toggle name="darkMode" label="Dark mode" checked={$isDarkMode} on:change={toggleDarkMode} />
+<Toggle name="darkMode" label="Dark mode" checked={$isDarkMode} onchange={toggleDarkMode} />
 
 <Toggle name="magicPage" label="Show Magic Page" bind:checked={$c.settings.showMagicPage} />
 
@@ -44,13 +45,13 @@
 	{#if $c.settings.experimentalFeatures}
 		<button
 			class="btn btn-secondary w-full"
-			on:click|preventDefault={() => openDialog(MacroDebugDialog, {})}>Macro debugger</button
+			onclick={preventDefault(() => openDialog(MacroDebugDialog, {}))}>Macro debugger</button
 		>
 	{/if}
 
 	<button
 		class="btn btn-secondary w-full"
-		on:click|preventDefault={() => openDialog(ImportExportDialog, {})}>Import/Export</button
+		onclick={preventDefault(() => openDialog(ImportExportDialog, {}))}>Import/Export</button
 	>
 
 	<Steps
@@ -65,21 +66,21 @@
 				},
 			},
 		]}
-		let:props={{ label, onClick, style }}
-		let:next
 	>
-		<button
-			class="btn w-full"
-			class:btn-warning={style.warning}
-			class:btn-outline={style.outline}
-			class:btn-error={style.error}
-			on:click={onClick ??
-				((ev) => {
-					ev.preventDefault();
-					next();
-				})}
-		>
-			{label}
-		</button>
+		{#snippet children({ props: { label, onClick, style }, next })}
+			<button
+				class="btn w-full"
+				class:btn-warning={style.warning}
+				class:btn-outline={style.outline}
+				class:btn-error={style.error}
+				onclick={onClick ??
+					((ev) => {
+						ev.preventDefault();
+						next();
+					})}
+			>
+				{label}
+			</button>
+		{/snippet}
 	</Steps>
 </div>

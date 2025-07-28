@@ -20,11 +20,12 @@
 	label="Primary Ability"
 	options={ABILITY_KEYS}
 	bind:value={$c.ac.primaryAbility}
-	let:option={key}
 >
-	<option value={key}>
-		{$t(`abilities.${key}.full`)}
-	</option>
+	{#snippet children({ option: key })}
+		<option value={key}>
+			{$t(`abilities.${key}.full`)}
+		</option>
+	{/snippet}
 </Select>
 
 <Select
@@ -33,11 +34,12 @@
 	options={ABILITY_KEYS}
 	noneOption="None"
 	bind:value={$c.ac.secondaryAbility}
-	let:option={key}
 >
-	<option value={key}>
-		{$t(`abilities.${key}.full`)}
-	</option>
+	{#snippet children({ option: key })}
+		<option value={key}>
+			{$t(`abilities.${key}.full`)}
+		</option>
+	{/snippet}
 </Select>
 
 <Divider />

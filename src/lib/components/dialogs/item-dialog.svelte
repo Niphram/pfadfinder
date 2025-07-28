@@ -11,12 +11,14 @@
 	import Select from '../input/select.svelte';
 	import Toggle from '../input/toggle.svelte';
 
+	interface Props {
+		list?: Item[];
+		index: number;
+	}
+
+	let { list = $bindable([]), index }: Props = $props();
+
 	const { c } = getChar();
-
-	export let list: Item[] = [];
-	export let index: number;
-
-	$: list && updateItems();
 
 	function updateItems() {
 		$c = $c;
@@ -28,6 +30,9 @@
 	}
 
 	$title = 'Item';
+	$effect.pre(() => {
+		list && updateItems();
+	});
 </script>
 
 <div class="flex flex-col gap-2">
@@ -53,13 +58,10 @@
 		<div class="divider mb-0">
 			<div class="flex flex-row items-center gap-2">
 				<span>Charges</span>
-				<Select
-					name="itemChargeType"
-					options={CHARGE_TYPES}
-					bind:value={list[index].chargeType}
-					let:option={value}
-				>
-					<option {value}>{$t(`equipment.chargeType.${value}`)}</option>
+				<Select name="itemChargeType" options={CHARGE_TYPES} bind:value={list[index].chargeType}>
+					{#snippet children({ option: value })}
+						<option {value}>{$t(`equipment.chargeType.${value}`)}</option>
+					{/snippet}
 				</Select>
 			</div>
 		</div>
@@ -93,7 +95,7 @@
 		/>
 	{/if}
 
-	<button on:click={deleteItem} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button onclick={deleteItem} class="btn btn-error mt-4 w-max self-center uppercase">
 		Delete
 	</button>
 </div>

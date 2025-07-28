@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	// Needed to satisfy eslint
 	type T = unknown;
 
@@ -6,36 +6,50 @@
 </script>
 
 <script lang="ts" generics="T">
+	import { run } from 'svelte/legacy';
+
 	import Sortable from 'sortablejs';
-	import { onMount } from 'svelte';
+	import { onMount, type Snippet } from 'svelte';
 
 	type Options = Omit<
 		Sortable.SortableOptions,
 		'onUpdate' | 'onAdd' | 'onRemove' | 'onMove' | 'onChoose' | 'disabled'
 	>;
 
-	export let items: T[];
-	export let options: Options | undefined = undefined;
+	interface Props {
+		items: T[];
+		options?: Options | undefined;
+		keyProp: keyof T;
+		disabled?: boolean;
+		class?: string;
+		keyPrefix?: string;
+		element?: string;
+		onMove?: ((item: T, targetArray: T[]) => boolean) | undefined;
+		children?: Snippet<[{ item: T; index: number }]>;
+		fallback?: Snippet;
+	}
 
-	export let keyProp: keyof T;
-
-	export let disabled = false;
-
-	let className = '';
-	export { className as class };
-
-	export let keyPrefix: string = '';
-
-	export let element = 'div';
-
-	export let onMove: ((item: T, targetArray: T[]) => boolean) | undefined = undefined;
+	let {
+		items = $bindable(),
+		options = undefined,
+		keyProp,
+		disabled = false,
+		class: className = '',
+		keyPrefix = '',
+		element = 'div',
+		onMove = undefined,
+		children,
+		fallback,
+	}: Props = $props();
 
 	let listEl: HTMLElement;
 
-	let sortableInstance: Sortable | undefined;
+	let sortableInstance: Sortable | undefined = $state();
 
 	// Update 'disabled' if it changes
-	$: sortableInstance?.option('disabled', disabled);
+	run(() => {
+		sortableInstance?.option('disabled', disabled);
+	});
 
 	// The that was selected last
 	let lastSelectedItem: T;
@@ -79,10 +93,10 @@
 
 <svelte:element this={element} class={className} bind:this={listEl}>
 	{#each items as item, index (keyPrefix + item[keyProp])}
-		<slot {item} {index} />
+		{@render children?.({ item, index })}
 	{/each}
 
 	{#if items.length === 0}
-		<slot name="fallback" />
+		{@render fallback?.()}
 	{/if}
 </svelte:element>

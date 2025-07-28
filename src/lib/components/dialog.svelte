@@ -10,9 +10,10 @@
 		props: {},
 	});
 
-	export function openDialog<T extends SvelteComponent>(
-		component: Component<T>,
-		props: Omit<ComponentProps<T>, 'title'>,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	export function openDialog<Props extends Record<string, any>>(
+		component: Component<Props>,
+		props: Omit<Props, 'title'>,
 	) {
 		dialogContent.set({
 			component,

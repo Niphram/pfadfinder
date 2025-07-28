@@ -8,9 +8,13 @@
 	import MacroTextArea from '../input/macro-text-area.svelte';
 	import Select from '../input/select.svelte';
 
-	const { c } = getChar();
+	interface Props {
+		key?: SaveKey;
+	}
 
-	export let key: SaveKey = 'fort';
+	let { key = 'fort' }: Props = $props();
+
+	const { c } = getChar();
 
 	$title = $t(`saves.${key}.full`);
 </script>
@@ -20,9 +24,10 @@
 	label="Base Ability"
 	options={ABILITY_KEYS}
 	bind:value={$c[key].ability}
-	let:option={key}
 >
-	<option value={key}>{$t(`abilities.${key}.full`)}</option>
+	{#snippet children({ option: key })}
+		<option value={key}>{$t(`abilities.${key}.full`)}</option>
+	{/snippet}
 </Select>
 
 <MacroInteger bind:value={$c[key].misc.expr} name="saveMisc" label="Misc" />
