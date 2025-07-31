@@ -2,9 +2,9 @@ import { autoserialize, autoserializeAs } from 'cerialize';
 import { nanoid } from 'nanoid';
 
 import { VERSION_NUMBER } from '../upgrade';
-import { Ability } from './abilities';
+import { Ability } from './abilities.svelte';
 import { ArmorClass } from './armorclass';
-import { Classes } from './class';
+import { Classes } from './class.svelte';
 import { Combat } from './combat';
 import { Equipment } from './equipment';
 import { Feat } from './feat';

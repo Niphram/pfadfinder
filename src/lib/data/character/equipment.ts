@@ -1,6 +1,6 @@
-import { autoserialize, autoserializeAs } from 'cerialize';
 import { nanoid } from 'nanoid';
 
+import { array, boolean, number, object, string } from '$lib/serde';
 import { mapMin, mapSum } from '$lib/utils';
 
 export const ARMOR_TYPES = ['light', 'medium', 'heavy', 'shield', 'misc'] as const;
@@ -12,49 +12,38 @@ export type ChargeType = (typeof CHARGE_TYPES)[number];
 export class Item {
 	id = nanoid();
 
-	@autoserialize
-	name = 'Unnamed Item';
+	name = string('Unnamed Item');
 
-	@autoserialize
-	quantity = 1;
+	quantity = number(1, { integer: true, min: 0 });
 
-	@autoserialize
-	equipped = true;
+	equipped = boolean(true);
 
-	@autoserialize
-	weight = 0;
+	weight = number(0, { min: 0 });
 
-	@autoserialize
-	chargeType: ChargeType = 'none';
+	chargeType = string<ChargeType>('none');
 
-	@autoserialize
-	remaining = 0;
+	remaining = number(0, { integer: true, min: 0 });
 
-	@autoserialize
-	perDay = 1;
+	perDay = number(1, { integer: true, min: 0 });
 
-	@autoserialize
-	description = '';
+	description = string('', { maxLength: 2000 });
 
-	@autoserialize
-	isContainer = false;
+	isContainer = boolean(false);
 
-	@autoserialize
-	containerOpen = false;
+	containerOpen = boolean(false);
 
-	@autoserializeAs(Item)
-	children: Item[] = [];
+	children = array(() => object(new Item()), []);
 
 	get totalWeight(): number {
 		return (
-			this.quantity * this.weight +
-			(this.isContainer ? mapSum(this.children, (item) => item.totalWeight) : 0)
+			this.quantity.value * this.weight.value +
+			(this.isContainer.value ? mapSum(this.children.value, (item) => item.value.totalWeight) : 0)
 		);
 	}
 
 	recharge() {
-		if (this.chargeType === 'perDay') {
-			this.remaining = this.perDay;
+		if (this.chargeType.value === 'perDay') {
+			this.remaining.value = this.perDay.value;
 		}
 	}
 }
@@ -62,66 +51,53 @@ export class Item {
 export class AcItem {
 	id = nanoid();
 
-	@autoserialize
-	name = 'Unnamed Item';
+	name = string('Unnamed Item');
 
-	@autoserialize
-	equipped = false;
+	equipped = boolean(false);
 
-	@autoserialize
-	acBonus = 0;
+	acBonus = number(0);
 
-	@autoserialize
-	ffBonus = 0;
+	ffBonus = number(0);
 
-	@autoserialize
-	touchBonus = 0;
+	touchBonus = number(0);
 
-	@autoserialize
-	natBonus = 0;
+	natBonus = number(0);
 
-	@autoserialize
-	defBonus = 0;
+	defBonus = number(0);
 
-	@autoserialize
-	dodBonus = 0;
+	dodBonus = number(0);
 
-	@autoserialize
-	type: ArmorType = 'medium';
+	type = string<ArmorType>('medium');
 
-	@autoserialize
-	chkPenalty = 0;
+	chkPenalty = number(0);
 
-	@autoserialize
-	maxDexBonus?: number = undefined;
+	maxDexBonus = number(undefined, { optional: true });
 
-	@autoserialize
-	spellFailure = 0;
+	spellFailure = number(0);
 
-	@autoserialize
-	notes = '';
+	notes = string('', { maxLength: 1000 });
 }
 
 export class Equipment {
-	@autoserializeAs(Item)
-	items: Item[] = [];
+	items = array(() => object(new Item()), []);
 
-	@autoserializeAs(AcItem)
-	acItems: AcItem[] = [];
+	acItems = array(() => object(new AcItem()), []);
 
 	get acBonus() {
-		return mapSum(this.acItems, (i) => (i.equipped ? i.acBonus : 0));
+		return mapSum(this.acItems.value, (i) => (i.value.equipped.value ? i.value.acBonus.value : 0));
 	}
 
 	get maxDexBonus() {
-		return mapMin(this.acItems, (i) => i.maxDexBonus ?? Infinity) ?? Infinity;
+		return mapMin(this.acItems.value, (i) => i.value.maxDexBonus.value ?? Infinity) ?? Infinity;
 	}
 
 	get armorCheckPenalty() {
-		return mapSum(this.acItems, (i) => i.chkPenalty);
+		return mapSum(this.acItems.value, (i) => i.value.chkPenalty.value);
 	}
 
 	get totalWeight() {
-		return mapSum(this.items, (i) => (!i.isContainer || i.equipped ? i.totalWeight : 0));
+		return mapSum(this.items.value, (i) =>
+			!i.value.isContainer.value || i.value.equipped.value ? i.value.totalWeight : 0,
+		);
 	}
 }

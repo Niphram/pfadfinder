@@ -1,8 +1,9 @@
-import { autoserialize, autoserializeAs } from 'cerialize';
 import { nanoid } from 'nanoid';
 
+import { array, boolean, object, string } from '$lib/serde';
+
 import { Derive, Macro, macro } from '../macros';
-import type { AbilityKey } from './abilities';
+import type { AbilityKey } from './abilities.svelte';
 
 export const sizeKeys = [
 	'fine',
@@ -36,36 +37,34 @@ export class SpellResistance {
 	@macro
 	misc = new Macro('0');
 
-	@autoserialize
-	notes = '';
+	notes = string('', { maxLength: 1000 });
 
-	readonly total = new Derive((c) => c.combat.sr.base.eval(c) + c.combat.sr.misc.eval(c));
+	readonly total = new Derive(
+		(c) => c.combat.sr.value.base.eval(c) + c.combat.sr.value.misc.eval(c),
+	);
 }
 
 export class BaseAttackBonus {
-	@autoserialize
-	notes = '';
+	notes = string('', { maxLength: 1000 });
 
 	readonly mod = new Derive((c) => c.classes.bab);
 }
 
 export class CombatManeuverBonus {
-	@autoserialize
-	notes = '';
+	notes = string('', { maxLength: 1000 });
 
 	readonly mod = new Derive((c) => {
 		const { ability, mod } = sizeModifiers[c.race.size];
-		return c.combat.bab.mod.eval(c) + mod + c[ability].mod.eval(c);
+		return c.combat.bab.value.mod.eval(c) + mod + c[ability].mod.eval(c);
 	});
 }
 
 export class CombatManeuverDefense {
-	@autoserialize
-	notes = '';
+	notes = string('', { maxLength: 1000 });
 
 	readonly mod = new Derive((c) => {
 		const { mod } = sizeModifiers[c.race.size];
-		return 10 + c.combat.bab.mod.eval(c) + c.str.mod.eval(c) + c.dex.mod.eval(c) + mod;
+		return 10 + c.combat.bab.value.mod.eval(c) + c.str.mod.eval(c) + c.dex.mod.eval(c) + mod;
 	});
 }
 
@@ -81,104 +80,82 @@ export const ATTACK_TYPES = [
 export type AttackType = (typeof ATTACK_TYPES)[number];
 
 export class AttackRoll {
-	@autoserialize
-	baseModifier: AttackType = 'babFull';
+	baseModifier = string<AttackType>('babFull');
 
-	@autoserialize
-	abilityModifier: AbilityKey | 'none' = 'none';
+	abilityModifier = string<AbilityKey | 'none'>('none');
 
 	@macro
 	bonusModifier = new Macro('0');
 
-	@autoserialize
-	versus = 'AC';
+	versus = string('AC');
 
-	@autoserialize
-	critRange = '20';
+	critRange = string('20');
 
-	@autoserialize
-	range = '';
+	range = string('');
 
 	readonly baseModValue = new Derive((c) =>
 		// TODO: Check this
-		this.baseModifier === 'none' ? 0
-		: this.baseModifier === 'babMax' ? c.combat.bab.mod.eval(c)
-		: this.baseModifier === 'babFull' ? c.combat.bab.mod.eval(c)
-		: this.baseModifier === 'cmb' ? c.combat.cmb.mod.eval(c)
-		: this.baseModifier === 'meelee' ? c.combat.bab.mod.eval(c) + c.str.mod.eval(c)
-		: this.baseModifier === 'ranged' ? c.combat.bab.mod.eval(c) + c.dex.mod.eval(c)
-		: this.baseModifier === 'flurryOfBlows' ? 0
+		this.baseModifier.value === 'none' ? 0
+		: this.baseModifier.value === 'babMax' ? c.combat.bab.value.mod.eval(c)
+		: this.baseModifier.value === 'babFull' ? c.combat.bab.value.mod.eval(c)
+		: this.baseModifier.value === 'cmb' ? c.combat.cmb.value.mod.eval(c)
+		: this.baseModifier.value === 'meelee' ? c.combat.bab.value.mod.eval(c) + c.str.mod.eval(c)
+		: this.baseModifier.value === 'ranged' ? c.combat.bab.value.mod.eval(c) + c.dex.mod.eval(c)
+		: this.baseModifier.value === 'flurryOfBlows' ? 0
 		: 0,
 	);
 
 	readonly abilityModValue = new Derive((c) =>
-		this.abilityModifier !== 'none' ? c[this.abilityModifier].mod.eval(c) : 0,
+		this.abilityModifier.value !== 'none' ? c[this.abilityModifier.value].mod.eval(c) : 0,
 	);
 }
 
 export class Damage {
-	@autoserialize
-	damage = '';
+	damage = string('');
 }
 
 export class Attack {
 	id = nanoid();
 
-	@autoserialize
-	name = 'Unnamed Attack';
+	name = string('Unnamed Attack');
 
-	@autoserialize
-	category = '';
+	category = string('');
 
-	@autoserialize
-	type = '';
+	type = string('');
 
-	@autoserialize
-	hasAttack = false;
+	hasAttack = boolean(false);
 
-	@autoserializeAs(AttackRoll)
-	attack = new AttackRoll();
+	attack = object(new AttackRoll());
 
-	@autoserialize
-	hasDamage = false;
+	hasDamage = boolean(false);
 
-	@autoserializeAs(Damage)
-	damage = new Damage();
+	damage = object(new Damage());
 
-	@autoserialize
-	notes = '';
+	notes = string('', { maxLength: 1000 });
 
 	readonly attackBonus = new Derive((c) => {
-		let total = this.attack.baseModValue.eval(c);
-		total += this.attack.abilityModValue.eval(c);
-		const bonus = this.attack.bonusModifier.eval(c) ?? 0;
+		let total = this.attack.value.baseModValue.eval(c);
+		total += this.attack.value.abilityModValue.eval(c);
+		const bonus = this.attack.value.bonusModifier.eval(c) ?? 0;
 		total += Number.isNaN(bonus) ? 0 : bonus;
 		return total;
 	});
 }
 
 export class Combat {
-	@autoserialize
-	cmbAbility: AbilityKey = 'str';
+	cmbAbility = string<AbilityKey>('str');
 
-	@autoserialize
-	meeleeAbility: AbilityKey = 'str';
+	meeleeAbility = string<AbilityKey>('str');
 
-	@autoserialize
-	rangedAbility: AbilityKey = 'dex';
+	rangedAbility = string<AbilityKey>('dex');
 
-	@autoserializeAs(SpellResistance)
-	sr = new SpellResistance();
+	sr = object(new SpellResistance());
 
-	@autoserializeAs(BaseAttackBonus)
-	bab = new BaseAttackBonus();
+	bab = object(new BaseAttackBonus());
 
-	@autoserializeAs(CombatManeuverBonus)
-	cmb = new CombatManeuverBonus();
+	cmb = object(new CombatManeuverBonus());
 
-	@autoserializeAs(CombatManeuverBonus)
-	cmd = new CombatManeuverDefense();
+	cmd = object(new CombatManeuverDefense());
 
-	@autoserializeAs(Attack)
-	attacks: Attack[] = [];
+	attacks = array(() => object(new Attack()), []);
 }

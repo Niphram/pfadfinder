@@ -1,7 +1,7 @@
 import { autoserialize } from 'cerialize';
 
 import { Derive, Macro, macro } from '../macros';
-import type { AbilityKey } from './abilities';
+import type { AbilityKey } from './abilities.svelte';
 
 export const SAVE_KEYS = ['fort', 'ref', 'will'] as const;
 export type SaveKey = (typeof SAVE_KEYS)[number];

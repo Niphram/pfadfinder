@@ -1,6 +1,7 @@
 import { autoserialize } from 'cerialize';
 
 import { Derive, Macro, macro } from '../macros';
+import { number, string } from '$lib/serde';
 
 export const ABILITY_KEYS = ['str', 'dex', 'con', 'int', 'wis', 'cha'] as const;
 export type AbilityKey = (typeof ABILITY_KEYS)[number];
@@ -15,15 +16,11 @@ export class Ability {
 	@macro
 	temp = new Macro('0');
 
-	@autoserialize
-	damage = 0;
+	damage = number(0, { min: 0, integer: true });
 
-	@autoserialize
-	notes = '';
+	notes = string('', { maxLength: 2000 });
 
-	get damageMod() {
-		return Math.trunc(this.damage / 2);
-	}
+	readonly damageMod = $derived(Math.trunc(this.damage.value / 2));
 
 	readonly total = new Derive(
 		(c) =>

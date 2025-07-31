@@ -2,7 +2,7 @@ import { autoserialize, autoserializeAs } from 'cerialize';
 
 import { mapSum } from '$lib/utils';
 import { Derive, Macro, macro } from '../macros';
-import type { AbilityKey } from './abilities';
+import type { AbilityKey } from './abilities.svelte';
 
 const SKILLS = {
 	acrobatics: { ability: 'dex', trained: false, penalty: true },

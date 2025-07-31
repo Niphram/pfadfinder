@@ -1,3 +1,4 @@
+import { enumeration, string } from '$lib/serde';
 import { autoserialize } from 'cerialize';
 import { nanoid } from 'nanoid';
 
@@ -17,24 +18,17 @@ export const FEAT_TYPES = [
 export type FeatType = (typeof FEAT_TYPES)[number];
 
 export class Feat {
-	@autoserialize
 	id = nanoid();
 
-	@autoserialize
-	name = 'New Feat';
+	name = string('New Feat');
 
-	@autoserialize
-	prerequisites = '';
+	prerequisites = string('');
 
-	@autoserialize
-	type: FeatType = 'general';
+	type = enumeration<FeatType>('general');
 
-	@autoserialize
-	benefits = '';
+	benefits = string('');
 
-	@autoserialize
-	normal = '';
+	normal = string('');
 
-	@autoserialize
-	special = '';
+	special = string('');
 }
