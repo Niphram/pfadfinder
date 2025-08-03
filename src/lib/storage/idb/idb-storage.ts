@@ -32,10 +32,10 @@ export class IDBStorage {
 			Promise.all([
 				this.db.characters.put(serialized),
 				this.db.characterMetadata.put({
-					id: char.id,
-					name: char.name,
+					id: char.id.value,
+					name: char.name.value,
 					description: char.description,
-					system: char.system,
+					system: char.system.value,
 					updated_at: new Date(),
 				}),
 			]),
@@ -65,7 +65,7 @@ export class IDBStorage {
 		const char = upgradeCharacterAndDeserialize(charData);
 		if (!char) return;
 
-		char.id = nanoid();
+		char.id.value = nanoid();
 
 		this.saveCharacter(char);
 	}

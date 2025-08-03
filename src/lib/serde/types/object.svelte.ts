@@ -8,11 +8,35 @@ export class ObjectWrapper<T extends object> implements Serializable<ObjectWrapp
 	}
 
 	[SERIALIZE_SYMBOL](): unknown {
-		throw new Error('TODO');
+		const result: Partial<Record<keyof T, unknown>> = {};
+
+		for (const [key, value] of Object.entries(this.value)) {
+			if (value && typeof value === 'object' && SERIALIZE_SYMBOL in value) {
+				// @ts-expect-error TODO
+				result[key] = value[SERIALIZE_SYMBOL]();
+			}
+		}
+
+		return result;
 	}
 
-	[DESERIALIZE_SYMBOL](_value: unknown): ObjectWrapper<T> {
-		throw new Error('TODO');
+	[DESERIALIZE_SYMBOL](value: unknown): ObjectWrapper<T> {
+		if (value && typeof value === 'object') {
+			for (const [key, dvalue] of Object.entries(value)) {
+				if (
+					key in this.value &&
+					// @ts-expect-error TODO
+					typeof this.value[key] === 'object' &&
+					// @ts-expect-error TODO
+					DESERIALIZE_SYMBOL in this.value[key]
+				) {
+					// @ts-expect-error TODO
+					this.value[key][DESERIALIZE_SYMBOL](dvalue);
+				}
+			}
+		}
+
+		return this;
 	}
 }
 

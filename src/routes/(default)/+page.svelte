@@ -39,7 +39,7 @@
 			const fileContent = await file.text();
 
 			const newChar = upgradeCharacterAndDeserialize(JSON.parse(fileContent));
-			newChar.id = nanoid();
+			newChar.id.value = nanoid();
 
 			await db.saveCharacter(newChar);
 			files = undefined;
@@ -109,7 +109,7 @@
 		<ul class="list bg-base-100 card card-border shadow-sm">
 			<li class="p-4 pb-2 text-xs tracking-wide opacity-60">Characters</li>
 
-			{#each characters as { id, name, description, system, updated_at } (id)}
+			{#each $characters as { id, name, description, system, updated_at } (id)}
 				<li class="p-2">
 					<a
 						href="{base}/character/{id}"
