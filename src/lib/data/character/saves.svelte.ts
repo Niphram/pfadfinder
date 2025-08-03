@@ -1,4 +1,5 @@
 import { derive, enumeration, EnumWrapper, macro, string } from '$lib/serde';
+import { ClassSerializer } from '$lib/serde/class-serializer';
 
 import type { AbilityKey } from './abilities.svelte';
 import { Character } from './character.svelte';
@@ -12,7 +13,7 @@ const DefaultBaseAbility = {
 	will: 'wis',
 } as const;
 
-export class Save {
+export class Save extends ClassSerializer {
 	ability: EnumWrapper<AbilityKey, false>;
 
 	bonus = macro('0');
@@ -26,6 +27,8 @@ export class Save {
 	);
 
 	constructor(public readonly key: SaveKey) {
+		super();
+
 		this.ability = enumeration(DefaultBaseAbility[key]);
 	}
 }

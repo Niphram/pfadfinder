@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Ability, type AbilityKey } from '$lib/data';
+	import { Ability } from '$lib/data';
 	import { t } from '$lib/i18n';
 	import type { SerdeProxy } from '$lib/serde/proxy';
 

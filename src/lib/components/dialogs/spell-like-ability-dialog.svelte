@@ -2,7 +2,6 @@
 	import { SPELL_ATTACK_TYPE, SPELL_LIKE_COUNT_TYPES, SpellAttackDamage } from '$lib/data';
 	import { getChar } from '$lib/data/context.svelte';
 	import { t } from '$lib/i18n';
-	import { object } from '$lib/serde';
 	import { preventDefault } from '$lib/utils';
 
 	import { title } from '../dialog.svelte';
@@ -25,7 +24,7 @@
 	}
 
 	function addDamageToSLA() {
-		c.spells.spellLikeAbilities[slaIndex].$damage.value.push(object(new SpellAttackDamage()));
+		c.spells.spellLikeAbilities[slaIndex].$damage.value.push(new SpellAttackDamage());
 	}
 
 	function removeDamageFromSLA(idx: number) {

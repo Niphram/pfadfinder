@@ -1,8 +1,9 @@
 import { derive, macro, string } from '$lib/serde';
+import { ClassSerializer } from '$lib/serde/class-serializer';
 
 import { Character } from './character.svelte';
 
-export class Initiative {
+export class Initiative extends ClassSerializer {
 	misc = macro('0');
 
 	notes = string('');

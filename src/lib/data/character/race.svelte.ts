@@ -1,8 +1,9 @@
 import { enumeration, macro, string } from '$lib/serde';
+import { ClassSerializer } from '$lib/serde/class-serializer';
 
 import type { SizeKey } from './combat.svelte';
 
-export class Race {
+export class Race extends ClassSerializer {
 	name = string('Unknown Race');
 
 	speed = macro('30');

@@ -1,57 +1,55 @@
 <script lang="ts">
-	import { DeserializeInto, Serialize } from 'cerialize';
-
-	import { Character } from '$lib/data';
-	import { getChar } from '$lib/data/context.svelte';
 	import { preventDefault } from '$lib/utils';
 
 	import { title } from '../dialog.svelte';
 	import Steps from '../steps.svelte';
 
-	const { c } = $derived(getChar());
-
 	$title = 'Import/Export';
 
 	function download() {
-		const file = new File([JSON.stringify(Serialize(c))], `${c.name}.json`, {
-			type: 'application/json',
-		});
+		alert('REIMPLEMENT THIS!');
 
-		const link = document.createElement('a');
-		const url = URL.createObjectURL(file);
+		// const file = new File([JSON.stringify(Serialize(c))], `${c.name}.json`, {
+		// 	type: 'application/json',
+		// });
 
-		link.href = url;
-		link.download = file.name;
-		document.body.appendChild(link);
-		link.click();
+		// const link = document.createElement('a');
+		// const url = URL.createObjectURL(file);
 
-		document.body.removeChild(link);
-		window.URL.revokeObjectURL(url);
+		// link.href = url;
+		// link.download = file.name;
+		// document.body.appendChild(link);
+		// link.click();
+
+		// document.body.removeChild(link);
+		// window.URL.revokeObjectURL(url);
 	}
 
 	let files: FileList | null | undefined = $state();
 	let validInputFile = $derived(files?.length === 1 && files[0].type === 'application/json');
 
 	async function importFromFIle() {
-		if (files?.length !== 1) {
-			return alert('No file selected!');
-		}
+		alert('REIMPLEMENT THIS!');
 
-		try {
-			const file = files[0];
+		// if (files?.length !== 1) {
+		// 	return alert('No file selected!');
+		// }
 
-			const fileContent = await file.text();
+		// try {
+		// 	const file = files[0];
 
-			const newChar = new Character();
-			DeserializeInto(JSON.parse(fileContent), Character, newChar);
+		// 	const fileContent = await file.text();
 
-			// TODO!
-			//await overwriteSave(newChar);
+		// 	const newChar = new Character();
+		// 	DeserializeInto(JSON.parse(fileContent), Character, newChar);
 
-			location.reload();
-		} catch (_err) {
-			alert('Could not import character!');
-		}
+		// 	// TODO!
+		// 	//await overwriteSave(newChar);
+
+		// 	location.reload();
+		// } catch (_err) {
+		// 	alert('Could not import character!');
+		// }
 	}
 </script>
 

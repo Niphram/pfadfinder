@@ -1,11 +1,12 @@
 import { derive, macro, number, string } from '$lib/serde';
+import { ClassSerializer } from '$lib/serde/class-serializer';
 
 import { Character } from './character.svelte';
 
 export const ABILITY_KEYS = ['str', 'dex', 'con', 'int', 'wis', 'cha'] as const;
 export type AbilityKey = (typeof ABILITY_KEYS)[number];
 
-export class Ability {
+export class Ability extends ClassSerializer {
 	base = macro('10');
 
 	bonus = macro('0');
@@ -31,6 +32,8 @@ export class Ability {
 	readonly skillCheckMod = this.mod;
 
 	constructor(public readonly key: AbilityKey) {
+		super();
+
 		if (this.key === 'dex' || this.key === 'str') {
 			this.skillCheckMod = derive<Character>(
 				(c) => this.mod.eval(c) + c.equipment.armorCheckPenalty,

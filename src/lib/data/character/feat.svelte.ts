@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import { enumeration, string } from '$lib/serde';
+import { ClassSerializer } from '$lib/serde/class-serializer';
 
 export const FEAT_TYPES = [
 	'general',
@@ -17,7 +18,7 @@ export const FEAT_TYPES = [
 ] as const;
 export type FeatType = (typeof FEAT_TYPES)[number];
 
-export class Feat {
+export class Feat extends ClassSerializer {
 	id = nanoid();
 
 	name = string('New Feat');

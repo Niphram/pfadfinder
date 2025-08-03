@@ -2,7 +2,6 @@
 	import { Skill, type SkillKey } from '$lib/data/character/skills.svelte';
 	import { getChar } from '$lib/data/context.svelte';
 	import { t } from '$lib/i18n';
-	import { object } from '$lib/serde';
 	import { preventDefault } from '$lib/utils';
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
@@ -10,7 +9,7 @@
 	const { c } = $derived(getChar());
 
 	function addSkill(skill: SkillKey) {
-		c.skills[skill].$skills.value.push(object(new Skill(skill)));
+		c.skills[skill].$skills.value.push(new Skill(skill));
 	}
 
 	function removeSkill(skill: SkillKey, idx: number) {

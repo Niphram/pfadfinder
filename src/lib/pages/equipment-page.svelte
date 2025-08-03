@@ -7,27 +7,25 @@
 	import { macroNotify } from '$lib/utils/notes';
 
 	import AcItemDialog from '$lib/components/dialogs/ac-item-dialog.svelte';
-	import ItemDialog from '$lib/components/dialogs/item-dialog.svelte';
 
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import Integer from '$lib/components/input/integer.svelte';
 	import TextArea from '$lib/components/input/text-area.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
-	import NestedEquipmentList from '$lib/nested-equipment-list.svelte';
 	import { getChar } from '$lib/data/context.svelte';
-	import { object } from '$lib/serde';
+	import NestedEquipmentList from '$lib/nested-equipment-list.svelte';
 
 	const { c } = $derived(getChar());
 
 	function addItem() {
-		c.equipment.$items.value.push(object(new Item()));
+		c.equipment.$items.value.push(new Item());
 
 		// TODO!
 		//openDialog(ItemDialog, { list: c.equipment.items, index: c.equipment.items.length - 1 });
 	}
 
 	function addAcItem() {
-		c.equipment.$acItems.value.push(object(new AcItem()));
+		c.equipment.$acItems.value.push(new AcItem());
 
 		openDialog(AcItemDialog, { index: c.equipment.acItems.length - 1 });
 	}

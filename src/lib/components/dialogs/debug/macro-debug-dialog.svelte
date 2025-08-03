@@ -5,8 +5,8 @@
 	import Fieldset from '$lib/components/input/fieldset.svelte';
 	import RichInput from '$lib/components/input/rich-input.svelte';
 	import { getChar } from '$lib/data/context.svelte';
-	import { Macro } from '$lib/data/macros';
 	import { Tokenizer, TokenType } from '$lib/macro/tokenizer';
+	import { macro } from '$lib/serde';
 	import { computeMacroStyle } from '$lib/text/macro-text-style';
 	import MacroAstTree from './macro-ast-tree.svelte';
 
@@ -14,7 +14,7 @@
 
 	$title = 'Macro debugging';
 
-	const testMacro = new Macro('floor(@classes.list.0.level * 5 / 6) + @int.mod + 3');
+	const testMacro = macro('floor(@classes.list.0.level * 5 / 6) + @int.mod + 3');
 	const tokens = $derived(new Tokenizer(testMacro.expr).allTokens());
 
 	const TOKEN_COLORS: Record<TokenType, string> = {

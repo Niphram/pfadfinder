@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid';
 
-import { array, number, object, string } from '$lib/serde';
+import { array, number, string } from '$lib/serde';
+import { ClassSerializer } from '$lib/serde/class-serializer';
 
 import { VERSION_NUMBER } from '../upgrade';
 import { Ability } from './abilities.svelte';
@@ -20,7 +21,7 @@ import { SkillList } from './skills.svelte';
 import { Spells } from './spells.svelte';
 import { Trait } from './trait.svelte';
 
-export class Character {
+export class Character extends ClassSerializer {
 	id = string(nanoid());
 
 	version = number(VERSION_NUMBER);
@@ -30,47 +31,45 @@ export class Character {
 	system = string('pathfinder');
 
 	get description() {
-		return this.classes.value.list.value
-			.map((c) => `${c.value.name.value} ${c.value.level.value}`)
-			.join(', ');
+		return this.classes.list.value.map((c) => `${c.name.value} ${c.level.value}`).join(', ');
 	}
 
-	race = object(new Race());
+	readonly race = new Race();
 
-	classes = object(new Classes());
+	readonly classes = new Classes();
 
-	hp = object(new HitPoints());
+	readonly hp = new HitPoints();
 
-	init = object(new Initiative());
+	readonly init = new Initiative();
 
-	str = object(new Ability('str'));
-	dex = object(new Ability('dex'));
-	con = object(new Ability('con'));
-	int = object(new Ability('int'));
-	wis = object(new Ability('wis'));
-	cha = object(new Ability('cha'));
+	readonly str = new Ability('str');
+	readonly dex = new Ability('dex');
+	readonly con = new Ability('con');
+	readonly int = new Ability('int');
+	readonly wis = new Ability('wis');
+	readonly cha = new Ability('cha');
 
-	fort = object(new Save('fort'));
-	ref = object(new Save('ref'));
-	will = object(new Save('will'));
+	readonly fort = new Save('fort');
+	readonly ref = new Save('ref');
+	readonly will = new Save('will');
 
-	combat = object(new Combat());
+	readonly combat = new Combat();
 
-	skills = object(new SkillList());
+	readonly skills = new SkillList();
 
-	traits = array(() => object(new Trait()), []);
+	traits = array(() => new Trait(), []);
 
-	feats = array(() => object(new Feat()), []);
+	feats = array(() => new Feat(), []);
 
-	spells = object(new Spells());
+	readonly spells = new Spells();
 
-	ac = object(new ArmorClass());
+	readonly ac = new ArmorClass();
 
-	equipment = object(new Equipment());
+	readonly equipment = new Equipment();
 
-	money = object(new Money());
+	readonly money = new Money();
 
-	persona = object(new Persona());
+	readonly persona = new Persona();
 
-	settings = object(new Settings());
+	readonly settings = new Settings();
 }

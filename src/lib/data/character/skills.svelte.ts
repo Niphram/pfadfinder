@@ -1,4 +1,5 @@
-import { array, boolean, derive, enumeration, macro, number, object, string } from '$lib/serde';
+import { array, boolean, derive, enumeration, macro, number, string } from '$lib/serde';
+import { ClassSerializer } from '$lib/serde/class-serializer';
 import { mapSum } from '$lib/utils';
 
 import type { AbilityKey } from './abilities.svelte';
@@ -44,7 +45,7 @@ const SKILLS = {
 export const SKILL_KEYS = Object.keys(SKILLS);
 export type SkillKey = keyof typeof SKILLS;
 
-export class Skill {
+export class Skill extends ClassSerializer {
 	name = string('');
 
 	ability = enumeration<AbilityKey>('str');
@@ -71,6 +72,8 @@ export class Skill {
 	);
 
 	constructor(key?: SkillKey) {
+		super();
+
 		if (key) {
 			this.ability.value = SKILLS[key].ability;
 			this.penalty.value = SKILLS[key].penalty;
@@ -78,89 +81,91 @@ export class Skill {
 	}
 }
 
-export class SkillGroup {
-	skills = array(() => object(new Skill()), []);
+export class SkillGroup extends ClassSerializer {
+	skills = array(() => new Skill(), []);
 
 	readonly trained: boolean;
 
-	readonly ranks = $derived(mapSum(this.skills.value, (skill) => skill.value.ranks.value));
+	readonly ranks = $derived(mapSum(this.skills.value, (skill) => skill.ranks.value));
 
 	constructor(key: SkillKey) {
-		this.skills.value = [object(new Skill(key))];
+		super();
+
+		this.skills.value = [new Skill(key)];
 		this.trained = SKILLS[key].trained;
 	}
 }
 
-export class SkillList {
-	acrobatics = object(new SkillGroup('acrobatics'));
+export class SkillList extends ClassSerializer {
+	readonly acrobatics = new SkillGroup('acrobatics');
 
-	appraise = object(new SkillGroup('appraise'));
+	readonly appraise = new SkillGroup('appraise');
 
-	bluff = object(new SkillGroup('bluff'));
+	readonly bluff = new SkillGroup('bluff');
 
-	climb = object(new SkillGroup('climb'));
+	readonly climb = new SkillGroup('climb');
 
-	craft = object(new SkillGroup('craft'));
+	readonly craft = new SkillGroup('craft');
 
-	diplomacy = object(new SkillGroup('diplomacy'));
+	readonly diplomacy = new SkillGroup('diplomacy');
 
-	disableDevice = object(new SkillGroup('disableDevice'));
+	readonly disableDevice = new SkillGroup('disableDevice');
 
-	disguise = object(new SkillGroup('disguise'));
+	readonly disguise = new SkillGroup('disguise');
 
-	escapeArtist = object(new SkillGroup('escapeArtist'));
+	readonly escapeArtist = new SkillGroup('escapeArtist');
 
-	fly = object(new SkillGroup('fly'));
+	readonly fly = new SkillGroup('fly');
 
-	handleAnimal = object(new SkillGroup('handleAnimal'));
+	readonly handleAnimal = new SkillGroup('handleAnimal');
 
-	heal = object(new SkillGroup('heal'));
+	readonly heal = new SkillGroup('heal');
 
-	intimidate = object(new SkillGroup('intimidate'));
+	readonly intimidate = new SkillGroup('intimidate');
 
-	knowledgeArcana = object(new SkillGroup('knowledgeArcana'));
+	readonly knowledgeArcana = new SkillGroup('knowledgeArcana');
 
-	knowledgeDungeoneering = object(new SkillGroup('knowledgeDungeoneering'));
+	readonly knowledgeDungeoneering = new SkillGroup('knowledgeDungeoneering');
 
-	knowledgeEngineering = object(new SkillGroup('knowledgeEngineering'));
+	readonly knowledgeEngineering = new SkillGroup('knowledgeEngineering');
 
-	knowledgeGeography = object(new SkillGroup('knowledgeGeography'));
+	readonly knowledgeGeography = new SkillGroup('knowledgeGeography');
 
-	knowledgeHistory = object(new SkillGroup('knowledgeHistory'));
+	readonly knowledgeHistory = new SkillGroup('knowledgeHistory');
 
-	knowledgeLocal = object(new SkillGroup('knowledgeLocal'));
+	readonly knowledgeLocal = new SkillGroup('knowledgeLocal');
 
-	knowledgeNature = object(new SkillGroup('knowledgeNature'));
+	readonly knowledgeNature = new SkillGroup('knowledgeNature');
 
-	knowledgeNobility = object(new SkillGroup('knowledgeNobility'));
+	readonly knowledgeNobility = new SkillGroup('knowledgeNobility');
 
-	knowledgePlanes = object(new SkillGroup('knowledgePlanes'));
+	readonly knowledgePlanes = new SkillGroup('knowledgePlanes');
 
-	knowledgeReligion = object(new SkillGroup('knowledgeReligion'));
+	readonly knowledgeReligion = new SkillGroup('knowledgeReligion');
 
-	linguistics = object(new SkillGroup('linguistics'));
+	readonly linguistics = new SkillGroup('linguistics');
 
-	perception = object(new SkillGroup('perception'));
+	readonly perception = new SkillGroup('perception');
 
-	perform = object(new SkillGroup('perform'));
+	readonly perform = new SkillGroup('perform');
 
-	profession = object(new SkillGroup('profession'));
+	readonly profession = new SkillGroup('profession');
 
-	ride = object(new SkillGroup('ride'));
+	readonly ride = new SkillGroup('ride');
 
-	senseMotive = object(new SkillGroup('senseMotive'));
+	readonly senseMotive = new SkillGroup('senseMotive');
 
-	sleightOfHand = object(new SkillGroup('sleightOfHand'));
+	readonly sleightOfHand = new SkillGroup('sleightOfHand');
 
-	spellcraft = object(new SkillGroup('spellcraft'));
+	readonly spellcraft = new SkillGroup('spellcraft');
 
-	stealth = object(new SkillGroup('stealth'));
+	readonly stealth = new SkillGroup('stealth');
 
-	survival = object(new SkillGroup('survival'));
+	readonly survival = new SkillGroup('survival');
 
-	swim = object(new SkillGroup('swim'));
+	readonly swim = new SkillGroup('swim');
 
-	useMagicDevice = object(new SkillGroup('useMagicDevice'));
+	readonly useMagicDevice = new SkillGroup('useMagicDevice');
 
-	readonly skillRanks = $derived(mapSum(SKILL_KEYS, (key) => this[key].value.ranks));
+	readonly skillRanks = $derived(mapSum(SKILL_KEYS, (key) => this[key].ranks));
 }

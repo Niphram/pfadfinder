@@ -4,24 +4,24 @@ import { describe, expect, test } from 'vitest';
 import { charProxy } from './proxy';
 import { array, ArrayWrapper } from './types/array.svelte';
 import { boolean } from './types/bool.svelte';
-import { enumeration } from './types/enum.svelte';
-import { number } from './types/number.svelte';
-import { object, ObjectWrapper } from './types/object.svelte';
-import { string } from './types/string.svelte';
 import { derive } from './types/derive.svelte';
+import { enumeration } from './types/enum.svelte';
 import { macro } from './types/macro.svelte';
+import { number } from './types/number.svelte';
+import { string } from './types/string.svelte';
+import { ClassSerializer } from './class-serializer';
 
-class SubSubClass {
+class SubSubClass extends ClassSerializer {
 	foo = randNumber();
 }
 
-class SubClass {
+class SubClass extends ClassSerializer {
 	foo = randNumber();
 
-	sub = object(new SubSubClass());
+	sub = new SubSubClass();
 }
 
-class TestClass {
+class TestClass extends ClassSerializer {
 	string = string(randText());
 
 	number = number(randNumber());
@@ -30,11 +30,11 @@ class TestClass {
 
 	enumeration = enumeration(randText());
 
-	array = array(() => randNumber(), []);
+	array = array(() => number(randNumber()), []);
 
 	subarray = array(() => new SubClass(), []);
 
-	object = object(new SubClass());
+	object = new SubClass();
 
 	derive = derive<TestClass>((c) => c.number);
 
@@ -80,7 +80,7 @@ describe('Proxy', () => {
 		});
 
 		test('ArrayWrapper', () => {
-			const array = toCollection(randNumber);
+			const array = toCollection(() => number(randNumber()));
 
 			const sut = charProxy(new TestClass());
 			sut.$array.value = array;
@@ -95,15 +95,6 @@ describe('Proxy', () => {
 			sut.$subarray.value = array;
 
 			expect(sut.subarray).toStrictEqual(array);
-		});
-
-		test('ObjectWrapper', () => {
-			const object = new SubClass();
-
-			const sut = charProxy(new TestClass());
-			sut.$object.value = object;
-
-			expect(sut.$object.value).toBe(object);
 		});
 
 		test('Derive', () => {
@@ -137,12 +128,6 @@ describe('Proxy', () => {
 
 			expect(sut.array).toBeInstanceOf(Array);
 			expect(sut.$array).toBeInstanceOf(ArrayWrapper);
-
-			expect(sut.object).toBeInstanceOf(SubClass);
-			expect(sut.$object).toBeInstanceOf(ObjectWrapper);
-
-			expect(sut.object.sub).toBeInstanceOf(SubSubClass);
-			expect(sut.object.$sub).toBeInstanceOf(ObjectWrapper);
 		});
 	});
 });

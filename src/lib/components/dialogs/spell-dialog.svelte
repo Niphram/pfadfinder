@@ -11,7 +11,6 @@
 
 	import Select from '../input/select.svelte';
 	import Toggle from '../input/toggle.svelte';
-	import { object } from '$lib/serde';
 
 	interface Props {
 		spellLevel: SpellLevel;
@@ -27,7 +26,7 @@
 	}
 
 	function addDamageToSpell() {
-		c.spells[spellLevel].spells[spellIdx].$damage.value.push(object(new SpellAttackDamage()));
+		c.spells[spellLevel].spells[spellIdx].$damage.value.push(new SpellAttackDamage());
 	}
 
 	function removeDamageFromSpell(idx: number) {

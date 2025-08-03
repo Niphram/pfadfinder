@@ -1,15 +1,13 @@
-import type { Character } from '$lib/data';
 import { evalNode } from '$lib/macro/evaluate';
 import { Parser } from '$lib/macro/parser';
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../interfaces';
-import type { SerdeProxy } from '../proxy';
 
-export class Macro<C extends object = Character> implements Serializable<Macro<C>> {
+export class Macro implements Serializable {
 	expr = $state('');
 
 	readonly node = $derived(Parser.parse(this.expr));
 
-	eval(c: C) {
+	eval(c: object) {
 		return evalNode(this.node, c);
 	}
 
@@ -21,15 +19,13 @@ export class Macro<C extends object = Character> implements Serializable<Macro<C
 		return this.expr;
 	}
 
-	[DESERIALIZE_SYMBOL](value: unknown): Macro<C> {
+	[DESERIALIZE_SYMBOL](value: unknown) {
 		if (typeof value === 'string') {
 			this.expr = value;
 		}
-
-		return this;
 	}
 }
 
-export function macro<C extends object = Character>(expr: string) {
-	return new Macro<SerdeProxy<C>>(expr);
+export function macro(expr: string) {
+	return new Macro(expr);
 }

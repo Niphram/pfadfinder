@@ -14,7 +14,6 @@
 	import { SPELL_LEVELS, Spell, SpellLikeAbility, type SpellLevel } from '$lib/data';
 	import { getChar } from '$lib/data/context.svelte';
 	import { t } from '$lib/i18n';
-	import { object } from '$lib/serde';
 
 	const { c } = $derived(getChar());
 
@@ -23,11 +22,11 @@
 	}
 
 	function addSpell(level: SpellLevel) {
-		c.spells[level].$spells.value.push(object(new Spell()));
+		c.spells[level].$spells.value.push(new Spell());
 	}
 
 	function addSLA() {
-		c.spells.$spellLikeAbilities.value.push(object(new SpellLikeAbility()));
+		c.spells.$spellLikeAbilities.value.push(new SpellLikeAbility());
 	}
 
 	function castSpell(level: SpellLevel, index: number) {

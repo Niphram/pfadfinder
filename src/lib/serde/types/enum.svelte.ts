@@ -1,9 +1,7 @@
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../interfaces';
 import type { Option } from '../optional';
 
-export class EnumWrapper<Values, IsOptional extends boolean>
-	implements Serializable<EnumWrapper<Values, IsOptional>>
-{
+export class EnumWrapper<Values, IsOptional extends boolean> implements Serializable {
 	value: Option<Values, IsOptional>;
 
 	constructor(
@@ -17,12 +15,10 @@ export class EnumWrapper<Values, IsOptional extends boolean>
 		return this.value;
 	}
 
-	[DESERIALIZE_SYMBOL](value: unknown): EnumWrapper<Values, IsOptional> {
+	[DESERIALIZE_SYMBOL](value: unknown) {
 		if (value !== undefined && value !== null) {
 			this.value = value as Option<Values, IsOptional>;
 		}
-
-		return this;
 	}
 }
 

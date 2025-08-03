@@ -1,9 +1,10 @@
 import { nanoid } from 'nanoid';
 
-import { array, boolean, derive, macro, object, string } from '$lib/serde';
+import { array, boolean, derive, macro, string } from '$lib/serde';
 
 import type { AbilityKey } from './abilities.svelte';
 import { Character } from './character.svelte';
+import { ClassSerializer } from '$lib/serde/class-serializer';
 
 export const sizeKeys = [
 	'fine',
@@ -30,7 +31,7 @@ const sizeModifiers: Record<SizeKey, { mod: number; ability: AbilityKey }> = {
 	colossal: { ability: 'str', mod: +8 },
 };
 
-export class SpellResistance {
+export class SpellResistance extends ClassSerializer {
 	base = macro('0');
 
 	misc = macro('0');
@@ -40,13 +41,13 @@ export class SpellResistance {
 	readonly total = derive<Character>((c) => c.combat.sr.base + c.combat.sr.misc);
 }
 
-export class BaseAttackBonus {
+export class BaseAttackBonus extends ClassSerializer {
 	notes = string('', { maxLength: 1000 });
 
 	readonly mod = derive<Character>((c) => c.classes.bab);
 }
 
-export class CombatManeuverBonus {
+export class CombatManeuverBonus extends ClassSerializer {
 	notes = string('', { maxLength: 1000 });
 
 	readonly mod = derive<Character>((c) => {
@@ -55,7 +56,7 @@ export class CombatManeuverBonus {
 	});
 }
 
-export class CombatManeuverDefense {
+export class CombatManeuverDefense extends ClassSerializer {
 	notes = string('', { maxLength: 1000 });
 
 	readonly mod = derive<Character>((c) => {
@@ -75,7 +76,7 @@ export const ATTACK_TYPES = [
 ] as const;
 export type AttackType = (typeof ATTACK_TYPES)[number];
 
-export class AttackRoll {
+export class AttackRoll extends ClassSerializer {
 	baseModifier = string<AttackType>('babFull');
 
 	abilityModifier = string<AbilityKey | 'none'>('none');
@@ -105,11 +106,11 @@ export class AttackRoll {
 	);
 }
 
-export class Damage {
+export class Damage extends ClassSerializer {
 	damage = string('');
 }
 
-export class Attack {
+export class Attack extends ClassSerializer {
 	id = nanoid();
 
 	name = string('Unnamed Attack');
@@ -120,37 +121,37 @@ export class Attack {
 
 	hasAttack = boolean(false);
 
-	attack = object(new AttackRoll());
+	attack = new AttackRoll();
 
 	hasDamage = boolean(false);
 
-	damage = object(new Damage());
+	damage = new Damage();
 
 	notes = string('', { maxLength: 1000 });
 
 	readonly attackBonus = derive<Character>((c) => {
-		let total = this.attack.value.baseModValue.eval(c);
-		total += this.attack.value.abilityModValue.eval(c);
-		const bonus = this.attack.value.bonusModifier.eval(c) ?? 0;
+		let total = this.attack.baseModValue.eval(c);
+		total += this.attack.abilityModValue.eval(c);
+		const bonus = this.attack.bonusModifier.eval(c) ?? 0;
 		total += Number.isNaN(bonus) ? 0 : bonus;
 		return total;
 	});
 }
 
-export class Combat {
+export class Combat extends ClassSerializer {
 	cmbAbility = string<AbilityKey>('str');
 
 	meeleeAbility = string<AbilityKey>('str');
 
 	rangedAbility = string<AbilityKey>('dex');
 
-	sr = object(new SpellResistance());
+	sr = new SpellResistance();
 
-	bab = object(new BaseAttackBonus());
+	bab = new BaseAttackBonus();
 
-	cmb = object(new CombatManeuverBonus());
+	cmb = new CombatManeuverBonus();
 
-	cmd = object(new CombatManeuverDefense());
+	cmd = new CombatManeuverDefense();
 
-	attacks = array(() => object(new Attack()), []);
+	attacks = array(() => new Attack(), []);
 }

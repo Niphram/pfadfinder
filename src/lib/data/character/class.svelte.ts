@@ -1,4 +1,5 @@
-import { array, boolean, derive, enumeration, number, object, string } from '$lib/serde';
+import { array, boolean, derive, enumeration, number, string } from '$lib/serde';
+import { ClassSerializer } from '$lib/serde/class-serializer';
 import { mapSum } from '$lib/utils';
 import { Character } from './character.svelte';
 
@@ -11,7 +12,7 @@ export enum Dice {
 	D20 = 20,
 }
 
-export class Class {
+export class Class extends ClassSerializer {
 	name = string('Unnamed Class', { maxLength: 50 });
 
 	favored = boolean(false);
@@ -35,25 +36,25 @@ export class Class {
 	miscRanks = number(0);
 }
 
-export class Classes {
-	list = array(() => object(new Class()), [object(new Class())]);
+export class Classes extends ClassSerializer {
+	list = array(() => new Class(), [new Class()]);
 
-	readonly levels = $derived(mapSum(this.list.value, (c) => c.value.level.value));
+	readonly levels = $derived(mapSum(this.list.value, (c) => c.level.value));
 
-	readonly speed = $derived(mapSum(this.list.value, (c) => c.value.level.value));
+	readonly speed = $derived(mapSum(this.list.value, (c) => c.level.value));
 
-	readonly bab = $derived(mapSum(this.list.value, (c) => c.value.bab.value));
+	readonly bab = $derived(mapSum(this.list.value, (c) => c.bab.value));
 
-	readonly fort = $derived(mapSum(this.list.value, (c) => c.value.fort.value));
+	readonly fort = $derived(mapSum(this.list.value, (c) => c.fort.value));
 
-	readonly ref = $derived(mapSum(this.list.value, (c) => c.value.ref.value));
+	readonly ref = $derived(mapSum(this.list.value, (c) => c.ref.value));
 
-	readonly will = $derived(mapSum(this.list.value, (c) => c.value.will.value));
+	readonly will = $derived(mapSum(this.list.value, (c) => c.will.value));
 
 	readonly ranks = derive<Character>((c) => {
 		const classRanks = mapSum(
 			this.list.value,
-			(c) => c.value.levelRanks.value * c.value.level.value + c.value.miscRanks.value,
+			(c) => c.levelRanks.value * c.level.value + c.miscRanks.value,
 		);
 		return classRanks + c.int.mod * c.classes.levels;
 	});

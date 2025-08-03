@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Character } from '$lib/data';
 	import { getChar } from '$lib/data/context.svelte';
 	import { persisted } from '$lib/data/storage';
 	import { preventDefault } from '$lib/utils';

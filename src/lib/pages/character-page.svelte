@@ -8,12 +8,11 @@
 	import ClassDialog from '$lib/components/dialogs/class-dialog.svelte';
 	import RaceDialog from '$lib/components/dialogs/race-dialog.svelte';
 	import { getChar } from '$lib/data/context.svelte';
-	import { object } from '$lib/serde';
 
 	const { c } = $derived(getChar());
 
 	function addClass() {
-		c.classes.$list.value.push(object(new Class()));
+		c.classes.$list.value.push(new Class());
 
 		openDialog(ClassDialog, { classIndex: c.classes.list.length - 1 });
 	}

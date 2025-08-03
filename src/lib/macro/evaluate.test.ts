@@ -1,7 +1,5 @@
 import { describe, expect, test } from 'vitest';
 
-import { Derive, Macro } from '$lib/data/macros';
-
 import { evalNode } from './evaluate';
 import { Parser } from './parser';
 
@@ -45,16 +43,12 @@ describe('evaluateNode', () => {
 			foo: 1,
 		};
 		array = [2, 3, 4];
-		macro = new Macro('2+3');
-		derive = new Derive((c: TestChar) => c.nested.foo);
 	}
 
 	describe('Attributes', () => {
 		test.each([
 			['@nested.foo', 1],
 			['@array.1', 3],
-			['@macro', 5],
-			['@derive', 1],
 		])('Attribute "%s" should evaluate to %s', (input, expected) => {
 			const ast = Parser.parse(input);
 			const result = evalNode(ast, new TestChar());

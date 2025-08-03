@@ -1,5 +1,4 @@
-import { object } from '$lib/serde';
-import { DESERIALIZE_SYMBOL } from '$lib/serde/interfaces';
+import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
 import { charProxy, type SerdeProxy } from '$lib/serde/proxy';
 import { Character } from './character';
 
@@ -49,7 +48,8 @@ export function upgradeCharacterAndDeserialize(char: any) {
 		char.version = v + 1;
 	}
 
-	const deserializedChar = object(new Character())[DESERIALIZE_SYMBOL](char).value;
+	const deserializedChar = new Character();
+	deserializedChar[DESERIALIZE_SYMBOL](char);
 
 	const proxy = charProxy(deserializedChar);
 

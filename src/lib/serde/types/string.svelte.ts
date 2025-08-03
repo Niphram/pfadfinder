@@ -2,7 +2,7 @@ import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../inte
 import type { Option } from '../optional';
 
 export class StringWrapper<Values extends string, IsOptional extends boolean>
-	implements Serializable<StringWrapper<Values, IsOptional>>
+	implements Serializable
 {
 	value: Option<Values, IsOptional>;
 
@@ -17,12 +17,10 @@ export class StringWrapper<Values extends string, IsOptional extends boolean>
 		return this.value;
 	}
 
-	[DESERIALIZE_SYMBOL](value: unknown): StringWrapper<Values, IsOptional> {
+	[DESERIALIZE_SYMBOL](value: unknown) {
 		if (typeof value === 'string') {
 			this.value = value as Option<Values, IsOptional>;
 		}
-
-		return this;
 	}
 }
 

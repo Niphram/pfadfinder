@@ -1,9 +1,10 @@
 import { nanoid } from 'nanoid';
 
-import { array, boolean, derive, enumeration, macro, number, object, string } from '$lib/serde';
+import { array, boolean, derive, enumeration, macro, number, string } from '$lib/serde';
 import type { SerdeProxy } from '$lib/serde/proxy';
 import { mapSum, withSign } from '$lib/utils';
 
+import { ClassSerializer } from '$lib/serde/class-serializer';
 import { Character, type AbilityKey } from '.';
 
 export const SPELL_LEVELS = [
@@ -34,13 +35,13 @@ export const SPELL_ATTACK_TYPE = [
 ] as const;
 export type SpellAttackType = (typeof SPELL_ATTACK_TYPE)[number];
 
-export class SpellAttackDamage {
+export class SpellAttackDamage extends ClassSerializer {
 	damage = string('');
 
 	type = string('');
 }
 
-export class SpellAttack {
+export class SpellAttack extends ClassSerializer {
 	hasAttack = boolean(false);
 
 	type = enumeration<SpellAttackType>('none');
@@ -52,7 +53,7 @@ export class SpellAttack {
 	critMultiplier = number(2);
 }
 
-export class SpellSave {
+export class SpellSave extends ClassSerializer {
 	hasSave = boolean(false);
 
 	effect = string('');
@@ -60,7 +61,7 @@ export class SpellSave {
 	dcMod = number(0);
 }
 
-export class SpellCommonProps {
+export class SpellCommonProps extends ClassSerializer {
 	id = nanoid();
 
 	name = string('Unnamed Spell');
@@ -81,13 +82,13 @@ export class SpellCommonProps {
 
 	duration = string('');
 
-	savingThrow = object(new SpellSave());
+	readonly savingThrow = new SpellSave();
 
 	spellResistance = string('');
 
-	attack = object(new SpellAttack());
+	readonly attack = new SpellAttack();
 
-	damage = array(() => object(new SpellAttackDamage()), []);
+	damage = array(() => new SpellAttackDamage(), []);
 
 	description = string('');
 
@@ -175,8 +176,8 @@ export class SpellLikeAbility extends SpellCommonProps {
 			['Effect', this.effect.value],
 			[
 				'Saving Throw',
-				this.savingThrow.value.hasSave.value &&
-					`${this.savingThrow.value.effect.value} (DC ${this.savingThrow.value.dcMod.value})`,
+				this.savingThrow.hasSave.value &&
+					`${this.savingThrow.effect.value} (DC ${this.savingThrow.dcMod.value})`,
 			],
 			['Spell Resistance', this.spellResistance.value],
 		].filter((e) => !!e[1]),
@@ -187,7 +188,7 @@ export class SpellLikeAbility extends SpellCommonProps {
 	}
 }
 
-export class SpellLevelList {
+export class SpellLevelList extends ClassSerializer {
 	known = number(0);
 
 	perDay = number(0);
@@ -196,7 +197,7 @@ export class SpellLevelList {
 
 	dcBonus = number(0);
 
-	spells = array(() => object(new Spell()), []);
+	spells = array(() => new Spell(), []);
 
 	readonly dc = derive<Character>(
 		(c) => 10 + SPELL_LEVELS.indexOf(this.level)! + c.spells[this.level].known,
@@ -206,37 +207,39 @@ export class SpellLevelList {
 		(c) => c.spells[this.level].perDay + c.spells[this.level].perDayBonus,
 	);
 
-	readonly prepared = $derived(mapSum(this.spells.value, (s) => s.value.prepared.value));
+	readonly prepared = $derived(mapSum(this.spells.value, (s) => s.prepared.value));
 
-	readonly used = $derived(mapSum(this.spells.value, (s) => s.value.used.value));
+	readonly used = $derived(mapSum(this.spells.value, (s) => s.used.value));
 
-	constructor(private level: SpellLevel) {}
+	constructor(private level: SpellLevel) {
+		super();
+	}
 }
 
-export class Spells {
+export class Spells extends ClassSerializer {
 	dcAbility = enumeration<AbilityKey, true>(undefined);
 
 	dcBonus = macro('0');
 
-	level_0 = object(new SpellLevelList('level_0'));
+	readonly level_0 = new SpellLevelList('level_0');
 
-	level_1 = object(new SpellLevelList('level_1'));
+	readonly level_1 = new SpellLevelList('level_1');
 
-	level_2 = object(new SpellLevelList('level_2'));
+	readonly level_2 = new SpellLevelList('level_2');
 
-	level_3 = object(new SpellLevelList('level_3'));
+	readonly level_3 = new SpellLevelList('level_3');
 
-	level_4 = object(new SpellLevelList('level_4'));
+	readonly level_4 = new SpellLevelList('level_4');
 
-	level_5 = object(new SpellLevelList('level_5'));
+	readonly level_5 = new SpellLevelList('level_5');
 
-	level_6 = object(new SpellLevelList('level_6'));
+	readonly level_6 = new SpellLevelList('level_6');
 
-	level_7 = object(new SpellLevelList('level_7'));
+	readonly level_7 = new SpellLevelList('level_7');
 
-	level_8 = object(new SpellLevelList('level_8'));
+	readonly level_8 = new SpellLevelList('level_8');
 
-	level_9 = object(new SpellLevelList('level_9'));
+	readonly level_9 = new SpellLevelList('level_9');
 
-	spellLikeAbilities = array(() => object(new SpellLikeAbility()), []);
+	readonly spellLikeAbilities = array(() => new SpellLikeAbility(), []);
 }

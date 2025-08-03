@@ -1,10 +1,11 @@
 import { derive, macro, number } from '$lib/serde';
+import { ClassSerializer } from '$lib/serde/class-serializer';
 import type { SerdeProxy } from '$lib/serde/proxy';
 import { mapSum } from '$lib/utils';
 
 import { Character } from './character.svelte';
 
-export class HitPoints {
+export class HitPoints extends ClassSerializer {
 	rolled = number(0);
 
 	bonus = macro('0');

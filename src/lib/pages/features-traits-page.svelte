@@ -9,20 +9,19 @@
 	import { Feat, Trait } from '$lib/data';
 	import { getChar } from '$lib/data/context.svelte';
 	import { t } from '$lib/i18n';
-	import { object } from '$lib/serde';
 	import { preventDefault } from '$lib/utils';
 	import { macroNotify } from '$lib/utils/notes';
 
 	const { c } = $derived(getChar());
 
 	function addFeat() {
-		c.$feats.value.push(object(new Feat()));
+		c.$feats.value.push(new Feat());
 
 		openDialog(FeatDialog, { index: c.feats.length - 1 });
 	}
 
 	function addTrait() {
-		c.$traits.value.push(object(new Trait()));
+		c.$traits.value.push(new Trait());
 
 		openDialog(TraitDialog, { index: c.traits.length - 1 });
 	}

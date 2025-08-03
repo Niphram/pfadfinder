@@ -1,6 +1,6 @@
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../interfaces';
 
-export class ArrayWrapper<T extends Serializable<T>> implements Serializable<ArrayWrapper<T>> {
+export class ArrayWrapper<T extends Serializable> implements Serializable {
 	value: T[];
 
 	factory: () => T;
@@ -14,15 +14,17 @@ export class ArrayWrapper<T extends Serializable<T>> implements Serializable<Arr
 		return this.value.map((v) => v[SERIALIZE_SYMBOL]());
 	}
 
-	[DESERIALIZE_SYMBOL](value: unknown): ArrayWrapper<T> {
+	[DESERIALIZE_SYMBOL](value: unknown) {
 		if (Array.isArray(value)) {
-			this.value = value.map((v) => this.factory()[DESERIALIZE_SYMBOL](v));
+			this.value = value.map((v) => {
+				const element = this.factory();
+				element[DESERIALIZE_SYMBOL](v);
+				return element;
+			});
 		}
-
-		return this;
 	}
 }
 
-export function array<T extends Serializable<T>>(factory: () => T, value?: T[]) {
+export function array<T extends Serializable>(factory: () => T, value?: T[]) {
 	return new ArrayWrapper<T>(value ?? [], factory);
 }

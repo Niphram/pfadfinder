@@ -1,8 +1,9 @@
 import { nanoid } from 'nanoid';
 
-import { array, boolean, number, object, string } from '$lib/serde';
+import { array, boolean, number, string } from '$lib/serde';
 import { mapMin, mapSum } from '$lib/utils';
 import type { SerdeProxy } from '$lib/serde/proxy';
+import { ClassSerializer } from '$lib/serde/class-serializer';
 
 export const ARMOR_TYPES = ['light', 'medium', 'heavy', 'shield', 'misc'] as const;
 export type ArmorType = (typeof ARMOR_TYPES)[number];
@@ -10,7 +11,7 @@ export type ArmorType = (typeof ARMOR_TYPES)[number];
 export const CHARGE_TYPES = ['none', 'perDay', 'total'] as const;
 export type ChargeType = (typeof CHARGE_TYPES)[number];
 
-export class Item {
+export class Item extends ClassSerializer {
 	id = nanoid();
 
 	name = string('Unnamed Item');
@@ -33,11 +34,11 @@ export class Item {
 
 	containerOpen = boolean(false);
 
-	children = array(() => object(new Item()), []);
+	children = array(() => new Item(), []);
 
 	readonly totalWeight: number = $derived(
 		this.quantity.value * this.weight.value +
-			(this.isContainer.value ? mapSum(this.children.value, (item) => item.value.totalWeight) : 0),
+			(this.isContainer.value ? mapSum(this.children.value, (item) => item.totalWeight) : 0),
 	);
 
 	recharge(this: SerdeProxy<Item>) {
@@ -47,7 +48,7 @@ export class Item {
 	}
 }
 
-export class AcItem {
+export class AcItem extends ClassSerializer {
 	id = nanoid();
 
 	name = string('Unnamed Item');
@@ -77,26 +78,22 @@ export class AcItem {
 	notes = string('', { maxLength: 1000 });
 }
 
-export class Equipment {
-	items = array(() => object(new Item()), []);
+export class Equipment extends ClassSerializer {
+	items = array(() => new Item(), []);
 
-	acItems = array(() => object(new AcItem()), []);
+	acItems = array(() => new AcItem(), []);
 
 	readonly acBonus = $derived(
-		mapSum(this.acItems.value, (i) => (i.value.equipped.value ? i.value.acBonus.value : 0)),
+		mapSum(this.acItems.value, (i) => (i.equipped.value ? i.acBonus.value : 0)),
 	);
 
 	readonly maxDexBonus = $derived(
-		mapMin(this.acItems.value, (i) => i.value.maxDexBonus.value ?? Infinity) ?? Infinity,
+		mapMin(this.acItems.value, (i) => i.maxDexBonus.value ?? Infinity) ?? Infinity,
 	);
 
-	readonly armorCheckPenalty = $derived(
-		mapSum(this.acItems.value, (i) => i.value.chkPenalty.value),
-	);
+	readonly armorCheckPenalty = $derived(mapSum(this.acItems.value, (i) => i.chkPenalty.value));
 
 	readonly totalWeight = $derived(
-		mapSum(this.items.value, (i) =>
-			!i.value.isContainer.value || i.value.equipped.value ? i.value.totalWeight : 0,
-		),
+		mapSum(this.items.value, (i) => (!i.isContainer.value || i.equipped.value ? i.totalWeight : 0)),
 	);
 }

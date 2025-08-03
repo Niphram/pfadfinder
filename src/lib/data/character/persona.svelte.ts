@@ -1,4 +1,5 @@
-import { number, object, string } from '$lib/serde';
+import { number, string } from '$lib/serde';
+import { ClassSerializer } from '$lib/serde/class-serializer';
 
 export const FACET_KEYS = [
 	'charm',
@@ -10,24 +11,24 @@ export const FACET_KEYS = [
 ] as const;
 export type FacetKey = (typeof FACET_KEYS)[number];
 
-class Facet {
+class Facet extends ClassSerializer {
 	rank = number(0);
 
 	notes = string('');
 }
 
-export class Persona {
-	charm = object(new Facet());
+export class Persona extends ClassSerializer {
+	charm = new Facet();
 
-	genius = object(new Facet());
+	genius = new Facet();
 
-	heroism = object(new Facet());
+	heroism = new Facet();
 
-	sacrifice = object(new Facet());
+	sacrifice = new Facet();
 
-	sagacity = object(new Facet());
+	sagacity = new Facet();
 
-	subterfuge = object(new Facet());
+	subterfuge = new Facet();
 
 	notes = string('');
 }

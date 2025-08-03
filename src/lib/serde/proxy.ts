@@ -6,7 +6,6 @@ import { Derive } from './types/derive.svelte';
 import { EnumWrapper } from './types/enum.svelte';
 import { Macro } from './types/macro.svelte';
 import { NumberWrapper } from './types/number.svelte';
-import { ObjectWrapper } from './types/object.svelte';
 import { StringWrapper } from './types/string.svelte';
 
 export type SerdeProxy<T> =
@@ -17,11 +16,9 @@ export type SerdeProxy<T> =
 	T extends EnumWrapper<any, boolean> ? T['value']
 	: // eslint-disable-next-line @typescript-eslint/no-explicit-any
 	T extends Derive<any> ? number
-	: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-	T extends Macro<any> ? number
+	: T extends Macro ? number
 	: T extends ArrayWrapper<infer A> ? SerdeProxy<A>[]
 	: T extends Array<infer A> ? SerdeProxy<A>[] & Record<`$${number}`, A>
-	: T extends ObjectWrapper<infer O> ? SerdeProxy<O>
 	: // eslint-disable-next-line @typescript-eslint/no-explicit-any
 	T extends (this: SerdeProxy<any>, ...args: infer Args) => infer R ? (...args: Args) => R
 	: T extends object ?
@@ -53,14 +50,14 @@ export function charProxy<T extends object>(char: T) {
 
 			if (isValueWrapper(property)) {
 				return property.value;
-			} else if (property instanceof ObjectWrapper) {
-				return this.nest(property.value);
 			} else if (property instanceof ArrayWrapper) {
 				return this.nest(property.value);
 			} else if (property instanceof Derive) {
 				return property.eval(dp);
 			} else if (property instanceof Macro) {
 				return property.eval(dp);
+			} else if (typeof property === 'object') {
+				return this.nest(property);
 			}
 
 			return property;
@@ -71,9 +68,6 @@ export function charProxy<T extends object>(char: T) {
 			const property = (target as any)[p];
 
 			if (isValueWrapper(property)) {
-				property.value = value;
-				return true;
-			} else if (property instanceof ObjectWrapper) {
 				property.value = value;
 				return true;
 			} else if (property instanceof ArrayWrapper) {

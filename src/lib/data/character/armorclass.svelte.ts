@@ -1,9 +1,10 @@
 import { derive, enumeration, macro, string } from '$lib/serde';
+import { ClassSerializer } from '$lib/serde/class-serializer';
 
 import type { AbilityKey } from './abilities.svelte';
 import { Character } from './character.svelte';
 
-export class ArmorClass {
+export class ArmorClass extends ClassSerializer {
 	primaryAbility = enumeration<AbilityKey>('dex');
 
 	secondaryAbility = enumeration<AbilityKey, true>(undefined);

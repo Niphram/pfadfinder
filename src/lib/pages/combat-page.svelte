@@ -1,26 +1,25 @@
 <script lang="ts">
-	import { withSign } from '$lib/utils/format';
 	import { Attack } from '$lib/data';
+	import { withSign } from '$lib/utils/format';
 
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
 	import { openDialog } from '$lib/components/dialog.svelte';
+	import AttackDialog from '$lib/components/dialogs/attack-dialog.svelte';
 	import BabDialog from '$lib/components/dialogs/bab-dialog.svelte';
 	import CmbDialog from '$lib/components/dialogs/cmb-dialog.svelte';
 	import CmdDialog from '$lib/components/dialogs/cmd-dialog.svelte';
 	import SrDialog from '$lib/components/dialogs/sr-dialog.svelte';
-	import { macroNotify } from '$lib/utils/notes';
-	import AttackDialog from '$lib/components/dialogs/attack-dialog.svelte';
-	import SortableList from '$lib/components/sortable-list.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
-	import { parseTextWithMacros } from '$lib/macro/text';
+	import SortableList from '$lib/components/sortable-list.svelte';
 	import { getChar } from '$lib/data/context.svelte';
+	import { parseTextWithMacros } from '$lib/macro/text';
 	import { preventDefault } from '$lib/utils';
-	import { object } from '$lib/serde';
+	import { macroNotify } from '$lib/utils/notes';
 
 	const { c } = $derived(getChar());
 
 	function addAttack() {
-		c.combat.$attacks.value.push(object(new Attack()));
+		c.combat.$attacks.value.push(new Attack());
 
 		openDialog(AttackDialog, { index: c.combat.attacks.length - 1 });
 	}
