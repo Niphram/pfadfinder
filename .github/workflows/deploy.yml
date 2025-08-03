@@ -1,8 +1,6 @@
 name: Deploy to GitHub Pages
 
-on:
-  push:
-    branches: ['main', 'master']
+on: push
 
 jobs:
   build_site:
@@ -48,6 +46,7 @@ jobs:
   deploy:
     needs: build_site
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
 
     permissions:
       pages: write
