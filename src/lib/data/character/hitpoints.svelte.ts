@@ -1,4 +1,5 @@
 import { derive, macro, number } from '$lib/serde';
+import type { SerdeProxy } from '$lib/serde/proxy';
 import { mapSum } from '$lib/utils';
 
 import { Character } from './character.svelte';
@@ -38,18 +39,18 @@ export class HitPoints {
 			this.bonus.eval(c),
 	);
 
-	heal(amount: number) {
-		this.damageTaken.value = Math.max(0, this.damageTaken.value - amount);
-		this.nonlethalDamage.value = Math.max(0, this.nonlethalDamage.value - amount);
+	heal(this: SerdeProxy<HitPoints>, amount: number) {
+		this.damageTaken = Math.max(0, this.damageTaken - amount);
+		this.nonlethalDamage = Math.max(0, this.nonlethalDamage - amount);
 	}
 
-	dealLethal(amount: number) {
-		const remaining = Math.max(0, amount - this.temp.value);
-		this.temp.value = Math.max(0, this.temp.value - amount);
-		this.damageTaken.value += remaining;
+	dealLethal(this: SerdeProxy<HitPoints>, amount: number) {
+		const remaining = Math.max(0, amount - this.temp);
+		this.temp = Math.max(0, this.temp - amount);
+		this.damageTaken += remaining;
 	}
 
-	dealNonlethal(amount: number) {
-		this.nonlethalDamage.value += amount;
+	dealNonlethal(this: SerdeProxy<HitPoints>, amount: number) {
+		this.nonlethalDamage += amount;
 	}
 }

@@ -25,7 +25,7 @@ export class Save {
 		(c) => c.classes[this.key] + c[this.ability.value].mod + c[this.key].bonus + c[this.key].misc,
 	);
 
-	constructor(private key: SaveKey) {
+	constructor(public readonly key: SaveKey) {
 		this.ability = enumeration(DefaultBaseAbility[key]);
 	}
 }

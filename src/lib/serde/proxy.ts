@@ -23,7 +23,7 @@ export type SerdeProxy<T> =
 	: T extends Array<infer A> ? SerdeProxy<A>[] & Record<`$${number}`, A>
 	: T extends ObjectWrapper<infer O> ? SerdeProxy<O>
 	: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-	T extends (...args: any) => any ? T
+	T extends (this: SerdeProxy<any>, ...args: infer Args) => infer R ? (...args: Args) => R
 	: T extends object ?
 		{ [K in keyof T]: SerdeProxy<T[K]> } & {
 			[K in Extract<keyof T, string> as `$${K}`]: T[K];
@@ -46,11 +46,6 @@ export function charProxy<T extends object>(char: T) {
 				const prop = p.slice(1);
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				return (target as any)[prop];
-			}
-
-			if (!Reflect.has(target, p)) {
-				console.error('?!?!', p);
-				return undefined;
 			}
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any

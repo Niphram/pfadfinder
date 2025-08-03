@@ -35,7 +35,7 @@
 
 <button
 	onclick={() => notify()}
-	oncontextmenu={preventDefault(() => openDialog(AbilityDialog, { key }))}
+	oncontextmenu={preventDefault(() => openDialog(AbilityDialog, { ability: c[key] }))}
 	class="btn h-min p-0"
 >
 	<div class="divide-base-100 flex w-full flex-col divide-y-2 text-center">

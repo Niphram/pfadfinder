@@ -83,9 +83,7 @@ export class SkillGroup {
 
 	readonly trained: boolean;
 
-	get ranks() {
-		return mapSum(this.skills.value, (skill) => skill.value.ranks.value);
-	}
+	readonly ranks = $derived(mapSum(this.skills.value, (skill) => skill.value.ranks.value));
 
 	constructor(key: SkillKey) {
 		this.skills.value = [object(new Skill(key))];

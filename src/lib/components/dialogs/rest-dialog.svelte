@@ -30,7 +30,7 @@
 		if (c.settings.rechargeSLA) c.spells.spellLikeAbilities.forEach((sla) => sla.recharge());
 
 		// Recharge all features/traits
-		if (c.settings.rechargeTraits) c.traits.forEach((trait) => trait.recharge(c));
+		if (c.settings.rechargeTraits) c.traits.forEach((trait) => trait.recharge());
 
 		// Recharge all items
 		if (c.settings.rechargeItems) rechargeItems(c.equipment.items);

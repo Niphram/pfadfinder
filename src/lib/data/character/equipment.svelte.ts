@@ -2,6 +2,7 @@ import { nanoid } from 'nanoid';
 
 import { array, boolean, number, object, string } from '$lib/serde';
 import { mapMin, mapSum } from '$lib/utils';
+import type { SerdeProxy } from '$lib/serde/proxy';
 
 export const ARMOR_TYPES = ['light', 'medium', 'heavy', 'shield', 'misc'] as const;
 export type ArmorType = (typeof ARMOR_TYPES)[number];
@@ -34,16 +35,14 @@ export class Item {
 
 	children = array(() => object(new Item()), []);
 
-	get totalWeight(): number {
-		return (
-			this.quantity.value * this.weight.value +
-			(this.isContainer.value ? mapSum(this.children.value, (item) => item.value.totalWeight) : 0)
-		);
-	}
+	readonly totalWeight: number = $derived(
+		this.quantity.value * this.weight.value +
+			(this.isContainer.value ? mapSum(this.children.value, (item) => item.value.totalWeight) : 0),
+	);
 
-	recharge() {
-		if (this.chargeType.value === 'perDay') {
-			this.remaining.value = this.perDay.value;
+	recharge(this: SerdeProxy<Item>) {
+		if (this.chargeType === 'perDay') {
+			this.remaining = this.perDay;
 		}
 	}
 }
@@ -83,21 +82,21 @@ export class Equipment {
 
 	acItems = array(() => object(new AcItem()), []);
 
-	get acBonus() {
-		return mapSum(this.acItems.value, (i) => (i.value.equipped.value ? i.value.acBonus.value : 0));
-	}
+	readonly acBonus = $derived(
+		mapSum(this.acItems.value, (i) => (i.value.equipped.value ? i.value.acBonus.value : 0)),
+	);
 
-	get maxDexBonus() {
-		return mapMin(this.acItems.value, (i) => i.value.maxDexBonus.value ?? Infinity) ?? Infinity;
-	}
+	readonly maxDexBonus = $derived(
+		mapMin(this.acItems.value, (i) => i.value.maxDexBonus.value ?? Infinity) ?? Infinity,
+	);
 
-	get armorCheckPenalty() {
-		return mapSum(this.acItems.value, (i) => i.value.chkPenalty.value);
-	}
+	readonly armorCheckPenalty = $derived(
+		mapSum(this.acItems.value, (i) => i.value.chkPenalty.value),
+	);
 
-	get totalWeight() {
-		return mapSum(this.items.value, (i) =>
+	readonly totalWeight = $derived(
+		mapSum(this.items.value, (i) =>
 			!i.value.isContainer.value || i.value.equipped.value ? i.value.totalWeight : 0,
-		);
-	}
+		),
+	);
 }

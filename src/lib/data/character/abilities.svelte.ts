@@ -30,7 +30,7 @@ export class Ability {
 
 	readonly skillCheckMod = this.mod;
 
-	constructor(private key: AbilityKey) {
+	constructor(public readonly key: AbilityKey) {
 		if (this.key === 'dex' || this.key === 'str') {
 			this.skillCheckMod = derive<Character>(
 				(c) => this.mod.eval(c) + c.equipment.armorCheckPenalty,

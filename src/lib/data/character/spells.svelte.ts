@@ -103,14 +103,14 @@ export class Spell extends SpellCommonProps {
 
 	components = string('');
 
-	details(level: number, c: SerdeProxy<Character>): [string, boolean][] {
+	details(this: SerdeProxy<Spell>, level: number, c: SerdeProxy<Character>): [string, boolean][] {
 		const dcAbility = c.spells.dcAbility;
 		const abilityDc = (dcAbility ? c[dcAbility].mod : 0) + c.spells.dcBonus;
-		const saveDc = 10 + level + this.savingThrow.value.dcMod.value + abilityDc;
+		const saveDc = 10 + level + this.savingThrow.dcMod + abilityDc;
 
-		let attackBonus = this.attack.value.mod.value;
+		let attackBonus = this.attack.mod;
 
-		switch (this.attack.value.type.value) {
+		switch (this.attack.type) {
 			case 'touch':
 				attackBonus += c.combat.bab.mod + c.str.mod;
 				break;
@@ -126,37 +126,30 @@ export class Spell extends SpellCommonProps {
 			case 'wis':
 			case 'int':
 			case 'cha':
-				attackBonus += c[this.attack.value.type.value].mod;
+				attackBonus += c[this.attack.type].mod;
 				break;
 			case 'none':
 		}
 
 		return [
-			['School', this.school.value],
-			['Casting Time', this.castingTime.value],
-			['Components', this.components.value],
-			['Range', this.range.value],
-			['Area', this.area.value],
-			['Targets', this.targets.value],
-			['Duration', this.duration.value],
-			['Effect', this.effect.value],
-			[
-				'Saving Throw',
-				this.savingThrow.value.hasSave.value &&
-					`${this.savingThrow.value.effect.value} (DC ${saveDc})`,
-			],
-			['Spell Resistance', this.spellResistance.value],
+			['School', this.school],
+			['Casting Time', this.castingTime],
+			['Components', this.components],
+			['Range', this.range],
+			['Area', this.area],
+			['Targets', this.targets],
+			['Duration', this.duration],
+			['Effect', this.effect],
+			['Saving Throw', this.savingThrow.hasSave && `${this.savingThrow.effect} (DC ${saveDc})`],
+			['Spell Resistance', this.spellResistance],
 			[
 				'Attack',
-				this.attack.value.hasAttack.value &&
-					`${withSign(attackBonus)} (${this.attack.value.type.value}) (Crit ≥${this.attack.value.critRange.value} for x${
-						this.attack.value.critMultiplier.value
+				this.attack.hasAttack &&
+					`${withSign(attackBonus)} (${this.attack.type}) (Crit ≥${this.attack.critRange} for x${
+						this.attack.critMultiplier
 					})`,
 			],
-			...this.damage.value.map((d, i) => [
-				`Damage #${i + 1}`,
-				`${d.value.damage.value} ${d.value.type.value}`,
-			]),
+			...this.damage.map((d, i) => [`Damage #${i + 1}`, `${d.damage} ${d.type}`]),
 		].filter((e) => !!e[1]) as [string, boolean][];
 	}
 }
@@ -171,8 +164,8 @@ export class SpellLikeAbility extends SpellCommonProps {
 
 	remaining = number(0);
 
-	get details() {
-		return [
+	readonly details = $derived(
+		[
 			['School', this.school.value],
 			['Casting Time', this.castingTime.value],
 			['Range', this.range.value],
@@ -186,11 +179,11 @@ export class SpellLikeAbility extends SpellCommonProps {
 					`${this.savingThrow.value.effect.value} (DC ${this.savingThrow.value.dcMod.value})`,
 			],
 			['Spell Resistance', this.spellResistance.value],
-		].filter((e) => !!e[1]);
-	}
+		].filter((e) => !!e[1]),
+	);
 
-	recharge() {
-		if (this.type.value === 'perDay') this.remaining.value = this.perDay.value;
+	recharge(this: SerdeProxy<SpellLikeAbility>) {
+		if (this.type === 'perDay') this.remaining = this.perDay;
 	}
 }
 
@@ -203,6 +196,8 @@ export class SpellLevelList {
 
 	dcBonus = number(0);
 
+	spells = array(() => object(new Spell()), []);
+
 	readonly dc = derive<Character>(
 		(c) => 10 + SPELL_LEVELS.indexOf(this.level)! + c.spells[this.level].known,
 	);
@@ -211,15 +206,9 @@ export class SpellLevelList {
 		(c) => c.spells[this.level].perDay + c.spells[this.level].perDayBonus,
 	);
 
-	get prepared() {
-		return mapSum(this.spells.value, (s) => s.value.prepared.value);
-	}
+	readonly prepared = $derived(mapSum(this.spells.value, (s) => s.value.prepared.value));
 
-	get used() {
-		return mapSum(this.spells.value, (s) => s.value.used.value);
-	}
-
-	spells = array(() => object(new Spell()), []);
+	readonly used = $derived(mapSum(this.spells.value, (s) => s.value.used.value));
 
 	constructor(private level: SpellLevel) {}
 }
