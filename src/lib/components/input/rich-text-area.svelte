@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ClassValue } from 'svelte/elements';
 
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { RangedProperties } from '$lib/text/ranged-properties';
 
 	export type RichInputTextProperties = {
@@ -47,7 +47,7 @@
 		computeTextStyle?.(value) ?? new RangedProperties(value.length),
 	);
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 </script>
 
 <div class="relative">
@@ -60,14 +60,14 @@
 		onscroll={synchronizeScroll}
 		spellcheck="false"
 		class={[
-			$c.settings.enableMacroHighlighting &&
+			c.settings.enableMacroHighlighting &&
 				'caret-base-content relative z-20 resize-none bg-transparent text-transparent',
 			commonClasses,
 			className,
 		]}
 	></textarea>
 
-	{#if $c.settings.enableMacroHighlighting}
+	{#if c.settings.enableMacroHighlighting}
 		<div
 			bind:this={renderEl}
 			class={[

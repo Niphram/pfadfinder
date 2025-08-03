@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
@@ -12,27 +12,27 @@
 
 	let { index }: Props = $props();
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	function deleteTrait() {
-		$c.traits.splice(index, 1);
-		$c.traits = $c.traits;
+		c.traits.splice(index, 1);
+		c.traits = c.traits;
 	}
 
 	$title = 'Feature/Trait';
 </script>
 
 <div class="flex flex-col gap-2">
-	{#if index < $c.traits.length}
+	{#if index < c.traits.length}
 		<Input
 			name="traitName"
 			label="Name"
 			placeholder="Type here"
-			bind:value={$c.traits[index].name}
+			bind:value={c.traits[index].name}
 		/>
 
 		<MacroInteger
-			bind:value={$c.traits[index].perDay.expr}
+			bind:value={c.traits[index].$perDay.expr}
 			name="traitPerDay"
 			label="Per Day"
 			placeholder="Uses per day"
@@ -43,7 +43,7 @@
 			name="traitDescription"
 			label="Description"
 			rows={10}
-			bind:value={$c.traits[index].description}
+			bind:value={c.traits[index].description}
 		/>
 	{/if}
 

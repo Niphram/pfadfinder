@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ARMOR_TYPES } from '$lib/data';
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { t } from '$lib/i18n';
 
 	import { title } from '../dialog.svelte';
@@ -17,7 +17,7 @@
 
 	let { index }: Props = $props();
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	const bonusKeys = [
 		'acBonus',
@@ -29,32 +29,31 @@
 	] as const;
 
 	function deleteAcItem() {
-		$c.equipment.acItems.splice(index, 1);
-		$c.equipment.acItems = $c.equipment.acItems;
+		c.equipment.acItems.splice(index, 1);
 	}
 
 	$title = 'Item';
 </script>
 
 <div class="flex flex-col gap-2">
-	{#if index < $c.equipment.acItems.length}
+	{#if index < c.equipment.acItems.length}
 		<Input
 			name="className"
 			label="Name"
 			placeholder="Type here"
-			bind:value={$c.equipment.acItems[index].name}
+			bind:value={c.equipment.acItems[index].name}
 		/>
 
 		<Toggle
 			name="itemEquipped"
 			label="Equipped?"
-			bind:checked={$c.equipment.acItems[index].equipped}
+			bind:checked={c.equipment.acItems[index].equipped}
 		/>
 
 		<div class="grid grid-cols-3 gap-2">
 			{#each bonusKeys as key (key)}
 				<Integer
-					bind:value={$c.equipment.acItems[index][key]}
+					bind:value={c.equipment.acItems[index][key]}
 					name="class{key}"
 					label={$t(`equipment.acBonuses.${key}.short`)}
 				/>
@@ -62,7 +61,7 @@
 		</div>
 
 		<Select
-			bind:value={$c.equipment.acItems[index].type}
+			bind:value={c.equipment.acItems[index].type}
 			name="itemType"
 			label="Type"
 			options={ARMOR_TYPES}
@@ -74,25 +73,25 @@
 
 		<div class="grid grid-cols-3 gap-2">
 			<Integer
-				bind:value={$c.equipment.acItems[index].chkPenalty}
+				bind:value={c.equipment.acItems[index].chkPenalty}
 				noPositive
 				name="chkPenalty"
 				label={$t(`equipment.penalties.chkPenalty.short`)}
 			/>
 			<OptionalInteger
-				bind:value={$c.equipment.acItems[index].maxDexBonus}
+				bind:value={c.equipment.acItems[index].maxDexBonus}
 				name="maxDexBonus"
 				label={$t(`equipment.penalties.maxDexBonus.short`)}
 			/>
 			<Integer
-				bind:value={$c.equipment.acItems[index].spellFailure}
+				bind:value={c.equipment.acItems[index].spellFailure}
 				name="spellFailure"
 				label={$t(`equipment.penalties.spellFailure.short`)}
 			/>
 		</div>
 
 		<MacroTextArea
-			bind:value={$c.equipment.acItems[index].notes}
+			bind:value={c.equipment.acItems[index].notes}
 			name="acItemNotes"
 			placeholder="Notes"
 			label="Notes"

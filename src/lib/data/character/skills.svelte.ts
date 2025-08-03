@@ -163,4 +163,6 @@ export class SkillList {
 	swim = object(new SkillGroup('swim'));
 
 	useMagicDevice = object(new SkillGroup('useMagicDevice'));
+
+	readonly skillRanks = $derived(mapSum(SKILL_KEYS, (key) => this[key].value.ranks));
 }

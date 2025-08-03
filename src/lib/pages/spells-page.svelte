@@ -12,32 +12,31 @@
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import { SPELL_LEVELS, Spell, SpellLikeAbility, type SpellLevel } from '$lib/data';
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { t } from '$lib/i18n';
+	import { object } from '$lib/serde';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	function openConfigDialog() {
 		openDialog(SpellLevelDialog, {});
 	}
 
 	function addSpell(level: SpellLevel) {
-		$c.spells[level].spells.push(new Spell());
-		$c.spells[level].spells = $c.spells[level].spells;
+		c.spells[level].$spells.value.push(object(new Spell()));
 	}
 
 	function addSLA() {
-		$c.spells.spellLikeAbilities.push(new SpellLikeAbility());
-		$c.spells.spellLikeAbilities = $c.spells.spellLikeAbilities;
+		c.spells.$spellLikeAbilities.value.push(object(new SpellLikeAbility()));
 	}
 
 	function castSpell(level: SpellLevel, index: number) {
-		$c.spells[level].spells[index].used++;
+		c.spells[level].spells[index].used++;
 	}
 
 	function castSla(index: number) {
-		if ($c.spells.spellLikeAbilities[index].remaining > 0)
-			$c.spells.spellLikeAbilities[index].remaining--;
+		if (c.spells.spellLikeAbilities[index].remaining > 0)
+			c.spells.spellLikeAbilities[index].remaining--;
 	}
 </script>
 
@@ -48,19 +47,19 @@
 	</Divider>
 
 	{#each SPELL_LEVELS as level, idx (level)}
-		{#if $c.spells[level].perDay > 0}
+		{#if c.spells[level].perDay > 0}
 			<Divider>
 				{$t(`spell.level.${level}`)}
 				<Button size="xs" color="secondary" onclick={() => addSpell(level)}>Add</Button>
 			</Divider>
 
 			<div class="mb-2 flex flex-row justify-center gap-2">
-				<div class="badge badge-primary">Used: {$c.spells[level].used}</div>
+				<div class="badge badge-primary">Used: {c.spells[level].used}</div>
 				<div class="badge badge-secondary">
-					Per Day: {$c.spells[level].totalPerDay.eval($c)}
+					Per Day: {c.spells[level].totalPerDay}
 				</div>
 				<div class="badge badge-neutral badge-outline">
-					Prepared: {$c.spells[level].prepared}
+					Prepared: {c.spells[level].prepared}
 				</div>
 			</div>
 
@@ -72,7 +71,7 @@
 					animation: 150,
 					easing: 'cubic-bezier(1, 0, 0, 1)',
 				}}
-				bind:items={$c.spells[level].spells}
+				bind:items={c.spells[level].spells}
 				keyProp="id"
 			>
 				{#snippet fallback()}
@@ -110,7 +109,7 @@
 							<div
 								class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
 							>
-								{#each spell.details(idx, $c) as [label, value], i (i)}
+								{#each spell.details(idx, c) as [label, value], i (i)}
 									<div>{label}</div>
 									<div>{value}</div>
 								{/each}
@@ -143,7 +142,7 @@
 			animation: 150,
 			easing: 'cubic-bezier(1, 0, 0, 1)',
 		}}
-		bind:items={$c.spells.spellLikeAbilities}
+		bind:items={c.spells.spellLikeAbilities}
 		keyProp="id"
 	>
 		{#snippet fallback()}

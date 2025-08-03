@@ -1,17 +1,19 @@
-import { writable } from 'svelte/store';
-
-import type { LayoutLoad } from './$types';
-import type { Character } from '$lib/data';
 import { error } from '@sveltejs/kit';
+
+import { Character } from '$lib/data';
+import type { LayoutLoad } from './$types';
 
 export const load: LayoutLoad = async ({ params, parent }) => {
 	const { db } = await parent();
 
-	const char = await db.getCharacterById(params.id);
+	console.log(db, params);
 
-	if (!char) error(404, { message: 'Character not found!' });
+	// TODO!
+	const character = new Character(); //await db.getCharacterById(params.id);
+
+	if (!character) error(404, { message: 'Character not found!' });
 
 	return {
-		character: writable<Character>(char),
+		character,
 	};
 };

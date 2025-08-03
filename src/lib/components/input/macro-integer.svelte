@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { evalNode } from '$lib/macro/evaluate';
 	import { Parser } from '$lib/macro/parser';
 	import { computeMacroStyle } from '$lib/text/macro-text-style';
 	import Fieldset from './fieldset.svelte';
 	import RichInput from './rich-input.svelte';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	interface Props {
 		noNegatives?: boolean;
@@ -31,7 +31,7 @@
 	}: Props = $props();
 
 	let current = $state(value);
-	let parsed = $derived(evalNode(Parser.parse(current), $c));
+	let parsed = $derived(evalNode(Parser.parse(current), c));
 
 	let valid = $derived(
 		(!current && optional) ||

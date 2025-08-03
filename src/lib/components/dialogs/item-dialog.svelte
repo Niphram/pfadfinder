@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { CHARGE_TYPES, Item } from '$lib/data';
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { t } from '$lib/i18n';
 
 	import { title } from '../dialog.svelte';
@@ -18,41 +18,43 @@
 
 	let { list = $bindable([]), index }: Props = $props();
 
-	const { c } = getChar();
-
-	function updateItems() {
-		$c = $c;
-	}
+	const { c } = $derived(getChar());
 
 	function deleteItem() {
 		list.splice(index, 1);
-		list = list;
 	}
 
 	$title = 'Item';
-	$effect.pre(() => {
-		list && updateItems();
-	});
 </script>
 
 <div class="flex flex-col gap-2">
 	{#if index < list.length}
-		<Input name="itemName" label="Name" placeholder="Type here" bind:value={list[index].name} />
+		<Input
+			name="itemName"
+			label="Name"
+			placeholder="Type here"
+			bind:value={list[index].name.value}
+		/>
 
 		<div class="flex flex-row gap-2">
-			<Integer bind:value={list[index].quantity} name="itemQuantity" label="Quantity" noNegatives />
-			<Number bind:value={list[index].weight} name="itemWeight" label="Weight" />
+			<Integer
+				bind:value={list[index].quantity.value}
+				name="itemQuantity"
+				label="Quantity"
+				noNegatives
+			/>
+			<Number bind:value={list[index].weight.value} name="itemWeight" label="Weight" />
 		</div>
 
 		<Toggle
 			name="isContainer"
 			label="Container?"
-			bind:checked={list[index].isContainer}
-			disabled={list[index].children.length > 0 || list !== $c.equipment.items}
+			bind:checked={list[index].isContainer.value}
+			disabled={list[index].children.value.length > 0 || list !== c.equipment.items}
 		/>
 
 		{#if list[index].isContainer}
-			<Toggle name="isEquipped" label="Equipped?" bind:checked={list[index].equipped} />
+			<Toggle name="isEquipped" label="Equipped?" bind:checked={list[index].equipped.value} />
 		{/if}
 
 		<div class="divider mb-0">
@@ -66,29 +68,29 @@
 			</div>
 		</div>
 
-		{#if list[index].chargeType !== 'none'}
+		{#if list[index].chargeType.value !== 'none'}
 			<div class="flex flex-row gap-2">
 				<Integer
 					label="Remaining charges"
 					name="itemCharges"
 					noNegatives
-					bind:value={list[index].remaining}
+					bind:value={list[index].remaining.value}
 				/>
 
-				{#if list[index].chargeType === 'perDay'}
+				{#if list[index].chargeType.value === 'perDay'}
 					<Integer
 						label="Per Day"
 						name="itemChargesPerDay"
 						noNegatives
 						noZero
-						bind:value={list[index].perDay}
+						bind:value={list[index].perDay.value}
 					/>
 				{/if}
 			</div>
 		{/if}
 
 		<MacroTextArea
-			bind:value={list[index].description}
+			bind:value={list[index].description.value}
 			name="itemNotes"
 			placeholder="Description"
 			label="Description"

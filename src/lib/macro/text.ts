@@ -1,11 +1,12 @@
 import type { Character } from '$lib/data';
+import type { SerdeProxy } from '$lib/serde/proxy';
 
 import { evalNode } from './evaluate';
 import { Parser } from './parser';
 
 const MACRO = /{{(.*?)}}/g;
 
-export function parseTextWithMacros(input: string, char: Character): string {
+export function parseTextWithMacros(input: string, char: SerdeProxy<Character>): string {
 	const parsed = input.replaceAll(MACRO, (match) => {
 		const macro = match.substring(2, match.length - 2);
 

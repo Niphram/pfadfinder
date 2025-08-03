@@ -2,18 +2,18 @@
 	import { DeserializeInto, Serialize } from 'cerialize';
 
 	import { Character } from '$lib/data';
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { preventDefault } from '$lib/utils';
 
 	import { title } from '../dialog.svelte';
 	import Steps from '../steps.svelte';
 
-	const { c, overwriteSave } = getChar();
+	const { c } = $derived(getChar());
 
 	$title = 'Import/Export';
 
 	function download() {
-		const file = new File([JSON.stringify(Serialize($c))], `${$c.name}.json`, {
+		const file = new File([JSON.stringify(Serialize(c))], `${c.name}.json`, {
 			type: 'application/json',
 		});
 
@@ -45,7 +45,8 @@
 			const newChar = new Character();
 			DeserializeInto(JSON.parse(fileContent), Character, newChar);
 
-			await overwriteSave(newChar);
+			// TODO!
+			//await overwriteSave(newChar);
 
 			location.reload();
 		} catch (_err) {

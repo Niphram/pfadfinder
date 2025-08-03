@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { evalNode } from '$lib/macro/evaluate';
 	import { Parser } from '$lib/macro/parser';
 
@@ -9,10 +9,10 @@
 
 	let { expr }: Props = $props();
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	let node = $derived(Parser.parse(expr));
-	let result = $derived(evalNode(node, $c));
+	let result = $derived(evalNode(node, c));
 </script>
 
 {result}

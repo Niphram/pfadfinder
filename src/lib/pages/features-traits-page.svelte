@@ -7,34 +7,33 @@
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import { Feat, Trait } from '$lib/data';
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { t } from '$lib/i18n';
+	import { object } from '$lib/serde';
 	import { preventDefault } from '$lib/utils';
 	import { macroNotify } from '$lib/utils/notes';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	function addFeat() {
-		$c.feats.push(new Feat());
-		$c.feats = $c.feats;
+		c.$feats.value.push(object(new Feat()));
 
-		openDialog(FeatDialog, { index: $c.feats.length - 1 });
+		openDialog(FeatDialog, { index: c.feats.length - 1 });
 	}
 
 	function addTrait() {
-		$c.traits.push(new Trait());
-		$c.traits = $c.traits;
+		c.$traits.value.push(object(new Trait()));
 
-		openDialog(TraitDialog, { index: $c.traits.length - 1 });
+		openDialog(TraitDialog, { index: c.traits.length - 1 });
 	}
 
 	function useTrait(index: number) {
-		if ($c.traits[index].remaining > 0) $c.traits[index].remaining--;
+		if (c.traits[index].remaining > 0) c.traits[index].remaining--;
 	}
 
 	function refillTrait(index: number) {
-		if ($c.traits[index].perDay.expr) {
-			$c.traits[index].remaining = $c.traits[index].perDay.eval($c);
+		if (c.traits[index].$perDay.expr) {
+			c.traits[index].remaining = c.traits[index].perDay;
 		}
 	}
 </script>
@@ -48,7 +47,7 @@
 	</div>
 
 	<SortableList
-		bind:items={$c.feats}
+		bind:items={c.feats}
 		options={{
 			group: 'feats',
 			handle: '.drag-handle',
@@ -104,7 +103,7 @@
 	</div>
 
 	<SortableList
-		bind:items={$c.traits}
+		bind:items={c.traits}
 		options={{
 			group: 'traits',
 			handle: '.drag-handle',
@@ -122,18 +121,18 @@
 				<div class="flex grow flex-row items-stretch gap-2">
 					<button
 						class="btn btn-sm md:btn-md flex-1"
-						onclick={() => macroNotify(item.name, item.description, $c)}
+						onclick={() => macroNotify(item.name, item.description, c)}
 						oncontextmenu={preventDefault(() => openDialog(TraitDialog, { index }))}
 					>
 						{item.name}
 					</button>
-					{#if item.perDay.expr}
+					{#if item.$perDay.expr}
 						<button
 							class="btn btn-accent btn-sm md:btn-md w-32"
 							onclick={() => useTrait(index)}
 							oncontextmenu={preventDefault(() => refillTrait(index))}
 						>
-							{item.remaining}/{item.perDay.eval($c)} per day
+							{item.remaining}/{item.perDay} per day
 						</button>
 					{/if}
 				</div>

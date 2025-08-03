@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { t } from '$lib/i18n';
 
 	import { closeDialog, openDialog, title } from '../dialog.svelte';
@@ -7,17 +7,17 @@
 	import RestDialog from './rest-dialog.svelte';
 	import SettingsDialog from './settings-dialog.svelte';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	let navButtons = $derived([
 		{ key: 'abilities', active: true },
 		{ key: 'combat', active: true },
 		{ key: 'skills', active: true },
-		{ key: 'spells', active: $c.settings.showMagicPage },
+		{ key: 'spells', active: c.settings.showMagicPage },
 		{ key: 'features_traits', active: true },
 		{ key: 'equipment', active: true },
 		{ key: 'character', active: true },
-		{ key: 'persona', active: $c.settings.usePersonaSystem },
+		{ key: 'persona', active: c.settings.usePersonaSystem },
 	] as const);
 
 	$title = '';

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ABILITY_KEYS, type SaveKey } from '$lib/data';
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { t } from '$lib/i18n';
 
 	import { title } from '../dialog.svelte';
@@ -14,7 +14,7 @@
 
 	let { key = 'fort' }: Props = $props();
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	$title = $t(`saves.${key}.full`);
 </script>
@@ -23,14 +23,14 @@
 	name="saveBaseAbility"
 	label="Base Ability"
 	options={ABILITY_KEYS}
-	bind:value={$c[key].ability}
+	bind:value={c[key].ability}
 >
 	{#snippet children({ option: key })}
 		<option value={key}>{$t(`abilities.${key}.full`)}</option>
 	{/snippet}
 </Select>
 
-<MacroInteger bind:value={$c[key].misc.expr} name="saveMisc" label="Misc" />
-<MacroInteger bind:value={$c[key].bonus.expr} name="saveBonus" label="Temp Mod" />
+<MacroInteger bind:value={c[key].$misc.expr} name="saveMisc" label="Misc" />
+<MacroInteger bind:value={c[key].$bonus.expr} name="saveBonus" label="Temp Mod" />
 
-<MacroTextArea bind:value={$c[key].notes} name="saveNotes" label="Notes" placeholder="Notes" />
+<MacroTextArea bind:value={c[key].notes} name="saveNotes" label="Notes" placeholder="Notes" />

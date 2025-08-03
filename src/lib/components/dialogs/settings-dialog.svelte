@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Character } from '$lib/data';
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { persisted } from '$lib/data/storage';
 	import { preventDefault } from '$lib/utils';
 	import { openDialog, title } from '../dialog.svelte';
@@ -10,25 +10,25 @@
 	import MacroDebugDialog from './debug/macro-debug-dialog.svelte';
 	import ImportExportDialog from './import-export-dialog.svelte';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	$title = 'Settings';
 </script>
 
 <Toggle name="darkMode" label="Dark mode" checked={$isDarkMode} onchange={toggleDarkMode} />
 
-<Toggle name="magicPage" label="Show Magic Page" bind:checked={$c.settings.showMagicPage} />
+<Toggle name="magicPage" label="Show Magic Page" bind:checked={c.settings.showMagicPage} />
 
 <Toggle
 	name="personaSystem"
 	label="Use Persona System"
-	bind:checked={$c.settings.usePersonaSystem}
+	bind:checked={c.settings.usePersonaSystem}
 />
 
 <Toggle
 	name="syntaxHighlighting"
 	label="Enable Macro Highlighting"
-	bind:checked={$c.settings.enableMacroHighlighting}
+	bind:checked={c.settings.enableMacroHighlighting}
 />
 
 <div>Persistent storage: {$persisted}</div>
@@ -36,13 +36,13 @@
 <Toggle
 	name="experimental"
 	label="Enable experimental features"
-	bind:checked={$c.settings.experimentalFeatures}
+	bind:checked={c.settings.experimentalFeatures}
 />
 
 <div class="divider">Danger</div>
 
 <div class="flex flex-col gap-4">
-	{#if $c.settings.experimentalFeatures}
+	{#if c.settings.experimentalFeatures}
 		<button
 			class="btn btn-secondary w-full"
 			onclick={preventDefault(() => openDialog(MacroDebugDialog, {}))}>Macro debugger</button
@@ -62,7 +62,8 @@
 				label: 'REALLY SURE???',
 				style: { error: true },
 				onClick: () => {
-					c.set(new Character());
+					// TODO!
+					//c.set(new Character());
 				},
 			},
 		]}

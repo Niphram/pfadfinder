@@ -14,22 +14,22 @@
 	import TextArea from '$lib/components/input/text-area.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import NestedEquipmentList from '$lib/nested-equipment-list.svelte';
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
+	import { object } from '$lib/serde';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	function addItem() {
-		$c.equipment.items.push(new Item());
-		$c.equipment.items = $c.equipment.items;
+		c.equipment.$items.value.push(object(new Item()));
 
-		openDialog(ItemDialog, { list: $c.equipment.items, index: $c.equipment.items.length - 1 });
+		// TODO!
+		//openDialog(ItemDialog, { list: c.equipment.items, index: c.equipment.items.length - 1 });
 	}
 
 	function addAcItem() {
-		$c.equipment.acItems.push(new AcItem());
-		$c.equipment.acItems = $c.equipment.acItems;
+		c.equipment.$acItems.value.push(object(new AcItem()));
 
-		openDialog(AcItemDialog, { index: $c.equipment.acItems.length - 1 });
+		openDialog(AcItemDialog, { index: c.equipment.acItems.length - 1 });
 	}
 </script>
 
@@ -37,23 +37,23 @@
 	<div class="divider mb-0">Money</div>
 
 	<div class="flex flex-row gap-2">
-		<Integer bind:value={$c.money.cp} label="CP" name="cp" placeholder="Copper" />
-		<Integer bind:value={$c.money.sp} label="SP" name="sp" placeholder="Silver" />
-		<Integer bind:value={$c.money.gp} label="GP" name="gp" placeholder="Gold" />
-		<Integer bind:value={$c.money.pp} label="PP" name="pp" placeholder="Platinum" />
+		<Integer bind:value={c.money.cp} label="CP" name="cp" placeholder="Copper" />
+		<Integer bind:value={c.money.sp} label="SP" name="sp" placeholder="Silver" />
+		<Integer bind:value={c.money.gp} label="GP" name="gp" placeholder="Gold" />
+		<Integer bind:value={c.money.pp} label="PP" name="pp" placeholder="Platinum" />
 	</div>
 
-	<TextArea bind:value={$c.money.notes} name="valuables" placeholder="Other Valuables" rows={1} />
+	<TextArea bind:value={c.money.notes} name="valuables" placeholder="Other Valuables" rows={1} />
 
 	<div class="divider">
 		<div class="flex flex-row items-center gap-2">
 			Gear
-			<div class="badge badge-neutral badge-outline">{$c.equipment.totalWeight} lb.</div>
+			<div class="badge badge-neutral badge-outline">{c.equipment.totalWeight} lb.</div>
 			<button class="btn btn-secondary btn-xs" onclick={addItem}>Add</button>
 		</div>
 	</div>
 
-	<NestedEquipmentList bind:items={$c.equipment.items}></NestedEquipmentList>
+	<NestedEquipmentList bind:items={c.equipment.items}></NestedEquipmentList>
 
 	<div class="divider">
 		<div class="flex flex-row gap-2">
@@ -63,7 +63,7 @@
 	</div>
 
 	<SortableList
-		bind:items={$c.equipment.acItems}
+		bind:items={c.equipment.acItems}
 		options={{
 			group: 'ac-items',
 			handle: '.drag-handle',
@@ -82,7 +82,7 @@
 				</div>
 				<button
 					class="btn btn-sm md:btn-md min-w-0 flex-auto truncate"
-					onclick={() => macroNotify(item.name, item.notes, $c)}
+					onclick={() => macroNotify(item.name, item.notes, c)}
 					oncontextmenu={preventDefault(() => openDialog(AcItemDialog, { index }))}
 				>
 					<span class="truncate" class:underline={item.equipped}>

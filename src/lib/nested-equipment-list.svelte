@@ -8,12 +8,12 @@
 
 	import SortableList from './components/sortable-list.svelte';
 	import { type Item } from './data';
-	import { getChar } from './data/context';
+	import { getChar } from './data/context.svelte';
 	import { t } from './i18n';
 	import { macroNotify } from './utils/notes';
 	import { preventDefault, stopPropagation } from './utils';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	interface Props {
 		items: Item[];
@@ -31,7 +31,7 @@
 
 	// If the moved item is a container and the target is another container, block move
 	function onMove(item: Item, target: Item[]) {
-		return !item.isContainer || target === $c.equipment.items;
+		return !item.isContainer || target === c.equipment.items;
 	}
 </script>
 
@@ -61,9 +61,7 @@
 				{#if !props.item.isContainer}
 					<button
 						class="btn btn-sm md:btn-md min-w-0 flex-auto truncate"
-						onclick={stopPropagation(() =>
-							macroNotify(props.item.name, props.item.description, $c),
-						)}
+						onclick={stopPropagation(() => macroNotify(props.item.name, props.item.description, c))}
 						oncontextmenu={stopPropagation(
 							preventDefault(() => openDialog(ItemDialog, { list: items, index: props.index })),
 						)}

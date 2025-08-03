@@ -1,41 +1,40 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-
-	import { openDialog } from '$lib/components/dialog.svelte';
-
-	import AbilitiesPage from '$lib/pages/abilities-page.svelte';
-	import CharacterPage from '$lib/pages/character-page.svelte';
-	import CombatPage from '$lib/pages/combat-page.svelte';
-	import FeaturesTraitsPage from '$lib/pages/features-traits-page.svelte';
-	import SkillsPage from '$lib/pages/skills-page.svelte';
-	import SpellsPage from '$lib/pages/spells-page.svelte';
-
 	import HpButton from '$lib/components/buttons/hp-button.svelte';
-
+	import { openDialog } from '$lib/components/dialog.svelte';
 	import CharacterInfoDialog from '$lib/components/dialogs/character-info-dialog.svelte';
 	import HpDialog from '$lib/components/dialogs/hp-dialog.svelte';
 	import PageDialog from '$lib/components/dialogs/page-dialog.svelte';
+	import { getChar } from '$lib/data/context.svelte';
+	import { t } from '$lib/i18n';
+	import AbilitiesPage from '$lib/pages/abilities-page.svelte';
+	import CharacterPage from '$lib/pages/character-page.svelte';
+	import CombatPage from '$lib/pages/combat-page.svelte';
 	import EquipmentPage from '$lib/pages/equipment-page.svelte';
+	import FeaturesTraitsPage from '$lib/pages/features-traits-page.svelte';
 	import PersonaPage from '$lib/pages/persona-page.svelte';
-	import { getChar } from '$lib/data/context';
+	import SkillsPage from '$lib/pages/skills-page.svelte';
+	import SpellsPage from '$lib/pages/spells-page.svelte';
+	import { readable } from 'svelte/store';
 
-	const { c, dirty } = getChar();
+	const { c } = $derived(getChar());
+
+	const dirty = readable(false);
 
 	let pages = $derived([
 		{ key: 'abilities', component: AbilitiesPage, active: true },
 		{ key: 'combat', component: CombatPage, active: true },
 		{ key: 'skills', component: SkillsPage, active: true },
-		{ key: 'spells', component: SpellsPage, active: $c.settings.showMagicPage },
+		{ key: 'spells', component: SpellsPage, active: c.settings.showMagicPage },
 		{ key: 'features_traits', component: FeaturesTraitsPage, active: true },
 		{ key: 'equipment', component: EquipmentPage, active: true },
 		{ key: 'character', component: CharacterPage, active: true },
-		{ key: 'persona', component: PersonaPage, active: $c.settings.usePersonaSystem },
+		{ key: 'persona', component: PersonaPage, active: c.settings.usePersonaSystem },
 	] as const);
 </script>
 
 <svelte:head>
 	<title>
-		{$c.name}{$dirty ? ` (${$t('texts.general.unsaved')})` : ''}
+		{c.name}{$dirty ? ` (${$t('texts.general.unsaved')})` : ''}
 	</title>
 </svelte:head>
 
@@ -45,10 +44,10 @@
 			<button class="grow text-left" onclick={() => openDialog(CharacterInfoDialog, {})}>
 				<div class="flex flex-col">
 					<p class="text-lg font-bold">
-						{$c.name} <span class="text-sm font-normal">(Lvl. {$c.classes.levels})</span>
+						{c.name} <span class="text-sm font-normal">(Lvl. {c.classes.levels})</span>
 					</p>
 					<span class="text-sm">
-						{$c.classes.list.map((c) => `${c.name} ${c.level}`).join(', ')}
+						{c.classes.list.map((c) => `${c.name} ${c.level}`).join(', ')}
 					</span>
 				</div>
 			</button>

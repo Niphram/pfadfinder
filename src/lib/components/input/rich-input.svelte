@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ClassValue } from 'svelte/elements';
 
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { RangedProperties } from '$lib/text/ranged-properties';
 
 	export type RichInputTextProperties = {
@@ -44,7 +44,7 @@
 		computeTextStyle?.(value) ?? new RangedProperties(value.length),
 	);
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 </script>
 
 <div class="relative">
@@ -55,14 +55,14 @@
 		{placeholder}
 		onscroll={synchronizeScroll}
 		class={[
-			$c.settings.enableMacroHighlighting &&
+			c.settings.enableMacroHighlighting &&
 				'caret-base-content z-10 bg-transparent text-transparent',
 			commonClasses,
 			className,
 		]}
 	/>
 
-	{#if $c.settings.enableMacroHighlighting}
+	{#if c.settings.enableMacroHighlighting}
 		<div class={['absolute top-0 left-0 z-0', commonClasses, className]}>
 			<div bind:this={renderEl} class="overflow-hidden whitespace-pre">
 				{#each textStyle.spans as { start, length, props }, i (i)}

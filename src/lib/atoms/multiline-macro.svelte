@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { parseTextWithMacros } from '$lib/macro/text';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	interface Props {
 		text: string;
@@ -12,7 +12,7 @@
 
 	let { text, element = 'p', class: className = undefined }: Props = $props();
 
-	let parsed = $derived(parseTextWithMacros(text, $c));
+	let parsed = $derived(parseTextWithMacros(text, c));
 	let lines = $derived(parsed.split('\n').filter((line) => line.trim().length > 0));
 </script>
 

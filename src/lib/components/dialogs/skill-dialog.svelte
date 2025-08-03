@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ABILITY_KEYS, type SkillKey } from '$lib/data';
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { t } from '$lib/i18n';
 
 	import { title } from '../dialog.svelte';
@@ -18,11 +18,15 @@
 
 	let { key = 'acrobatics', index = 0 }: Props = $props();
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
-	let variant = $c.skills[key].skills[index].name ? ` (${$c.skills[key].skills[index].name})` : '';
+	let variant = $derived(
+		c.skills[key].skills[index].name ? ` (${c.skills[key].skills[index].name})` : '',
+	);
 
-	$title = $t(`skills.${key}`) + variant;
+	$effect(() => {
+		$title = $t(`skills.${key}`) + variant;
+	});
 </script>
 
 <div class="flex flex-row gap-2">
@@ -30,14 +34,14 @@
 		class="max-w-min"
 		name="classSkill"
 		label="C?"
-		bind:checked={$c.skills[key].skills[index].classSkill}
+		bind:checked={c.skills[key].skills[index].classSkill}
 	/>
 
 	<Select
 		name="skillBaseAbility"
 		label="Base Ability"
 		options={ABILITY_KEYS}
-		bind:value={$c.skills[key].skills[index].ability}
+		bind:value={c.skills[key].skills[index].ability}
 		size="small"
 	>
 		{#snippet children({ option: key })}
@@ -49,21 +53,21 @@
 <Toggle
 	name="armorPenalty"
 	label="Armor Penalty?"
-	bind:checked={$c.skills[key].skills[index].penalty}
+	bind:checked={c.skills[key].skills[index].penalty}
 />
 
 <div class="flex flex-row gap-2">
-	<Integer bind:value={$c.skills[key].skills[index].ranks} name="skillRanks" label="Ranks" />
-	<MacroInteger bind:value={$c.skills[key].skills[index].misc.expr} name="skillMisc" label="Misc" />
+	<Integer bind:value={c.skills[key].skills[index].ranks} name="skillRanks" label="Ranks" />
+	<MacroInteger bind:value={c.skills[key].skills[index].$misc.expr} name="skillMisc" label="Misc" />
 	<MacroInteger
-		bind:value={$c.skills[key].skills[index].temp.expr}
+		bind:value={c.skills[key].skills[index].$temp.expr}
 		name="skillBonus"
 		label="Temp Mod"
 	/>
 </div>
 
 <MacroTextArea
-	bind:value={$c.skills[key].skills[index].notes}
+	bind:value={c.skills[key].skills[index].notes}
 	name="skillNotes"
 	label="Notes"
 	placeholder="Notes"

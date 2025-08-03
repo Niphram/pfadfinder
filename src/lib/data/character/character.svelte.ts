@@ -30,7 +30,9 @@ export class Character {
 	system = string('pathfinder');
 
 	get description() {
-		return this.classes.value.list.value.map((c) => `${c.name.value} ${c.level.value}`).join(', ');
+		return this.classes.value.list.value
+			.map((c) => `${c.value.name.value} ${c.value.level.value}`)
+			.join(', ');
 	}
 
 	race = object(new Race());

@@ -7,15 +7,15 @@
 
 	import ClassDialog from '$lib/components/dialogs/class-dialog.svelte';
 	import RaceDialog from '$lib/components/dialogs/race-dialog.svelte';
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
+	import { object } from '$lib/serde';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	function addClass() {
-		$c.classes.list.push(new Class());
-		$c.classes.list = $c.classes.list;
+		c.classes.$list.value.push(object(new Class()));
 
-		openDialog(ClassDialog, { classIndex: $c.classes.list.length - 1 });
+		openDialog(ClassDialog, { classIndex: c.classes.list.length - 1 });
 	}
 </script>
 
@@ -23,7 +23,7 @@
 	<div class="divider">Race</div>
 
 	<CaptionedButton
-		label={$c.race.name}
+		label={c.race.name}
 		caption="Race"
 		oncontextmenu={() => openDialog(RaceDialog, {})}
 	/>
@@ -31,7 +31,7 @@
 	<div class="divider">Classes</div>
 
 	<div class="flex flex-col gap-4">
-		{#each $c.classes.list as { name, level }, classIndex (classIndex)}
+		{#each c.classes.list as { name, level }, classIndex (classIndex)}
 			<CaptionedButton
 				label={name}
 				caption="Level {level}"

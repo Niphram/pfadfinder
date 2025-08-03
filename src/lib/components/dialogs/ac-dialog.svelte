@@ -1,6 +1,6 @@
 <script>
 	import { ABILITY_KEYS } from '$lib/data';
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { t } from '$lib/i18n';
 
 	import Divider from '$lib/atoms/divider.svelte';
@@ -10,7 +10,7 @@
 
 	import { title } from '../dialog.svelte';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	$title = 'Armor Class';
 </script>
@@ -19,7 +19,7 @@
 	name="acPrimaryAbility"
 	label="Primary Ability"
 	options={ABILITY_KEYS}
-	bind:value={$c.ac.primaryAbility}
+	bind:value={c.ac.primaryAbility}
 >
 	{#snippet children({ option: key })}
 		<option value={key}>
@@ -33,7 +33,7 @@
 	label="Secondary Ability"
 	options={ABILITY_KEYS}
 	noneOption="None"
-	bind:value={$c.ac.secondaryAbility}
+	bind:value={c.ac.secondaryAbility}
 >
 	{#snippet children({ option: key })}
 		<option value={key}>
@@ -44,10 +44,10 @@
 
 <Divider />
 
-<MacroInteger name="bonusAc" label="Bonus to AC" bind:value={$c.ac.bonusAc.expr} />
+<MacroInteger name="bonusAc" label="Bonus to AC" bind:value={c.ac.$bonusAc.expr} />
 
-<MacroInteger name="bonusTouch" label="Bonus to touch AC" bind:value={$c.ac.bonusTouch.expr} />
+<MacroInteger name="bonusTouch" label="Bonus to touch AC" bind:value={c.ac.$bonusTouch.expr} />
 
-<MacroInteger name="bonusFf" label="Bonus to flat-footed AC" bind:value={$c.ac.bonusFf.expr} />
+<MacroInteger name="bonusFf" label="Bonus to flat-footed AC" bind:value={c.ac.$bonusFf.expr} />
 
-<TextArea name="acNotes" label="Notes" rows={5} bind:value={$c.ac.notes} />
+<TextArea name="acNotes" label="Notes" rows={5} bind:value={c.ac.notes} />

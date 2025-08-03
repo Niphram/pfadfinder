@@ -103,7 +103,7 @@ export class Spell extends SpellCommonProps {
 
 	components = string('');
 
-	details(level: number, c: SerdeProxy<Character>) {
+	details(level: number, c: SerdeProxy<Character>): [string, boolean][] {
 		const dcAbility = c.spells.dcAbility;
 		const abilityDc = (dcAbility ? c[dcAbility].mod : 0) + c.spells.dcBonus;
 		const saveDc = 10 + level + this.savingThrow.value.dcMod.value + abilityDc;
@@ -157,7 +157,7 @@ export class Spell extends SpellCommonProps {
 				`Damage #${i + 1}`,
 				`${d.value.damage.value} ${d.value.type.value}`,
 			]),
-		].filter((e) => !!e[1]);
+		].filter((e) => !!e[1]) as [string, boolean][];
 	}
 }
 

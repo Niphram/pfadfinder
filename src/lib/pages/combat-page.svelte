@@ -13,16 +13,16 @@
 	import SortableList from '$lib/components/sortable-list.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import { parseTextWithMacros } from '$lib/macro/text';
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { preventDefault } from '$lib/utils';
+	import { object } from '$lib/serde';
 
-	const { c, p } = getChar();
+	const { c } = $derived(getChar());
 
 	function addAttack() {
-		$c.combat.attacks.push(new Attack());
-		$c.combat.attacks = $c.combat.attacks;
+		c.combat.$attacks.value.push(object(new Attack()));
 
-		openDialog(AttackDialog, { index: $c.combat.attacks.length - 1 });
+		openDialog(AttackDialog, { index: c.combat.attacks.length - 1 });
 	}
 </script>
 
@@ -31,31 +31,31 @@
 
 	<div class="grid w-full grid-cols-2 gap-2 md:grid-cols-4">
 		<CaptionedButton
-			label={withSign($p.combat.bab.mod)}
+			label={withSign(c.combat.bab.mod)}
 			caption="Base Attack Bonus"
-			underline={!!$c.combat.bab.notes}
-			onclick={() => macroNotify('Base Attack Bonus', $c.combat.bab.notes, $c)}
+			underline={!!c.combat.bab.notes}
+			onclick={() => macroNotify('Base Attack Bonus', c.combat.bab.notes, c)}
 			oncontextmenu={() => openDialog(BabDialog, {})}
 		/>
 		<CaptionedButton
-			label={withSign($p.combat.sr.total)}
+			label={withSign(c.combat.sr.total)}
 			caption="Spell Resistance"
-			underline={!!$c.combat.sr.notes}
-			onclick={() => macroNotify('Spell Resistance', $c.combat.sr.notes, $c)}
+			underline={!!c.combat.sr.notes}
+			onclick={() => macroNotify('Spell Resistance', c.combat.sr.notes, c)}
 			oncontextmenu={() => openDialog(SrDialog, {})}
 		/>
 		<CaptionedButton
-			label={withSign($p.combat.cmb.mod)}
+			label={withSign(c.combat.cmb.mod)}
 			caption="CMB"
-			underline={!!$c.combat.cmb.notes}
-			onclick={() => macroNotify('Combat Manouver Bonus', $c.combat.cmb.notes, $c)}
+			underline={!!c.combat.cmb.notes}
+			onclick={() => macroNotify('Combat Manouver Bonus', c.combat.cmb.notes, c)}
 			oncontextmenu={() => openDialog(CmbDialog, {})}
 		/>
 		<CaptionedButton
-			label={$p.combat.cmd.mod}
+			label={c.combat.cmd.mod}
 			caption="CMD"
-			underline={!!$c.combat.cmd.notes}
-			onclick={() => macroNotify('Combat Manouver Defense', $c.combat.cmd.notes, $c)}
+			underline={!!c.combat.cmd.notes}
+			onclick={() => macroNotify('Combat Manouver Defense', c.combat.cmd.notes, c)}
 			oncontextmenu={() => openDialog(CmdDialog, {})}
 		/>
 	</div>
@@ -67,7 +67,7 @@
 		</div>
 	</div>
 
-	{#if $c.combat.attacks.length > 0}
+	{#if c.combat.attacks.length > 0}
 		<table class="table border-separate border-spacing-y-2">
 			<thead>
 				<tr class="border-none text-center">
@@ -86,7 +86,7 @@
 					animation: 150,
 					easing: 'cubic-bezier(1, 0, 0, 1)',
 				}}
-				bind:items={$c.combat.attacks}
+				bind:items={c.combat.attacks}
 				keyProp="id"
 			>
 				{#snippet children({ item: attack, index })}
@@ -97,27 +97,27 @@
 
 						<td
 							class="join-item bg-base-200 cursor-pointer rounded-l-md p-1"
-							onclick={() => macroNotify(attack.name, attack.notes, $c)}
+							onclick={() => macroNotify(attack.name, attack.notes, c)}
 							oncontextmenu={preventDefault(() => openDialog(AttackDialog, { index }))}
 							>{attack.name}</td
 						>
 						<td
 							class="join-item bg-base-200 cursor-pointer p-1"
-							onclick={() => macroNotify(attack.name, attack.notes, $c)}
+							onclick={() => macroNotify(attack.name, attack.notes, c)}
 							oncontextmenu={preventDefault(() => openDialog(AttackDialog, { index }))}
-							>{attack.hasAttack ? withSign(attack.attackBonus.eval($c)) : '-'}</td
+							>{attack.hasAttack ? withSign(attack.attackBonus) : '-'}</td
 						>
 						<td
 							class="join-item bg-base-200 cursor-pointer p-1"
-							onclick={() => macroNotify(attack.name, attack.notes, $c)}
+							onclick={() => macroNotify(attack.name, attack.notes, c)}
 							oncontextmenu={preventDefault(() => openDialog(AttackDialog, { index }))}
 							>{(attack.hasAttack && attack.attack.critRange) || '-'}</td
 						>
 						<td
 							class="join-item bg-base-200 cursor-pointer rounded-r-md p-1"
-							onclick={() => macroNotify(attack.name, attack.notes, $c)}
+							onclick={() => macroNotify(attack.name, attack.notes, c)}
 							oncontextmenu={preventDefault(() => openDialog(AttackDialog, { index }))}
-							>{(attack.hasDamage && parseTextWithMacros(attack.damage.damage, $c)) || '-'}</td
+							>{(attack.hasDamage && parseTextWithMacros(attack.damage.damage, c)) || '-'}</td
 						>
 					</tr>
 				{/snippet}

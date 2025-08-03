@@ -3,11 +3,12 @@
 	import PersonaScoreDialog from '$lib/components/dialogs/persona-facet-dialog.svelte';
 	import TextArea from '$lib/components/input/text-area.svelte';
 	import { FACET_KEYS } from '$lib/data/character/persona.svelte';
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '$lib/data/context.svelte';
 	import { t } from '$lib/i18n';
+	import { preventDefault } from '$lib/utils';
 	import { macroNotify } from '$lib/utils/notes';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 </script>
 
 <div class="flex flex-col">
@@ -17,12 +18,12 @@
 		{#each FACET_KEYS as key (key)}
 			<button
 				class="btn h-min p-0"
-				on:click={() => macroNotify($t(`persona.${key}`), $c.persona[key].notes, $c)}
-				on:contextmenu|preventDefault={() => openDialog(PersonaScoreDialog, { key })}
+				onclick={() => macroNotify($t(`persona.${key}`), c.persona[key].notes, c)}
+				oncontextmenu={preventDefault(() => openDialog(PersonaScoreDialog, { key }))}
 			>
 				<div class="divide-base-100 flex w-full flex-col divide-y-2 text-center">
-					<div class="py-1 text-3xl font-extrabold">{$c.persona[key].rank}</div>
-					<div class="py-1 uppercase decoration-wavy" class:underline={!!$c.persona[key].notes}>
+					<div class="py-1 text-3xl font-extrabold">{c.persona[key].rank}</div>
+					<div class="py-1 uppercase decoration-wavy" class:underline={!!c.persona[key].notes}>
 						{$t(`persona.${key}`)}
 					</div>
 				</div>
@@ -32,5 +33,5 @@
 
 	<div class="divider">Notes</div>
 
-	<TextArea name="notes" bind:value={$c.persona.notes} rows={10} placeholder="Notes" />
+	<TextArea name="notes" bind:value={c.persona.notes} rows={10} placeholder="Notes" />
 </div>
