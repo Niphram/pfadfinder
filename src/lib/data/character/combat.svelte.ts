@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import { array, boolean, derive, macro, object, string } from '$lib/serde';
 
 import type { AbilityKey } from './abilities.svelte';
-import { Character } from './character';
+import { Character } from './character.svelte';
 
 export const sizeKeys = [
 	'fine',

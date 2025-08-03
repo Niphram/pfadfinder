@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { FacetKey } from '$lib/data/character/persona';
+	import type { FacetKey } from '$lib/data/character/persona.svelte';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 

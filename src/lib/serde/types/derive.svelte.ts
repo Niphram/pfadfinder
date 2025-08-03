@@ -1,7 +1,6 @@
-import type { Character } from '$lib/data';
 import type { SerdeProxy } from '../proxy';
 
-export class Derive<C = Character> {
+export class Derive<C> {
 	eval(char: C) {
 		return this.cb(char);
 	}
@@ -9,6 +8,6 @@ export class Derive<C = Character> {
 	constructor(private cb: (char: C) => number) {}
 }
 
-export function derive<C = Character>(cb: (c: SerdeProxy<C>) => number) {
+export function derive<C>(cb: (c: SerdeProxy<C>) => number) {
 	return new Derive(cb);
 }

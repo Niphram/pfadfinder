@@ -1,9 +1,10 @@
-import { mapSum, withSign } from '$lib/utils';
-import { autoserialize, autoserializeAs, inheritSerialization } from 'cerialize';
 import { nanoid } from 'nanoid';
-import { Character, type AbilityKey } from '.';
+
 import { array, boolean, derive, enumeration, macro, number, object, string } from '$lib/serde';
 import type { SerdeProxy } from '$lib/serde/proxy';
+import { mapSum, withSign } from '$lib/utils';
+
+import { Character, type AbilityKey } from '.';
 
 export const SPELL_LEVELS = [
 	'level_0',
@@ -105,19 +106,19 @@ export class Spell extends SpellCommonProps {
 	details(level: number, c: SerdeProxy<Character>) {
 		const dcAbility = c.spells.dcAbility;
 		const abilityDc = (dcAbility ? c[dcAbility].mod : 0) + c.spells.dcBonus;
-		const saveDc = 10 + level + this.savingThrow.dcMod + abilityDc;
+		const saveDc = 10 + level + this.savingThrow.value.dcMod.value + abilityDc;
 
-		let attackBonus = this.attack.mod;
+		let attackBonus = this.attack.value.mod.value;
 
-		switch (this.attack.type) {
+		switch (this.attack.value.type.value) {
 			case 'touch':
-				attackBonus += c.combat.bab.mod.eval(c) + c.str.mod.eval(c);
+				attackBonus += c.combat.bab.mod + c.str.mod;
 				break;
 			case 'rangedTouch':
-				attackBonus += c.combat.bab.mod.eval(c) + c.dex.mod.eval(c);
+				attackBonus += c.combat.bab.mod + c.dex.mod;
 				break;
 			case 'cmb':
-				attackBonus += c.combat.cmb.mod.eval(c);
+				attackBonus += c.combat.cmb.mod;
 				break;
 			case 'str':
 			case 'dex':
@@ -125,30 +126,37 @@ export class Spell extends SpellCommonProps {
 			case 'wis':
 			case 'int':
 			case 'cha':
-				attackBonus += c[this.attack.type].mod.eval(c);
+				attackBonus += c[this.attack.value.type.value].mod;
 				break;
 			case 'none':
 		}
 
 		return [
-			['School', this.school],
-			['Casting Time', this.castingTime],
-			['Components', this.components],
-			['Range', this.range],
-			['Area', this.area],
-			['Targets', this.targets],
-			['Duration', this.duration],
-			['Effect', this.effect],
-			['Saving Throw', this.savingThrow.hasSave && `${this.savingThrow.effect} (DC ${saveDc})`],
-			['Spell Resistance', this.spellResistance],
+			['School', this.school.value],
+			['Casting Time', this.castingTime.value],
+			['Components', this.components.value],
+			['Range', this.range.value],
+			['Area', this.area.value],
+			['Targets', this.targets.value],
+			['Duration', this.duration.value],
+			['Effect', this.effect.value],
+			[
+				'Saving Throw',
+				this.savingThrow.value.hasSave.value &&
+					`${this.savingThrow.value.effect.value} (DC ${saveDc})`,
+			],
+			['Spell Resistance', this.spellResistance.value],
 			[
 				'Attack',
-				this.attack.hasAttack &&
-					`${withSign(attackBonus)} (${this.attack.type}) (Crit ≥${this.attack.critRange} for x${
-						this.attack.critMultiplier
+				this.attack.value.hasAttack.value &&
+					`${withSign(attackBonus)} (${this.attack.value.type.value}) (Crit ≥${this.attack.value.critRange.value} for x${
+						this.attack.value.critMultiplier.value
 					})`,
 			],
-			...this.damage.map((d, i) => [`Damage #${i + 1}`, `${d.damage} ${d.type}`]),
+			...this.damage.value.map((d, i) => [
+				`Damage #${i + 1}`,
+				`${d.value.damage.value} ${d.value.type.value}`,
+			]),
 		].filter((e) => !!e[1]);
 	}
 }
@@ -165,23 +173,24 @@ export class SpellLikeAbility extends SpellCommonProps {
 
 	get details() {
 		return [
-			['School', this.school],
-			['Casting Time', this.castingTime],
-			['Range', this.range],
-			['Area', this.area],
-			['Targets', this.targets],
-			['Duration', this.duration],
-			['Effect', this.effect],
+			['School', this.school.value],
+			['Casting Time', this.castingTime.value],
+			['Range', this.range.value],
+			['Area', this.area.value],
+			['Targets', this.targets.value],
+			['Duration', this.duration.value],
+			['Effect', this.effect.value],
 			[
 				'Saving Throw',
-				this.savingThrow.hasSave && `${this.savingThrow.effect} (DC ${this.savingThrow.dcMod})`,
+				this.savingThrow.value.hasSave.value &&
+					`${this.savingThrow.value.effect.value} (DC ${this.savingThrow.value.dcMod.value})`,
 			],
-			['Spell Resistance', this.spellResistance],
+			['Spell Resistance', this.spellResistance.value],
 		].filter((e) => !!e[1]);
 	}
 
 	recharge() {
-		if (this.type === 'perDay') this.remaining = this.perDay;
+		if (this.type.value === 'perDay') this.remaining.value = this.perDay.value;
 	}
 }
 
@@ -194,18 +203,20 @@ export class SpellLevelList {
 
 	dcBonus = number(0);
 
-	readonly dc = derive<Character>((c) => 10 + this.level + c.spells[this.level].known);
+	readonly dc = derive<Character>(
+		(c) => 10 + SPELL_LEVELS.indexOf(this.level)! + c.spells[this.level].known,
+	);
 
 	readonly totalPerDay = derive<Character>(
 		(c) => c.spells[this.level].perDay + c.spells[this.level].perDayBonus,
 	);
 
 	get prepared() {
-		return mapSum(this.spells, (s) => s.prepared);
+		return mapSum(this.spells.value, (s) => s.value.prepared.value);
 	}
 
 	get used() {
-		return mapSum(this.spells, (s) => s.used);
+		return mapSum(this.spells.value, (s) => s.value.used.value);
 	}
 
 	spells = array(() => object(new Spell()), []);

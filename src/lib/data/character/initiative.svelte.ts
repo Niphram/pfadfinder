@@ -1,5 +1,6 @@
 import { derive, macro, string } from '$lib/serde';
-import { Character } from './character';
+
+import { Character } from './character.svelte';
 
 export class Initiative {
 	misc = macro('0');

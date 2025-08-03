@@ -11,7 +11,7 @@ export class ObjectWrapper<T extends object> implements Serializable<ObjectWrapp
 		throw new Error('TODO');
 	}
 
-	[DESERIALIZE_SYMBOL](value: unknown): ObjectWrapper<T> {
+	[DESERIALIZE_SYMBOL](_value: unknown): ObjectWrapper<T> {
 		throw new Error('TODO');
 	}
 }

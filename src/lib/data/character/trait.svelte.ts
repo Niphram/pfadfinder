@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import { macro, number, string } from '$lib/serde';
 import type { SerdeProxy } from '$lib/serde/proxy';
 
-import type { Character } from './character';
+import type { Character } from './character.svelte';
 
 export class Trait {
 	id = string(nanoid());

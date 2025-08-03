@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import type { Component, ComponentProps, SvelteComponent } from 'svelte';
+	import type { Component } from 'svelte';
 	import { writable } from 'svelte/store';
 
 	let dialog: HTMLDialogElement;

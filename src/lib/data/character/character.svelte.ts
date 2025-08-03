@@ -4,21 +4,21 @@ import { array, number, object, string } from '$lib/serde';
 
 import { VERSION_NUMBER } from '../upgrade';
 import { Ability } from './abilities.svelte';
-import { ArmorClass } from './armorclass';
+import { ArmorClass } from './armorclass.svelte';
 import { Classes } from './class.svelte';
-import { Combat } from './combat';
-import { Equipment } from './equipment';
-import { Feat } from './feat';
-import { HitPoints } from './hitpoints';
-import { Initiative } from './initiative';
-import { Money } from './money';
-import { Persona } from './persona';
-import { Race } from './race';
-import { Save } from './saves';
-import { Settings } from './settings';
-import { SkillList } from './skills';
-import { Spells } from './spells';
-import { Trait } from './trait';
+import { Combat } from './combat.svelte';
+import { Equipment } from './equipment.svelte';
+import { Feat } from './feat.svelte';
+import { HitPoints } from './hitpoints.svelte';
+import { Initiative } from './initiative.svelte';
+import { Money } from './money.svelte';
+import { Persona } from './persona.svelte';
+import { Race } from './race.svelte';
+import { Save } from './saves.svelte';
+import { Settings } from './settings.svelte';
+import { SkillList } from './skills.svelte';
+import { Spells } from './spells.svelte';
+import { Trait } from './trait.svelte';
 
 export class Character {
 	id = string(nanoid());
@@ -30,7 +30,7 @@ export class Character {
 	system = string('pathfinder');
 
 	get description() {
-		return this.classes.list.map((c) => `${c.name} ${c.level}`).join(', ');
+		return this.classes.value.list.value.map((c) => `${c.name.value} ${c.level.value}`).join(', ');
 	}
 
 	race = object(new Race());

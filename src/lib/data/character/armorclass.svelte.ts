@@ -1,7 +1,7 @@
 import { derive, enumeration, macro, string } from '$lib/serde';
 
 import type { AbilityKey } from './abilities.svelte';
-import { Character } from './character';
+import { Character } from './character.svelte';
 
 export class ArmorClass {
 	primaryAbility = enumeration<AbilityKey>('dex');
@@ -32,7 +32,7 @@ export class ArmorClass {
 
 	readonly touch = derive<Character>((c) => 10 + c.ac.abilityMod + this.bonusTouch.eval(c));
 
-	readonly flatFooted = derive(
+	readonly flatFooted = derive<Character>(
 		(c) => 10 + c.equipment.acBonus + Math.min(c.ac.abilityMod, 0) + this.bonusFf.eval(c),
 	);
 }

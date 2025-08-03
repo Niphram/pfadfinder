@@ -1,7 +1,5 @@
 import DeepProxy from 'proxy-deep';
 
-import { evalNode } from '$lib/macro/evaluate';
-
 import { ArrayWrapper } from './types/array.svelte';
 import { BoolWrapper } from './types/bool.svelte';
 import { Derive } from './types/derive.svelte';
@@ -15,9 +13,12 @@ export type SerdeProxy<T> =
 	T extends StringWrapper<string, boolean> ? T['value']
 	: T extends NumberWrapper<boolean> ? T['value']
 	: T extends BoolWrapper ? T['value']
-	: T extends EnumWrapper<any, boolean> ? T['value']
-	: T extends Derive<any> ? number
-	: T extends Macro<any> ? number
+	: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+	T extends EnumWrapper<any, boolean> ? T['value']
+	: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+	T extends Derive<any> ? number
+	: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+	T extends Macro<any> ? number
 	: T extends ArrayWrapper<infer A> ? SerdeProxy<A>[]
 	: T extends Array<infer A> ? SerdeProxy<A>[] & Record<`$${number}`, A>
 	: T extends ObjectWrapper<infer O> ? SerdeProxy<O>
@@ -27,7 +28,7 @@ export type SerdeProxy<T> =
 		}
 	:	T;
 
-function isValueWrapper(obj: any) {
+function isValueWrapper(obj: unknown) {
 	return (
 		obj instanceof StringWrapper ||
 		obj instanceof NumberWrapper ||
@@ -38,10 +39,11 @@ function isValueWrapper(obj: any) {
 
 export function charProxy<T extends object>(char: T) {
 	const dp = new DeepProxy(char, {
-		get(target, p, receiver) {
+		get(target, p) {
 			if (typeof p === 'string' && p.startsWith('$')) {
 				const prop = p.slice(1);
-				return target[prop];
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				return (target as any)[prop];
 			}
 
 			if (!Reflect.has(target, p)) {
@@ -49,7 +51,8 @@ export function charProxy<T extends object>(char: T) {
 				return undefined;
 			}
 
-			const property = target[p];
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const property = (target as any)[p];
 
 			if (isValueWrapper(property)) {
 				return property.value;
@@ -66,8 +69,9 @@ export function charProxy<T extends object>(char: T) {
 			return property;
 		},
 
-		set(target, p, value, receiver) {
-			const property = target[p];
+		set(target, p, value) {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const property = (target as any)[p];
 
 			if (isValueWrapper(property)) {
 				property.value = value;
@@ -79,7 +83,8 @@ export function charProxy<T extends object>(char: T) {
 				property.value = value;
 				return true;
 			} else if (p in target) {
-				target[p] = value;
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				(target as any)[p] = value;
 			}
 
 			return false;

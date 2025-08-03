@@ -1,6 +1,7 @@
 import { derive, enumeration, EnumWrapper, macro, string } from '$lib/serde';
 
 import type { AbilityKey } from './abilities.svelte';
+import { Character } from './character.svelte';
 
 export const SAVE_KEYS = ['fort', 'ref', 'will'] as const;
 export type SaveKey = (typeof SAVE_KEYS)[number];
@@ -20,7 +21,7 @@ export class Save {
 
 	notes = string('');
 
-	readonly mod = derive(
+	readonly mod = derive<Character>(
 		(c) => c.classes[this.key] + c[this.ability.value].mod + c[this.key].bonus + c[this.key].misc,
 	);
 

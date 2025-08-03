@@ -1,6 +1,6 @@
 import { derive, macro, number, string } from '$lib/serde';
 
-import { Character } from './character';
+import { Character } from './character.svelte';
 
 export const ABILITY_KEYS = ['str', 'dex', 'con', 'int', 'wis', 'cha'] as const;
 export type AbilityKey = (typeof ABILITY_KEYS)[number];
@@ -32,7 +32,9 @@ export class Ability {
 
 	constructor(private key: AbilityKey) {
 		if (this.key === 'dex' || this.key === 'str') {
-			this.skillCheckMod = derive<Character>((c) => this.mod + c.equipment.armorCheckPenalty);
+			this.skillCheckMod = derive<Character>(
+				(c) => this.mod.eval(c) + c.equipment.armorCheckPenalty,
+			);
 		}
 	}
 }

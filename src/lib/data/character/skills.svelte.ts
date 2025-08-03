@@ -2,7 +2,7 @@ import { array, boolean, derive, enumeration, macro, number, object, string } fr
 import { mapSum } from '$lib/utils';
 
 import type { AbilityKey } from './abilities.svelte';
-import { Character } from './character';
+import { Character } from './character.svelte';
 
 const SKILLS = {
 	acrobatics: { ability: 'dex', trained: false, penalty: true },

@@ -1,6 +1,6 @@
 import { array, boolean, derive, enumeration, number, string } from '$lib/serde';
 import { mapSum } from '$lib/utils';
-import { Character } from './character';
+import { Character } from './character.svelte';
 
 export enum Dice {
 	D4 = 4,

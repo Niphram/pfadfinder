@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Skill, type SkillKey } from '$lib/data/character/skills';
+	import { Skill, type SkillKey } from '$lib/data/character/skills.svelte';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { preventDefault } from '$lib/utils';

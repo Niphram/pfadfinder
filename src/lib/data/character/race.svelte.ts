@@ -1,6 +1,6 @@
 import { enumeration, macro, string } from '$lib/serde';
 
-import type { SizeKey } from './combat';
+import type { SizeKey } from './combat.svelte';
 
 export class Race {
 	name = string('Unknown Race');

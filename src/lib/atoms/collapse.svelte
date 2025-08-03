@@ -7,7 +7,7 @@
 		icon?: 'arrow' | 'plus' | undefined;
 		class?: string;
 		title?: import('svelte').Snippet;
-		children?: import('svelte').Snippet<[any]>;
+		children?: import('svelte').Snippet<[{ open: boolean }]>;
 		oncontextmenu?: MouseEventHandler<HTMLDivElement>;
 		ontoggle?: (open: boolean) => void;
 	}

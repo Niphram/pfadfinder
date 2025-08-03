@@ -1,9 +1,9 @@
-name: Deploy to GitHub Pages
+name: Test and Deploy
 
 on: push
 
 jobs:
-  build_site:
+  build_and_test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -44,7 +44,7 @@ jobs:
           path: 'build/'
 
   deploy:
-    needs: build_site
+    needs: build_and_test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
 

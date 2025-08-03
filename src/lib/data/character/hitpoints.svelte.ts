@@ -1,7 +1,7 @@
 import { derive, macro, number } from '$lib/serde';
 import { mapSum } from '$lib/utils';
 
-import { Character } from './character';
+import { Character } from './character.svelte';
 
 export class HitPoints {
 	rolled = number(0);

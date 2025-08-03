@@ -1,5 +1,6 @@
-import { enumeration, string } from '$lib/serde';
 import { nanoid } from 'nanoid';
+
+import { enumeration, string } from '$lib/serde';
 
 export const FEAT_TYPES = [
 	'general',
