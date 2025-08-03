@@ -1,8 +1,8 @@
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../interfaces';
 import type { Option } from '../optional';
 
-export class Enumeration<Values, IsOptional extends boolean>
-	implements Serializable<Enumeration<Values, IsOptional>>
+export class EnumWrapper<Values, IsOptional extends boolean>
+	implements Serializable<EnumWrapper<Values, IsOptional>>
 {
 	value: Option<Values, IsOptional>;
 
@@ -17,7 +17,7 @@ export class Enumeration<Values, IsOptional extends boolean>
 		return this.value;
 	}
 
-	[DESERIALIZE_SYMBOL](value: unknown): Enumeration<Values, IsOptional> {
+	[DESERIALIZE_SYMBOL](value: unknown): EnumWrapper<Values, IsOptional> {
 		if (value !== undefined && value !== null) {
 			this.value = value as Option<Values, IsOptional>;
 		}
@@ -38,5 +38,5 @@ export function enumeration<Values, IsOptional extends boolean = false>(
 	value: Option<Values, IsOptional>,
 	options?: EnumerationOptions<IsOptional>,
 ) {
-	return new Enumeration<Values, IsOptional>(value, Object.assign({}, DEFAULT_OPTIONS, options));
+	return new EnumWrapper<Values, IsOptional>(value, Object.assign({}, DEFAULT_OPTIONS, options));
 }

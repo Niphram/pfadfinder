@@ -1,4 +1,4 @@
-export class Array<T> {
+export class ArrayWrapper<T> {
 	value: T[];
 
 	factory: () => T;
@@ -10,5 +10,5 @@ export class Array<T> {
 }
 
 export function array<T>(factory: () => T, value?: T[]) {
-	return new Array<T>(value ?? [], factory);
+	return new ArrayWrapper<T>(value ?? [], factory);
 }

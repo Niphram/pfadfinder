@@ -1,6 +1,5 @@
-import { autoserialize } from 'cerialize';
+import { derive, enumeration, EnumWrapper, macro, string } from '$lib/serde';
 
-import { Derive, Macro, macro } from '../macros';
 import type { AbilityKey } from './abilities.svelte';
 
 export const SAVE_KEYS = ['fort', 'ref', 'will'] as const;
@@ -13,27 +12,19 @@ const DefaultBaseAbility = {
 } as const;
 
 export class Save {
-	@autoserialize
-	ability: AbilityKey;
+	ability: EnumWrapper<AbilityKey, false>;
 
-	@macro
-	bonus = new Macro('0');
+	bonus = macro('0');
 
-	@macro
-	misc = new Macro('0');
+	misc = macro('0');
 
-	@autoserialize
-	notes = '';
+	notes = string('');
 
-	readonly mod = new Derive(
-		(c) =>
-			c.classes[this.key] +
-			c[this.ability].mod.eval(c) +
-			c[this.key].bonus.eval(c) +
-			c[this.key].misc.eval(c),
+	readonly mod = derive(
+		(c) => c.classes[this.key] + c[this.ability.value].mod + c[this.key].bonus + c[this.key].misc,
 	);
 
 	constructor(private key: SaveKey) {
-		this.ability = DefaultBaseAbility[key];
+		this.ability = enumeration(DefaultBaseAbility[key]);
 	}
 }

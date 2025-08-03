@@ -1,18 +1,15 @@
-import { autoserialize } from 'cerialize';
-
+import { derive, macro, number } from '$lib/serde';
 import { mapSum } from '$lib/utils';
 
-import { Derive, Macro, macro } from '../macros';
+import { Character } from './character';
 
 export class HitPoints {
-	@autoserialize
-	rolled = 0;
+	rolled = number(0);
 
-	@macro
-	bonus = new Macro('0');
+	bonus = macro('0');
 
 	// Average HP based on hit dice
-	readonly average = new Derive((c) => {
+	readonly average = derive<Character>((c) => {
 		const [firstClass, ...remainingClasses] = c.classes.list;
 
 		const firstLevelHp = Math.ceil((firstClass.hitDice + 1) / 2);
@@ -24,38 +21,35 @@ export class HitPoints {
 		return firstLevelHp + remainingLevelsHp;
 	});
 
-	@autoserialize
-	temp = 0;
+	temp = number(0);
 
-	@autoserialize
-	damageTaken = 0;
+	damageTaken = number(0);
 
-	@autoserialize
-	nonlethalDamage = 0;
+	nonlethalDamage = number(0);
 
-	readonly current = new Derive((c) => c.hp.max.eval(c) - this.damageTaken);
+	readonly current = derive<Character>((c) => c.hp.max - this.damageTaken.value);
 
-	readonly conHp = new Derive((c) => c.classes.levels * c.con.mod.eval(c));
+	readonly conHp = derive<Character>((c) => c.classes.levels * c.con.mod);
 
-	readonly max = new Derive(
+	readonly max = derive<Character>(
 		(c) =>
-			(c.settings.useAverageHP ? this.average.eval(c) : this.rolled) +
+			(c.settings.useAverageHP ? this.average.eval(c) : this.rolled.value) +
 			this.conHp.eval(c) +
 			this.bonus.eval(c),
 	);
 
 	heal(amount: number) {
-		this.damageTaken = Math.max(0, this.damageTaken - amount);
-		this.nonlethalDamage = Math.max(0, this.nonlethalDamage - amount);
+		this.damageTaken.value = Math.max(0, this.damageTaken.value - amount);
+		this.nonlethalDamage.value = Math.max(0, this.nonlethalDamage.value - amount);
 	}
 
 	dealLethal(amount: number) {
-		const remaining = Math.max(0, amount - this.temp);
-		this.temp = Math.max(0, this.temp - amount);
-		this.damageTaken += remaining;
+		const remaining = Math.max(0, amount - this.temp.value);
+		this.temp.value = Math.max(0, this.temp.value - amount);
+		this.damageTaken.value += remaining;
 	}
 
 	dealNonlethal(amount: number) {
-		this.nonlethalDamage += amount;
+		this.nonlethalDamage.value += amount;
 	}
 }

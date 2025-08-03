@@ -1,9 +1,9 @@
 import { nanoid } from 'nanoid';
 
-import { array, boolean, object, string } from '$lib/serde';
+import { array, boolean, derive, macro, object, string } from '$lib/serde';
 
-import { Derive, Macro, macro } from '../macros';
 import type { AbilityKey } from './abilities.svelte';
+import { Character } from './character';
 
 export const sizeKeys = [
 	'fine',
@@ -31,40 +31,36 @@ const sizeModifiers: Record<SizeKey, { mod: number; ability: AbilityKey }> = {
 };
 
 export class SpellResistance {
-	@macro
-	base = new Macro('0');
+	base = macro('0');
 
-	@macro
-	misc = new Macro('0');
+	misc = macro('0');
 
 	notes = string('', { maxLength: 1000 });
 
-	readonly total = new Derive(
-		(c) => c.combat.sr.value.base.eval(c) + c.combat.sr.value.misc.eval(c),
-	);
+	readonly total = derive<Character>((c) => c.combat.sr.base + c.combat.sr.misc);
 }
 
 export class BaseAttackBonus {
 	notes = string('', { maxLength: 1000 });
 
-	readonly mod = new Derive((c) => c.classes.bab);
+	readonly mod = derive<Character>((c) => c.classes.bab);
 }
 
 export class CombatManeuverBonus {
 	notes = string('', { maxLength: 1000 });
 
-	readonly mod = new Derive((c) => {
+	readonly mod = derive<Character>((c) => {
 		const { ability, mod } = sizeModifiers[c.race.size];
-		return c.combat.bab.value.mod.eval(c) + mod + c[ability].mod.eval(c);
+		return c.combat.bab.mod + mod + c[ability].mod;
 	});
 }
 
 export class CombatManeuverDefense {
 	notes = string('', { maxLength: 1000 });
 
-	readonly mod = new Derive((c) => {
+	readonly mod = derive<Character>((c) => {
 		const { mod } = sizeModifiers[c.race.size];
-		return 10 + c.combat.bab.value.mod.eval(c) + c.str.mod.eval(c) + c.dex.mod.eval(c) + mod;
+		return 10 + c.combat.bab.mod + c.str.mod + c.dex.mod + mod;
 	});
 }
 
@@ -84,8 +80,7 @@ export class AttackRoll {
 
 	abilityModifier = string<AbilityKey | 'none'>('none');
 
-	@macro
-	bonusModifier = new Macro('0');
+	bonusModifier = macro('0');
 
 	versus = string('AC');
 
@@ -93,20 +88,20 @@ export class AttackRoll {
 
 	range = string('');
 
-	readonly baseModValue = new Derive((c) =>
+	readonly baseModValue = derive<Character>((c) =>
 		// TODO: Check this
 		this.baseModifier.value === 'none' ? 0
-		: this.baseModifier.value === 'babMax' ? c.combat.bab.value.mod.eval(c)
-		: this.baseModifier.value === 'babFull' ? c.combat.bab.value.mod.eval(c)
-		: this.baseModifier.value === 'cmb' ? c.combat.cmb.value.mod.eval(c)
-		: this.baseModifier.value === 'meelee' ? c.combat.bab.value.mod.eval(c) + c.str.mod.eval(c)
-		: this.baseModifier.value === 'ranged' ? c.combat.bab.value.mod.eval(c) + c.dex.mod.eval(c)
+		: this.baseModifier.value === 'babMax' ? c.combat.bab.mod
+		: this.baseModifier.value === 'babFull' ? c.combat.bab.mod
+		: this.baseModifier.value === 'cmb' ? c.combat.cmb.mod
+		: this.baseModifier.value === 'meelee' ? c.combat.bab.mod + c.str.mod
+		: this.baseModifier.value === 'ranged' ? c.combat.bab.mod + c.dex.mod
 		: this.baseModifier.value === 'flurryOfBlows' ? 0
 		: 0,
 	);
 
-	readonly abilityModValue = new Derive((c) =>
-		this.abilityModifier.value !== 'none' ? c[this.abilityModifier.value].mod.eval(c) : 0,
+	readonly abilityModValue = derive<Character>((c) =>
+		this.abilityModifier.value !== 'none' ? c[this.abilityModifier.value].mod : 0,
 	);
 }
 
@@ -133,7 +128,7 @@ export class Attack {
 
 	notes = string('', { maxLength: 1000 });
 
-	readonly attackBonus = new Derive((c) => {
+	readonly attackBonus = derive<Character>((c) => {
 		let total = this.attack.value.baseModValue.eval(c);
 		total += this.attack.value.abilityModValue.eval(c);
 		const bonus = this.attack.value.bonusModifier.eval(c) ?? 0;

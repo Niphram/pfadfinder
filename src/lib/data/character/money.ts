@@ -1,18 +1,13 @@
-import { autoserialize } from 'cerialize';
+import { number, string } from '$lib/serde';
 
 export class Money {
-	@autoserialize
-	pp = 0;
+	pp = number(0);
 
-	@autoserialize
-	gp = 0;
+	gp = number(0);
 
-	@autoserialize
-	sp = 0;
+	sp = number(0);
 
-	@autoserialize
-	cp = 0;
+	cp = number(0);
 
-	@autoserialize
-	notes = '';
+	notes = string('');
 }

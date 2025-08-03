@@ -1,8 +1,9 @@
 import { mapSum, withSign } from '$lib/utils';
 import { autoserialize, autoserializeAs, inheritSerialization } from 'cerialize';
 import { nanoid } from 'nanoid';
-import type { AbilityKey, Character } from '.';
-import { Derive, Macro, macro } from '../macros';
+import { Character, type AbilityKey } from '.';
+import { array, boolean, derive, enumeration, macro, number, object, string } from '$lib/serde';
+import type { SerdeProxy } from '$lib/serde/proxy';
 
 export const SPELL_LEVELS = [
 	'level_0',
@@ -33,107 +34,77 @@ export const SPELL_ATTACK_TYPE = [
 export type SpellAttackType = (typeof SPELL_ATTACK_TYPE)[number];
 
 export class SpellAttackDamage {
-	@autoserialize
-	damage = '';
+	damage = string('');
 
-	@autoserialize
-	type = '';
+	type = string('');
 }
 
 export class SpellAttack {
-	@autoserialize
-	hasAttack = false;
+	hasAttack = boolean(false);
 
-	@autoserialize
-	type: SpellAttackType = 'none';
+	type = enumeration<SpellAttackType>('none');
 
-	@autoserialize
-	mod = 0;
+	mod = number(0);
 
-	@autoserialize
-	critRange = 20;
+	critRange = number(20);
 
-	@autoserialize
-	critMultiplier = 2;
+	critMultiplier = number(2);
 }
 
 export class SpellSave {
-	@autoserialize
-	hasSave = false;
+	hasSave = boolean(false);
 
-	@autoserialize
-	effect = '';
+	effect = string('');
 
-	@autoserialize
-	dcMod = 0;
+	dcMod = number(0);
 }
 
 export class SpellCommonProps {
 	id = nanoid();
 
-	@autoserialize
-	name = 'Unnamed Spell';
+	name = string('Unnamed Spell');
 
-	@autoserialize
-	school = '';
+	school = string('');
 
-	@autoserialize
-	classAndLevel = '';
+	classAndLevel = string('');
 
-	@autoserialize
-	castingTime = '';
+	castingTime = string('');
 
-	@autoserialize
-	range = '';
+	range = string('');
 
-	@autoserialize
-	area = '';
+	area = string('');
 
-	@autoserialize
-	targets = '';
+	targets = string('');
 
-	@autoserialize
-	effect = '';
+	effect = string('');
 
-	@autoserialize
-	duration = '';
+	duration = string('');
 
-	@autoserializeAs(SpellSave)
-	savingThrow = new SpellSave();
+	savingThrow = object(new SpellSave());
 
-	@autoserialize
-	spellResistance = '';
+	spellResistance = string('');
 
-	@autoserializeAs(SpellAttack)
-	attack = new SpellAttack();
+	attack = object(new SpellAttack());
 
-	@autoserializeAs(SpellAttackDamage)
-	damage: SpellAttackDamage[] = [];
+	damage = array(() => object(new SpellAttackDamage()), []);
 
-	@autoserialize
-	description = '';
+	description = string('');
 
-	@autoserialize
-	notes = '';
+	notes = string('');
 }
 
-@inheritSerialization(SpellCommonProps)
 export class Spell extends SpellCommonProps {
-	@autoserialize
-	prepared = 0;
+	prepared = number(0);
 
-	@autoserialize
-	used = 0;
+	used = number(0);
 
-	@autoserialize
-	isDomainSpell = false;
+	isDomainSpell = boolean(false);
 
-	@autoserialize
-	components = '';
+	components = string('');
 
-	details(level: number, c: Character) {
+	details(level: number, c: SerdeProxy<Character>) {
 		const dcAbility = c.spells.dcAbility;
-		const abilityDc = (dcAbility ? c[dcAbility].mod.eval(c) : 0) + c.spells.dcBonus.eval(c);
+		const abilityDc = (dcAbility ? c[dcAbility].mod : 0) + c.spells.dcBonus;
 		const saveDc = 10 + level + this.savingThrow.dcMod + abilityDc;
 
 		let attackBonus = this.attack.mod;
@@ -185,16 +156,12 @@ export class Spell extends SpellCommonProps {
 export const SPELL_LIKE_COUNT_TYPES = ['constant', 'atWill', 'perDay'] as const;
 export type SpellLikeCountTypes = (typeof SPELL_LIKE_COUNT_TYPES)[number];
 
-@inheritSerialization(SpellCommonProps)
 export class SpellLikeAbility extends SpellCommonProps {
-	@autoserialize
-	type: SpellLikeCountTypes = 'atWill';
+	type = enumeration<SpellLikeCountTypes>('atWill');
 
-	@autoserialize
-	perDay = 1;
+	perDay = number(1);
 
-	@autoserialize
-	remaining = 0;
+	remaining = number(0);
 
 	get details() {
 		return [
@@ -219,21 +186,17 @@ export class SpellLikeAbility extends SpellCommonProps {
 }
 
 export class SpellLevelList {
-	@autoserialize
-	known = 0;
+	known = number(0);
 
-	@autoserialize
-	perDay = 0;
+	perDay = number(0);
 
-	@autoserialize
-	perDayBonus = 0;
+	perDayBonus = number(0);
 
-	@autoserialize
-	dcBonus = 0;
+	dcBonus = number(0);
 
-	readonly dc = new Derive((c) => 10 + this.level + c.spells[this.level].known);
+	readonly dc = derive<Character>((c) => 10 + this.level + c.spells[this.level].known);
 
-	readonly totalPerDay = new Derive(
+	readonly totalPerDay = derive<Character>(
 		(c) => c.spells[this.level].perDay + c.spells[this.level].perDayBonus,
 	);
 
@@ -245,49 +208,35 @@ export class SpellLevelList {
 		return mapSum(this.spells, (s) => s.used);
 	}
 
-	@autoserializeAs(Spell)
-	spells: Spell[] = [];
+	spells = array(() => object(new Spell()), []);
 
 	constructor(private level: SpellLevel) {}
 }
 
 export class Spells {
-	@autoserialize
-	dcAbility?: AbilityKey;
+	dcAbility = enumeration<AbilityKey, true>(undefined);
 
-	@macro
-	dcBonus = new Macro('0');
+	dcBonus = macro('0');
 
-	@autoserializeAs(SpellLevelList)
-	level_0 = new SpellLevelList('level_0');
+	level_0 = object(new SpellLevelList('level_0'));
 
-	@autoserializeAs(SpellLevelList)
-	level_1 = new SpellLevelList('level_1');
+	level_1 = object(new SpellLevelList('level_1'));
 
-	@autoserializeAs(SpellLevelList)
-	level_2 = new SpellLevelList('level_2');
+	level_2 = object(new SpellLevelList('level_2'));
 
-	@autoserializeAs(SpellLevelList)
-	level_3 = new SpellLevelList('level_3');
+	level_3 = object(new SpellLevelList('level_3'));
 
-	@autoserializeAs(SpellLevelList)
-	level_4 = new SpellLevelList('level_4');
+	level_4 = object(new SpellLevelList('level_4'));
 
-	@autoserializeAs(SpellLevelList)
-	level_5 = new SpellLevelList('level_5');
+	level_5 = object(new SpellLevelList('level_5'));
 
-	@autoserializeAs(SpellLevelList)
-	level_6 = new SpellLevelList('level_6');
+	level_6 = object(new SpellLevelList('level_6'));
 
-	@autoserializeAs(SpellLevelList)
-	level_7 = new SpellLevelList('level_7');
+	level_7 = object(new SpellLevelList('level_7'));
 
-	@autoserializeAs(SpellLevelList)
-	level_8 = new SpellLevelList('level_8');
+	level_8 = object(new SpellLevelList('level_8'));
 
-	@autoserializeAs(SpellLevelList)
-	level_9 = new SpellLevelList('level_9');
+	level_9 = object(new SpellLevelList('level_9'));
 
-	@autoserializeAs(SpellLikeAbility)
-	spellLikeAbilities: SpellLikeAbility[] = [];
+	spellLikeAbilities = array(() => object(new SpellLikeAbility()), []);
 }

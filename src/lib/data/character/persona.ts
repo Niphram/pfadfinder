@@ -1,4 +1,4 @@
-import { autoserialize, autoserializeAs } from 'cerialize';
+import { number, object, string } from '$lib/serde';
 
 export const FACET_KEYS = [
 	'charm',
@@ -11,32 +11,23 @@ export const FACET_KEYS = [
 export type FacetKey = (typeof FACET_KEYS)[number];
 
 class Facet {
-	@autoserialize
-	rank = 0;
+	rank = number(0);
 
-	@autoserialize
-	notes = '';
+	notes = string('');
 }
 
 export class Persona {
-	@autoserializeAs(Facet)
-	charm = new Facet();
+	charm = object(new Facet());
 
-	@autoserializeAs(Facet)
-	genius = new Facet();
+	genius = object(new Facet());
 
-	@autoserializeAs(Facet)
-	heroism = new Facet();
+	heroism = object(new Facet());
 
-	@autoserializeAs(Facet)
-	sacrifice = new Facet();
+	sacrifice = object(new Facet());
 
-	@autoserializeAs(Facet)
-	sagacity = new Facet();
+	sagacity = object(new Facet());
 
-	@autoserializeAs(Facet)
-	subterfuge = new Facet();
+	subterfuge = object(new Facet());
 
-	@autoserialize
-	notes = '';
+	notes = string('');
 }

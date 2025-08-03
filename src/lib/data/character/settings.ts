@@ -1,42 +1,29 @@
-import { autoserialize } from 'cerialize';
+import { boolean } from '$lib/serde';
 
 export class Settings {
-	@autoserialize
-	heal = true;
+	heal = boolean(true);
 
-	@autoserialize
-	addConToHeal = false;
+	addConToHeal = boolean(false);
 
-	@autoserialize
-	healAbilityDamage = true;
+	healAbilityDamage = boolean(true);
 
-	@autoserialize
-	rechargeSLA = true;
+	rechargeSLA = boolean(true);
 
-	@autoserialize
-	rechargeTraits = true;
+	rechargeTraits = boolean(true);
 
-	@autoserialize
-	rechargeItems = true;
+	rechargeItems = boolean(true);
 
-	@autoserialize
-	resetSpellUsage = true;
+	resetSpellUsage = boolean(true);
 
-	@autoserialize
-	resetPreparedSpells = true;
+	resetPreparedSpells = boolean(true);
 
-	@autoserialize
-	showMagicPage = true;
+	showMagicPage = boolean(true);
 
-	@autoserialize
-	usePersonaSystem = false;
+	usePersonaSystem = boolean(false);
 
-	@autoserialize
-	useAverageHP = false;
+	useAverageHP = boolean(false);
 
-	@autoserialize
-	enableMacroHighlighting = true;
+	enableMacroHighlighting = boolean(true);
 
-	@autoserialize
-	experimentalFeatures = false;
+	experimentalFeatures = boolean(false);
 }

@@ -1,5 +1,6 @@
-import { autoserialize, autoserializeAs } from 'cerialize';
 import { nanoid } from 'nanoid';
+
+import { array, number, object, string } from '$lib/serde';
 
 import { VERSION_NUMBER } from '../upgrade';
 import { Ability } from './abilities.svelte';
@@ -20,81 +21,54 @@ import { Spells } from './spells';
 import { Trait } from './trait';
 
 export class Character {
-	@autoserialize
-	id = nanoid();
+	id = string(nanoid());
 
-	@autoserialize
-	version = VERSION_NUMBER;
+	version = number(VERSION_NUMBER);
 
-	@autoserialize
-	name = 'Unnamed Character';
+	name = string('Unnamed Character');
 
-	@autoserialize
-	system = 'pathfinder';
+	system = string('pathfinder');
 
 	get description() {
 		return this.classes.list.map((c) => `${c.name} ${c.level}`).join(', ');
 	}
 
-	@autoserializeAs(Race)
-	race = new Race();
+	race = object(new Race());
 
-	@autoserializeAs(Classes)
-	classes = new Classes();
+	classes = object(new Classes());
 
-	@autoserializeAs(HitPoints)
-	hp = new HitPoints();
+	hp = object(new HitPoints());
 
-	@autoserializeAs(Initiative)
-	init = new Initiative();
+	init = object(new Initiative());
 
-	@autoserializeAs(Ability)
-	str = new Ability('str');
-	@autoserializeAs(Ability)
-	dex = new Ability('dex');
-	@autoserializeAs(Ability)
-	con = new Ability('con');
-	@autoserializeAs(Ability)
-	int = new Ability('int');
-	@autoserializeAs(Ability)
-	wis = new Ability('wis');
-	@autoserializeAs(Ability)
-	cha = new Ability('cha');
+	str = object(new Ability('str'));
+	dex = object(new Ability('dex'));
+	con = object(new Ability('con'));
+	int = object(new Ability('int'));
+	wis = object(new Ability('wis'));
+	cha = object(new Ability('cha'));
 
-	@autoserializeAs(Save)
-	fort = new Save('fort');
-	@autoserializeAs(Save)
-	ref = new Save('ref');
-	@autoserializeAs(Save)
-	will = new Save('will');
+	fort = object(new Save('fort'));
+	ref = object(new Save('ref'));
+	will = object(new Save('will'));
 
-	@autoserializeAs(Combat)
-	combat = new Combat();
+	combat = object(new Combat());
 
-	@autoserializeAs(SkillList)
-	skills = new SkillList();
+	skills = object(new SkillList());
 
-	@autoserializeAs(Trait)
-	traits: Trait[] = [];
+	traits = array(() => object(new Trait()), []);
 
-	@autoserializeAs(Feat)
-	feats: Feat[] = [];
+	feats = array(() => object(new Feat()), []);
 
-	@autoserializeAs(Spells)
-	spells = new Spells();
+	spells = object(new Spells());
 
-	@autoserializeAs(ArmorClass)
-	ac = new ArmorClass();
+	ac = object(new ArmorClass());
 
-	@autoserializeAs(Equipment)
-	equipment = new Equipment();
+	equipment = object(new Equipment());
 
-	@autoserializeAs(Money)
-	money = new Money();
+	money = object(new Money());
 
-	@autoserializeAs(Persona)
-	persona = new Persona();
+	persona = object(new Persona());
 
-	@autoserializeAs(Settings)
-	settings = new Settings();
+	settings = object(new Settings());
 }

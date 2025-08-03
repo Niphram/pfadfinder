@@ -1,33 +1,23 @@
-import { autoserialize } from 'cerialize';
+import { enumeration, macro, string } from '$lib/serde';
 
-import { Macro, macro } from '../macros';
 import type { SizeKey } from './combat';
 
 export class Race {
-	@autoserialize
-	name = 'Unknown Race';
+	name = string('Unknown Race');
 
-	@macro
-	speed = new Macro('30');
+	speed = macro('30');
 
-	@autoserialize
-	size: SizeKey = 'medium';
+	size = enumeration<SizeKey>('medium');
 
-	@macro
-	str = new Macro('0');
+	str = macro('0');
 
-	@macro
-	dex = new Macro('0');
+	dex = macro('0');
 
-	@macro
-	con = new Macro('0');
+	con = macro('0');
 
-	@macro
-	int = new Macro('0');
+	int = macro('0');
 
-	@macro
-	wis = new Macro('0');
+	wis = macro('0');
 
-	@macro
-	cha = new Macro('0');
+	cha = macro('0');
 }

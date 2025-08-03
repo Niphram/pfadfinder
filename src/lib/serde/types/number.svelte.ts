@@ -1,7 +1,9 @@
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../interfaces';
 import type { Option } from '../optional';
 
-export class Number<IsOptional extends boolean> implements Serializable<Number<IsOptional>> {
+export class NumberWrapper<IsOptional extends boolean>
+	implements Serializable<NumberWrapper<IsOptional>>
+{
 	value: Option<number, IsOptional>;
 
 	constructor(
@@ -15,7 +17,7 @@ export class Number<IsOptional extends boolean> implements Serializable<Number<I
 		return this.value;
 	}
 
-	[DESERIALIZE_SYMBOL](value: unknown): Number<IsOptional> {
+	[DESERIALIZE_SYMBOL](value: unknown): NumberWrapper<IsOptional> {
 		if (typeof value === 'number') {
 			this.value = value;
 		}
@@ -42,5 +44,5 @@ export function number<IsOptional extends boolean = false>(
 	value: Option<number, IsOptional>,
 	options?: NumberOptions<IsOptional>,
 ) {
-	return new Number<IsOptional>(value, Object.assign({}, DEFAULT_OPTIONS, options));
+	return new NumberWrapper<IsOptional>(value, Object.assign({}, DEFAULT_OPTIONS, options));
 }

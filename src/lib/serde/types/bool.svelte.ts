@@ -1,6 +1,6 @@
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../interfaces';
 
-export class Boolean implements Serializable<Boolean> {
+export class BoolWrapper implements Serializable<BoolWrapper> {
 	value: boolean;
 
 	constructor(value: boolean) {
@@ -11,7 +11,7 @@ export class Boolean implements Serializable<Boolean> {
 		return this.value;
 	}
 
-	[DESERIALIZE_SYMBOL](value: unknown): Boolean {
+	[DESERIALIZE_SYMBOL](value: unknown): BoolWrapper {
 		if (typeof value === 'boolean') {
 			this.value = value;
 		}
@@ -21,5 +21,5 @@ export class Boolean implements Serializable<Boolean> {
 }
 
 export function boolean(value: boolean) {
-	return new Boolean(value);
+	return new BoolWrapper(value);
 }

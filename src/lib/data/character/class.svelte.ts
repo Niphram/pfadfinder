@@ -1,7 +1,6 @@
-import { array, boolean, enumeration, number, string } from '$lib/serde';
+import { array, boolean, derive, enumeration, number, string } from '$lib/serde';
 import { mapSum } from '$lib/utils';
-
-import { Derive } from '../macros';
+import { Character } from './character';
 
 export enum Dice {
 	D4 = 4,
@@ -51,11 +50,11 @@ export class Classes {
 
 	readonly will = $derived(mapSum(this.list.value, (c) => c.will.value));
 
-	readonly ranks = new Derive((c) => {
+	readonly ranks = derive<Character>((c) => {
 		const classRanks = mapSum(
 			this.list.value,
 			(c) => c.levelRanks.value * c.level.value + c.miscRanks.value,
 		);
-		return classRanks + c.int.mod.eval(c) * c.classes.levels;
+		return classRanks + c.int.mod * c.classes.levels;
 	});
 }

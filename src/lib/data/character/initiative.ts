@@ -1,14 +1,10 @@
-import { autoserialize } from 'cerialize';
-
-import { Derive } from '../macros';
-import { Macro, macro } from '../macros/macro';
+import { derive, macro, string } from '$lib/serde';
+import { Character } from './character';
 
 export class Initiative {
-	@macro
-	misc = new Macro('0');
+	misc = macro('0');
 
-	@autoserialize
-	notes = '';
+	notes = string('');
 
-	readonly mod = new Derive((c) => c.dex.mod.eval(c) + c.init.misc.eval(c));
+	readonly mod = derive<Character>((c) => c.dex.mod + c.init.misc);
 }

@@ -1,6 +1,6 @@
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../interfaces';
 
-export class Object<T extends object> implements Serializable<Object<T>> {
+export class ObjectWrapper<T extends object> implements Serializable<ObjectWrapper<T>> {
 	value: T;
 
 	constructor(value: T) {
@@ -11,11 +11,11 @@ export class Object<T extends object> implements Serializable<Object<T>> {
 		throw new Error('TODO');
 	}
 
-	[DESERIALIZE_SYMBOL](value: unknown): Object<T> {
+	[DESERIALIZE_SYMBOL](value: unknown): ObjectWrapper<T> {
 		throw new Error('TODO');
 	}
 }
 
 export function object<T extends object>(value: T) {
-	return new Object(value);
+	return new ObjectWrapper(value);
 }

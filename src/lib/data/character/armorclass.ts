@@ -1,44 +1,38 @@
-import { autoserialize } from 'cerialize';
+import { derive, enumeration, macro, string } from '$lib/serde';
 
-import { Derive, Macro, macro } from '../macros';
 import type { AbilityKey } from './abilities.svelte';
+import { Character } from './character';
 
 export class ArmorClass {
-	@autoserialize
-	primaryAbility: AbilityKey = 'dex';
+	primaryAbility = enumeration<AbilityKey>('dex');
 
-	@autoserialize
-	secondaryAbility?: AbilityKey;
+	secondaryAbility = enumeration<AbilityKey, true>(undefined);
 
-	@macro
-	bonusAc = new Macro('0');
+	bonusAc = macro('0');
 
-	@macro
-	bonusTouch = new Macro('0');
+	bonusTouch = macro('0');
 
-	@macro
-	bonusFf = new Macro('0');
+	bonusFf = macro('0');
 
-	@autoserialize
-	notes = '';
+	notes = string('');
 
-	readonly abilityMod = new Derive((c) => {
-		const primaryMax = this.primaryAbility === 'dex' ? c.equipment.maxDexBonus : Infinity;
-		const secondaryMax = this.secondaryAbility === 'dex' ? c.equipment.maxDexBonus : Infinity;
+	readonly abilityMod = derive<Character>((c) => {
+		const primaryMax = this.primaryAbility.value === 'dex' ? c.equipment.maxDexBonus : Infinity;
+		const secondaryMax = this.secondaryAbility.value === 'dex' ? c.equipment.maxDexBonus : Infinity;
 
 		return (
-			Math.min(c[this.primaryAbility].mod.eval(c), primaryMax) +
-			(this.secondaryAbility ? Math.min(c[this.secondaryAbility].mod.eval(c), secondaryMax) : 0)
+			Math.min(c[this.primaryAbility.value].mod, primaryMax) +
+			(this.secondaryAbility.value ? Math.min(c[this.secondaryAbility.value].mod, secondaryMax) : 0)
 		);
 	});
 
-	readonly total = new Derive(
-		(c) => 10 + c.ac.abilityMod.eval(c) + c.equipment.acBonus + this.bonusAc.eval(c),
+	readonly total = derive<Character>(
+		(c) => 10 + c.ac.abilityMod + c.equipment.acBonus + this.bonusAc.eval(c),
 	);
 
-	readonly touch = new Derive((c) => 10 + c.ac.abilityMod.eval(c) + this.bonusTouch.eval(c));
+	readonly touch = derive<Character>((c) => 10 + c.ac.abilityMod + this.bonusTouch.eval(c));
 
-	readonly flatFooted = new Derive(
-		(c) => 10 + c.equipment.acBonus + Math.min(c.ac.abilityMod.eval(c), 0) + this.bonusFf.eval(c),
+	readonly flatFooted = derive(
+		(c) => 10 + c.equipment.acBonus + Math.min(c.ac.abilityMod, 0) + this.bonusFf.eval(c),
 	);
 }

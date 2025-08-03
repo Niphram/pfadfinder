@@ -1,8 +1,8 @@
-import { autoserialize, autoserializeAs } from 'cerialize';
-
+import { array, boolean, derive, enumeration, macro, number, object, string } from '$lib/serde';
 import { mapSum } from '$lib/utils';
-import { Derive, Macro, macro } from '../macros';
+
 import type { AbilityKey } from './abilities.svelte';
+import { Character } from './character';
 
 const SKILLS = {
 	acrobatics: { ability: 'dex', trained: false, penalty: true },
@@ -45,166 +45,122 @@ export const SKILL_KEYS = Object.keys(SKILLS);
 export type SkillKey = keyof typeof SKILLS;
 
 export class Skill {
-	@autoserialize
-	name = '';
+	name = string('');
 
-	@autoserialize
-	ability: AbilityKey = 'str';
+	ability = enumeration<AbilityKey>('str');
 
-	@autoserialize
-	penalty = false;
+	penalty = boolean(false);
 
-	@autoserialize
-	ranks = 0;
+	ranks = number(0);
 
-	@macro
-	misc = new Macro('0');
+	misc = macro('0');
 
-	@macro
-	temp = new Macro('0');
+	temp = macro('0');
 
-	@autoserialize
-	classSkill = false;
+	classSkill = boolean(false);
 
-	@autoserialize
-	notes = '';
+	notes = string('');
 
-	readonly mod = new Derive(
+	readonly mod = derive<Character>(
 		(c) =>
-			c[this.ability].skillCheckMod.eval(c) +
-			this.ranks +
+			c[this.ability.value].skillCheckMod +
+			this.ranks.value +
 			this.misc.eval(c) +
 			this.temp.eval(c) +
-			(this.classSkill && this.ranks > 0 ? 3 : 0),
+			(this.classSkill.value && this.ranks.value > 0 ? 3 : 0),
 	);
 
 	constructor(key?: SkillKey) {
 		if (key) {
-			this.ability = SKILLS[key].ability;
-			this.penalty = SKILLS[key].penalty;
+			this.ability.value = SKILLS[key].ability;
+			this.penalty.value = SKILLS[key].penalty;
 		}
 	}
 }
 
 export class SkillGroup {
-	@autoserializeAs(Skill)
-	skills: Skill[];
+	skills = array(() => object(new Skill()), []);
 
 	readonly trained: boolean;
 
 	get ranks() {
-		return mapSum(this.skills, (skill) => skill.ranks);
+		return mapSum(this.skills.value, (skill) => skill.value.ranks.value);
 	}
 
 	constructor(key: SkillKey) {
-		this.skills = [new Skill(key)];
+		this.skills.value = [object(new Skill(key))];
 		this.trained = SKILLS[key].trained;
 	}
 }
 
 export class SkillList {
-	@autoserializeAs(SkillGroup)
-	acrobatics = new SkillGroup('acrobatics');
+	acrobatics = object(new SkillGroup('acrobatics'));
 
-	@autoserializeAs(SkillGroup)
-	appraise = new SkillGroup('appraise');
+	appraise = object(new SkillGroup('appraise'));
 
-	@autoserializeAs(SkillGroup)
-	bluff = new SkillGroup('bluff');
+	bluff = object(new SkillGroup('bluff'));
 
-	@autoserializeAs(SkillGroup)
-	climb = new SkillGroup('climb');
+	climb = object(new SkillGroup('climb'));
 
-	@autoserializeAs(SkillGroup)
-	craft = new SkillGroup('craft');
+	craft = object(new SkillGroup('craft'));
 
-	@autoserializeAs(SkillGroup)
-	diplomacy = new SkillGroup('diplomacy');
+	diplomacy = object(new SkillGroup('diplomacy'));
 
-	@autoserializeAs(SkillGroup)
-	disableDevice = new SkillGroup('disableDevice');
+	disableDevice = object(new SkillGroup('disableDevice'));
 
-	@autoserializeAs(SkillGroup)
-	disguise = new SkillGroup('disguise');
+	disguise = object(new SkillGroup('disguise'));
 
-	@autoserializeAs(SkillGroup)
-	escapeArtist = new SkillGroup('escapeArtist');
+	escapeArtist = object(new SkillGroup('escapeArtist'));
 
-	@autoserializeAs(SkillGroup)
-	fly = new SkillGroup('fly');
+	fly = object(new SkillGroup('fly'));
 
-	@autoserializeAs(SkillGroup)
-	handleAnimal = new SkillGroup('handleAnimal');
+	handleAnimal = object(new SkillGroup('handleAnimal'));
 
-	@autoserializeAs(SkillGroup)
-	heal = new SkillGroup('heal');
+	heal = object(new SkillGroup('heal'));
 
-	@autoserializeAs(SkillGroup)
-	intimidate = new SkillGroup('intimidate');
+	intimidate = object(new SkillGroup('intimidate'));
 
-	@autoserializeAs(SkillGroup)
-	knowledgeArcana = new SkillGroup('knowledgeArcana');
+	knowledgeArcana = object(new SkillGroup('knowledgeArcana'));
 
-	@autoserializeAs(SkillGroup)
-	knowledgeDungeoneering = new SkillGroup('knowledgeDungeoneering');
+	knowledgeDungeoneering = object(new SkillGroup('knowledgeDungeoneering'));
 
-	@autoserializeAs(SkillGroup)
-	knowledgeEngineering = new SkillGroup('knowledgeEngineering');
+	knowledgeEngineering = object(new SkillGroup('knowledgeEngineering'));
 
-	@autoserializeAs(SkillGroup)
-	knowledgeGeography = new SkillGroup('knowledgeGeography');
+	knowledgeGeography = object(new SkillGroup('knowledgeGeography'));
 
-	@autoserializeAs(SkillGroup)
-	knowledgeHistory = new SkillGroup('knowledgeHistory');
+	knowledgeHistory = object(new SkillGroup('knowledgeHistory'));
 
-	@autoserializeAs(SkillGroup)
-	knowledgeLocal = new SkillGroup('knowledgeLocal');
+	knowledgeLocal = object(new SkillGroup('knowledgeLocal'));
 
-	@autoserializeAs(SkillGroup)
-	knowledgeNature = new SkillGroup('knowledgeNature');
+	knowledgeNature = object(new SkillGroup('knowledgeNature'));
 
-	@autoserializeAs(SkillGroup)
-	knowledgeNobility = new SkillGroup('knowledgeNobility');
+	knowledgeNobility = object(new SkillGroup('knowledgeNobility'));
 
-	@autoserializeAs(SkillGroup)
-	knowledgePlanes = new SkillGroup('knowledgePlanes');
+	knowledgePlanes = object(new SkillGroup('knowledgePlanes'));
 
-	@autoserializeAs(SkillGroup)
-	knowledgeReligion = new SkillGroup('knowledgeReligion');
+	knowledgeReligion = object(new SkillGroup('knowledgeReligion'));
 
-	@autoserializeAs(SkillGroup)
-	linguistics = new SkillGroup('linguistics');
+	linguistics = object(new SkillGroup('linguistics'));
 
-	@autoserializeAs(SkillGroup)
-	perception = new SkillGroup('perception');
+	perception = object(new SkillGroup('perception'));
 
-	@autoserializeAs(SkillGroup)
-	perform = new SkillGroup('perform');
+	perform = object(new SkillGroup('perform'));
 
-	@autoserializeAs(SkillGroup)
-	profession = new SkillGroup('profession');
+	profession = object(new SkillGroup('profession'));
 
-	@autoserializeAs(SkillGroup)
-	ride = new SkillGroup('ride');
+	ride = object(new SkillGroup('ride'));
 
-	@autoserializeAs(SkillGroup)
-	senseMotive = new SkillGroup('senseMotive');
+	senseMotive = object(new SkillGroup('senseMotive'));
 
-	@autoserializeAs(SkillGroup)
-	sleightOfHand = new SkillGroup('sleightOfHand');
+	sleightOfHand = object(new SkillGroup('sleightOfHand'));
 
-	@autoserializeAs(SkillGroup)
-	spellcraft = new SkillGroup('spellcraft');
+	spellcraft = object(new SkillGroup('spellcraft'));
 
-	@autoserializeAs(SkillGroup)
-	stealth = new SkillGroup('stealth');
+	stealth = object(new SkillGroup('stealth'));
 
-	@autoserializeAs(SkillGroup)
-	survival = new SkillGroup('survival');
+	survival = object(new SkillGroup('survival'));
 
-	@autoserializeAs(SkillGroup)
-	swim = new SkillGroup('swim');
+	swim = object(new SkillGroup('swim'));
 
-	@autoserializeAs(SkillGroup)
-	useMagicDevice = new SkillGroup('useMagicDevice');
+	useMagicDevice = object(new SkillGroup('useMagicDevice'));
 }

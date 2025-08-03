@@ -1,27 +1,24 @@
-import { autoserialize } from 'cerialize';
 import { nanoid } from 'nanoid';
-import { Macro, macro } from '../macros';
+
+import { macro, number, string } from '$lib/serde';
+import type { SerdeProxy } from '$lib/serde/proxy';
+
 import type { Character } from './character';
 
 export class Trait {
-	@autoserialize
-	id = nanoid();
+	id = string(nanoid());
 
-	@autoserialize
-	name = '';
+	name = string('');
 
-	@macro
-	perDay = new Macro('');
+	perDay = macro('');
 
-	@autoserialize
-	remaining = 0;
+	remaining = number(0);
 
-	@autoserialize
-	description = '';
+	description = string('');
 
-	recharge(c: Character) {
-		if (this.perDay.expr) {
-			this.remaining = this.perDay.eval(c);
+	recharge(c: SerdeProxy<Character>) {
+		if (this.perDay.expr !== '') {
+			this.remaining.value = this.perDay.eval(c);
 		}
 	}
 }

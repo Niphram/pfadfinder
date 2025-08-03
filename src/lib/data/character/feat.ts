@@ -1,5 +1,4 @@
 import { enumeration, string } from '$lib/serde';
-import { autoserialize } from 'cerialize';
 import { nanoid } from 'nanoid';
 
 export const FEAT_TYPES = [
