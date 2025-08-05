@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Serialize } from 'cerialize';
 	import { nanoid } from 'nanoid';
 
 	import { base } from '$app/paths';
@@ -8,6 +7,7 @@
 	import { upgradeCharacterAndDeserialize } from '$lib/data/upgrade';
 	import { preventDefault } from '$lib/utils';
 
+	import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
 	import type { PageProps } from './$types';
 
 	const { data }: PageProps = $props();
@@ -53,7 +53,7 @@
 
 		if (!char) return;
 
-		const file = new File([JSON.stringify(Serialize(char))], `${char.name}.json`, {
+		const file = new File([JSON.stringify(char[SERIALIZE_SYMBOL]())], `${char.name.value}.json`, {
 			type: 'application/json',
 		});
 

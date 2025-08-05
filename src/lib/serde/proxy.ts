@@ -40,13 +40,10 @@ export function charProxy<T extends object>(char: T) {
 	const dp = new DeepProxy(char, {
 		get(target, p) {
 			if (typeof p === 'string' && p.startsWith('$')) {
-				const prop = p.slice(1);
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				return (target as any)[prop];
+				return Reflect.get(target, p.slice(1));
 			}
 
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const property = (target as any)[p];
+			const property = Reflect.get(target, p);
 
 			if (isValueWrapper(property)) {
 				return property.value;
@@ -64,18 +61,14 @@ export function charProxy<T extends object>(char: T) {
 		},
 
 		set(target, p, value) {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const property = (target as any)[p];
+			const property = Reflect.get(target, p);
 
 			if (isValueWrapper(property)) {
-				property.value = value;
-				return true;
+				return Reflect.set(property, 'value', value);
 			} else if (property instanceof ArrayWrapper) {
-				property.value = value;
-				return true;
+				return Reflect.set(property, 'value', value);
 			} else if (p in target) {
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				(target as any)[p] = value;
+				return Reflect.set(target, p, value);
 			}
 
 			return false;

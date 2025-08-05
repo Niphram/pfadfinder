@@ -7,7 +7,8 @@ import type { Character } from './character';
 const CHAR_KEY = Symbol('character');
 
 type State = {
-	c: SerdeProxy<Character>;
+	readonly c: SerdeProxy<Character>;
+	dirty: boolean;
 };
 
 export function setChar(state: State) {

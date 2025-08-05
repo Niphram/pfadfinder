@@ -14,11 +14,8 @@
 	import PersonaPage from '$lib/pages/persona-page.svelte';
 	import SkillsPage from '$lib/pages/skills-page.svelte';
 	import SpellsPage from '$lib/pages/spells-page.svelte';
-	import { readable } from 'svelte/store';
 
-	const { c } = $derived(getChar());
-
-	const dirty = readable(false);
+	const { c, dirty } = $derived(getChar());
 
 	let pages = $derived([
 		{ key: 'abilities', component: AbilitiesPage, active: true },
@@ -34,7 +31,7 @@
 
 <svelte:head>
 	<title>
-		{c.name}{$dirty ? ` (${$t('texts.general.unsaved')})` : ''}
+		{c.name}{dirty ? ` (${$t('texts.general.unsaved')})` : ''}
 	</title>
 </svelte:head>
 

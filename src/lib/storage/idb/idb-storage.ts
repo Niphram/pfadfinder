@@ -1,9 +1,9 @@
-import { Serialize } from 'cerialize';
 import Dexie from 'dexie';
 import { nanoid } from 'nanoid';
 
 import { Character } from '$lib/data';
 import { upgradeCharacterAndDeserialize } from '$lib/data/upgrade';
+import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
 import { lazy } from '$lib/utils';
 
 import { VERSIONS, type Schema } from './versions';
@@ -26,7 +26,8 @@ export class IDBStorage {
 	});
 
 	async saveCharacter(char: Character) {
-		const serialized = Serialize(char);
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const serialized: any = char[SERIALIZE_SYMBOL]();
 
 		await this.db.transaction('rw!', [this.db.characters, this.db.characterMetadata], async () =>
 			Promise.all([
