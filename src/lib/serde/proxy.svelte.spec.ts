@@ -85,7 +85,8 @@ describe('Proxy', () => {
 			const sut = charProxy(new TestClass());
 			sut.$array.value = array;
 
-			expect(sut.array).toStrictEqual(array);
+			expect(sut.array).toStrictEqual(array.map((c) => c.value));
+			expect(sut.$array.value).toStrictEqual(array);
 		});
 
 		test('ArrayWrapper Object', () => {

@@ -1,4 +1,4 @@
-import DeepProxy from 'proxy-deep';
+import { makeCachedProxyFactory } from '$lib/utils';
 
 import { ArrayWrapper } from './types/array.svelte';
 import { BoolWrapper } from './types/bool.svelte';
@@ -27,53 +27,53 @@ export type SerdeProxy<T> =
 		}
 	:	T;
 
-function isValueWrapper(obj: unknown) {
-	return (
-		obj instanceof StringWrapper ||
-		obj instanceof NumberWrapper ||
-		obj instanceof BoolWrapper ||
-		obj instanceof EnumWrapper
-	);
-}
-
 export function charProxy<T extends object>(char: T) {
-	const dp = new DeepProxy(char, {
-		get(target, p) {
-			if (typeof p === 'string' && p.startsWith('$')) {
-				return Reflect.get(target, p.slice(1));
-			}
+	const proxyFactory = makeCachedProxyFactory();
 
-			const property = Reflect.get(target, p);
+	const dp = (function makeCharProxy(value: object) {
+		return proxyFactory(value, {
+			get(target, key) {
+				if (typeof key === 'string' && key.startsWith('$')) {
+					return Reflect.get(target, key.slice(1));
+				}
 
-			if (isValueWrapper(property)) {
-				return property.value;
-			} else if (property instanceof ArrayWrapper) {
-				return this.nest(property.value);
-			} else if (property instanceof Derive) {
-				return property.eval(dp);
-			} else if (property instanceof Macro) {
-				return property.eval(dp);
-			} else if (typeof property === 'object') {
-				return this.nest(property);
-			}
+				const property = Reflect.get(target, key);
 
-			return property;
-		},
+				if (
+					property instanceof StringWrapper ||
+					property instanceof NumberWrapper ||
+					property instanceof BoolWrapper ||
+					property instanceof EnumWrapper
+				) {
+					return property.value;
+				} else if (property instanceof Derive || property instanceof Macro) {
+					return property.eval(dp);
+				} else if (property instanceof ArrayWrapper) {
+					return makeCharProxy(property.value);
+				} else if (typeof property === 'object') {
+					return makeCharProxy(property);
+				}
 
-		set(target, p, value) {
-			const property = Reflect.get(target, p);
+				return property;
+			},
 
-			if (isValueWrapper(property)) {
-				return Reflect.set(property, 'value', value);
-			} else if (property instanceof ArrayWrapper) {
-				return Reflect.set(property, 'value', value);
-			} else if (p in target) {
-				return Reflect.set(target, p, value);
-			}
+			set(target, key, newValue) {
+				const property = Reflect.get(target, key);
 
-			return false;
-		},
-	});
+				if (
+					property instanceof StringWrapper ||
+					property instanceof NumberWrapper ||
+					property instanceof BoolWrapper ||
+					property instanceof EnumWrapper ||
+					property instanceof ArrayWrapper
+				) {
+					return Reflect.set(property, 'value', newValue);
+				}
 
-	return dp as SerdeProxy<T>;
+				return Reflect.set(target, key, newValue);
+			},
+		});
+	})(char) as SerdeProxy<T>;
+
+	return dp;
 }
