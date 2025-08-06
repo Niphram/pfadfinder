@@ -7,7 +7,7 @@
 	import { SAVE_KEYS } from '$lib/data';
 	import Input from '../input/input.svelte';
 	import Toggle from '../input/toggle.svelte';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 
 	interface Props {
 		classIndex: number;

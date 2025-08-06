@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { parseTextWithMacros } from '$lib/macro/text';
 
 	const { c } = $derived(getChar());

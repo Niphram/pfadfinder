@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 
 	import { title } from '../dialog.svelte';
 	import MacroTextArea from '../input/macro-text-area.svelte';

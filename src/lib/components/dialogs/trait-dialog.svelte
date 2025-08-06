@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';

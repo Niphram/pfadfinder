@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Attack } from '$lib/data';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { parseTextWithMacros } from '$lib/macro/text';
 	import { preventDefault } from '$lib/utils';
 	import { withSign } from '$lib/utils/format';

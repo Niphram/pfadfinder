@@ -2,7 +2,7 @@
 	import type { MouseEventHandler } from 'svelte/elements';
 
 	import Button from '$lib/atoms/button.svelte';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 
 	const { c } = $derived(getChar());
 

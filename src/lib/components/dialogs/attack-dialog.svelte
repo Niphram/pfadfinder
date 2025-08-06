@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ABILITY_KEYS, ATTACK_TYPES } from '$lib/data';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { computeMacroInTextStyle } from '$lib/text/macro-text-style';
 
 	import { title } from '../dialog.svelte';

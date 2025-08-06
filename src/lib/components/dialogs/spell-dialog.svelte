@@ -2,7 +2,7 @@
 	import { preventDefault } from 'svelte/legacy';
 
 	import { SPELL_ATTACK_TYPE, SpellAttackDamage, type SpellLevel } from '$lib/data';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';

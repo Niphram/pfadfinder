@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Alert from '$lib/atoms/alert.svelte';
 	import Divider from '$lib/atoms/divider.svelte';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { preventDefault } from '$lib/utils';
 
 	import { title } from '../dialog.svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { FacetKey } from '$lib/data/character/persona.svelte';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 
 	import { title } from '../dialog.svelte';

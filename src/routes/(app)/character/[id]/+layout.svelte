@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Character } from '$lib/data';
-	import { setChar } from '$lib/data/context.svelte';
+	import { setChar } from '$lib/data/context';
 	import { charProxy } from '$lib/serde/proxy';
 	import { debounce, observeMutations } from '$lib/utils';
 

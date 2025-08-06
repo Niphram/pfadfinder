@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Macro_ast_tree from './macro-ast-tree.svelte';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { AstNodeType, type AstNode } from '$lib/macro/ast';
 	import { evalNode } from '$lib/macro/evaluate';
 

@@ -1,6 +1,6 @@
 <script>
 	import { ABILITY_KEYS } from '$lib/data';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 
 	import Divider from '$lib/atoms/divider.svelte';

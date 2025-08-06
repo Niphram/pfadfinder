@@ -4,7 +4,7 @@
 	import { title } from '$lib/components/dialog.svelte';
 	import Fieldset from '$lib/components/input/fieldset.svelte';
 	import RichInput from '$lib/components/input/rich-input.svelte';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { Tokenizer, TokenType } from '$lib/macro/tokenizer';
 	import { macro } from '$lib/serde';
 	import { computeMacroStyle } from '$lib/text/macro-text-style';

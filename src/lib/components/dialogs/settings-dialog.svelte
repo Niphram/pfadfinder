@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { persisted } from '$lib/data/storage';
 	import { preventDefault } from '$lib/utils';
 	import { openDialog, title } from '../dialog.svelte';

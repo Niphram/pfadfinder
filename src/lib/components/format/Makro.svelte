@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { evalNode } from '$lib/macro/evaluate';
 	import { Parser } from '$lib/macro/parser';
 

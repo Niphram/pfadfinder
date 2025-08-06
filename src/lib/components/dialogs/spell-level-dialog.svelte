@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ABILITY_KEYS, SPELL_LEVELS } from '$lib/data';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { title } from '../dialog.svelte';
 	import Integer from '../input/integer.svelte';

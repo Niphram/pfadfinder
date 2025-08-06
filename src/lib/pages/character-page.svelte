@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Class } from '$lib/data';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
 	import { openDialog } from '$lib/components/dialog.svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { AcItem, Item } from '$lib/data';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { preventDefault } from '$lib/utils';
 	import { macroNotify } from '$lib/utils/notes';

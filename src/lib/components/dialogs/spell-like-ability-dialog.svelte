@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { SPELL_ATTACK_TYPE, SPELL_LIKE_COUNT_TYPES, SpellAttackDamage } from '$lib/data';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { preventDefault } from '$lib/utils';
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { withSign } from '$lib/utils';
 	import { macroNotify } from '$lib/utils/notes';
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { SPELL_LEVELS, Spell, SpellLikeAbility, type SpellLevel } from '$lib/data';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { preventDefault, stopPropagation } from '$lib/utils';
 

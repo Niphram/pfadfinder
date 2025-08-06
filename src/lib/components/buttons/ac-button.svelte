@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { MouseEventHandler } from 'svelte/elements';
 
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import { preventDefault } from '$lib/utils';
 
 	interface Props {

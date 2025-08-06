@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ABILITY_KEYS, Item, SPELL_LEVELS } from '$lib/data';
-	import { getChar } from '$lib/data/context.svelte';
+	import { getChar } from '$lib/data/context';
 	import type { SerdeProxy } from '$lib/serde/proxy';
 
 	import { title } from '../dialog.svelte';
