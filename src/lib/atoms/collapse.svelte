@@ -1,11 +1,12 @@
 <script lang="ts">
+	import type { ClassValue, MouseEventHandler } from 'svelte/elements';
+
 	import { preventDefault } from '$lib/utils';
-	import type { MouseEventHandler } from 'svelte/elements';
 
 	interface Props {
 		open?: boolean;
 		icon?: 'arrow' | 'plus' | undefined;
-		class?: string;
+		class?: ClassValue;
 		title?: import('svelte').Snippet;
 		children?: import('svelte').Snippet<[{ open: boolean }]>;
 		oncontextmenu?: MouseEventHandler<HTMLDivElement>;
@@ -15,7 +16,7 @@
 	let {
 		open = $bindable(false),
 		icon = undefined,
-		class: className = '',
+		class: className,
 		title,
 		children,
 		oncontextmenu,
@@ -45,7 +46,7 @@
 </script>
 
 <div
-	class="bg-base-200 collapse text-left {className}"
+	class={['bg-base-200 collapse text-left', className]}
 	class:collapse-arrow={icon === 'arrow'}
 	class:collapse-plus={icon === 'plus'}
 	class:collapse-open={open}

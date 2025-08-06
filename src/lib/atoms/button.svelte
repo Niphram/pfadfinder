@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import type { MouseEventHandler } from 'svelte/elements';
+	import type { ClassValue, MouseEventHandler } from 'svelte/elements';
 
 	const COLORS = {
-		default: '',
+		default: undefined,
 		neutral: 'btn-neutral',
 		primary: 'btn-primary',
 		secondary: 'btn-secondary',
@@ -15,20 +15,20 @@
 	};
 
 	const STYLES = {
-		default: '',
+		default: undefined,
 		ghost: 'btn-ghost',
 		link: 'btn-link',
 		outline: 'btn-outline',
 	};
 
 	const SIZES = {
-		default: '',
+		default: undefined,
 		xs: 'btn-xs',
 		sm: 'btn-sm',
 	};
 
 	interface Props {
-		class?: string;
+		class?: ClassValue;
 		color?: keyof typeof COLORS;
 		style?: keyof typeof STYLES;
 		size?: keyof typeof SIZES;
@@ -38,7 +38,7 @@
 	}
 
 	let {
-		class: className = '',
+		class: className,
 		color = 'default',
 		style = 'default',
 		size = 'default',
@@ -49,7 +49,7 @@
 </script>
 
 <button
-	class="btn {COLORS[color]} {STYLES[style]} {SIZES[size]} {className}"
+	class={['btn', COLORS[color], STYLES[style], SIZES[size], className]}
 	{onclick}
 	{oncontextmenu}
 >
