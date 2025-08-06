@@ -6,8 +6,6 @@
 </script>
 
 <script lang="ts" generics="T">
-	import { run } from 'svelte/legacy';
-
 	import Sortable from 'sortablejs';
 	import { onMount, type Snippet } from 'svelte';
 
@@ -47,31 +45,28 @@
 	let sortableInstance: Sortable | undefined = $state();
 
 	// Update 'disabled' if it changes
-	run(() => {
+	$effect(() => {
 		sortableInstance?.option('disabled', disabled);
 	});
 
-	// The that was selected last
-	let lastSelectedItem: T;
-
 	onMount(() => {
+		// The that was selected last
+		let lastSelectedItem: T;
+
 		listMap.set(listEl, items);
 
 		sortableInstance = Sortable.create(listEl, {
 			onUpdate({ oldIndex = 0, newIndex = 0 }) {
 				items.splice(newIndex, 0, items.splice(oldIndex, 1)[0]);
-				items = items;
 			},
 			onAdd({ oldIndex = 0, newIndex = 0, from }) {
 				const list = listMap.get(from) as T[];
 				if (list) {
 					items.splice(newIndex, 0, list[oldIndex]);
-					items = items;
 				}
 			},
 			onRemove({ oldIndex = 0 }) {
 				items.splice(oldIndex, 1);
-				items = items;
 			},
 			onMove({ to }) {
 				const targetList = listMap.get(to) as T[];

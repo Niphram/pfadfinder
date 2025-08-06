@@ -30,6 +30,8 @@ class TestClass extends ClassSerializer {
 
 	enumeration = enumeration(randText());
 
+	optionalEnumeration = enumeration(randText(), { optional: true });
+
 	array = array(() => number(randNumber()), []);
 
 	subarray = array(() => new SubClass(), []);
@@ -77,6 +79,13 @@ describe('Proxy', () => {
 			sut.enumeration = text;
 
 			expect(sut.enumeration).toBe(text);
+		});
+
+		test('optional EnumWrapper', () => {
+			const sut = charProxy(new TestClass());
+			sut.optionalEnumeration = undefined;
+
+			expect(sut.optionalEnumeration).toBeUndefined();
 		});
 
 		test('ArrayWrapper', () => {

@@ -12,11 +12,12 @@
 	import { t } from './i18n';
 	import { macroNotify } from './utils/notes';
 	import { preventDefault, stopPropagation } from './utils';
+	import type { SerdeProxy } from './serde/proxy';
 
 	const { c } = $derived(getChar());
 
 	interface Props {
-		items: Item[];
+		items: SerdeProxy<Item>[];
 		class?: string;
 		disabled?: boolean;
 		parentId?: string;
@@ -30,7 +31,7 @@
 	}: Props = $props();
 
 	// If the moved item is a container and the target is another container, block move
-	function onMove(item: Item, target: Item[]) {
+	function onMove(item: SerdeProxy<Item>, target: SerdeProxy<Item>[]) {
 		return !item.isContainer || target === c.equipment.items;
 	}
 </script>
@@ -85,7 +86,7 @@
 				{:else}
 					<Collapse
 						icon="arrow"
-						open={items[props.index].containerOpen}
+						bind:open={items[props.index].containerOpen}
 						ontoggle={(open) => (items[props.index].containerOpen = open)}
 						oncontextmenu={() => openDialog(ItemDialog, { list: items, index: props.index })}
 					>
@@ -100,7 +101,7 @@
 
 						{#snippet children({ open })}
 							<Self
-								items={props.item.children}
+								bind:items={props.item.children}
 								parentId={props.item.id}
 								disabled={!open}
 								class="bg-base-100 rounded-lg p-2 pl-0"

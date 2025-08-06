@@ -19,7 +19,7 @@ export const FEAT_TYPES = [
 export type FeatType = (typeof FEAT_TYPES)[number];
 
 export class Feat extends ClassSerializer {
-	id = nanoid();
+	id = string(nanoid());
 
 	name = string('New Feat');
 

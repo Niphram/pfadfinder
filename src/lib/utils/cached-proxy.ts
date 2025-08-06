@@ -6,18 +6,37 @@ export function makeCachedProxyFactory() {
 	const MARKER = Symbol();
 	const PROXY_MAP = new WeakMap<object, object>();
 
-	return <T extends object>(target: T, { has = Reflect.has, ...handlers }: ProxyHandler<T>) => {
+	function isProxy<T extends object>(obj: T): obj is T & { [MARKER]: T } {
+		return !!(obj as { [MARKER]?: T })[MARKER];
+	}
+
+	return <T extends object>(
+		target: T,
+		{ get = Reflect.get, set = Reflect.set, ...handlers }: ProxyHandler<T>,
+	) => {
 		// Check if the value already is the desired proxy
-		if (MARKER in target) return target;
+		if (isProxy(target)) return target;
 
 		// Check if proxy for the object already exists
 		const cachedProxy = PROXY_MAP.get(target);
 		if (cachedProxy) return cachedProxy;
 
 		const proxy = new Proxy(target, {
-			has(target, p) {
+			get(target, p, receiver) {
 				// Special marker property
-				return p === MARKER || has(target, p);
+				if (p === MARKER) {
+					return target;
+				}
+
+				return get(target, p, receiver);
+			},
+			set(target, p, newValue, receiver) {
+				// If the new value is a proxy created using this factory, unwrap it
+				if (newValue !== undefined && newValue !== null && isProxy(newValue)) {
+					return set(target, p, newValue[MARKER], receiver);
+				} else {
+					return set(target, p, newValue, receiver);
+				}
 			},
 			...handlers,
 		});
