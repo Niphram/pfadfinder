@@ -1,13 +1,11 @@
 <script lang="ts">
-	import { openDialog } from '$lib/components/dialog.svelte';
-
 	import { ABILITY_KEYS, SAVE_KEYS } from '$lib/data';
 
 	import AbilityButton from '$lib/components/buttons/ability-button.svelte';
 	import AcButton from '$lib/components/buttons/ac-button.svelte';
 	import InitButton from '$lib/components/buttons/init-button.svelte';
 	import SaveButton from '$lib/components/buttons/save-button.svelte';
-
+	import { openDialog } from '$lib/components/dialog.svelte';
 	import AcDialog from '$lib/components/dialogs/ac-dialog.svelte';
 </script>
 

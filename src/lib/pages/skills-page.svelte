@@ -1,20 +1,19 @@
 <script lang="ts">
-	import { openDialog } from '$lib/components/dialog.svelte';
-	import SkillDialog from '$lib/components/dialogs/skill-dialog.svelte';
-	import SkillVariantsDialog from '$lib/components/dialogs/skill-variants-dialog.svelte';
 	import { SKILL_KEYS } from '$lib/data';
 	import { getChar } from '$lib/data/context.svelte';
 	import { t } from '$lib/i18n';
 	import { preventDefault, withSign } from '$lib/utils';
 	import { macroNotify } from '$lib/utils/notes';
 
-	const { c } = $derived(getChar());
+	import { openDialog } from '$lib/components/dialog.svelte';
+	import SkillDialog from '$lib/components/dialogs/skill-dialog.svelte';
+	import SkillVariantsDialog from '$lib/components/dialogs/skill-variants-dialog.svelte';
 
-	const skillRanks = $derived(c.skills.skillRanks);
+	const { c } = $derived(getChar());
 </script>
 
 <div class="flex flex-col gap-2">
-	<div class="divider">Skills (Ranks {skillRanks}/{c.classes.ranks})</div>
+	<div class="divider">Skills (Ranks {c.skills.skillRanks}/{c.classes.ranks})</div>
 
 	{#each SKILL_KEYS as key (key)}
 		{#each c.skills[key].skills as variant, index (index)}

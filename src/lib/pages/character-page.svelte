@@ -1,13 +1,11 @@
 <script lang="ts">
-	import { openDialog } from '$lib/components/dialog.svelte';
-
 	import { Class } from '$lib/data';
+	import { getChar } from '$lib/data/context.svelte';
 
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
-
+	import { openDialog } from '$lib/components/dialog.svelte';
 	import ClassDialog from '$lib/components/dialogs/class-dialog.svelte';
 	import RaceDialog from '$lib/components/dialogs/race-dialog.svelte';
-	import { getChar } from '$lib/data/context.svelte';
 
 	const { c } = $derived(getChar());
 

@@ -5,9 +5,9 @@
 
 	import { Character } from '$lib/data';
 	import { upgradeCharacterAndDeserialize } from '$lib/data/upgrade';
+	import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
 	import { preventDefault } from '$lib/utils';
 
-	import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
 	import type { PageProps } from './$types';
 
 	const { data }: PageProps = $props();

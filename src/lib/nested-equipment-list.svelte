@@ -1,38 +1,41 @@
 <script lang="ts">
 	import Self from './nested-equipment-list.svelte';
 
-	import Collapse from './atoms/collapse.svelte';
-	import { openDialog } from './components/dialog.svelte';
-	import ItemDialog from './components/dialogs/item-dialog.svelte';
-	import DragHandle from './components/icons/drag-handle.svelte';
+	import type { ClassValue } from 'svelte/elements';
 
-	import SortableList from './components/sortable-list.svelte';
-	import { type Item } from './data';
-	import { getChar } from './data/context.svelte';
-	import { t } from './i18n';
-	import { macroNotify } from './utils/notes';
-	import { preventDefault, stopPropagation } from './utils';
-	import type { SerdeProxy } from './serde/proxy';
+	import { type Item } from '$lib/data';
+	import { getChar } from '$lib/data/context.svelte';
+	import { t } from '$lib/i18n';
+	import type { SerdeProxy } from '$lib/serde/proxy';
+	import { preventDefault, stopPropagation } from '$lib/utils';
+	import { macroNotify } from '$lib/utils/notes';
+
+	import { openDialog } from '$lib/components/dialog.svelte';
+	import ItemDialog from '$lib/components/dialogs/item-dialog.svelte';
+	import DragHandle from '$lib/components/icons/drag-handle.svelte';
+	import SortableList from '$lib/components/sortable-list.svelte';
+
+	import Collapse from '$lib/atoms/collapse.svelte';
 
 	const { c } = $derived(getChar());
 
 	interface Props {
 		items: SerdeProxy<Item>[];
-		class?: string;
+		class?: ClassValue;
 		disabled?: boolean;
 		parentId?: string;
 	}
 
 	let {
 		items = $bindable(),
-		class: className = '',
+		class: className,
 		disabled = false,
 		parentId = 'items',
 	}: Props = $props();
 
-	// If the moved item is a container and the target is another container, block move
+	// If the moved item is a container and the target is not the top level item list, block move
 	function onMove(item: SerdeProxy<Item>, target: SerdeProxy<Item>[]) {
-		return !item.isContainer || target === c.equipment.items;
+		return !(item.isContainer && target !== c.equipment.items);
 	}
 </script>
 
@@ -51,7 +54,7 @@
 		{onMove}
 		keyProp="id"
 		{disabled}
-		class="flex flex-col gap-2 {className}"
+		class={['flex flex-col gap-2', className]}
 	>
 		{#snippet children(props)}
 			<div class="flex w-full flex-auto flex-row">

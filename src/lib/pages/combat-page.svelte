@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { Attack } from '$lib/data';
+	import { getChar } from '$lib/data/context.svelte';
+	import { parseTextWithMacros } from '$lib/macro/text';
+	import { preventDefault } from '$lib/utils';
 	import { withSign } from '$lib/utils/format';
+	import { macroNotify } from '$lib/utils/notes';
 
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
 	import { openDialog } from '$lib/components/dialog.svelte';
@@ -11,10 +15,6 @@
 	import SrDialog from '$lib/components/dialogs/sr-dialog.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
-	import { getChar } from '$lib/data/context.svelte';
-	import { parseTextWithMacros } from '$lib/macro/text';
-	import { preventDefault } from '$lib/utils';
-	import { macroNotify } from '$lib/utils/notes';
 
 	const { c } = $derived(getChar());
 

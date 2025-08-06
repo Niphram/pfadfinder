@@ -1,16 +1,18 @@
 <script lang="ts">
-	import Collapse from '$lib/atoms/collapse.svelte';
-	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
-	import { openDialog } from '$lib/components/dialog.svelte';
-	import FeatDialog from '$lib/components/dialogs/feat-dialog.svelte';
-	import TraitDialog from '$lib/components/dialogs/trait-dialog.svelte';
-	import DragHandle from '$lib/components/icons/drag-handle.svelte';
-	import SortableList from '$lib/components/sortable-list.svelte';
 	import { Feat, Trait } from '$lib/data';
 	import { getChar } from '$lib/data/context.svelte';
 	import { t } from '$lib/i18n';
 	import { preventDefault } from '$lib/utils';
 	import { macroNotify } from '$lib/utils/notes';
+
+	import { openDialog } from '$lib/components/dialog.svelte';
+	import FeatDialog from '$lib/components/dialogs/feat-dialog.svelte';
+	import TraitDialog from '$lib/components/dialogs/trait-dialog.svelte';
+	import DragHandle from '$lib/components/icons/drag-handle.svelte';
+	import SortableList from '$lib/components/sortable-list.svelte';
+
+	import Collapse from '$lib/atoms/collapse.svelte';
+	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
 
 	const { c } = $derived(getChar());
 

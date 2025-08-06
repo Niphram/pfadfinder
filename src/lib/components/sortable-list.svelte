@@ -8,6 +8,7 @@
 <script lang="ts" generics="T">
 	import Sortable from 'sortablejs';
 	import { onMount, type Snippet } from 'svelte';
+	import type { ClassValue } from 'svelte/elements';
 
 	type Options = Omit<
 		Sortable.SortableOptions,
@@ -19,7 +20,7 @@
 		options?: Options | undefined;
 		keyProp: keyof T;
 		disabled?: boolean;
-		class?: string;
+		class?: ClassValue;
 		keyPrefix?: string;
 		element?: string;
 		onMove?: ((item: T, targetArray: T[]) => boolean) | undefined;
@@ -32,7 +33,7 @@
 		options = undefined,
 		keyProp,
 		disabled = false,
-		class: className = '',
+		class: className,
 		keyPrefix = '',
 		element = 'div',
 		onMove = undefined,

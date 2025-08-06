@@ -1,19 +1,20 @@
 <script lang="ts">
-	import { preventDefault, stopPropagation } from 'svelte/legacy';
+	import { SPELL_LEVELS, Spell, SpellLikeAbility, type SpellLevel } from '$lib/data';
+	import { getChar } from '$lib/data/context.svelte';
+	import { t } from '$lib/i18n';
+	import { preventDefault, stopPropagation } from '$lib/utils';
 
-	import Button from '$lib/atoms/button.svelte';
-	import Collapse from '$lib/atoms/collapse.svelte';
-	import Divider from '$lib/atoms/divider.svelte';
-	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import SpellDialog from '$lib/components/dialogs/spell-dialog.svelte';
 	import SpellLevelDialog from '$lib/components/dialogs/spell-level-dialog.svelte';
 	import SpellLikeAbilityDialog from '$lib/components/dialogs/spell-like-ability-dialog.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
-	import { SPELL_LEVELS, Spell, SpellLikeAbility, type SpellLevel } from '$lib/data';
-	import { getChar } from '$lib/data/context.svelte';
-	import { t } from '$lib/i18n';
+
+	import Button from '$lib/atoms/button.svelte';
+	import Collapse from '$lib/atoms/collapse.svelte';
+	import Divider from '$lib/atoms/divider.svelte';
+	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
 
 	const { c } = $derived(getChar());
 
