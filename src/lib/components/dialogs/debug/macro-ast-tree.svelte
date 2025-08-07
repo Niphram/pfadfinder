@@ -1,5 +1,6 @@
 <script lang="ts">
-	import Macro_ast_tree from './macro-ast-tree.svelte';
+	import Self from './macro-ast-tree.svelte';
+
 	import { getChar } from '$lib/data/context';
 	import { AstNodeType, type AstNode } from '$lib/macro/ast';
 	import { evalNode } from '$lib/macro/evaluate';
@@ -60,16 +61,16 @@
 				<li><p>Path: {node.path.join('.')} (= {evalNode(node, c)})</p></li>
 			{:else if node.type === AstNodeType.Unary}
 				<li><p>Operator: {OP_TYPES[node.op]}</p></li>
-				<li><Macro_ast_tree {open} prefix="Value: " node={node.node}></Macro_ast_tree></li>
+				<li><Self {open} prefix="Value: " node={node.node}></Self></li>
 			{:else if node.type === AstNodeType.Binary}
 				<li><p>Operator: {OP_TYPES[node.op]}</p></li>
-				<li><Macro_ast_tree {open} prefix="Left: " node={node.left}></Macro_ast_tree></li>
-				<li><Macro_ast_tree {open} prefix="Right: " node={node.right}></Macro_ast_tree></li>
+				<li><Self {open} prefix="Left: " node={node.left}></Self></li>
+				<li><Self {open} prefix="Right: " node={node.right}></Self></li>
 			{:else if node.type === AstNodeType.Func}
 				<li><p>Type: {node.func ?? 'None (Just parentheses)'}</p></li>
 				{#each node.nodes as funcNode, i (i)}
 					<li>
-						<Macro_ast_tree {open} prefix="Arg {i}: " node={funcNode}></Macro_ast_tree>
+						<Self {open} prefix="Arg {i}: " node={funcNode}></Self>
 					</li>
 				{/each}
 			{/if}

@@ -23,7 +23,6 @@
 
 	function deleteAttack() {
 		c.combat.attacks.splice(index, 1);
-		c.combat.attacks = c.combat.attacks;
 	}
 
 	$title = 'Weapon/Attack';

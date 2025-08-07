@@ -7,11 +7,12 @@
 	import Steps from '../steps.svelte';
 	import { isDarkMode, toggleDarkMode } from '../theme-changer.svelte';
 	import MacroDebugDialog from './debug/macro-debug-dialog.svelte';
-	import ImportExportDialog from './import-export-dialog.svelte';
 
 	const { c } = $derived(getChar());
 
 	$title = 'Settings';
+
+	const showDanger = $derived(c.settings.experimentalFeatures);
 </script>
 
 <Toggle name="darkMode" label="Dark mode" checked={$isDarkMode} onchange={toggleDarkMode} />
@@ -38,49 +39,15 @@
 	bind:checked={c.settings.experimentalFeatures}
 />
 
-<div class="divider">Danger</div>
+{#if showDanger}
+	<div class="divider">Danger</div>
 
-<div class="flex flex-col gap-4">
-	{#if c.settings.experimentalFeatures}
-		<button
-			class="btn btn-secondary w-full"
-			onclick={preventDefault(() => openDialog(MacroDebugDialog, {}))}>Macro debugger</button
-		>
-	{/if}
-
-	<button
-		class="btn btn-secondary w-full"
-		onclick={preventDefault(() => openDialog(ImportExportDialog, {}))}>Import/Export</button
-	>
-
-	<Steps
-		steps={[
-			{ label: 'Delete Character', style: { warning: true, outline: true } },
-			{ label: 'Are you sure?', style: { warning: true } },
-			{
-				label: 'REALLY SURE???',
-				style: { error: true },
-				onClick: () => {
-					// TODO!
-					//c.set(new Character());
-				},
-			},
-		]}
-	>
-		{#snippet children({ props: { label, onClick, style }, next })}
+	<div class="flex flex-col gap-4">
+		{#if c.settings.experimentalFeatures}
 			<button
-				class="btn w-full"
-				class:btn-warning={style.warning}
-				class:btn-outline={style.outline}
-				class:btn-error={style.error}
-				onclick={onClick ??
-					((ev) => {
-						ev.preventDefault();
-						next();
-					})}
+				class="btn btn-secondary w-full"
+				onclick={preventDefault(() => openDialog(MacroDebugDialog, {}))}>Macro debugger</button
 			>
-				{label}
-			</button>
-		{/snippet}
-	</Steps>
-</div>
+		{/if}
+	</div>
+{/if}

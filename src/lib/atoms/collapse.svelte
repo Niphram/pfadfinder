@@ -10,7 +10,6 @@
 		title?: import('svelte').Snippet;
 		children?: import('svelte').Snippet<[{ open: boolean }]>;
 		oncontextmenu?: MouseEventHandler<HTMLDivElement>;
-		ontoggle?: (open: boolean) => void;
 	}
 
 	let {
@@ -20,12 +19,10 @@
 		title,
 		children,
 		oncontextmenu,
-		ontoggle,
 	}: Props = $props();
 
 	function toggleOpen() {
 		open = !open;
-		ontoggle?.(open);
 	}
 
 	function keydownHandler(event: KeyboardEvent) {

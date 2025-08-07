@@ -69,7 +69,7 @@
 		<div class="flex h-min flex-row items-stretch gap-4">
 			<div class="flex flex-1 basis-0 flex-col">
 				<button
-					onclick={preventDefault(() => (c.hp.heal(modifyAmount), (c = c)))}
+					onclick={preventDefault(() => c.hp.heal(modifyAmount))}
 					class="btn grow bg-green-500 px-2 text-lg lg:text-xl">Heal</button
 				>
 			</div>
@@ -81,11 +81,11 @@
 			/>
 			<div class="flex flex-1 basis-0 flex-col gap-2">
 				<button
-					onclick={preventDefault(() => (c.hp.dealLethal(modifyAmount), (c = c)))}
+					onclick={preventDefault(() => c.hp.dealLethal(modifyAmount))}
 					class="btn grow bg-red-500 px-2 text-lg lg:text-xl">Lethal</button
 				>
 				<button
-					onclick={preventDefault(() => (c.hp.dealNonlethal(modifyAmount), (c = c)))}
+					onclick={preventDefault(() => c.hp.dealNonlethal(modifyAmount))}
 					class="btn grow bg-orange-500 px-2 text-lg lg:text-xl">Nonlethal</button
 				>
 			</div>

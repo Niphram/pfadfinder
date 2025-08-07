@@ -90,7 +90,6 @@
 					<Collapse
 						icon="arrow"
 						bind:open={items[props.index].containerOpen}
-						ontoggle={(open) => (items[props.index].containerOpen = open)}
 						oncontextmenu={() => openDialog(ItemDialog, { list: items, index: props.index })}
 					>
 						{#snippet title()}

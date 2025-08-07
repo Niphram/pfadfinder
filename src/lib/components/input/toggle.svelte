@@ -6,7 +6,7 @@
 	interface Props {
 		checked: boolean;
 		name: string;
-		label?: string | undefined;
+		label?: string;
 		disabled?: boolean;
 		onchange?: ChangeEventHandler<HTMLInputElement>;
 	}

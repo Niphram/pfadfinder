@@ -16,7 +16,6 @@
 
 	function deleteTrait() {
 		c.traits.splice(index, 1);
-		c.traits = c.traits;
 	}
 
 	$title = 'Feature/Trait';
