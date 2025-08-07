@@ -4,7 +4,6 @@
 	import { preventDefault } from '$lib/utils';
 	import { openDialog, title } from '../dialog.svelte';
 	import Toggle from '../input/toggle.svelte';
-	import Steps from '../steps.svelte';
 	import { isDarkMode, toggleDarkMode } from '../theme-changer.svelte';
 	import MacroDebugDialog from './debug/macro-debug-dialog.svelte';
 
