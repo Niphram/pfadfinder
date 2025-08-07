@@ -8,9 +8,13 @@
 	import MacroTextArea from '../input/macro-text-area.svelte';
 	import Select from '../input/select.svelte';
 
-	const { c } = getChar();
+	interface Props {
+		key?: SaveKey;
+	}
 
-	export let key: SaveKey = 'fort';
+	let { key = 'fort' }: Props = $props();
+
+	const { c } = $derived(getChar());
 
 	$title = $t(`saves.${key}.full`);
 </script>
@@ -19,13 +23,14 @@
 	name="saveBaseAbility"
 	label="Base Ability"
 	options={ABILITY_KEYS}
-	bind:value={$c[key].ability}
-	let:option={key}
+	bind:value={c[key].ability}
 >
-	<option value={key}>{$t(`abilities.${key}.full`)}</option>
+	{#snippet children({ option: key })}
+		<option value={key}>{$t(`abilities.${key}.full`)}</option>
+	{/snippet}
 </Select>
 
-<MacroInteger bind:value={$c[key].misc.expr} name="saveMisc" label="Misc" />
-<MacroInteger bind:value={$c[key].bonus.expr} name="saveBonus" label="Temp Mod" />
+<MacroInteger bind:value={c[key].$misc.expr} name="saveMisc" label="Misc" />
+<MacroInteger bind:value={c[key].$bonus.expr} name="saveBonus" label="Temp Mod" />
 
-<MacroTextArea bind:value={$c[key].notes} name="saveNotes" label="Notes" placeholder="Notes" />
+<MacroTextArea bind:value={c[key].notes} name="saveNotes" label="Notes" placeholder="Notes" />

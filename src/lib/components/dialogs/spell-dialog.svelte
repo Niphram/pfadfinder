@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import { SPELL_ATTACK_TYPE, SpellAttackDamage, type SpellLevel } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
@@ -10,36 +12,37 @@
 	import Select from '../input/select.svelte';
 	import Toggle from '../input/toggle.svelte';
 
-	const { c } = getChar();
+	interface Props {
+		spellLevel: SpellLevel;
+		spellIdx: number;
+	}
 
-	export let spellLevel: SpellLevel;
-	export let spellIdx: number;
+	let { spellLevel, spellIdx }: Props = $props();
+
+	const { c } = $derived(getChar());
 
 	function deleteSpell() {
-		$c.spells[spellLevel].spells.splice(spellIdx, 1);
-		$c.spells[spellLevel].spells = $c.spells[spellLevel].spells;
+		c.spells[spellLevel].spells.splice(spellIdx, 1);
 	}
 
 	function addDamageToSpell() {
-		$c.spells[spellLevel].spells[spellIdx].damage.push(new SpellAttackDamage());
-		$c.spells[spellLevel].spells[spellIdx].damage = $c.spells[spellLevel].spells[spellIdx].damage;
+		c.spells[spellLevel].spells[spellIdx].$damage.value.push(new SpellAttackDamage());
 	}
 
 	function removeDamageFromSpell(idx: number) {
-		$c.spells[spellLevel].spells[spellIdx].damage.splice(idx, 1);
-		$c.spells[spellLevel].spells[spellIdx].damage = $c.spells[spellLevel].spells[spellIdx].damage;
+		c.spells[spellLevel].spells[spellIdx].damage.splice(idx, 1);
 	}
 
 	$title = 'Spell';
 </script>
 
 <div class="flex flex-col gap-2">
-	{#if spellIdx < $c.spells[spellLevel].spells.length}
+	{#if spellIdx < c.spells[spellLevel].spells.length}
 		<Input
 			name="spellName"
 			label="Name"
 			placeholder="Name"
-			bind:value={$c.spells[spellLevel].spells[spellIdx].name}
+			bind:value={c.spells[spellLevel].spells[spellIdx].name}
 		/>
 
 		<div class="divider">Preperation</div>
@@ -48,12 +51,12 @@
 			<Integer
 				label="Used today"
 				name="spellUsage"
-				bind:value={$c.spells[spellLevel].spells[spellIdx].used}
+				bind:value={c.spells[spellLevel].spells[spellIdx].used}
 			/>
 			<Integer
 				label="Prepared today"
 				name="spellPrepared"
-				bind:value={$c.spells[spellLevel].spells[spellIdx].prepared}
+				bind:value={c.spells[spellLevel].spells[spellIdx].prepared}
 			/>
 		</div>
 
@@ -62,70 +65,70 @@
 		<Toggle
 			name="domainSpell"
 			label="Domain?"
-			bind:checked={$c.spells[spellLevel].spells[spellIdx].isDomainSpell}
+			bind:checked={c.spells[spellLevel].spells[spellIdx].isDomainSpell}
 		/>
 
 		<Input
 			name="spellSchool"
 			label="School"
 			placeholder="School/Domain/Elemental"
-			bind:value={$c.spells[spellLevel].spells[spellIdx].school}
+			bind:value={c.spells[spellLevel].spells[spellIdx].school}
 		/>
 
 		<Input
 			name="classAndLevel"
 			label="Class/Level"
 			placeholder="Sorcerer/Wizard 3"
-			bind:value={$c.spells[spellLevel].spells[spellIdx].classAndLevel}
+			bind:value={c.spells[spellLevel].spells[spellIdx].classAndLevel}
 		/>
 
 		<Input
 			name="castingTime"
 			label="Casting Time"
 			placeholder="1 standard action"
-			bind:value={$c.spells[spellLevel].spells[spellIdx].castingTime}
+			bind:value={c.spells[spellLevel].spells[spellIdx].castingTime}
 		/>
 
 		<Input
 			name="components"
 			label="Components"
 			placeholder="V, S, M (a ball of bat guano and sulfur)"
-			bind:value={$c.spells[spellLevel].spells[spellIdx].components}
+			bind:value={c.spells[spellLevel].spells[spellIdx].components}
 		/>
 
 		<Input
 			name="range"
 			label="Range"
 			placeholder="Long (400 ft. + 40 ft./level)"
-			bind:value={$c.spells[spellLevel].spells[spellIdx].range}
+			bind:value={c.spells[spellLevel].spells[spellIdx].range}
 		/>
 
 		<Input
 			name="area"
 			label="Area"
 			placeholder="20-ft.-radius spread"
-			bind:value={$c.spells[spellLevel].spells[spellIdx].area}
+			bind:value={c.spells[spellLevel].spells[spellIdx].area}
 		/>
 
 		<Input
 			name="targets"
 			label="Targets"
 			placeholder="up to five creatures"
-			bind:value={$c.spells[spellLevel].spells[spellIdx].targets}
+			bind:value={c.spells[spellLevel].spells[spellIdx].targets}
 		/>
 
 		<Input
 			name="effect"
 			label="Effect"
 			placeholder="Heal 1d6+CasterLevel"
-			bind:value={$c.spells[spellLevel].spells[spellIdx].effect}
+			bind:value={c.spells[spellLevel].spells[spellIdx].effect}
 		/>
 
 		<Input
 			name="duration"
 			label="Duration"
 			placeholder="Instantaneous"
-			bind:value={$c.spells[spellLevel].spells[spellIdx].duration}
+			bind:value={c.spells[spellLevel].spells[spellIdx].duration}
 		/>
 
 		<div class="divider">
@@ -133,30 +136,30 @@
 				Saving Throw
 				<Toggle
 					name="savingThrow"
-					bind:checked={$c.spells[spellLevel].spells[spellIdx].savingThrow.hasSave}
+					bind:checked={c.spells[spellLevel].spells[spellIdx].savingThrow.hasSave}
 				/>
 			</div>
 		</div>
 
-		{#if $c.spells[spellLevel].spells[spellIdx].savingThrow.hasSave}
+		{#if c.spells[spellLevel].spells[spellIdx].savingThrow.hasSave}
 			<Input
 				name="savingThrowEffect"
 				label="Effect"
 				placeholder="Reflex Half"
-				bind:value={$c.spells[spellLevel].spells[spellIdx].savingThrow.effect}
+				bind:value={c.spells[spellLevel].spells[spellIdx].savingThrow.effect}
 			/>
 
 			<Integer
 				label="DC Bonus"
 				name="saveDcMod"
-				bind:value={$c.spells[spellLevel].spells[spellIdx].savingThrow.dcMod}
+				bind:value={c.spells[spellLevel].spells[spellIdx].savingThrow.dcMod}
 			/>
 		{/if}
 
 		<Input
 			name="sr"
 			label="Spell Resistance"
-			bind:value={$c.spells[spellLevel].spells[spellIdx].spellResistance}
+			bind:value={c.spells[spellLevel].spells[spellIdx].spellResistance}
 		/>
 
 		<div class="divider">
@@ -164,26 +167,27 @@
 				Attack
 				<Toggle
 					name="attack"
-					bind:checked={$c.spells[spellLevel].spells[spellIdx].attack.hasAttack}
+					bind:checked={c.spells[spellLevel].spells[spellIdx].attack.hasAttack}
 				/>
 			</div>
 		</div>
 
-		{#if $c.spells[spellLevel].spells[spellIdx].attack.hasAttack}
+		{#if c.spells[spellLevel].spells[spellIdx].attack.hasAttack}
 			<div class="flex flex-row gap-2">
 				<Select
-					bind:value={$c.spells[spellLevel].spells[spellIdx].attack.type}
+					bind:value={c.spells[spellLevel].spells[spellIdx].attack.type}
 					name="spellAttackType"
 					label="Type"
 					options={SPELL_ATTACK_TYPE}
-					let:option
 				>
-					<option value={option}>{$t(`spell.attackType.${option}`)}</option>
+					{#snippet children({ option })}
+						<option value={option}>{$t(`spell.attackType.${option}`)}</option>
+					{/snippet}
 				</Select>
 				<Integer
 					label="Attack Mod"
 					name="attackBonus"
-					bind:value={$c.spells[spellLevel].spells[spellIdx].attack.mod}
+					bind:value={c.spells[spellLevel].spells[spellIdx].attack.mod}
 				/>
 			</div>
 
@@ -191,12 +195,12 @@
 				<Integer
 					label="Critical Range"
 					name="critRange"
-					bind:value={$c.spells[spellLevel].spells[spellIdx].attack.critRange}
+					bind:value={c.spells[spellLevel].spells[spellIdx].attack.critRange}
 				/>
 				<Integer
 					label="Multiplier"
 					name="critMult"
-					bind:value={$c.spells[spellLevel].spells[spellIdx].attack.critMultiplier}
+					bind:value={c.spells[spellLevel].spells[spellIdx].attack.critMultiplier}
 				/>
 			</div>
 		{/if}
@@ -204,13 +208,13 @@
 		<div class="divider mb-0">
 			<div class="flex flex-row gap-2">
 				Damage
-				<button class="btn btn-secondary btn-xs" on:click|preventDefault={addDamageToSpell}
+				<button class="btn btn-secondary btn-xs" onclick={preventDefault(addDamageToSpell)}
 					>Add</button
 				>
 			</div>
 		</div>
 
-		{#each $c.spells[spellLevel].spells[spellIdx].damage as damage, damageIdx (damageIdx)}
+		{#each c.spells[spellLevel].spells[spellIdx].damage as damage, damageIdx (damageIdx)}
 			<div class="flex flex-row gap-2">
 				<input
 					name="spellDamage"
@@ -226,9 +230,9 @@
 				/>
 				<button
 					class="btn btn-warning"
-					on:click|preventDefault={() => {
+					onclick={preventDefault(() => {
 						removeDamageFromSpell(damageIdx);
-					}}>Delete</button
+					})}>Delete</button
 				>
 			</div>
 		{/each}
@@ -236,11 +240,11 @@
 		<MacroTextArea
 			name="spellDescription"
 			label="Description"
-			bind:value={$c.spells[spellLevel].spells[spellIdx].description}
+			bind:value={c.spells[spellLevel].spells[spellIdx].description}
 		/>
 	{/if}
 
-	<button on:click={deleteSpell} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button onclick={deleteSpell} class="btn btn-error mt-4 w-max self-center uppercase">
 		Delete
 	</button>
 </div>

@@ -1,4 +1,5 @@
-import { GenericDeserializeInto } from 'cerialize';
+import { DESERIALIZE_SYMBOL } from '$lib/serde/interfaces';
+import { charProxy, type SerdeProxy } from '$lib/serde/proxy';
 
 import { Character } from './character';
 
@@ -9,7 +10,7 @@ import { Character } from './character';
  */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const UPGRADES: ((char: any) => void | ((char: Character) => void))[] = [
+const UPGRADES: ((char: any) => void | ((char: SerdeProxy<Character>) => void))[] = [
 	// Version 2, rename spell levels
 	(char: { spells: Record<`level_${number}` | number, unknown> }) => {
 		for (let i = 0; i <= 9; i++) {
@@ -28,7 +29,7 @@ const UPGRADES: ((char: any) => void | ((char: Character) => void))[] = [
 
 		return (char) => {
 			// Calculate new hitpoint data format
-			char.hp.rolled = oldMax - char.con.mod.eval(char) * char.classes.levels;
+			char.hp.rolled = oldMax - char.con.mod * char.classes.levels;
 			char.hp.damageTaken = oldMax - oldCurrent;
 		};
 	},
@@ -36,7 +37,7 @@ const UPGRADES: ((char: any) => void | ((char: Character) => void))[] = [
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function upgradeCharacterAndDeserialize(char: any) {
-	const postUpgrades: ((char: Character) => void)[] = [];
+	const postUpgrades: ((char: SerdeProxy<Character>) => void)[] = [];
 
 	for (let v = char.version; v <= UPGRADES.length; v++) {
 		const postUpgrade = UPGRADES[v - 1](char);
@@ -48,10 +49,13 @@ export function upgradeCharacterAndDeserialize(char: any) {
 		char.version = v + 1;
 	}
 
-	const deserializedChar = GenericDeserializeInto(char, Character, new Character());
+	const deserializedChar = new Character();
+	deserializedChar[DESERIALIZE_SYMBOL](char);
+
+	const proxy = charProxy(deserializedChar);
 
 	// Apply post-upgrades
-	postUpgrades.forEach((postUpgrade) => postUpgrade(deserializedChar));
+	postUpgrades.forEach((postUpgrade) => postUpgrade(proxy));
 
 	return deserializedChar;
 }

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Serialize } from 'cerialize';
 	import { nanoid } from 'nanoid';
 
 	import { base } from '$app/paths';
 
 	import { Character } from '$lib/data';
 	import { upgradeCharacterAndDeserialize } from '$lib/data/upgrade';
+	import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
 	import { preventDefault } from '$lib/utils';
 
 	import type { PageProps } from './$types';
@@ -39,7 +39,7 @@
 			const fileContent = await file.text();
 
 			const newChar = upgradeCharacterAndDeserialize(JSON.parse(fileContent));
-			newChar.id = nanoid();
+			newChar.id.value = nanoid();
 
 			await db.saveCharacter(newChar);
 			files = undefined;
@@ -53,7 +53,7 @@
 
 		if (!char) return;
 
-		const file = new File([JSON.stringify(Serialize(char))], `${char.name}.json`, {
+		const file = new File([JSON.stringify(char[SERIALIZE_SYMBOL]())], `${char.name.value}.json`, {
 			type: 'application/json',
 		});
 

@@ -11,62 +11,67 @@
 	import RichInput from '../input/rich-input.svelte';
 	import Select from '../input/select.svelte';
 
-	const { c } = getChar();
+	interface Props {
+		index: number;
+	}
 
-	export let index: number;
+	let { index }: Props = $props();
+
+	const { c } = $derived(getChar());
 
 	const attackAbilities = ['none', ...ABILITY_KEYS];
 
 	function deleteAttack() {
-		$c.combat.attacks.splice(index, 1);
-		$c.combat.attacks = $c.combat.attacks;
+		c.combat.attacks.splice(index, 1);
 	}
 
 	$title = 'Weapon/Attack';
 </script>
 
 <div class="flex flex-col gap-2">
-	{#if index < $c.combat.attacks.length}
+	{#if index < c.combat.attacks.length}
 		<Input
 			name="className"
 			label="Name"
 			placeholder="Type here"
-			bind:value={$c.combat.attacks[index].name}
+			bind:value={c.combat.attacks[index].name}
 		/>
 
 		<div class="divider">
 			<div class="flex flex-row gap-2">
 				Attack
-				<input type="checkbox" class="toggle" bind:checked={$c.combat.attacks[index].hasAttack} />
+				<input type="checkbox" class="toggle" bind:checked={c.combat.attacks[index].hasAttack} />
 			</div>
 		</div>
 
-		{#if $c.combat.attacks[index].hasAttack}
+		{#if c.combat.attacks[index].hasAttack}
 			<div class="flex flex-row gap-1">
 				<Select
-					bind:value={$c.combat.attacks[index].attack.baseModifier}
+					bind:value={c.combat.attacks[index].attack.baseModifier}
 					name="attackBaseMod"
 					label="Base"
 					options={ATTACK_TYPES}
-					let:option
 				>
-					<option value={option}>{option}</option>
+					{#snippet children({ option })}
+						<option value={option}>{option}</option>
+					{/snippet}
 				</Select>
 				<Select
-					bind:value={$c.combat.attacks[index].attack.abilityModifier}
+					bind:value={c.combat.attacks[index].attack.abilityModifier}
 					name="attackAbilityMod"
 					label="Ability"
 					options={attackAbilities}
-					let:option
 				>
-					<option value={option}>{option}</option>
+					{#snippet children({ option })}
+						<option value={option}>{option}</option>
+					{/snippet}
 				</Select>
 				<MacroInteger
 					optional
 					placeholder="0"
 					label="Bonus"
 					name="attackBonusMod"
-					bind:value={$c.combat.attacks[index].attack.bonusModifier.expr}
+					bind:value={c.combat.attacks[index].attack.$bonusModifier.expr}
 				></MacroInteger>
 			</div>
 
@@ -75,14 +80,14 @@
 					name="attackCritRange"
 					label="Critical Range"
 					placeholder="19-20"
-					bind:value={$c.combat.attacks[index].attack.critRange}
+					bind:value={c.combat.attacks[index].attack.critRange}
 				/>
 
 				<Input
 					name="attackRange"
 					label="Range"
 					placeholder="5 feet"
-					bind:value={$c.combat.attacks[index].attack.range}
+					bind:value={c.combat.attacks[index].attack.range}
 				/>
 			</div>
 		{/if}
@@ -90,30 +95,30 @@
 		<div class="divider">
 			<div class="flex flex-row gap-2">
 				Damage
-				<input type="checkbox" class="toggle" bind:checked={$c.combat.attacks[index].hasDamage} />
+				<input type="checkbox" class="toggle" bind:checked={c.combat.attacks[index].hasDamage} />
 			</div>
 		</div>
 
-		{#if $c.combat.attacks[index].hasDamage}
+		{#if c.combat.attacks[index].hasDamage}
 			<Fieldset legend="Damage">
 				<RichInput
 					name="damage"
 					placeholder="1d6 Piercing + STR"
-					bind:value={$c.combat.attacks[index].damage.damage}
+					bind:value={c.combat.attacks[index].damage.damage}
 					computeTextStyle={computeMacroInTextStyle}
 				/>
 			</Fieldset>
 		{/if}
 
 		<MacroTextArea
-			bind:value={$c.combat.attacks[index].notes}
+			bind:value={c.combat.attacks[index].notes}
 			name="acItemNotes"
 			placeholder="Notes"
 			label="Notes"
 		/>
 	{/if}
 
-	<button on:click={deleteAttack} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button onclick={deleteAttack} class="btn btn-error mt-4 w-max self-center uppercase">
 		Delete
 	</button>
 </div>

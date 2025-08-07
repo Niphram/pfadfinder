@@ -1,28 +1,24 @@
 <script lang="ts">
-	import { openDialog } from '$lib/components/dialog.svelte';
-	import SkillDialog from '$lib/components/dialogs/skill-dialog.svelte';
-	import SkillVariantsDialog from '$lib/components/dialogs/skill-variants-dialog.svelte';
 	import { SKILL_KEYS } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
-	import { mapSum, withSign } from '$lib/utils';
+	import { preventDefault, withSign } from '$lib/utils';
 	import { macroNotify } from '$lib/utils/notes';
 
-	const { c, p } = getChar();
+	import { openDialog } from '$lib/components/dialog.svelte';
+	import SkillDialog from '$lib/components/dialogs/skill-dialog.svelte';
+	import SkillVariantsDialog from '$lib/components/dialogs/skill-variants-dialog.svelte';
 
-	$: skillRanks = mapSum(
-		Object.keys($c.skills).map((k) => $c.skills[k]),
-		(sg) => sg.ranks,
-	);
+	const { c } = $derived(getChar());
 </script>
 
 <div class="flex flex-col gap-2">
-	<div class="divider">Skills (Ranks {skillRanks}/{$c.classes.ranks.eval($c)})</div>
+	<div class="divider">Skills (Ranks {c.skills.skillRanks}/{c.classes.ranks})</div>
 
 	{#each SKILL_KEYS as key (key)}
-		{#each $c.skills[key].skills as variant, index (index)}
-			{@const ability = $c.skills[key].skills[index].ability}
-			{@const penalty = $p[ability].skillCheckMod !== $p[ability].mod}
+		{#each c.skills[key].skills as variant, index (index)}
+			{@const ability = c.skills[key].skills[index].ability}
+			{@const penalty = c[ability].skillCheckMod !== c[ability].mod}
 
 			{@const skillTags = [penalty && '!', variant.classSkill && 'c', variant.ranks > 0 && 't']
 				.filter(Boolean)
@@ -30,13 +26,13 @@
 
 			<button
 				class="w-full"
-				on:click={() =>
+				onclick={() =>
 					macroNotify(
 						$t(`skills.${key}`),
 						variant.notes + (penalty ? '\n\nApplied penalty due to armor' : ''),
-						$c,
+						c,
 					)}
-				on:contextmenu|preventDefault={() => openDialog(SkillDialog, { key, index })}
+				oncontextmenu={preventDefault(() => openDialog(SkillDialog, { key, index }))}
 			>
 				<div class="btn btn-ghost join btn-sm flex flex-row gap-1 p-0">
 					<div
@@ -57,7 +53,7 @@
 						class:bg-warning={penalty}
 					>
 						<span class="join-item w-16 align-middle"
-							>{withSign($p.skills[key].skills[index].mod)}</span
+							>{withSign(c.skills[key].skills[index].mod)}</span
 						>
 					</div>
 				</div>
@@ -68,7 +64,7 @@
 	<div class="divider">Config</div>
 
 	<button
-		on:click={() => openDialog(SkillVariantsDialog, {})}
+		onclick={() => openDialog(SkillVariantsDialog, {})}
 		class="btn btn-primary w-min self-center">Skill Variants</button
 	>
 </div>

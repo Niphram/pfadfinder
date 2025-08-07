@@ -1,6 +1,9 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
+	import type { ClassValue, MouseEventHandler } from 'svelte/elements';
+
 	const COLORS = {
-		default: '',
+		default: undefined,
 		neutral: 'btn-neutral',
 		primary: 'btn-primary',
 		secondary: 'btn-secondary',
@@ -12,30 +15,43 @@
 	};
 
 	const STYLES = {
-		default: '',
+		default: undefined,
 		ghost: 'btn-ghost',
 		link: 'btn-link',
 		outline: 'btn-outline',
 	};
 
 	const SIZES = {
-		default: '',
+		default: undefined,
 		xs: 'btn-xs',
 		sm: 'btn-sm',
 	};
 
-	let className: string = '';
-	export { className as class };
+	interface Props {
+		class?: ClassValue;
+		color?: keyof typeof COLORS;
+		style?: keyof typeof STYLES;
+		size?: keyof typeof SIZES;
+		onclick?: MouseEventHandler<HTMLButtonElement>;
+		oncontextmenu?: MouseEventHandler<HTMLButtonElement>;
+		children?: Snippet;
+	}
 
-	export let color: keyof typeof COLORS = 'default';
-	export let style: keyof typeof STYLES = 'default';
-	export let size: keyof typeof SIZES = 'default';
+	let {
+		class: className,
+		color = 'default',
+		style = 'default',
+		size = 'default',
+		onclick,
+		oncontextmenu,
+		children,
+	}: Props = $props();
 </script>
 
 <button
-	class="btn {COLORS[color]} {STYLES[style]} {SIZES[size]} {className}"
-	on:click
-	on:contextmenu
+	class={['btn', COLORS[color], STYLES[style], SIZES[size], className]}
+	{onclick}
+	{oncontextmenu}
 >
-	<slot />
+	{@render children?.()}
 </button>

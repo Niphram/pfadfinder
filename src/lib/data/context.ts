@@ -1,32 +1,20 @@
-/**
- * Temporary context so I can migrate all the components.
- */
-
 import { getContext, setContext } from 'svelte';
-import type { Readable, Writable } from 'svelte/store';
+
+import type { SerdeProxy } from '$lib/serde/proxy';
 
 import type { Character } from './character';
 
 const CHAR_KEY = Symbol('character');
 
-export function setChar(
-	c: Writable<Character>,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	p: Readable<any>,
-	dirty: Readable<boolean>,
-	loaded: Readable<boolean>,
-	overwriteSave: (data: Character) => Promise<void>,
-) {
-	setContext(CHAR_KEY, { c, p, dirty, loaded, overwriteSave });
+type State = {
+	readonly c: SerdeProxy<Character>;
+	dirty: boolean;
+};
+
+export function setChar(state: State) {
+	setContext(CHAR_KEY, state);
 }
 
 export function getChar() {
-	return getContext(CHAR_KEY) as {
-		c: Writable<Character>;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		p: Readable<any>;
-		dirty: Readable<boolean>;
-		loaded: Readable<boolean>;
-		overwriteSave: (data: Character) => Promise<void>;
-	};
+	return getContext(CHAR_KEY) as State;
 }

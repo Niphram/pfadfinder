@@ -2,6 +2,7 @@
 	import { CHARGE_TYPES, Item } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
+	import type { SerdeProxy } from '$lib/serde/proxy';
 
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
@@ -11,20 +12,17 @@
 	import Select from '../input/select.svelte';
 	import Toggle from '../input/toggle.svelte';
 
-	const { c } = getChar();
-
-	export let list: Item[] = [];
-	export let index: number;
-
-	$: list && updateItems();
-
-	function updateItems() {
-		$c = $c;
+	interface Props {
+		list?: SerdeProxy<Item>[];
+		index: number;
 	}
+
+	let { list = $bindable([]), index }: Props = $props();
+
+	const { c } = $derived(getChar());
 
 	function deleteItem() {
 		list.splice(index, 1);
-		list = list;
 	}
 
 	$title = 'Item';
@@ -43,7 +41,7 @@
 			name="isContainer"
 			label="Container?"
 			bind:checked={list[index].isContainer}
-			disabled={list[index].children.length > 0 || list !== $c.equipment.items}
+			disabled={list[index].children.length > 0 || list !== c.equipment.items}
 		/>
 
 		{#if list[index].isContainer}
@@ -53,13 +51,10 @@
 		<div class="divider mb-0">
 			<div class="flex flex-row items-center gap-2">
 				<span>Charges</span>
-				<Select
-					name="itemChargeType"
-					options={CHARGE_TYPES}
-					bind:value={list[index].chargeType}
-					let:option={value}
-				>
-					<option {value}>{$t(`equipment.chargeType.${value}`)}</option>
+				<Select name="itemChargeType" options={CHARGE_TYPES} bind:value={list[index].chargeType}>
+					{#snippet children({ option: value })}
+						<option {value}>{$t(`equipment.chargeType.${value}`)}</option>
+					{/snippet}
 				</Select>
 			</div>
 		</div>
@@ -93,7 +88,7 @@
 		/>
 	{/if}
 
-	<button on:click={deleteItem} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button onclick={deleteItem} class="btn btn-error mt-4 w-max self-center uppercase">
 		Delete
 	</button>
 </div>

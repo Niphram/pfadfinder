@@ -4,9 +4,9 @@
 	import { title } from '../dialog.svelte';
 	import MacroTextArea from '../input/macro-text-area.svelte';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	$title = 'Combat Maneuver Defense';
 </script>
 
-<MacroTextArea bind:value={$c.combat.cmd.notes} name="cmdNotes" label="Notes" placeholder="Notes" />
+<MacroTextArea bind:value={c.combat.cmd.notes} name="cmdNotes" label="Notes" placeholder="Notes" />

@@ -6,29 +6,32 @@
 	import MacroInteger from '../input/macro-integer.svelte';
 	import MacroTextArea from '../input/macro-text-area.svelte';
 
-	const { c } = getChar();
+	interface Props {
+		index: number;
+	}
 
-	export let index: number;
+	let { index }: Props = $props();
+
+	const { c } = $derived(getChar());
 
 	function deleteTrait() {
-		$c.traits.splice(index, 1);
-		$c.traits = $c.traits;
+		c.traits.splice(index, 1);
 	}
 
 	$title = 'Feature/Trait';
 </script>
 
 <div class="flex flex-col gap-2">
-	{#if index < $c.traits.length}
+	{#if index < c.traits.length}
 		<Input
 			name="traitName"
 			label="Name"
 			placeholder="Type here"
-			bind:value={$c.traits[index].name}
+			bind:value={c.traits[index].name}
 		/>
 
 		<MacroInteger
-			bind:value={$c.traits[index].perDay.expr}
+			bind:value={c.traits[index].$perDay.expr}
 			name="traitPerDay"
 			label="Per Day"
 			placeholder="Uses per day"
@@ -39,11 +42,11 @@
 			name="traitDescription"
 			label="Description"
 			rows={10}
-			bind:value={$c.traits[index].description}
+			bind:value={c.traits[index].description}
 		/>
 	{/if}
 
-	<button on:click={deleteTrait} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button onclick={deleteTrait} class="btn btn-error mt-4 w-max self-center uppercase">
 		Delete
 	</button>
 </div>

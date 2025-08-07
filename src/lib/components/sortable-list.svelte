@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	// Needed to satisfy eslint
 	type T = unknown;
 
@@ -7,57 +7,67 @@
 
 <script lang="ts" generics="T">
 	import Sortable from 'sortablejs';
-	import { onMount } from 'svelte';
+	import { onMount, type Snippet } from 'svelte';
+	import type { ClassValue } from 'svelte/elements';
 
 	type Options = Omit<
 		Sortable.SortableOptions,
 		'onUpdate' | 'onAdd' | 'onRemove' | 'onMove' | 'onChoose' | 'disabled'
 	>;
 
-	export let items: T[];
-	export let options: Options | undefined = undefined;
+	interface Props {
+		items: T[];
+		options?: Options | undefined;
+		keyProp: keyof T;
+		disabled?: boolean;
+		class?: ClassValue;
+		keyPrefix?: string;
+		element?: string;
+		onMove?: ((item: T, targetArray: T[]) => boolean) | undefined;
+		children?: Snippet<[{ item: T; index: number }]>;
+		fallback?: Snippet;
+	}
 
-	export let keyProp: keyof T;
-
-	export let disabled = false;
-
-	let className = '';
-	export { className as class };
-
-	export let keyPrefix: string = '';
-
-	export let element = 'div';
-
-	export let onMove: ((item: T, targetArray: T[]) => boolean) | undefined = undefined;
+	let {
+		items = $bindable(),
+		options = undefined,
+		keyProp,
+		disabled = false,
+		class: className,
+		keyPrefix = '',
+		element = 'div',
+		onMove = undefined,
+		children,
+		fallback,
+	}: Props = $props();
 
 	let listEl: HTMLElement;
 
-	let sortableInstance: Sortable | undefined;
+	let sortableInstance: Sortable | undefined = $state();
 
 	// Update 'disabled' if it changes
-	$: sortableInstance?.option('disabled', disabled);
-
-	// The that was selected last
-	let lastSelectedItem: T;
+	$effect(() => {
+		sortableInstance?.option('disabled', disabled);
+	});
 
 	onMount(() => {
+		// The that was selected last
+		let lastSelectedItem: T;
+
 		listMap.set(listEl, items);
 
 		sortableInstance = Sortable.create(listEl, {
 			onUpdate({ oldIndex = 0, newIndex = 0 }) {
 				items.splice(newIndex, 0, items.splice(oldIndex, 1)[0]);
-				items = items;
 			},
 			onAdd({ oldIndex = 0, newIndex = 0, from }) {
 				const list = listMap.get(from) as T[];
 				if (list) {
 					items.splice(newIndex, 0, list[oldIndex]);
-					items = items;
 				}
 			},
 			onRemove({ oldIndex = 0 }) {
 				items.splice(oldIndex, 1);
-				items = items;
 			},
 			onMove({ to }) {
 				const targetList = listMap.get(to) as T[];
@@ -79,10 +89,10 @@
 
 <svelte:element this={element} class={className} bind:this={listEl}>
 	{#each items as item, index (keyPrefix + item[keyProp])}
-		<slot {item} {index} />
+		{@render children?.({ item, index })}
 	{/each}
 
 	{#if items.length === 0}
-		<slot name="fallback" />
+		{@render fallback?.()}
 	{/if}
 </svelte:element>

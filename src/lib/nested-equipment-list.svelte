@@ -1,29 +1,41 @@
 <script lang="ts">
-	import Collapse from './atoms/collapse.svelte';
-	import { openDialog } from './components/dialog.svelte';
-	import ItemDialog from './components/dialogs/item-dialog.svelte';
-	import DragHandle from './components/icons/drag-handle.svelte';
+	import Self from './nested-equipment-list.svelte';
 
-	import SortableList from './components/sortable-list.svelte';
-	import { type Item } from './data';
-	import { getChar } from './data/context';
-	import { t } from './i18n';
-	import { macroNotify } from './utils/notes';
+	import type { ClassValue } from 'svelte/elements';
 
-	const { c } = getChar();
+	import { type Item } from '$lib/data';
+	import { getChar } from '$lib/data/context';
+	import { t } from '$lib/i18n';
+	import type { SerdeProxy } from '$lib/serde/proxy';
+	import { preventDefault, stopPropagation } from '$lib/utils';
+	import { macroNotify } from '$lib/utils/notes';
 
-	export let items: Item[];
+	import { openDialog } from '$lib/components/dialog.svelte';
+	import ItemDialog from '$lib/components/dialogs/item-dialog.svelte';
+	import DragHandle from '$lib/components/icons/drag-handle.svelte';
+	import SortableList from '$lib/components/sortable-list.svelte';
 
-	let className: string = '';
-	export { className as class };
+	import Collapse from '$lib/atoms/collapse.svelte';
 
-	export let disabled = false;
+	const { c } = $derived(getChar());
 
-	export let parentId = 'items';
+	interface Props {
+		items: SerdeProxy<Item>[];
+		class?: ClassValue;
+		disabled?: boolean;
+		parentId?: string;
+	}
 
-	// If the moved item is a container and the target is another container, block move
-	function onMove(item: Item, target: Item[]) {
-		return !item.isContainer || target === $c.equipment.items;
+	let {
+		items = $bindable(),
+		class: className,
+		disabled = false,
+		parentId = 'items',
+	}: Props = $props();
+
+	// If the moved item is a container and the target is not the top level item list, block move
+	function onMove(item: SerdeProxy<Item>, target: SerdeProxy<Item>[]) {
+		return !(item.isContainer && target !== c.equipment.items);
 	}
 </script>
 
@@ -42,61 +54,64 @@
 		{onMove}
 		keyProp="id"
 		{disabled}
-		class="flex flex-col gap-2 {className}"
-		let:item
-		let:index
+		class={['flex flex-col gap-2', className]}
 	>
-		<div class="flex w-full flex-auto flex-row">
-			<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
-				<DragHandle />
-			</div>
+		{#snippet children(props)}
+			<div class="flex w-full flex-auto flex-row">
+				<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
+					<DragHandle />
+				</div>
 
-			{#if !item.isContainer}
-				<button
-					class="btn btn-sm md:btn-md min-w-0 flex-auto truncate"
-					on:click|stopPropagation={() => macroNotify(item.name, item.description, $c)}
-					on:contextmenu|preventDefault|stopPropagation={() =>
-						openDialog(ItemDialog, { list: items, index })}
-				>
-					<span class="truncate">
-						{item.quantity}x {item.name}
-					</span>
-				</button>
-				{#if item.chargeType !== 'none'}
+				{#if !props.item.isContainer}
 					<button
-						class="btn btn-accent btn-sm md:btn-md ml-2 w-28 px-2"
-						on:click|stopPropagation={() => items[index].remaining > 0 && items[index].remaining--}
+						class="btn btn-sm md:btn-md min-w-0 flex-auto truncate"
+						onclick={stopPropagation(() => macroNotify(props.item.name, props.item.description, c))}
+						oncontextmenu={stopPropagation(
+							preventDefault(() => openDialog(ItemDialog, { list: items, index: props.index })),
+						)}
 					>
-						{item.remaining}{#if item.chargeType === 'perDay'}
-							/{item.perDay}
-						{/if} charges
+						<span class="truncate">
+							{props.item.quantity}x {props.item.name}
+						</span>
 					</button>
-				{/if}
-			{:else}
-				<Collapse
-					icon="arrow"
-					bind:open={items[index].containerOpen}
-					on:click={() => macroNotify(item.name, item.description, $c)}
-					on:contextmenu={() => openDialog(ItemDialog, { list: items, index })}
-					let:open
-				>
-					<svelte:fragment slot="title">
-						<span class="text-sm font-semibold" class:underline={item.equipped}>
-							{item.name}
-						</span>
-						<span class="badge badge-md">
-							{$t('equipment.items', item.children.length)}
-						</span>
-					</svelte:fragment>
+					{#if props.item.chargeType !== 'none'}
+						<button
+							class="btn btn-accent btn-sm md:btn-md ml-2 w-28 px-2"
+							onclick={stopPropagation(
+								() => items[props.index].remaining > 0 && items[props.index].remaining--,
+							)}
+						>
+							{props.item.remaining}{#if props.item.chargeType === 'perDay'}
+								/{props.item.perDay}
+							{/if} charges
+						</button>
+					{/if}
+				{:else}
+					<Collapse
+						icon="arrow"
+						bind:open={items[props.index].containerOpen}
+						oncontextmenu={() => openDialog(ItemDialog, { list: items, index: props.index })}
+					>
+						{#snippet title()}
+							<span class="text-sm font-semibold" class:underline={props.item.equipped}>
+								{props.item.name}
+							</span>
+							<span class="badge badge-md">
+								{$t('equipment.items', props.item.children.length)}
+							</span>
+						{/snippet}
 
-					<svelte:self
-						bind:items={items[index].children}
-						parentId={item.id}
-						disabled={!open}
-						class="bg-base-100 rounded-lg p-2 pl-0"
-					/>
-				</Collapse>
-			{/if}
-		</div>
+						{#snippet children({ open })}
+							<Self
+								bind:items={props.item.children}
+								parentId={props.item.id}
+								disabled={!open}
+								class="bg-base-100 rounded-lg p-2 pl-0"
+							/>
+						{/snippet}
+					</Collapse>
+				{/if}
+			</div>
+		{/snippet}
 	</SortableList>
 {/key}

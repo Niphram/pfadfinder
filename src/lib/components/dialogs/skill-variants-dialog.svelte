@@ -1,20 +1,19 @@
 <script lang="ts">
-	import { Skill, type SkillKey } from '$lib/data/character/skills';
+	import { Skill, type SkillKey } from '$lib/data/character/skills.svelte';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
+	import { preventDefault } from '$lib/utils';
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	function addSkill(skill: SkillKey) {
-		$c.skills[skill].skills.push(new Skill(skill));
-		$c.skills = $c.skills;
+		c.skills[skill].$skills.value.push(new Skill(skill));
 	}
 
 	function removeSkill(skill: SkillKey, idx: number) {
-		$c.skills[skill].skills.splice(idx, 1);
-		$c.skills = $c.skills;
+		c.skills[skill].skills.splice(idx, 1);
 	}
 
 	const skills = ['craft', 'perform', 'profession'] as const;
@@ -26,13 +25,13 @@
 	{#each skills as key (key)}
 		<div class="divider">{$t(`skills.${key}`)}</div>
 
-		{#each $c.skills[key].skills as skill, idx (idx)}
+		{#each c.skills[key].skills as skill, idx (idx)}
 			<div class="flex w-full flex-row items-center gap-2">
 				<Input name="variant-{idx}" bind:value={skill.name} />
 				<button
-					on:click|preventDefault={() => {
+					onclick={preventDefault(() => {
 						removeSkill(key, idx);
-					}}
+					})}
 					class="btn btn-warning join-item">Delete</button
 				>
 			</div>
@@ -40,7 +39,7 @@
 		<div class="flex flex-row justify-center">
 			<button
 				class="btn btn-circle btn-primary btn-sm"
-				on:click|preventDefault={() => addSkill(key)}>+</button
+				onclick={preventDefault(() => addSkill(key))}>+</button
 			>
 		</div>
 	{/each}

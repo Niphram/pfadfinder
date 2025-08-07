@@ -6,7 +6,7 @@
 	import Fieldset from './fieldset.svelte';
 	import RichInput from './rich-input.svelte';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	interface Props {
 		noNegatives?: boolean;
@@ -31,7 +31,7 @@
 	}: Props = $props();
 
 	let current = $state(value);
-	let parsed = $derived(evalNode(Parser.parse(current), $c));
+	let parsed = $derived(evalNode(Parser.parse(current), c));
 
 	let valid = $derived(
 		(!current && optional) ||
@@ -41,7 +41,7 @@
 				!(noPositive && parsed > 0)),
 	);
 
-	$effect(() => {
+	$effect.pre(() => {
 		if (valid) {
 			value = current;
 		}

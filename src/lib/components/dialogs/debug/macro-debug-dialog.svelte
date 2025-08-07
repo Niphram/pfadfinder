@@ -5,17 +5,17 @@
 	import Fieldset from '$lib/components/input/fieldset.svelte';
 	import RichInput from '$lib/components/input/rich-input.svelte';
 	import { getChar } from '$lib/data/context';
-	import { Macro } from '$lib/data/macros';
 	import { Tokenizer, TokenType } from '$lib/macro/tokenizer';
+	import { macro } from '$lib/serde';
 	import { computeMacroStyle } from '$lib/text/macro-text-style';
 	import MacroAstTree from './macro-ast-tree.svelte';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
 	$title = 'Macro debugging';
 
-	const testMacro = new Macro('floor(@classes.list.0.level * 5 / 6) + @int.mod + 3');
-	$: tokens = new Tokenizer(testMacro.expr).allTokens();
+	const testMacro = macro('floor(@classes.list.0.level * 5 / 6) + @int.mod + 3');
+	const tokens = $derived(new Tokenizer(testMacro.expr).allTokens());
 
 	const TOKEN_COLORS: Record<TokenType, string> = {
 		[TokenType.AT]: 'badge-info',
@@ -30,7 +30,7 @@
 		[TokenType.INVALID]: 'badge-error',
 	};
 
-	let astOpen = true;
+	let astOpen = $state(true);
 </script>
 
 <div class="flex flex-col gap-2">
@@ -38,7 +38,7 @@
 		<RichInput name="macroTest" bind:value={testMacro.expr} computeTextStyle={computeMacroStyle} />
 	</Fieldset>
 
-	<p>Evaluates to: {testMacro.eval($c)}</p>
+	<p>Evaluates to: {testMacro.eval(c)}</p>
 
 	<Divider>Tokens</Divider>
 
@@ -52,7 +52,7 @@
 
 	<Divider>
 		Abstract Syntax Tree
-		<Button size="xs" color="neutral" on:click={(e) => (e.preventDefault(), (astOpen = !astOpen))}>
+		<Button size="xs" color="neutral" onclick={(e) => (e.preventDefault(), (astOpen = !astOpen))}>
 			toggle all
 		</Button>
 	</Divider>

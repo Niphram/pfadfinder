@@ -3,12 +3,16 @@
 	import { evalNode } from '$lib/macro/evaluate';
 	import { Parser } from '$lib/macro/parser';
 
-	const { c } = getChar();
+	interface Props {
+		expr: string;
+	}
 
-	export let expr: string;
+	let { expr }: Props = $props();
 
-	$: node = Parser.parse(expr);
-	$: result = evalNode(node, $c);
+	const { c } = $derived(getChar());
+
+	let node = $derived(Parser.parse(expr));
+	let result = $derived(evalNode(node, c));
 </script>
 
 {result}

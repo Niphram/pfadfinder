@@ -8,38 +8,37 @@
 	import MacroTextArea from '../input/macro-text-area.svelte';
 	import Select from '../input/select.svelte';
 
-	const { c } = getChar();
+	interface Props {
+		index: number;
+	}
 
-	export let index: number;
+	let { index }: Props = $props();
+
+	const { c } = $derived(getChar());
 
 	function deleteFeat() {
-		$c.feats.splice(index, 1);
-		$c.feats = $c.feats;
+		c.feats.splice(index, 1);
 	}
 
 	$title = 'Feat';
 </script>
 
 <div class="flex flex-col gap-2">
-	{#if index < $c.feats.length}
-		<Input name="featName" label="Name" placeholder="Type here" bind:value={$c.feats[index].name} />
+	{#if index < c.feats.length}
+		<Input name="featName" label="Name" placeholder="Type here" bind:value={c.feats[index].name} />
 
 		<MacroTextArea
 			name="featPrerequisites"
 			label="Prerequisites"
 			placeholder="Enter Prerequisites"
 			rows={5}
-			bind:value={$c.feats[index].prerequisites}
+			bind:value={c.feats[index].prerequisites}
 		/>
 
-		<Select
-			label="Type"
-			name="featType"
-			bind:value={$c.feats[index].type}
-			options={FEAT_TYPES}
-			let:option
-		>
-			<option value={option}>{$t(`feats.type.${option}`)}</option>
+		<Select label="Type" name="featType" bind:value={c.feats[index].type} options={FEAT_TYPES}>
+			{#snippet children({ option })}
+				<option value={option}>{$t(`feats.type.${option}`)}</option>
+			{/snippet}
 		</Select>
 
 		<MacroTextArea
@@ -47,7 +46,7 @@
 			label="Benefits"
 			placeholder="Enter Benefits"
 			rows={5}
-			bind:value={$c.feats[index].benefits}
+			bind:value={c.feats[index].benefits}
 		/>
 
 		<MacroTextArea
@@ -55,7 +54,7 @@
 			label="Normal"
 			placeholder="Enter Normal"
 			rows={5}
-			bind:value={$c.feats[index].normal}
+			bind:value={c.feats[index].normal}
 		/>
 
 		<MacroTextArea
@@ -63,11 +62,11 @@
 			label="Special"
 			placeholder="Enter Special"
 			rows={5}
-			bind:value={$c.feats[index].special}
+			bind:value={c.feats[index].special}
 		/>
 	{/if}
 
-	<button on:click={deleteFeat} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button onclick={deleteFeat} class="btn btn-error mt-4 w-max self-center uppercase">
 		Delete
 	</button>
 </div>

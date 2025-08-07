@@ -1,15 +1,19 @@
 <script lang="ts">
+	import Self from './macro-ast-tree.svelte';
+
 	import { getChar } from '$lib/data/context';
 	import { AstNodeType, type AstNode } from '$lib/macro/ast';
 	import { evalNode } from '$lib/macro/evaluate';
 
-	const { c } = getChar();
+	const { c } = $derived(getChar());
 
-	export let node: AstNode | undefined;
+	interface Props {
+		node: AstNode | undefined;
+		open?: boolean;
+		prefix?: string;
+	}
 
-	export let open = true;
-
-	export let prefix: string = '';
+	let { node, open = true, prefix = '' }: Props = $props();
 
 	const NODE_TYPES = {
 		[AstNodeType.Error]: 'Error',
@@ -54,19 +58,19 @@
 			{:else if node.type === AstNodeType.Constant}
 				<li><p>Value: {node.constant}</p></li>
 			{:else if node.type === AstNodeType.Attribute}
-				<li><p>Path: {node.path.join('.')} (= {evalNode(node, $c)})</p></li>
+				<li><p>Path: {node.path.join('.')} (= {evalNode(node, c)})</p></li>
 			{:else if node.type === AstNodeType.Unary}
 				<li><p>Operator: {OP_TYPES[node.op]}</p></li>
-				<li><svelte:self {open} prefix="Value: " node={node.node}></svelte:self></li>
+				<li><Self {open} prefix="Value: " node={node.node}></Self></li>
 			{:else if node.type === AstNodeType.Binary}
 				<li><p>Operator: {OP_TYPES[node.op]}</p></li>
-				<li><svelte:self {open} prefix="Left: " node={node.left}></svelte:self></li>
-				<li><svelte:self {open} prefix="Right: " node={node.right}></svelte:self></li>
+				<li><Self {open} prefix="Left: " node={node.left}></Self></li>
+				<li><Self {open} prefix="Right: " node={node.right}></Self></li>
 			{:else if node.type === AstNodeType.Func}
 				<li><p>Type: {node.func ?? 'None (Just parentheses)'}</p></li>
 				{#each node.nodes as funcNode, i (i)}
 					<li>
-						<svelte:self {open} prefix="Arg {i}: " node={funcNode}></svelte:self>
+						<Self {open} prefix="Arg {i}: " node={funcNode}></Self>
 					</li>
 				{/each}
 			{/if}

@@ -1,16 +1,9 @@
-import { Derive } from '$lib/data/macros';
-import { Macro } from '$lib/data/macros/macro';
-
 import { AstNodeType, type AstNode } from './ast';
 
 function evalAttribute(path: string[], char: object): number {
 	try {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const val: unknown = path.reduce((c, p) => c[p], char as Record<string, any>);
-
-		if (val instanceof Macro || val instanceof Derive) {
-			return val.eval(char);
-		}
 
 		switch (typeof val) {
 			case 'number':

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { FacetKey } from '$lib/data/character/persona';
+	import type { FacetKey } from '$lib/data/character/persona.svelte';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 
@@ -7,19 +7,23 @@
 	import Integer from '../input/integer.svelte';
 	import MacroTextArea from '../input/macro-text-area.svelte';
 
-	const { c } = getChar();
+	interface Props {
+		key?: FacetKey;
+	}
 
-	export let key: FacetKey = 'charm';
+	let { key = 'charm' }: Props = $props();
+
+	const { c } = $derived(getChar());
 
 	$title = $t(`persona.${key}`);
 </script>
 
-<Integer bind:value={$c.persona[key].rank} label="Rank" name="facetRank" noNegatives />
+<Integer bind:value={c.persona[key].rank} label="Rank" name="facetRank" noNegatives />
 
 <MacroTextArea
 	name="personaNotes"
 	label="Notes"
 	placeholder="Enter Notes"
 	rows={10}
-	bind:value={$c.persona[key].notes}
+	bind:value={c.persona[key].notes}
 />

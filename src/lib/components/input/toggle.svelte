@@ -1,17 +1,22 @@
 <script lang="ts">
+	import type { ChangeEventHandler } from 'svelte/elements';
+
 	import Fieldset from './fieldset.svelte';
 
-	export let checked: boolean;
+	interface Props {
+		checked: boolean;
+		name: string;
+		label?: string;
+		disabled?: boolean;
+		onchange?: ChangeEventHandler<HTMLInputElement>;
+	}
 
-	export let name: string;
-	export let label: string | undefined = undefined;
-
-	export let disabled: boolean = false;
+	let { checked = $bindable(), name, label, disabled, onchange }: Props = $props();
 </script>
 
 <Fieldset>
 	<label class="fieldset-label">
-		<input {name} type="checkbox" bind:checked class="toggle" on:change {disabled} />
+		<input {name} type="checkbox" bind:checked class="toggle" {onchange} {disabled} />
 		{label}
 	</label>
 </Fieldset>
