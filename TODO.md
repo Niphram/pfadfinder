@@ -2,9 +2,9 @@
 
 Not final list, things will definetly change.
 
-- [ ] Migrate to Svelte5
+- [x] Migrate to Svelte5
   - [x] Update dependencies
-  - [ ] Migrate components
+  - [x] Migrate components
 - [x] ~~Switch to hash-routing, so we can use sveltekit's routing system with parameters in a static webapp~~ Found out about 404.html
 - [x] Duplicate all writes into the new database for easy migration later on
 - [x] Support for multiple characters
