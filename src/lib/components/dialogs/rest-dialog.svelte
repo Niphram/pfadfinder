@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ABILITY_KEYS, Item, SPELL_LEVELS } from '$lib/data';
 	import { getChar } from '$lib/data/context';
-	import type { SerdeProxy } from '$lib/serde/proxy';
+	import type { CharProxy } from '$lib/serde/proxy';
 
 	import { title } from '../dialog.svelte';
 	import Toggle from '../input/toggle.svelte';
@@ -10,7 +10,7 @@
 
 	$title = 'Rest';
 
-	function rechargeItems(items: SerdeProxy<Item>[]) {
+	function rechargeItems(items: CharProxy<Item>[]) {
 		items.forEach((item) => {
 			item.recharge();
 			rechargeItems(item.children);

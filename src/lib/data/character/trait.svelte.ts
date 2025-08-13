@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import { macro, number, string } from '$lib/serde';
-import type { SerdeProxy } from '$lib/serde/proxy';
+import type { CharProxy } from '$lib/serde/proxy';
 import { ClassSerializer } from '$lib/serde/class-serializer';
 
 export class Trait extends ClassSerializer {
@@ -15,7 +15,7 @@ export class Trait extends ClassSerializer {
 
 	description = string('');
 
-	recharge(this: SerdeProxy<Trait>) {
+	recharge(this: CharProxy<Trait>) {
 		if (this.$perDay.expr !== '') {
 			this.remaining = this.perDay;
 		}

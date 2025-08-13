@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Ability } from '$lib/data';
 	import { t } from '$lib/i18n';
-	import type { SerdeProxy } from '$lib/serde/proxy';
+	import type { CharProxy } from '$lib/serde/proxy';
 
 	import { title } from '../dialog.svelte';
 	import Integer from '../input/integer.svelte';
@@ -9,7 +9,7 @@
 	import MacroTextArea from '../input/macro-text-area.svelte';
 
 	interface Props {
-		ability: SerdeProxy<Ability>;
+		ability: CharProxy<Ability>;
 	}
 
 	let { ability }: Props = $props();

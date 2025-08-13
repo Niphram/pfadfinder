@@ -10,9 +10,12 @@
 	const { c } = $derived(getChar());
 
 	function addClass() {
-		c.classes.$list.value.push(new Class());
+		const index = c.classes.list.$.push(new Class()) - 1;
+		openDialog(ClassDialog, { value: c.classes.list[index], ondelete: () => deleteClass(index) });
+	}
 
-		openDialog(ClassDialog, { classIndex: c.classes.list.length - 1 });
+	function deleteClass(index: number) {
+		c.classes.list.splice(index, 1);
 	}
 </script>
 
@@ -28,13 +31,18 @@
 	<div class="divider">Classes</div>
 
 	<div class="flex flex-col gap-4">
-		{#each c.classes.list as { name, level }, classIndex (classIndex)}
+		{#each c.classes.list as cls, classIndex (classIndex)}
 			<CaptionedButton
-				label={name}
-				caption="Level {level}"
-				oncontextmenu={() => openDialog(ClassDialog, { classIndex })}
+				label={cls.name}
+				caption="Level {cls.level}"
+				oncontextmenu={() =>
+					openDialog(ClassDialog, {
+						value: cls,
+						ondelete: () => deleteClass(classIndex),
+					})}
 			/>
 		{/each}
 	</div>
+
 	<button onclick={addClass} class="btn btn-secondary self-center">Add Class</button>
 </div>

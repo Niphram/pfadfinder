@@ -1,4 +1,4 @@
-import type { SerdeProxy } from '../proxy';
+import type { CharProxy } from '../proxy';
 
 export class Derive<C> {
 	eval(char: C) {
@@ -8,6 +8,6 @@ export class Derive<C> {
 	constructor(private cb: (char: C) => number) {}
 }
 
-export function derive<C>(cb: (c: SerdeProxy<C>) => number) {
+export function derive<C>(cb: (c: CharProxy<C>) => number) {
 	return new Derive(cb);
 }

@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import { array, boolean, derive, enumeration, macro, number, string } from '$lib/serde';
-import type { SerdeProxy } from '$lib/serde/proxy';
+import type { CharProxy } from '$lib/serde/proxy';
 import { mapSum, withSign } from '$lib/utils';
 
 import { ClassSerializer } from '$lib/serde/class-serializer';
@@ -104,7 +104,7 @@ export class Spell extends SpellCommonProps {
 
 	components = string('');
 
-	details(this: SerdeProxy<Spell>, level: number, c: SerdeProxy<Character>): [string, boolean][] {
+	details(this: CharProxy<Spell>, level: number, c: CharProxy<Character>): [string, boolean][] {
 		const dcAbility = c.spells.dcAbility;
 		const abilityDc = (dcAbility ? c[dcAbility].mod : 0) + c.spells.dcBonus;
 		const saveDc = 10 + level + this.savingThrow.dcMod + abilityDc;
@@ -183,7 +183,7 @@ export class SpellLikeAbility extends SpellCommonProps {
 		].filter((e) => !!e[1]),
 	);
 
-	recharge(this: SerdeProxy<SpellLikeAbility>) {
+	recharge(this: CharProxy<SpellLikeAbility>) {
 		if (this.type === 'perDay') this.remaining = this.perDay;
 	}
 }

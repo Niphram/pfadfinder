@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 
 import { array, boolean, number, string } from '$lib/serde';
 import { mapMin, mapSum } from '$lib/utils';
-import type { SerdeProxy } from '$lib/serde/proxy';
+import type { CharProxy } from '$lib/serde/proxy';
 import { ClassSerializer } from '$lib/serde/class-serializer';
 
 export const ARMOR_TYPES = ['light', 'medium', 'heavy', 'shield', 'misc'] as const;
@@ -41,7 +41,7 @@ export class Item extends ClassSerializer {
 			(this.isContainer.value ? mapSum(this.children.value, (item) => item.totalWeight) : 0),
 	);
 
-	recharge(this: SerdeProxy<Item>) {
+	recharge(this: CharProxy<Item>) {
 		if (this.chargeType === 'perDay') {
 			this.remaining = this.perDay;
 		}

@@ -17,23 +17,23 @@ export class Class extends ClassSerializer {
 
 	favored = boolean(false);
 
-	level = number(1);
+	level = number(1, { min: 1, integer: true });
 
 	hitDice = enumeration(Dice.D4);
 
-	bab = number(0);
+	bab = number(0, { min: 0, integer: true });
 
-	fort = number(0);
+	fort = number(0, { integer: true });
 
-	ref = number(0);
+	ref = number(0, { integer: true });
 
-	will = number(0);
+	will = number(0, { integer: true });
 
-	speed = number(0);
+	speed = number(0, { min: 0, integer: true });
 
-	levelRanks = number(0);
+	levelRanks = number(0, { min: 0, integer: true });
 
-	miscRanks = number(0);
+	miscRanks = number(0, { integer: true });
 }
 
 export class Classes extends ClassSerializer {

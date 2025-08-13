@@ -2,7 +2,7 @@
 	import { CHARGE_TYPES, Item } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
-	import type { SerdeProxy } from '$lib/serde/proxy';
+	import type { CharProxy } from '$lib/serde/proxy';
 
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
@@ -13,7 +13,7 @@
 	import Toggle from '../input/toggle.svelte';
 
 	interface Props {
-		list?: SerdeProxy<Item>[];
+		list?: CharProxy<Item>[];
 		index: number;
 	}
 

@@ -22,9 +22,9 @@ export class EnumWrapper<Values, IsOptional extends boolean> implements Serializ
 	}
 }
 
-type EnumerationOptions<IsOptional extends boolean> = Partial<{
+type EnumerationOptions<IsOptional extends boolean> = {
 	optional: IsOptional;
-}>;
+};
 
 const DEFAULT_OPTIONS: EnumerationOptions<boolean> = {
 	optional: false,
@@ -32,7 +32,7 @@ const DEFAULT_OPTIONS: EnumerationOptions<boolean> = {
 
 export function enumeration<Values, IsOptional extends boolean = false>(
 	value: Option<Values, IsOptional>,
-	options?: EnumerationOptions<IsOptional>,
+	options?: Partial<EnumerationOptions<IsOptional>>,
 ) {
 	return new EnumWrapper<Values, IsOptional>(value, Object.assign({}, DEFAULT_OPTIONS, options));
 }

@@ -8,7 +8,7 @@ import { Macro } from './types/macro.svelte';
 import { NumberWrapper } from './types/number.svelte';
 import { StringWrapper } from './types/string.svelte';
 
-export type SerdeProxy<T> =
+export type CharProxy<T> =
 	T extends StringWrapper<string, boolean> ? T['value']
 	: T extends NumberWrapper<boolean> ? T['value']
 	: T extends BoolWrapper ? T['value']
@@ -17,22 +17,29 @@ export type SerdeProxy<T> =
 	: // eslint-disable-next-line @typescript-eslint/no-explicit-any
 	T extends Derive<any> ? number
 	: T extends Macro ? number
-	: T extends ArrayWrapper<infer A> ? SerdeProxy<A>[]
-	: T extends Array<infer A> ? SerdeProxy<A>[] & Record<`$${number}`, A>
+	: T extends ArrayWrapper<infer A> ? CharProxy<A>[] & { $: A[] }
+	: T extends Array<infer A> ? CharProxy<A>[]
 	: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-	T extends (this: SerdeProxy<any>, ...args: infer Args) => infer R ? (...args: Args) => R
+	T extends (this: CharProxy<any>, ...args: infer Args) => infer R ? (...args: Args) => R
 	: T extends object ?
-		{ [K in keyof T]: SerdeProxy<T[K]> } & {
+		{ [K in keyof T]: CharProxy<T[K]> } & {
 			[K in Extract<keyof T, string> as `$${K}`]: T[K];
+		} & {
+			$: T;
 		}
 	:	T;
 
-export function charProxy<T extends object>(char: T) {
-	const proxyFactory = makeCachedProxyFactory();
+// Use same cache for all
+const proxyFactory = makeCachedProxyFactory();
 
+export function charProxy<T extends object>(char: T) {
 	const dp = (function makeCharProxy(value: object) {
 		return proxyFactory(value, {
 			get(target, key) {
+				if (key === '$') {
+					return target;
+				}
+
 				if (typeof key === 'string' && key.startsWith('$')) {
 					return Reflect.get(target, key.slice(1));
 				}
@@ -73,7 +80,7 @@ export function charProxy<T extends object>(char: T) {
 				return Reflect.set(target, key, newValue);
 			},
 		});
-	})(char) as SerdeProxy<T>;
+	})(char) as CharProxy<T>;
 
 	return dp;
 }

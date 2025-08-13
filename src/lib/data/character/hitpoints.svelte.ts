@@ -1,6 +1,6 @@
 import { derive, macro, number } from '$lib/serde';
 import { ClassSerializer } from '$lib/serde/class-serializer';
-import type { SerdeProxy } from '$lib/serde/proxy';
+import type { CharProxy } from '$lib/serde/proxy';
 import { mapSum } from '$lib/utils';
 
 import { Character } from './character.svelte';
@@ -40,18 +40,18 @@ export class HitPoints extends ClassSerializer {
 			this.bonus.eval(c),
 	);
 
-	heal(this: SerdeProxy<HitPoints>, amount: number) {
+	heal(this: CharProxy<HitPoints>, amount: number) {
 		this.damageTaken = Math.max(0, this.damageTaken - amount);
 		this.nonlethalDamage = Math.max(0, this.nonlethalDamage - amount);
 	}
 
-	dealLethal(this: SerdeProxy<HitPoints>, amount: number) {
+	dealLethal(this: CharProxy<HitPoints>, amount: number) {
 		const remaining = Math.max(0, amount - this.temp);
 		this.temp = Math.max(0, this.temp - amount);
 		this.damageTaken += remaining;
 	}
 
-	dealNonlethal(this: SerdeProxy<HitPoints>, amount: number) {
+	dealNonlethal(this: CharProxy<HitPoints>, amount: number) {
 		this.nonlethalDamage += amount;
 	}
 }

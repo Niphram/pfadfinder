@@ -1,21 +1,22 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	import { Class, SAVE_KEYS } from '$lib/data';
 	import { t } from '$lib/i18n';
-	import Integer from '../input/integer.svelte';
-	import { title } from '../dialog.svelte';
-	import { SAVE_KEYS } from '$lib/data';
-	import Input from '../input/input.svelte';
-	import Toggle from '../input/toggle.svelte';
-	import { getChar } from '$lib/data/context';
+	import type { CharProxy } from '$lib/serde/proxy';
+
+	import { title } from '$lib/components/dialog.svelte';
+	import Input from '$lib/components/input/input.svelte';
+	import Integer from '$lib/components/input/integer.svelte';
+	import NumberWrapper from '$lib/components/input/number-wrapper.svelte';
+	import Toggle from '$lib/components/input/toggle.svelte';
 
 	interface Props {
-		classIndex: number;
+		value: CharProxy<Class>;
+		ondelete: () => void;
 	}
 
-	let { classIndex }: Props = $props();
-
-	const { c } = $derived(getChar());
+	let { value, ondelete }: Props = $props();
 
 	let deleteConfirm = $state(false);
 
@@ -28,7 +29,7 @@
 			deleteConfirm = true;
 			ev.preventDefault();
 		} else {
-			c.classes.list.splice(classIndex, 1);
+			ondelete();
 		}
 	}
 
@@ -36,61 +37,32 @@
 </script>
 
 <div class="flex flex-col gap-2">
-	{#if classIndex < c.classes.list.length}
-		<div class="flex flex-row gap-2">
-			<Input
-				name="className"
-				label="Name"
-				placeholder="Type here"
-				bind:value={c.classes.list[classIndex].name}
-			/>
+	<div class="flex flex-row gap-2">
+		<Input name="className" label="Name" placeholder="Type here" bind:value={value.name} />
 
-			<Integer
-				bind:value={c.classes.list[classIndex].level}
-				name="classLevel"
-				label="Level"
-				noNegatives
-				noZero
-			/>
-		</div>
+		<NumberWrapper value={value.$level} name="classLevel" label="Level" />
+	</div>
 
-		<Toggle
-			name="favoredClass"
-			label="Favored Class"
-			bind:checked={c.classes.list[classIndex].favored}
-		/>
+	<Toggle name="favoredClass" label="Favored Class" bind:checked={value.favored} />
 
-		<div class="grid grid-cols-2 gap-4">
-			<Integer bind:value={c.classes.list[classIndex].bab} name="bab" label="Base Attack Bonus" />
-			<Integer bind:value={c.classes.list[classIndex].speed} name="classSpeed" label="Speed" />
-		</div>
-		<div class="grid grid-cols-3 gap-2">
-			{#each SAVE_KEYS as key (key)}
-				<Integer
-					bind:value={c.classes.list[classIndex][key]}
-					name="class{key}"
-					label={$t(`saves.${key}.full`)}
-				/>
-			{/each}
-		</div>
-		<div class="divider mb-0">Ranks</div>
-		<div class="flex flex-row gap-2">
-			<Integer
-				bind:value={c.classes.list[classIndex].levelRanks}
-				name="classRanksLevel"
-				label="Ranks/Level"
-			/>
-			<Integer
-				bind:value={c.classes.list[classIndex].miscRanks}
-				name="classRanksMisc"
-				label="Misc Ranks"
-			/>
-		</div>
-	{/if}
+	<div class="grid grid-cols-2 gap-4">
+		<NumberWrapper value={value.$bab} name="bab" label="Base Attack Bonus" />
+		<NumberWrapper value={value.$speed} name="classSpeed" label="Speed" />
+	</div>
+	<div class="grid grid-cols-3 gap-2">
+		{#each SAVE_KEYS as key (key)}
+			<NumberWrapper value={value.$[key]} name="class{key}" label={$t(`saves.${key}.full`)} />
+		{/each}
+	</div>
+	<div class="divider mb-0">Ranks</div>
+	<div class="flex flex-row gap-2">
+		<NumberWrapper value={value.$levelRanks} name="classRanksLevel" label="Ranks/Level" />
+		<NumberWrapper value={value.$miscRanks} name="classRanksMisc" label="Misc Ranks" />
+	</div>
 
 	<button
 		onclick={deleteClass}
-		class="btn btn-error mt-4 w-max self-center uppercase"
-		class:btn-outline={!deleteConfirm}>{deleteConfirm ? 'Are you sure?' : 'Delete'}</button
+		class={['btn btn-error mt-4 w-max self-center uppercase', !deleteConfirm && 'btn-outline']}
+		>{deleteConfirm ? 'Are you sure?' : 'Delete'}</button
 	>
 </div>

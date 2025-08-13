@@ -6,7 +6,7 @@
 	import { type Item } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
-	import type { SerdeProxy } from '$lib/serde/proxy';
+	import type { CharProxy } from '$lib/serde/proxy';
 	import { preventDefault, stopPropagation } from '$lib/utils';
 	import { macroNotify } from '$lib/utils/notes';
 
@@ -20,7 +20,7 @@
 	const { c } = $derived(getChar());
 
 	interface Props {
-		items: SerdeProxy<Item>[];
+		items: CharProxy<Item>[];
 		class?: ClassValue;
 		disabled?: boolean;
 		parentId?: string;
@@ -34,7 +34,7 @@
 	}: Props = $props();
 
 	// If the moved item is a container and the target is not the top level item list, block move
-	function onMove(item: SerdeProxy<Item>, target: SerdeProxy<Item>[]) {
+	function onMove(item: CharProxy<Item>, target: CharProxy<Item>[]) {
 		return !(item.isContainer && target !== c.equipment.items);
 	}
 </script>

@@ -23,7 +23,7 @@
 		small,
 	}: Props = $props();
 
-	let current = $state(value);
+	let current = $derived(value);
 
 	let valid = $derived(
 		Number.isInteger(current) &&

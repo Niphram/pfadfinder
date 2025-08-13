@@ -1,13 +1,13 @@
 import { getContext, setContext } from 'svelte';
 
-import type { SerdeProxy } from '$lib/serde/proxy';
+import type { CharProxy } from '$lib/serde/proxy';
 
 import type { Character } from './character';
 
 const CHAR_KEY = Symbol('character');
 
 type State = {
-	readonly c: SerdeProxy<Character>;
+	readonly c: CharProxy<Character>;
 	dirty: boolean;
 };
 

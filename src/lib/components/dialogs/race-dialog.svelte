@@ -2,6 +2,7 @@
 	import { ABILITY_KEYS } from '$lib/data';
 	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
+
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
 	import MacroInteger from '../input/macro-integer.svelte';
@@ -17,7 +18,7 @@
 	<div class="grid grid-cols-3 gap-2">
 		{#each ABILITY_KEYS as key (key)}
 			<MacroInteger
-				bind:value={c.race[`$${key}`].expr}
+				bind:value={c.race.$[key].expr}
 				name="race{key}"
 				label={$t(`abilities.${key}.full`)}
 				placeholder={$t(`abilities.${key}.short`)}
