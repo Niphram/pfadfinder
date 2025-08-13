@@ -90,6 +90,17 @@ export default {
 		swim: 'Swim',
 		useMagicDevice: 'Use Magic Device',
 	},
+	combat: {
+		attackTypes: {
+			meelee: 'Meelee (BAB+STR full attack)',
+			ranged: 'Ranged (BAB+DEX full attack)',
+			cmb: 'CMB (CMB single attack)',
+			babFull: 'BAB Full (BAB full attack)',
+			babMax: 'BAB Max (BAB single attack)',
+			flurryOfBlows: 'Flurry of Blows (No clue how to implement this, will be removed later)',
+			none: 'None',
+		},
+	},
 	equipment: {
 		armorType: {
 			light: 'Light',

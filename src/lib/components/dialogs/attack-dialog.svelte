@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ABILITY_KEYS, ATTACK_TYPES } from '$lib/data';
 	import { getChar } from '$lib/data/context';
+	import { t } from '$lib/i18n';
 	import { computeMacroInTextStyle } from '$lib/text/macro-text-style';
 
 	import { title } from '../dialog.svelte';
@@ -53,7 +54,7 @@
 					options={ATTACK_TYPES}
 				>
 					{#snippet children({ option })}
-						<option value={option}>{option}</option>
+						<option value={option}>{$t(`combat.attackTypes.${option}`)}</option>
 					{/snippet}
 				</Select>
 				<Select

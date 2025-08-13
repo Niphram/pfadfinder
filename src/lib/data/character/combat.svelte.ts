@@ -1,10 +1,10 @@
 import { nanoid } from 'nanoid';
 
 import { array, boolean, derive, macro, string } from '$lib/serde';
+import { ClassSerializer } from '$lib/serde/class-serializer';
 
 import type { AbilityKey } from './abilities.svelte';
 import { Character } from './character.svelte';
-import { ClassSerializer } from '$lib/serde/class-serializer';
 
 export const sizeKeys = [
 	'fine',
@@ -30,6 +30,10 @@ const sizeModifiers: Record<SizeKey, { mod: number; ability: AbilityKey }> = {
 	gargantuan: { ability: 'str', mod: +4 },
 	colossal: { ability: 'str', mod: +8 },
 };
+
+function attackArray(attackCount: number, maxAttack: number) {
+	return Array.from({ length: attackCount }, (_, idx) => maxAttack - idx * 5);
+}
 
 export class SpellResistance extends ClassSerializer {
 	base = macro('0');
@@ -104,6 +108,28 @@ export class AttackRoll extends ClassSerializer {
 	readonly abilityModValue = derive<Character>((c) =>
 		this.abilityModifier.value !== 'none' ? c[this.abilityModifier.value].mod : 0,
 	);
+
+	readonly attacks = derive<Character, number[]>((c) => {
+		const bab = c.combat.bab.mod;
+		const fullAttackCount = Math.max(Math.ceil(bab / 5), 1);
+		const abilityMod =
+			this.abilityModifier.value !== 'none' ? c[this.abilityModifier.value].mod : 0;
+
+		switch (this.baseModifier.value) {
+			case 'meelee':
+				return attackArray(fullAttackCount, bab + c.str.mod + abilityMod);
+			case 'ranged':
+				return attackArray(fullAttackCount, bab + c.dex.mod + abilityMod);
+			case 'babFull':
+				return attackArray(fullAttackCount, bab + abilityMod);
+			case 'babMax':
+				return attackArray(1, bab + abilityMod);
+			case 'cmb':
+				return attackArray(1, c.combat.cmb.mod + abilityMod);
+			default:
+				return attackArray(1, abilityMod);
+		}
+	});
 }
 
 export class Damage extends ClassSerializer {

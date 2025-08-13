@@ -104,7 +104,7 @@
 							class="join-item bg-base-200 cursor-pointer p-1"
 							onclick={() => macroNotify(attack.name, attack.notes, c)}
 							oncontextmenu={preventDefault(() => openDialog(AttackDialog, { index }))}
-							>{attack.hasAttack ? withSign(attack.attackBonus) : '-'}</td
+							>{attack.hasAttack ? attack.attack.attacks.map(withSign).join('/') : '-'}</td
 						>
 						<td
 							class="join-item bg-base-200 cursor-pointer p-1"
