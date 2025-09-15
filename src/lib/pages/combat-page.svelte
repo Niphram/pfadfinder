@@ -140,24 +140,22 @@
 								</div>
 							{/snippet}
 
-							{#snippet children()}
-								{@const details = attack.details}
-								{#if details.length > 0}
-									<Divider class="my-0">Details</Divider>
-									<div
-										class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
-									>
-										{#each details as [label, value]}
-											<div>{label}</div>
-											<div>{value}</div>
-										{/each}
-									</div>
-								{/if}
-								{#if attack.showNotes && attack.notes}
-									<Divider class="my-0">Notes</Divider>
-									<MultilineMacro text={attack.notes}></MultilineMacro>
-								{/if}
-							{/snippet}
+							{@const details = attack.details}
+							{#if details.length > 0}
+								<Divider class="my-0">Details</Divider>
+								<div
+									class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
+								>
+									{#each details as [label, value] (label)}
+										<div>{label}</div>
+										<div>{value}</div>
+									{/each}
+								</div>
+							{/if}
+							{#if attack.showNotes && attack.notes}
+								<Divider class="my-0">Notes</Divider>
+								<MultilineMacro text={attack.notes}></MultilineMacro>
+							{/if}
 						</Collapse>
 					</div>
 				{/snippet}
