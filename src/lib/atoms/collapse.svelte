@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
 	import type { ClassValue, MouseEventHandler } from 'svelte/elements';
 
 	import { preventDefault } from '$lib/utils';
@@ -7,8 +8,10 @@
 		open?: boolean;
 		icon?: 'arrow' | 'plus' | undefined;
 		class?: ClassValue;
-		title?: import('svelte').Snippet;
-		children?: import('svelte').Snippet<[{ open: boolean }]>;
+		titleClass?: ClassValue;
+		contentClass?: ClassValue;
+		title?: Snippet<[{ open: boolean }]>;
+		children?: Snippet<[{ open: boolean }]>;
 		oncontextmenu?: MouseEventHandler<HTMLDivElement>;
 	}
 
@@ -16,6 +19,8 @@
 		open = $bindable(false),
 		icon = undefined,
 		class: className,
+		titleClass,
+		contentClass,
 		title,
 		children,
 		oncontextmenu,
@@ -43,11 +48,13 @@
 </script>
 
 <div
-	class={['bg-base-200 collapse text-left', className]}
-	class:collapse-arrow={icon === 'arrow'}
-	class:collapse-plus={icon === 'plus'}
-	class:collapse-open={open}
-	class:collapse-close={!open}
+	class={[
+		'bg-base-200 collapse text-left',
+		icon === 'arrow' && 'collapse-arrow',
+		icon === 'plus' && 'collapse-plus',
+		open ? 'collapse-open' : 'collapse-close',
+		className,
+	]}
 	onclick={toggleOpen}
 	oncontextmenu={oncontextmenu && preventDefault(oncontextmenu)}
 	onkeydown={keydownHandler}
@@ -56,12 +63,12 @@
 	tabindex="0"
 >
 	{#if title}
-		<div class="collapse-title h-min min-h-0 py-2 md:py-4" class:pe-4={!icon}>
-			{@render title?.()}
+		<div class={['collapse-title h-min min-h-0 py-2 md:py-4', titleClass]} class:pe-4={!icon}>
+			{@render title?.({ open })}
 		</div>
 	{/if}
 
-	<div class="collapse-content min-w-0">
+	<div class={['collapse-content min-w-0', contentClass]}>
 		{@render children?.({ open })}
 	</div>
 </div>

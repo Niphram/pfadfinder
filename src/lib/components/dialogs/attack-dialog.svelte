@@ -4,6 +4,7 @@
 	import { t } from '$lib/i18n';
 	import { computeMacroInTextStyle } from '$lib/text/macro-text-style';
 
+	import Divider from '../../atoms/divider.svelte';
 	import { title } from '../dialog.svelte';
 	import Fieldset from '../input/fieldset.svelte';
 	import Input from '../input/input.svelte';
@@ -111,12 +112,19 @@
 			</Fieldset>
 		{/if}
 
+		<Divider>Notes</Divider>
+
 		<MacroTextArea
 			bind:value={c.combat.attacks[index].notes}
 			name="acItemNotes"
 			placeholder="Notes"
 			label="Notes"
 		/>
+
+		<label class="label">
+			Show notes in overview
+			<input type="checkbox" bind:checked={c.combat.attacks[index].showNotes} class="toggle" />
+		</label>
 	{/if}
 
 	<button onclick={deleteAttack} class="btn btn-error mt-4 w-max self-center uppercase">

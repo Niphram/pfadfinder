@@ -6,6 +6,9 @@
 	import { withSign } from '$lib/utils/format';
 	import { macroNotify } from '$lib/utils/notes';
 
+	import Collapse from '$lib/atoms/collapse.svelte';
+	import Divider from '$lib/atoms/divider.svelte';
+	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import AttackDialog from '$lib/components/dialogs/attack-dialog.svelte';
@@ -65,6 +68,102 @@
 			<button class="btn btn-secondary btn-xs" onclick={addAttack}>Add</button>
 		</div>
 	</div>
+
+	{#if c.combat.attacks.length > 0}
+		<div
+			class="grid w-full grid-flow-row grid-cols-[min-content_repeat(4,auto)] justify-stretch gap-y-2"
+		>
+			<div class="col-span-5 grid grid-cols-subgrid text-center text-sm font-bold text-neutral-500">
+				<div></div>
+				<div>Name</div>
+				<div>Atk</div>
+				<div>Crit Range</div>
+				<div class="pr-12">Damage</div>
+			</div>
+
+			<SortableList
+				class="col-span-5 grid grid-cols-subgrid gap-y-2"
+				options={{
+					group: 'attack',
+					handle: '.drag-handle',
+					animation: 150,
+					easing: 'cubic-bezier(1, 0, 0, 1)',
+				}}
+				bind:items={c.combat.attacks}
+				keyProp="id"
+			>
+				{#snippet children({ item: attack, index })}
+					<div class="col-span-5 grid grid-cols-subgrid items-center">
+						<div
+							class="drag-handle flex w-6 items-center justify-center"
+							role="button"
+							tabindex="0"
+						>
+							<DragHandle />
+						</div>
+
+						<Collapse
+							class="col-span-4 grid grid-cols-subgrid"
+							titleClass="col-span-4 grid grid-cols-subgrid text-sm"
+							contentClass="col-span-4 text-sm"
+							icon="arrow"
+							oncontextmenu={preventDefault(() => openDialog(AttackDialog, { index }))}
+							bind:open={attack.open}
+						>
+							{#snippet title({ open })}
+								<div class="col-span-4 grid grid-cols-subgrid items-center gap-x-2">
+									<div
+										class={[
+											'text-ellipsis',
+											'whitespace-nowrap',
+											'overflow-hidden',
+											open && 'col-span-4',
+										]}
+									>
+										{attack.name}
+									</div>
+									{#if !open}
+										<div class="text-center">
+											{attack.hasAttack ? attack.attack.attacks.map(withSign).join('/') : '-'}
+										</div>
+										<div class="text-center">
+											{(attack.hasAttack && attack.attack.critRange) || '-'}
+										</div>
+										<div
+											class="text-center text-ellipsis"
+											class:overflow-hidden={!open}
+											class:whitespace-nowrap={!open}
+										>
+											{(attack.hasDamage && parseTextWithMacros(attack.damage.damage, c)) || '-'}
+										</div>
+									{/if}
+								</div>
+							{/snippet}
+
+							{#snippet children()}
+								{@const details = attack.details}
+								{#if details.length > 0}
+									<Divider class="my-0">Details</Divider>
+									<div
+										class="grid grid-cols-[max-content_auto] gap-x-2 text-xs [&>*:nth-child(odd)]:font-bold [&>*:nth-child(odd)]:after:content-[':']"
+									>
+										{#each details as [label, value]}
+											<div>{label}</div>
+											<div>{value}</div>
+										{/each}
+									</div>
+								{/if}
+								{#if attack.showNotes && attack.notes}
+									<Divider class="my-0">Notes</Divider>
+									<MultilineMacro text={attack.notes}></MultilineMacro>
+								{/if}
+							{/snippet}
+						</Collapse>
+					</div>
+				{/snippet}
+			</SortableList>
+		</div>
+	{/if}
 
 	{#if c.combat.attacks.length > 0}
 		<table class="table border-separate border-spacing-y-2">

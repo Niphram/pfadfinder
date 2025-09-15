@@ -1,7 +1,9 @@
 import { nanoid } from 'nanoid';
 
+import { parseTextWithMacros } from '$lib/macro/text';
 import { array, boolean, derive, macro, string } from '$lib/serde';
 import { ClassSerializer } from '$lib/serde/class-serializer';
+import { withSign } from '$lib/utils';
 
 import type { AbilityKey } from './abilities.svelte';
 import { Character } from './character.svelte';
@@ -140,6 +142,8 @@ export class Damage extends ClassSerializer {
 export class Attack extends ClassSerializer {
 	id = nanoid();
 
+	open = boolean(false);
+
 	name = string('Unnamed Attack');
 
 	category = string('');
@@ -154,6 +158,8 @@ export class Attack extends ClassSerializer {
 
 	damage = new Damage();
 
+	showNotes = boolean(true);
+
 	notes = string('', { maxLength: 1000 });
 
 	readonly attackBonus = derive<Character>((c) => {
@@ -162,6 +168,22 @@ export class Attack extends ClassSerializer {
 		const bonus = this.attack.bonusModifier.eval(c) ?? 0;
 		total += Number.isNaN(bonus) ? 0 : bonus;
 		return total;
+	});
+
+	readonly details = derive<Character, [label: string, value: string][]>((c) => {
+		const details: [string, string | undefined][] = [];
+
+		if (this.hasAttack.value) {
+			details.push(['Crit Range', this.attack.critRange.value]);
+			details.push(['Attacks', this.attack.attacks.eval(c).map(withSign).join('/')]);
+			details.push(['Range', this.attack.range.value]);
+		}
+
+		if (this.hasDamage.value) {
+			details.push(['Damage', parseTextWithMacros(this.damage.damage.value, c)]);
+		}
+
+		return details.filter((e) => !!e[1]) as [string, string][];
 	});
 }
 
