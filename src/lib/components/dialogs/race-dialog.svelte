@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { ABILITY_KEYS } from '$lib/data';
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
-	import { title } from '../dialog.svelte';
-	import Input from '../input/input.svelte';
-	import MacroInteger from '../input/macro-integer.svelte';
+
+	import { title } from '$lib/components/dialog.svelte';
+	import Input from '$lib/components/input/input.svelte';
+	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+
+	import { ABILITY_KEYS, getChar } from '$lib/data';
 
 	const { c } = $derived(getChar());
 

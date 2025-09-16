@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Skill, type SkillKey } from '$lib/data/character/skills.svelte';
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { preventDefault } from '$lib/utils';
-	import { title } from '../dialog.svelte';
-	import Input from '../input/input.svelte';
+
+	import { title } from '$lib/components/dialog.svelte';
+	import Input from '$lib/components/input/input.svelte';
+
+	import { getChar, Skill, type SkillKey } from '$lib/data';
 
 	const { c } = $derived(getChar());
 

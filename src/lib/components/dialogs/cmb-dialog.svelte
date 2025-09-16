@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context';
+	import { title } from '$lib/components/dialog.svelte';
+	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
 
-	import { title } from '../dialog.svelte';
-	import MacroTextArea from '../input/macro-text-area.svelte';
+	import { getChar } from '$lib/data';
 
 	const { c } = $derived(getChar());
 

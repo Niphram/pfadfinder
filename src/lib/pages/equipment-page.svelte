@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { AcItem, Item } from '$lib/data';
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
-	import { preventDefault } from '$lib/utils';
-	import { macroNotify } from '$lib/utils/notes';
+	import NestedEquipmentList from '$lib/nested-equipment-list.svelte';
+	import { macroNotify, preventDefault } from '$lib/utils';
 
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import AcItemDialog from '$lib/components/dialogs/ac-item-dialog.svelte';
@@ -13,7 +11,7 @@
 	import TextArea from '$lib/components/input/text-area.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 
-	import NestedEquipmentList from '$lib/nested-equipment-list.svelte';
+	import { AcItem, getChar, Item } from '$lib/data';
 
 	const { c } = $derived(getChar());
 

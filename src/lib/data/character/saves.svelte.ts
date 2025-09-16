@@ -1,5 +1,4 @@
-import { derive, enumeration, EnumWrapper, macro, string } from '$lib/serde';
-import { ClassSerializer } from '$lib/serde/class-serializer';
+import { ClassSerializer, derive, enumeration, EnumWrapper, macro, string } from '$lib/serde';
 
 import type { AbilityKey } from './abilities.svelte';
 import { Character } from './character.svelte';

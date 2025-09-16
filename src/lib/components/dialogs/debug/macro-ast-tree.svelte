@@ -1,9 +1,10 @@
 <script lang="ts">
-	import Self from './macro-ast-tree.svelte';
-
-	import { getChar } from '$lib/data/context';
 	import { AstNodeType, type AstNode } from '$lib/macro/ast';
 	import { evalNode } from '$lib/macro/evaluate';
+
+	import { getChar } from '$lib/data';
+
+	import Self from './macro-ast-tree.svelte';
 
 	const { c } = $derived(getChar());
 

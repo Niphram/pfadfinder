@@ -1,11 +1,11 @@
 <script lang="ts">
-	import CaptionedButton from '$lib/components/captioned-button.svelte';
-	import { getChar } from '$lib/data/context';
-	import { withSign } from '$lib/utils';
-	import { macroNotify } from '$lib/utils/notes';
+	import { macroNotify, withSign } from '$lib/utils';
 
-	import { openDialog } from '../dialog.svelte';
-	import InitDialog from '../dialogs/init-dialog.svelte';
+	import CaptionedButton from '$lib/components/captioned-button.svelte';
+	import { openDialog } from '$lib/components/dialog.svelte';
+	import InitDialog from '$lib/components/dialogs/init-dialog.svelte';
+
+	import { getChar } from '$lib/data';
 
 	const { c } = $derived(getChar());
 </script>

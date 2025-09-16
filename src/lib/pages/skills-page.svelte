@@ -1,13 +1,12 @@
 <script lang="ts">
-	import { SKILL_KEYS } from '$lib/data';
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
-	import { preventDefault, withSign } from '$lib/utils';
-	import { macroNotify } from '$lib/utils/notes';
+	import { macroNotify, preventDefault, withSign } from '$lib/utils';
 
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import SkillDialog from '$lib/components/dialogs/skill-dialog.svelte';
 	import SkillVariantsDialog from '$lib/components/dialogs/skill-variants-dialog.svelte';
+
+	import { getChar, SKILL_KEYS } from '$lib/data';
 
 	const { c } = $derived(getChar());
 </script>

@@ -1,6 +1,7 @@
 import { randBoolean, randNumber, randText, toCollection } from '@ngneat/falso';
 import { describe, expect, test } from 'vitest';
 
+import { ClassSerializer } from './class-serializer';
 import { charProxy } from './proxy';
 import { array, ArrayWrapper } from './types/array.svelte';
 import { boolean } from './types/bool.svelte';
@@ -9,7 +10,6 @@ import { enumeration } from './types/enum.svelte';
 import { macro } from './types/macro.svelte';
 import { number } from './types/number.svelte';
 import { string } from './types/string.svelte';
-import { ClassSerializer } from './class-serializer';
 
 class SubSubClass extends ClassSerializer {
 	foo = randNumber();

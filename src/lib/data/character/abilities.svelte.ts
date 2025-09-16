@@ -1,5 +1,4 @@
-import { derive, macro, number, string } from '$lib/serde';
-import { ClassSerializer } from '$lib/serde/class-serializer';
+import { ClassSerializer, derive, macro, number, string } from '$lib/serde';
 
 import { Character } from './character.svelte';
 

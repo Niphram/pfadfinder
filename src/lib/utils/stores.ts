@@ -1,4 +1,5 @@
 import { derived, writable, type Readable, type Updater, type Writable } from 'svelte/store';
+
 import { getDeep, setDeep } from './deep';
 import type { Get, Paths, Predicate } from './utilTypes';
 

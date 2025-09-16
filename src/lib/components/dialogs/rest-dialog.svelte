@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { ABILITY_KEYS, Item, SPELL_LEVELS } from '$lib/data';
-	import { getChar } from '$lib/data/context';
 	import type { SerdeProxy } from '$lib/serde/proxy';
 
-	import { title } from '../dialog.svelte';
-	import Toggle from '../input/toggle.svelte';
+	import { title } from '$lib/components/dialog.svelte';
+	import Toggle from '$lib/components/input/toggle.svelte';
+
+	import { ABILITY_KEYS, getChar, Item, SPELL_LEVELS } from '$lib/data';
 
 	const { c } = $derived(getChar());
 

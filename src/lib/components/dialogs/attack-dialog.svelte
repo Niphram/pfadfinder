@@ -1,17 +1,18 @@
 <script lang="ts">
-	import { ABILITY_KEYS, ATTACK_TYPES } from '$lib/data';
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import { computeMacroInTextStyle } from '$lib/text/macro-text-style';
 
-	import Divider from '../../atoms/divider.svelte';
-	import { title } from '../dialog.svelte';
-	import Fieldset from '../input/fieldset.svelte';
-	import Input from '../input/input.svelte';
-	import MacroInteger from '../input/macro-integer.svelte';
-	import MacroTextArea from '../input/macro-text-area.svelte';
-	import RichInput from '../input/rich-input.svelte';
-	import Select from '../input/select.svelte';
+	import Divider from '$lib/atoms/divider.svelte';
+
+	import { title } from '$lib/components/dialog.svelte';
+	import Fieldset from '$lib/components/input/fieldset.svelte';
+	import Input from '$lib/components/input/input.svelte';
+	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
+	import RichInput from '$lib/components/input/rich-input.svelte';
+	import Select from '$lib/components/input/select.svelte';
+
+	import { ABILITY_KEYS, ATTACK_TYPES, getChar } from '$lib/data';
 
 	interface Props {
 		index: number;

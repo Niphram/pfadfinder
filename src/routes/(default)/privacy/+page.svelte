@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { base } from '$app/paths';
+	import { resolve } from '$app/paths';
 </script>
 
 {#snippet heading(type: 'h1' | 'h2' | 'h3', id: string, content: string)}
@@ -18,7 +18,7 @@
 <article class="prose mx-auto p-4 select-text">
 	<p>
 		&lt;
-		<a href="{base}/">Back to home</a>
+		<a href={resolve('/')}>Back to home</a>
 	</p>
 
 	{@render heading('h1', 'privacy-policy', 'Privacy Policy')}

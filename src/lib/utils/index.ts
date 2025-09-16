@@ -5,5 +5,6 @@ export * from './event-modifiers';
 export * from './format';
 export * from './lazy';
 export * from './mutation-observer';
+export * from './notes';
 export * from './result';
 export * from './utilTypes';

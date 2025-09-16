@@ -1,8 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import { macro, number, string } from '$lib/serde';
-import type { SerdeProxy } from '$lib/serde/proxy';
-import { ClassSerializer } from '$lib/serde/class-serializer';
+import { ClassSerializer, macro, number, string, type SerdeProxy } from '$lib/serde';
 
 export class Trait extends ClassSerializer {
 	id = string(nanoid());

@@ -1,10 +1,18 @@
 import { nanoid } from 'nanoid';
 
-import { array, boolean, derive, enumeration, macro, number, string } from '$lib/serde';
-import type { SerdeProxy } from '$lib/serde/proxy';
+import {
+	array,
+	boolean,
+	ClassSerializer,
+	derive,
+	enumeration,
+	macro,
+	number,
+	string,
+	type SerdeProxy,
+} from '$lib/serde';
 import { mapSum, withSign } from '$lib/utils';
 
-import { ClassSerializer } from '$lib/serde/class-serializer';
 import { Character, type AbilityKey } from '.';
 
 export const SPELL_LEVELS = [

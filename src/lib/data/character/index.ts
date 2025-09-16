@@ -8,6 +8,7 @@ export * from './feat.svelte';
 export * from './hitpoints.svelte';
 export * from './initiative.svelte';
 export * from './money.svelte';
+export * from './persona.svelte';
 export * from './race.svelte';
 export * from './saves.svelte';
 export * from './skills.svelte';

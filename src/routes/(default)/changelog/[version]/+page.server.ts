@@ -1,9 +1,9 @@
 import { glob, readFile } from 'node:fs/promises';
 import { basename, resolve } from 'node:path';
 
-import { parseMarkdown } from '$lib/server/markdown';
-
 import type { EntryGenerator, PageServerLoad } from './$types';
+
+import { parseMarkdown } from '$lib/server/markdown';
 
 export const entries: EntryGenerator = async () => {
 	const changelogsIter = await glob('./changelog/*.md');

@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
-import { Parser } from './parser';
 import { AstNodeType } from './ast';
+import { Parser } from './parser';
 
 describe('Parser', () => {
 	describe('Constants', () => {

@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { ARMOR_TYPES } from '$lib/data';
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 
-	import { title } from '../dialog.svelte';
-	import Input from '../input/input.svelte';
-	import Integer from '../input/integer.svelte';
-	import MacroTextArea from '../input/macro-text-area.svelte';
-	import OptionalInteger from '../input/optional-integer.svelte';
-	import Select from '../input/select.svelte';
-	import Toggle from '../input/toggle.svelte';
+	import { title } from '$lib/components/dialog.svelte';
+	import Input from '$lib/components/input/input.svelte';
+	import Integer from '$lib/components/input/integer.svelte';
+	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
+	import OptionalInteger from '$lib/components/input/optional-integer.svelte';
+	import Select from '$lib/components/input/select.svelte';
+	import Toggle from '$lib/components/input/toggle.svelte';
+
+	import { ARMOR_TYPES, getChar } from '$lib/data';
 
 	interface Props {
 		index: number;

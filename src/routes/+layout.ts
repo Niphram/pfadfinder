@@ -1,7 +1,8 @@
-import { browser } from '$app/environment';
-import { IDBStorage } from '$lib/storage';
-
 import type { LayoutLoad } from './$types';
+
+import { browser } from '$app/environment';
+
+import { IDBStorage } from '$lib/storage';
 
 // Disable server-side-rendering
 export const ssr = false;

@@ -1,9 +1,7 @@
 import { nanoid } from 'nanoid';
 
-import { array, boolean, number, string } from '$lib/serde';
+import { array, boolean, ClassSerializer, number, string, type SerdeProxy } from '$lib/serde';
 import { mapMin, mapSum } from '$lib/utils';
-import type { SerdeProxy } from '$lib/serde/proxy';
-import { ClassSerializer } from '$lib/serde/class-serializer';
 
 export const ARMOR_TYPES = ['light', 'medium', 'heavy', 'shield', 'misc'] as const;
 export type ArmorType = (typeof ARMOR_TYPES)[number];

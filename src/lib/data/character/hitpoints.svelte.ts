@@ -1,6 +1,4 @@
-import { derive, macro, number } from '$lib/serde';
-import { ClassSerializer } from '$lib/serde/class-serializer';
-import type { SerdeProxy } from '$lib/serde/proxy';
+import { ClassSerializer, derive, macro, number, type SerdeProxy } from '$lib/serde';
 import { mapSum } from '$lib/utils';
 
 import { Character } from './character.svelte';

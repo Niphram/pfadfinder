@@ -1,8 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import { parseTextWithMacros } from '$lib/macro/text';
-import { array, boolean, derive, macro, string } from '$lib/serde';
-import { ClassSerializer } from '$lib/serde/class-serializer';
+import { array, boolean, ClassSerializer, derive, macro, string } from '$lib/serde';
 import { withSign } from '$lib/utils';
 
 import type { AbilityKey } from './abilities.svelte';

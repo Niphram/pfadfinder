@@ -1,13 +1,14 @@
 <script lang="ts">
-	import type { Character } from '$lib/data';
-	import { setChar } from '$lib/data/context';
+	import type { LayoutProps } from './$types';
+
 	import { charProxy } from '$lib/serde/proxy';
 	import { debounce, observeMutations } from '$lib/utils';
 
 	import Dialog from '$lib/components/dialog.svelte';
 	import ToastProvider from '$lib/components/toast-provider.svelte';
 
-	import type { LayoutProps } from './$types';
+	import type { Character } from '$lib/data';
+	import { setChar } from '$lib/data';
 
 	const { data, children }: LayoutProps = $props();
 

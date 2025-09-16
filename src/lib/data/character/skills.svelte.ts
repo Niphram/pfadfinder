@@ -1,5 +1,13 @@
-import { array, boolean, derive, enumeration, macro, number, string } from '$lib/serde';
-import { ClassSerializer } from '$lib/serde/class-serializer';
+import {
+	array,
+	boolean,
+	ClassSerializer,
+	derive,
+	enumeration,
+	macro,
+	number,
+	string,
+} from '$lib/serde';
 import { mapSum } from '$lib/utils';
 
 import type { AbilityKey } from './abilities.svelte';

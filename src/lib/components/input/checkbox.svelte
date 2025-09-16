@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ChangeEventHandler, ClassValue } from 'svelte/elements';
 
-	import Fieldset from './fieldset.svelte';
+	import Fieldset from '$lib/components/input/fieldset.svelte';
 
 	interface Props {
 		checked: boolean;

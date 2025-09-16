@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 
-	import { closeDialog, openDialog, title } from '../dialog.svelte';
+	import { closeDialog, openDialog, title } from '$lib/components/dialog.svelte';
+	import RestDialog from '$lib/components/dialogs/rest-dialog.svelte';
+	import SettingsDialog from '$lib/components/dialogs/settings-dialog.svelte';
 
-	import RestDialog from './rest-dialog.svelte';
-	import SettingsDialog from './settings-dialog.svelte';
+	import { getChar } from '$lib/data';
 
 	const { c } = $derived(getChar());
 

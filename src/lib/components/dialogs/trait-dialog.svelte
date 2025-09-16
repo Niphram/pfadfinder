@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context';
+	import { title } from '$lib/components/dialog.svelte';
+	import Input from '$lib/components/input/input.svelte';
+	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
 
-	import { title } from '../dialog.svelte';
-	import Input from '../input/input.svelte';
-	import MacroInteger from '../input/macro-integer.svelte';
-	import MacroTextArea from '../input/macro-text-area.svelte';
+	import { getChar } from '$lib/data';
 
 	interface Props {
 		index: number;

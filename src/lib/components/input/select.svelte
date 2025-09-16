@@ -9,7 +9,7 @@
 <script lang="ts" generics="V, T">
 	import type { Snippet } from 'svelte';
 
-	import Fieldset from './fieldset.svelte';
+	import Fieldset from '$lib/components/input/fieldset.svelte';
 
 	interface Props {
 		name: string;

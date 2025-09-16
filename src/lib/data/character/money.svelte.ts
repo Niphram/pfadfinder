@@ -1,5 +1,4 @@
-import { number, string } from '$lib/serde';
-import { ClassSerializer } from '$lib/serde/class-serializer';
+import { ClassSerializer, number, string } from '$lib/serde';
 
 export class Money extends ClassSerializer {
 	pp = number(0);

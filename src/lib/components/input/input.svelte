@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Fieldset from './fieldset.svelte';
+	import Fieldset from '$lib/components/input/fieldset.svelte';
 
 	interface Props {
 		value: string;

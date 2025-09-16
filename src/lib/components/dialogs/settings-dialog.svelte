@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context';
-	import { persisted } from '$lib/data/storage';
 	import { preventDefault } from '$lib/utils';
-	import { openDialog, title } from '../dialog.svelte';
-	import Toggle from '../input/toggle.svelte';
-	import { isDarkMode, toggleDarkMode } from '../theme-changer.svelte';
-	import MacroDebugDialog from './debug/macro-debug-dialog.svelte';
+
+	import { openDialog, title } from '$lib/components/dialog.svelte';
+	import MacroDebugDialog from '$lib/components/dialogs/debug/macro-debug-dialog.svelte';
+	import Toggle from '$lib/components/input/toggle.svelte';
+	import { isDarkMode, toggleDarkMode } from '$lib/components/theme-changer.svelte';
+
+	import { getChar, persisted } from '$lib/data';
 
 	const { c } = $derived(getChar());
 

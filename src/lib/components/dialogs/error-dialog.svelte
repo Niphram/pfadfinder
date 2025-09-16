@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { title } from '../dialog.svelte';
+	import { title } from '$lib/components/dialog.svelte';
 
 	interface Props {
 		message: string;

@@ -1,5 +1,6 @@
-import type { Character } from '$lib/data';
 import type { SerdeProxy } from '$lib/serde/proxy';
+
+import type { Character } from '$lib/data';
 
 import { evalNode } from './evaluate';
 import { Parser } from './parser';
@@ -14,7 +15,11 @@ export function parseTextWithMacros(input: string, char: SerdeProxy<Character>):
 		if (macro.startsWith(':')) {
 			const split = macro.indexOf(' ');
 			const format = macro.substring(1, split);
-			const result = evalNode(Parser.parse(macro.substring(split)), char);
+
+			const parseResult = Parser.parse(macro.substring(split));
+			if (!parseResult.ok) return '[Parse Error]';
+
+			const result = evalNode(parseResult.value, char);
 
 			const signed = format.includes('+');
 			const hideZero = format.includes('z');
@@ -29,7 +34,12 @@ export function parseTextWithMacros(input: string, char: SerdeProxy<Character>):
 
 			return `${result}`;
 		} else {
-			return `[${evalNode(Parser.parse(macro), char).toString()}]`;
+			const parseResult = Parser.parse(macro);
+			if (!parseResult.ok) return '[Parse Error]';
+
+			const result = evalNode(parseResult.value, char);
+
+			return `[${result.toString()}]`;
 		}
 	});
 

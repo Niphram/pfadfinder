@@ -1,17 +1,18 @@
 <script lang="ts">
-	import { CHARGE_TYPES, Item } from '$lib/data';
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 	import type { SerdeProxy } from '$lib/serde/proxy';
 
-	import Divider from '../../atoms/divider.svelte';
-	import { title } from '../dialog.svelte';
-	import Input from '../input/input.svelte';
-	import Integer from '../input/integer.svelte';
-	import MacroTextArea from '../input/macro-text-area.svelte';
-	import Number from '../input/number.svelte';
-	import Select from '../input/select.svelte';
-	import Toggle from '../input/toggle.svelte';
+	import Divider from '$lib/atoms/divider.svelte';
+
+	import { title } from '$lib/components/dialog.svelte';
+	import Input from '$lib/components/input/input.svelte';
+	import Integer from '$lib/components/input/integer.svelte';
+	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
+	import Number from '$lib/components/input/number.svelte';
+	import Select from '$lib/components/input/select.svelte';
+	import Toggle from '$lib/components/input/toggle.svelte';
+
+	import { CHARGE_TYPES, getChar, Item } from '$lib/data';
 
 	interface Props {
 		list?: SerdeProxy<Item>[];

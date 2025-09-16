@@ -2,12 +2,13 @@
 	import { onMount } from 'svelte';
 
 	import { t } from '$lib/i18n';
-	import Integer from '../input/integer.svelte';
-	import { title } from '../dialog.svelte';
-	import { SAVE_KEYS } from '$lib/data';
-	import Input from '../input/input.svelte';
-	import Toggle from '../input/toggle.svelte';
-	import { getChar } from '$lib/data/context';
+
+	import { title } from '$lib/components/dialog.svelte';
+	import Input from '$lib/components/input/input.svelte';
+	import Integer from '$lib/components/input/integer.svelte';
+	import Toggle from '$lib/components/input/toggle.svelte';
+
+	import { getChar, SAVE_KEYS } from '$lib/data';
 
 	interface Props {
 		classIndex: number;

@@ -1,14 +1,14 @@
 <script>
-	import { ABILITY_KEYS } from '$lib/data';
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 
 	import Divider from '$lib/atoms/divider.svelte';
+
+	import { title } from '$lib/components/dialog.svelte';
 	import MacroInteger from '$lib/components/input/macro-integer.svelte';
 	import Select from '$lib/components/input/select.svelte';
 	import TextArea from '$lib/components/input/text-area.svelte';
 
-	import { title } from '../dialog.svelte';
+	import { ABILITY_KEYS, getChar } from '$lib/data';
 
 	const { c } = $derived(getChar());
 

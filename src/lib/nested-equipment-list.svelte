@@ -1,21 +1,20 @@
 <script lang="ts">
-	import Self from './nested-equipment-list.svelte';
-
 	import type { ClassValue } from 'svelte/elements';
 
-	import { type Item } from '$lib/data';
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
-	import type { SerdeProxy } from '$lib/serde/proxy';
-	import { preventDefault, stopPropagation } from '$lib/utils';
-	import { macroNotify } from '$lib/utils/notes';
+	import { type SerdeProxy } from '$lib/serde';
+	import { macroNotify, preventDefault, stopPropagation } from '$lib/utils';
+
+	import Collapse from '$lib/atoms/collapse.svelte';
 
 	import { openDialog } from '$lib/components/dialog.svelte';
 	import ItemDialog from '$lib/components/dialogs/item-dialog.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 
-	import Collapse from '$lib/atoms/collapse.svelte';
+	import { getChar, type Item } from '$lib/data';
+
+	import Self from './nested-equipment-list.svelte';
 
 	const { c } = $derived(getChar());
 

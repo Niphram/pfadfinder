@@ -1,5 +1,4 @@
-import { boolean } from '$lib/serde';
-import { ClassSerializer } from '$lib/serde/class-serializer';
+import { boolean, ClassSerializer } from '$lib/serde';
 
 export class Settings extends ClassSerializer {
 	heal = boolean(true);

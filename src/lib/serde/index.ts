@@ -1,3 +1,7 @@
+export * from './class-serializer';
+export * from './interfaces';
+export * from './proxy';
+
 export * from './types/array.svelte';
 export * from './types/bool.svelte';
 export * from './types/derive.svelte';

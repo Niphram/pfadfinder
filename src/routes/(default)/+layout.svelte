@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { base } from '$app/paths';
+	import { resolve } from '$app/paths';
 
 	let { children } = $props();
 </script>
@@ -27,8 +27,8 @@
 			<p>&copy; Niphram - All rights reserved</p>
 		</aside>
 		<nav class="grid-flow-col gap-4 sm:justify-self-end">
-			<a href="{base}/changelog" class="link">Changelog</a>
-			<a href="{base}/privacy" class="link">Privacy Policy</a>
+			<a href={resolve('/changelog')} class="link">Changelog</a>
+			<a href={resolve('/privacy')} class="link">Privacy Policy</a>
 			<a href="https://github.com/Niphram/pfadfinder" class="link">Github</a>
 		</nav>
 	</footer>

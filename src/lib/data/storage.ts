@@ -1,5 +1,6 @@
-import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
+
+import { browser } from '$app/environment';
 
 export const persisted = writable(false);
 export const loaded = writable(false);

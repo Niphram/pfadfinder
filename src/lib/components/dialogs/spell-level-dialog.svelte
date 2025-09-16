@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { ABILITY_KEYS, SPELL_LEVELS } from '$lib/data';
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
-	import { title } from '../dialog.svelte';
-	import Integer from '../input/integer.svelte';
-	import MacroInteger from '../input/macro-integer.svelte';
-	import Select from '../input/select.svelte';
+
+	import { title } from '$lib/components/dialog.svelte';
+	import Integer from '$lib/components/input/integer.svelte';
+	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+	import Select from '$lib/components/input/select.svelte';
+
+	import { ABILITY_KEYS, getChar, SPELL_LEVELS } from '$lib/data';
 
 	const { c } = $derived(getChar());
 

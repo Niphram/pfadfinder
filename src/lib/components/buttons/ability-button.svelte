@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { type AbilityKey } from '$lib/data';
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
-	import { preventDefault, withSign } from '$lib/utils';
-	import { macroNotify } from '$lib/utils/notes';
+	import { macroNotify, preventDefault, withSign } from '$lib/utils';
 
-	import { openDialog } from '../dialog.svelte';
-	import AbilityDialog from '../dialogs/ability-dialog.svelte';
+	import { openDialog } from '$lib/components/dialog.svelte';
+	import AbilityDialog from '$lib/components/dialogs/ability-dialog.svelte';
+
+	import { getChar, type AbilityKey } from '$lib/data';
 
 	interface Props {
 		key: AbilityKey;

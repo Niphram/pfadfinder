@@ -1,10 +1,12 @@
 <script lang="ts">
-	import Button from '$lib/atoms/button.svelte';
-	import Divider from '$lib/atoms/divider.svelte';
-	import { title } from '$lib/components/dialog.svelte';
-	import MacroInteger from '$lib/components/input/macro-integer.svelte';
 	import { Tokenizer, TokenType } from '$lib/macro/tokenizer';
 	import { macro } from '$lib/serde';
+
+	import Button from '$lib/atoms/button.svelte';
+	import Divider from '$lib/atoms/divider.svelte';
+
+	import { title } from '$lib/components/dialog.svelte';
+	import MacroInteger from '$lib/components/input/macro-integer.svelte';
 
 	import MacroAstTree from './macro-ast-tree.svelte';
 

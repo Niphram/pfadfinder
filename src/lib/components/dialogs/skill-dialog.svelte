@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { ABILITY_KEYS, type SkillKey } from '$lib/data';
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 
-	import { title } from '../dialog.svelte';
-	import Checkbox from '../input/checkbox.svelte';
-	import Integer from '../input/integer.svelte';
-	import MacroInteger from '../input/macro-integer.svelte';
-	import MacroTextArea from '../input/macro-text-area.svelte';
-	import Select from '../input/select.svelte';
-	import Toggle from '../input/toggle.svelte';
+	import { title } from '$lib/components/dialog.svelte';
+	import Checkbox from '$lib/components/input/checkbox.svelte';
+	import Integer from '$lib/components/input/integer.svelte';
+	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
+	import Select from '$lib/components/input/select.svelte';
+	import Toggle from '$lib/components/input/toggle.svelte';
+
+	import { ABILITY_KEYS, getChar, type SkillKey } from '$lib/data';
 
 	interface Props {
 		key?: SkillKey;

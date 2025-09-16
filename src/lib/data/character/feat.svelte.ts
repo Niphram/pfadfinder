@@ -1,7 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import { enumeration, string } from '$lib/serde';
-import { ClassSerializer } from '$lib/serde/class-serializer';
+import { ClassSerializer, enumeration, string } from '$lib/serde';
 
 export const FEAT_TYPES = [
 	'general',

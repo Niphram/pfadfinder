@@ -1,10 +1,11 @@
 import Dexie from 'dexie';
 import { nanoid } from 'nanoid';
 
-import { Character } from '$lib/data';
-import { upgradeCharacterAndDeserialize } from '$lib/data/upgrade';
 import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
 import { lazy } from '$lib/utils';
+
+import { Character } from '$lib/data';
+import { upgradeCharacterAndDeserialize } from '$lib/data/upgrade';
 
 import { VERSIONS, type Schema } from './versions';
 

@@ -1,14 +1,15 @@
 <script lang="ts">
 	import { nanoid } from 'nanoid';
 
-	import { base } from '$app/paths';
+	import type { PageProps } from './$types';
 
-	import { Character } from '$lib/data';
-	import { upgradeCharacterAndDeserialize } from '$lib/data/upgrade';
+	import { resolve } from '$app/paths';
+
 	import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
 	import { preventDefault } from '$lib/utils';
 
-	import type { PageProps } from './$types';
+	import { Character } from '$lib/data';
+	import { upgradeCharacterAndDeserialize } from '$lib/data/upgrade';
 
 	const { data }: PageProps = $props();
 	const { characters, db } = data;
@@ -112,7 +113,7 @@
 			{#each $characters as { id, name, description, system, updated_at } (id)}
 				<li class="p-2">
 					<a
-						href="{base}/character/{id}"
+						href={resolve('/(app)/character/[id]', { id })}
 						aria-label="Open {name}"
 						data-sveltekit-preload-data="off"
 						class="list-row hover:bg-base-200 rounded-box col-span-3 items-center p-2 align-middle transition"

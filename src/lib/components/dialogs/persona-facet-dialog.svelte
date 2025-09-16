@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { FacetKey } from '$lib/data/character/persona.svelte';
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 
-	import { title } from '../dialog.svelte';
-	import Integer from '../input/integer.svelte';
-	import MacroTextArea from '../input/macro-text-area.svelte';
+	import { title } from '$lib/components/dialog.svelte';
+	import Integer from '$lib/components/input/integer.svelte';
+	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
+
+	import { getChar, type FacetKey } from '$lib/data';
 
 	interface Props {
 		key?: FacetKey;

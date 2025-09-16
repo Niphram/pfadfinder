@@ -1,5 +1,4 @@
-import { enumeration, macro, string } from '$lib/serde';
-import { ClassSerializer } from '$lib/serde/class-serializer';
+import { ClassSerializer, enumeration, macro, string } from '$lib/serde';
 
 import type { SizeKey } from './combat.svelte';
 

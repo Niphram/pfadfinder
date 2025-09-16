@@ -1,5 +1,4 @@
-import { DESERIALIZE_SYMBOL } from '$lib/serde/interfaces';
-import { charProxy, type SerdeProxy } from '$lib/serde/proxy';
+import { charProxy, DESERIALIZE_SYMBOL, type SerdeProxy } from '$lib/serde';
 
 import { Character } from './character';
 

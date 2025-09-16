@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { ABILITY_KEYS, type SaveKey } from '$lib/data';
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 
-	import { title } from '../dialog.svelte';
-	import MacroInteger from '../input/macro-integer.svelte';
-	import MacroTextArea from '../input/macro-text-area.svelte';
-	import Select from '../input/select.svelte';
+	import { title } from '$lib/components/dialog.svelte';
+	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
+	import Select from '$lib/components/input/select.svelte';
+
+	import { ABILITY_KEYS, getChar, type SaveKey } from '$lib/data';
 
 	interface Props {
 		key?: SaveKey;

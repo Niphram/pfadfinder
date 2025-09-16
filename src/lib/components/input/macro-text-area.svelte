@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { computeMacroInTextStyle } from '$lib/text/macro-text-style';
 
-	import Fieldset from './fieldset.svelte';
-	import RichTextArea from './rich-text-area.svelte';
+	import Fieldset from '$lib/components/input/fieldset.svelte';
+	import RichTextArea from '$lib/components/input/rich-text-area.svelte';
 
 	interface Props {
 		value: string;

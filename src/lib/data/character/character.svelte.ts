@@ -1,9 +1,9 @@
 import { nanoid } from 'nanoid';
 
-import { array, number, string } from '$lib/serde';
-import { ClassSerializer } from '$lib/serde/class-serializer';
+import { array, ClassSerializer, number, string } from '$lib/serde';
 
-import { VERSION_NUMBER } from '../upgrade';
+import { VERSION_NUMBER } from '$lib/data/upgrade';
+
 import { Ability } from './abilities.svelte';
 import { ArmorClass } from './armorclass.svelte';
 import { Classes } from './class.svelte';

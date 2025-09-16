@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { FEAT_TYPES } from '$lib/data';
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
 
-	import { title } from '../dialog.svelte';
-	import Input from '../input/input.svelte';
-	import MacroTextArea from '../input/macro-text-area.svelte';
-	import Select from '../input/select.svelte';
+	import { title } from '$lib/components/dialog.svelte';
+	import Input from '$lib/components/input/input.svelte';
+	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
+	import Select from '$lib/components/input/select.svelte';
+
+	import { FEAT_TYPES, getChar } from '$lib/data';
 
 	interface Props {
 		index: number;

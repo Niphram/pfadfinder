@@ -1,12 +1,14 @@
 <script lang="ts">
-	import Alert from '$lib/atoms/alert.svelte';
-	import Divider from '$lib/atoms/divider.svelte';
-	import { getChar } from '$lib/data/context';
 	import { preventDefault } from '$lib/utils';
 
-	import { title } from '../dialog.svelte';
-	import Integer from '../input/integer.svelte';
-	import MacroInteger from '../input/macro-integer.svelte';
+	import Alert from '$lib/atoms/alert.svelte';
+	import Divider from '$lib/atoms/divider.svelte';
+
+	import { title } from '$lib/components/dialog.svelte';
+	import Integer from '$lib/components/input/integer.svelte';
+	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+
+	import { getChar } from '$lib/data';
 
 	let { c } = $derived(getChar());
 

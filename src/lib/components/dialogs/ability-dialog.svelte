@@ -1,12 +1,13 @@
 <script lang="ts">
-	import { Ability } from '$lib/data';
 	import { t } from '$lib/i18n';
 	import type { SerdeProxy } from '$lib/serde/proxy';
 
-	import { title } from '../dialog.svelte';
-	import Integer from '../input/integer.svelte';
-	import MacroInteger from '../input/macro-integer.svelte';
-	import MacroTextArea from '../input/macro-text-area.svelte';
+	import { title } from '$lib/components/dialog.svelte';
+	import Integer from '$lib/components/input/integer.svelte';
+	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
+
+	import { Ability } from '$lib/data';
 
 	interface Props {
 		ability: SerdeProxy<Ability>;

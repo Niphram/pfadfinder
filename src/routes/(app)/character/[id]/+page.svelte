@@ -1,6 +1,11 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context';
 	import { t } from '$lib/i18n';
+
+	import HpButton from '$lib/components/buttons/hp-button.svelte';
+	import { openDialog } from '$lib/components/dialog.svelte';
+	import CharacterInfoDialog from '$lib/components/dialogs/character-info-dialog.svelte';
+	import HpDialog from '$lib/components/dialogs/hp-dialog.svelte';
+	import PageDialog from '$lib/components/dialogs/page-dialog.svelte';
 
 	import AbilitiesPage from '$lib/pages/abilities-page.svelte';
 	import CharacterPage from '$lib/pages/character-page.svelte';
@@ -11,11 +16,7 @@
 	import SkillsPage from '$lib/pages/skills-page.svelte';
 	import SpellsPage from '$lib/pages/spells-page.svelte';
 
-	import HpButton from '$lib/components/buttons/hp-button.svelte';
-	import { openDialog } from '$lib/components/dialog.svelte';
-	import CharacterInfoDialog from '$lib/components/dialogs/character-info-dialog.svelte';
-	import HpDialog from '$lib/components/dialogs/hp-dialog.svelte';
-	import PageDialog from '$lib/components/dialogs/page-dialog.svelte';
+	import { getChar } from '$lib/data';
 
 	const { c, dirty } = $derived(getChar());
 

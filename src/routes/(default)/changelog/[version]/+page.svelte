@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { base } from '$app/paths';
+	import { resolve } from '$app/paths';
 
 	const { data } = $props();
 	const { changelogHtml } = data;
@@ -10,7 +10,7 @@
 <article class="prose mx-auto p-4 select-text">
 	<p>
 		&lt;
-		<a href="{base}/changelog">Back to changelogs</a>
+		<a href={resolve('/changelog')}>Back to changelogs</a>
 	</p>
 
 	{@html changelogHtml}

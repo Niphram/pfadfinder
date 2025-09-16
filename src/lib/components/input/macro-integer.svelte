@@ -1,12 +1,13 @@
 <script lang="ts">
-	import { getChar } from '$lib/data/context';
 	import type { RuntimeError } from '$lib/macro/errors';
 	import { macro } from '$lib/serde';
 	import { computeMacroStyleWithError } from '$lib/text/macro-text-style';
 	import { Err, Ok, type Result } from '$lib/utils';
 
-	import Fieldset from './fieldset.svelte';
-	import RichInput from './rich-input.svelte';
+	import Fieldset from '$lib/components/input/fieldset.svelte';
+	import RichInput from '$lib/components/input/rich-input.svelte';
+
+	import { getChar } from '$lib/data';
 
 	const { c } = $derived(getChar());
 
