@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import { parseTextWithMacros } from '$lib/macro/text';
-import { array, boolean, ClassSerializer, derive, macro, string } from '$lib/serde';
+import { array, boolean, ClassSerializer, derive, macro, optionalMacro, string } from '$lib/serde';
 import { withSign } from '$lib/utils';
 
 import type { AbilityKey } from './abilities.svelte';
@@ -86,7 +86,7 @@ export class AttackRoll extends ClassSerializer {
 
 	abilityModifier = string<AbilityKey | 'none'>('none');
 
-	bonusModifier = macro('0');
+	bonusModifier = optionalMacro('');
 
 	versus = string('AC');
 
@@ -115,7 +115,7 @@ export class AttackRoll extends ClassSerializer {
 		const fullAttackCount = Math.max(Math.ceil(bab / 5), 1);
 		const abilityMod =
 			this.abilityModifier.value !== 'none' ? c[this.abilityModifier.value].mod : 0;
-		const bonus = this.bonusModifier.eval(c);
+		const bonus = this.bonusModifier.eval(c) ?? 0;
 
 		switch (this.baseModifier.value) {
 			case 'meelee':

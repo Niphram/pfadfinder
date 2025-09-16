@@ -31,7 +31,13 @@
 	{/snippet}
 </Select>
 
-<MacroInteger placeholder="0" label="DC Bonus" name="dcBonus" bind:value={c.spells.$dcBonus.expr} />
+<MacroInteger
+	optional
+	placeholder="0"
+	label="DC Bonus"
+	name="dcBonus"
+	bind:value={c.spells.$dcBonus.expr}
+/>
 
 <div>
 	{#each SPELL_LEVELS as level, idx (level)}

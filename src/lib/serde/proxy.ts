@@ -16,7 +16,8 @@ export type SerdeProxy<T> =
 	T extends EnumWrapper<any, boolean> ? T['value']
 	: // eslint-disable-next-line @typescript-eslint/no-explicit-any
 	T extends Derive<any, infer R> ? R
-	: T extends Macro ? number
+	: T extends Macro<false> ? number
+	: T extends Macro<true> ? number | undefined
 	: T extends ArrayWrapper<infer A> ? SerdeProxy<A>[]
 	: T extends Array<infer A> ? SerdeProxy<A>[] & Record<`$${number}`, A>
 	: // eslint-disable-next-line @typescript-eslint/no-explicit-any

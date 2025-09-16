@@ -6,8 +6,8 @@ import {
 	ClassSerializer,
 	derive,
 	enumeration,
-	macro,
 	number,
+	optionalMacro,
 	string,
 	type SerdeProxy,
 } from '$lib/serde';
@@ -114,7 +114,7 @@ export class Spell extends SpellCommonProps {
 
 	details(this: SerdeProxy<Spell>, level: number, c: SerdeProxy<Character>): [string, boolean][] {
 		const dcAbility = c.spells.dcAbility;
-		const abilityDc = (dcAbility ? c[dcAbility].mod : 0) + c.spells.dcBonus;
+		const abilityDc = (dcAbility ? c[dcAbility].mod : 0) + (c.spells.dcBonus ?? 0);
 		const saveDc = 10 + level + this.savingThrow.dcMod + abilityDc;
 
 		let attackBonus = this.attack.mod;
@@ -227,7 +227,7 @@ export class SpellLevelList extends ClassSerializer {
 export class Spells extends ClassSerializer {
 	dcAbility = enumeration<AbilityKey, true>(undefined);
 
-	dcBonus = macro('0');
+	dcBonus = optionalMacro('');
 
 	readonly level_0 = new SpellLevelList('level_0');
 

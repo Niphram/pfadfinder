@@ -32,9 +32,7 @@
 	}
 
 	function refillTrait(index: number) {
-		if (c.traits[index].$perDay.expr) {
-			c.traits[index].remaining = c.traits[index].perDay;
-		}
+		c.traits[index].remaining = c.traits[index].perDay ?? 0;
 	}
 </script>
 
