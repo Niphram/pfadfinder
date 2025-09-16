@@ -2,7 +2,7 @@
 	import { t } from '$lib/i18n';
 
 	import { title } from '$lib/components/dialog.svelte';
-	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+	import MacroNumber from '$lib/components/input/macro-number.svelte';
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
 	import Select from '$lib/components/input/select.svelte';
 
@@ -30,7 +30,7 @@
 	{/snippet}
 </Select>
 
-<MacroInteger bind:value={c[key].$misc.expr} name="saveMisc" label="Misc" />
-<MacroInteger bind:value={c[key].$bonus.expr} name="saveBonus" label="Temp Mod" />
+<MacroNumber value={c[key].$misc} name="saveMisc" label="Misc" />
+<MacroNumber value={c[key].$bonus} name="saveBonus" label="Temp Mod" />
 
 <MacroTextArea bind:value={c[key].notes} name="saveNotes" label="Notes" placeholder="Notes" />

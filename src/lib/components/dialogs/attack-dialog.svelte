@@ -7,7 +7,7 @@
 	import { title } from '$lib/components/dialog.svelte';
 	import Fieldset from '$lib/components/input/fieldset.svelte';
 	import Input from '$lib/components/input/input.svelte';
-	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+	import MacroNumber from '$lib/components/input/macro-number.svelte';
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
 	import RichInput from '$lib/components/input/rich-input.svelte';
 	import Select from '$lib/components/input/select.svelte';
@@ -71,13 +71,12 @@
 				</Select>
 			</div>
 
-			<MacroInteger
-				optional
+			<MacroNumber
 				placeholder="0"
 				label="Attack Bonus"
 				name="attackBonusMod"
-				bind:value={c.combat.attacks[index].attack.$bonusModifier.expr}
-			></MacroInteger>
+				value={c.combat.attacks[index].attack.$bonusModifier}
+			/>
 
 			<div class="flex flex-row gap-1">
 				<Input

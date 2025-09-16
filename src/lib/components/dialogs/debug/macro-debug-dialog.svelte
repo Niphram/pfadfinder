@@ -6,7 +6,7 @@
 	import Divider from '$lib/atoms/divider.svelte';
 
 	import { title } from '$lib/components/dialog.svelte';
-	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+	import MacroNumber from '$lib/components/input/macro-number.svelte';
 
 	import MacroAstTree from './macro-ast-tree.svelte';
 
@@ -32,7 +32,7 @@
 </script>
 
 <div class="flex flex-col gap-2">
-	<MacroInteger label="Debug Macro" name="debugMacro" bind:value={testMacro.expr} alwaysCommit />
+	<MacroNumber label="Debug Macro" name="debugMacro" value={testMacro} ignoreValidation />
 
 	<Divider>Tokens</Divider>
 

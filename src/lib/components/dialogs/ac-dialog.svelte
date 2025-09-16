@@ -4,7 +4,7 @@
 	import Divider from '$lib/atoms/divider.svelte';
 
 	import { title } from '$lib/components/dialog.svelte';
-	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+	import MacroNumber from '$lib/components/input/macro-number.svelte';
 	import Select from '$lib/components/input/select.svelte';
 	import TextArea from '$lib/components/input/text-area.svelte';
 
@@ -44,10 +44,10 @@
 
 <Divider />
 
-<MacroInteger name="bonusAc" label="Bonus to AC" bind:value={c.ac.$bonusAc.expr} />
+<MacroNumber name="bonusAc" label="Bonus to AC" value={c.ac.$bonusAc} />
 
-<MacroInteger name="bonusTouch" label="Bonus to touch AC" bind:value={c.ac.$bonusTouch.expr} />
+<MacroNumber name="bonusTouch" label="Bonus to touch AC" value={c.ac.$bonusTouch} />
 
-<MacroInteger name="bonusFf" label="Bonus to flat-footed AC" bind:value={c.ac.$bonusFf.expr} />
+<MacroNumber name="bonusFf" label="Bonus to flat-footed AC" value={c.ac.$bonusFf} />
 
 <TextArea name="acNotes" label="Notes" rows={5} bind:value={c.ac.notes} />

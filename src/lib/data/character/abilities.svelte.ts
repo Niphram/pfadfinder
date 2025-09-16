@@ -6,7 +6,7 @@ export const ABILITY_KEYS = ['str', 'dex', 'con', 'int', 'wis', 'cha'] as const;
 export type AbilityKey = (typeof ABILITY_KEYS)[number];
 
 export class Ability extends ClassSerializer {
-	base = macro('10');
+	base = macro('10', { min: 0 });
 
 	bonus = macro('0');
 

@@ -1,14 +1,18 @@
 import type { RuntimeError } from '$lib/macro/errors';
-import { evalNode, evalNodeGen } from '$lib/macro/evaluate';
+import { evalNodeGen } from '$lib/macro/evaluate';
 import { Parser } from '$lib/macro/parser';
-import { iteratorResultToResult, Ok, type Result } from '$lib/utils';
+import { Err, iteratorResultToResult, Ok, type Result } from '$lib/utils';
 
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../interfaces';
 import type { Option } from '../optional';
 
-export type MacroConfig<IsOptional extends boolean> = {
-	optional: IsOptional;
-};
+function validationError<T>(message: string): Result<T, RuntimeError> {
+	return Err({
+		message,
+		from: 0,
+		to: 0,
+	});
+}
 
 export class Macro<IsOptional extends boolean> implements Serializable {
 	expr = $state('');
@@ -16,44 +20,63 @@ export class Macro<IsOptional extends boolean> implements Serializable {
 	readonly parseResult = $derived(Parser.parse(this.expr));
 
 	/**
-	 * Tries to evaluate this macro. Will return NaN when any error occurs.
+	 * Tries to evaluate this macro. Will return NaN when any error occurs (even validation errors)
 	 * @param c the character to use when resolving attributes
 	 */
 	eval(c: object): Option<number, IsOptional> {
-		if (!this.expr.trim() && this.config.optional) {
-			// TODO: Fix this type
-			return undefined as unknown as number;
-		}
+		const result = this.result(c);
 
-		if (!this.parseResult.ok) {
-			return NaN;
-		}
-
-		return evalNode(this.parseResult.value, c);
+		if (!result.ok) return NaN;
+		else return result.value;
 	}
 
-	/**
-	 * Tries to evaluate this macro. Will return a result that may or may not be an error
-	 * @param c the character to use when resolving attributes
-	 */
-	evalE(c: object): Result<Option<number, IsOptional>, RuntimeError> {
-		if (!this.expr.trim() && this.config.optional) {
-			// TODO: Fix this type
-			return Ok(undefined as unknown as number);
+	result(c: object): Result<Option<number, IsOptional>, RuntimeError> {
+		// If the expression is empty and this macro is optional
+		if (!this.expr.trim() && this.options.optional) {
+			return Ok(undefined) as Result<Option<number, IsOptional>, RuntimeError>;
 		}
 
+		// Could not parse the expression
 		if (!this.parseResult.ok) {
 			return this.parseResult;
 		}
 
-		return iteratorResultToResult(evalNodeGen(this.parseResult.value, c).next());
+		const result = iteratorResultToResult(evalNodeGen(this.parseResult.value, c).next());
+
+		// Validate the result
+		if (result.ok) {
+			// Integer validation
+			if (this.options.integer && !Number.isInteger(result.value)) {
+				return validationError(`Value must be an integer (is ${result.value})`);
+			}
+
+			// Minimum validation
+			if (result.value < this.options.min) {
+				return validationError(
+					`Value must not be lower than ${this.options.min} (is ${result.value})`,
+				);
+			}
+
+			// Maximum validation
+			if (result.value > this.options.max) {
+				return validationError(
+					`Value must not be greater than ${this.options.max} (is ${result.value})`,
+				);
+			}
+		}
+
+		return result;
 	}
 
 	constructor(
 		expr: string,
-		public readonly config: MacroConfig<IsOptional>,
+		public readonly options: MacroOptions<IsOptional>,
 	) {
 		this.expr = expr;
+	}
+
+	clone() {
+		return new Macro(this.expr, this.options);
 	}
 
 	[SERIALIZE_SYMBOL](): unknown {
@@ -67,10 +90,24 @@ export class Macro<IsOptional extends boolean> implements Serializable {
 	}
 }
 
-export function macro(expr: string) {
-	return new Macro(expr, { optional: false });
-}
+type MacroOptions<IsOptional extends boolean> = {
+	readonly optional: IsOptional;
+	readonly min: number;
+	readonly max: number;
+	readonly integer: boolean;
+};
 
-export function optionalMacro(expr: string) {
-	return new Macro(expr, { optional: true });
+const DEFAULT_OPTIONS: MacroOptions<boolean> = {
+	optional: false,
+	integer: true,
+	min: -Infinity,
+	max: Infinity,
+};
+
+export function macro<IsOptional extends boolean = false>(
+	expr: string,
+	options?: Partial<MacroOptions<IsOptional>>,
+) {
+	const mergedOptions = Object.assign({}, DEFAULT_OPTIONS, options);
+	return new Macro(expr, mergedOptions);
 }

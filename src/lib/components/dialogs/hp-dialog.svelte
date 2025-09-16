@@ -6,7 +6,7 @@
 
 	import { title } from '$lib/components/dialog.svelte';
 	import Integer from '$lib/components/input/integer.svelte';
-	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+	import MacroNumber from '$lib/components/input/macro-number.svelte';
 
 	import { getChar } from '$lib/data';
 
@@ -136,6 +136,6 @@
 			noNegatives
 		/>
 
-		<MacroInteger label="Bonus HP" bind:value={c.hp.$bonus.expr} name="bonus_hp" />
+		<MacroNumber label="Bonus HP" value={c.hp.$bonus} name="bonus_hp" />
 	</div>
 </div>

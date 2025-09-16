@@ -3,7 +3,7 @@
 
 	import { title } from '$lib/components/dialog.svelte';
 	import Integer from '$lib/components/input/integer.svelte';
-	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+	import MacroNumber from '$lib/components/input/macro-number.svelte';
 	import Select from '$lib/components/input/select.svelte';
 
 	import { ABILITY_KEYS, getChar, SPELL_LEVELS } from '$lib/data';
@@ -31,13 +31,7 @@
 	{/snippet}
 </Select>
 
-<MacroInteger
-	optional
-	placeholder="0"
-	label="DC Bonus"
-	name="dcBonus"
-	bind:value={c.spells.$dcBonus.expr}
-/>
+<MacroNumber placeholder="0" label="DC Bonus" name="dcBonus" value={c.spells.$dcBonus} />
 
 <div>
 	{#each SPELL_LEVELS as level, idx (level)}

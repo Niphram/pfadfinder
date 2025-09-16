@@ -54,6 +54,7 @@
 		bind:value
 		{name}
 		{placeholder}
+		autocomplete="off"
 		onscroll={synchronizeScroll}
 		class={[
 			c.settings.enableMacroHighlighting &&

@@ -4,7 +4,7 @@
 	import { title } from '$lib/components/dialog.svelte';
 	import Checkbox from '$lib/components/input/checkbox.svelte';
 	import Integer from '$lib/components/input/integer.svelte';
-	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+	import MacroNumber from '$lib/components/input/macro-number.svelte';
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
 	import Select from '$lib/components/input/select.svelte';
 	import Toggle from '$lib/components/input/toggle.svelte';
@@ -58,14 +58,14 @@
 
 <Integer bind:value={c.skills[key].skills[index].ranks} name="skillRanks" label="Ranks" />
 
-<MacroInteger
-	bind:value={c.skills[key].skills[index].$misc.expr}
+<MacroNumber
+	value={c.skills[key].skills[index].$misc}
 	name="skillMisc"
 	label="Miscellaneous Bonus"
 />
 
-<MacroInteger
-	bind:value={c.skills[key].skills[index].$temp.expr}
+<MacroNumber
+	value={c.skills[key].skills[index].$temp}
 	name="skillBonus"
 	label="Temporary Modifier"
 />

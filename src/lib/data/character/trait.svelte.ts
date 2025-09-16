@@ -1,13 +1,13 @@
 import { nanoid } from 'nanoid';
 
-import { ClassSerializer, number, optionalMacro, string, type SerdeProxy } from '$lib/serde';
+import { ClassSerializer, macro, number, string, type SerdeProxy } from '$lib/serde';
 
 export class Trait extends ClassSerializer {
 	id = string(nanoid());
 
 	name = string('');
 
-	perDay = optionalMacro('');
+	perDay = macro('', { optional: true });
 
 	remaining = number(0);
 

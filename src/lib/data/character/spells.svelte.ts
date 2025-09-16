@@ -6,8 +6,8 @@ import {
 	ClassSerializer,
 	derive,
 	enumeration,
+	macro,
 	number,
-	optionalMacro,
 	string,
 	type SerdeProxy,
 } from '$lib/serde';
@@ -227,7 +227,7 @@ export class SpellLevelList extends ClassSerializer {
 export class Spells extends ClassSerializer {
 	dcAbility = enumeration<AbilityKey, true>(undefined);
 
-	dcBonus = optionalMacro('');
+	dcBonus = macro('', { optional: true });
 
 	readonly level_0 = new SpellLevelList('level_0');
 

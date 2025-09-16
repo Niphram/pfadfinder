@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { title } from '$lib/components/dialog.svelte';
 	import Input from '$lib/components/input/input.svelte';
-	import MacroInteger from '$lib/components/input/macro-integer.svelte';
+	import MacroNumber from '$lib/components/input/macro-number.svelte';
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
 
 	import { getChar } from '$lib/data';
@@ -30,12 +30,11 @@
 			bind:value={c.traits[index].name}
 		/>
 
-		<MacroInteger
-			bind:value={c.traits[index].$perDay.expr}
+		<MacroNumber
+			value={c.traits[index].$perDay}
 			name="traitPerDay"
 			label="Per Day"
 			placeholder="Uses per day"
-			optional
 		/>
 
 		<MacroTextArea
