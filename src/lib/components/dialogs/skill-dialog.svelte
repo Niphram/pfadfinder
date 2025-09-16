@@ -56,15 +56,19 @@
 	bind:checked={c.skills[key].skills[index].penalty}
 />
 
-<div class="flex flex-row gap-2">
-	<Integer bind:value={c.skills[key].skills[index].ranks} name="skillRanks" label="Ranks" />
-	<MacroInteger bind:value={c.skills[key].skills[index].$misc.expr} name="skillMisc" label="Misc" />
-	<MacroInteger
-		bind:value={c.skills[key].skills[index].$temp.expr}
-		name="skillBonus"
-		label="Temp Mod"
-	/>
-</div>
+<Integer bind:value={c.skills[key].skills[index].ranks} name="skillRanks" label="Ranks" />
+
+<MacroInteger
+	bind:value={c.skills[key].skills[index].$misc.expr}
+	name="skillMisc"
+	label="Miscellaneous Bonus"
+/>
+
+<MacroInteger
+	bind:value={c.skills[key].skills[index].$temp.expr}
+	name="skillBonus"
+	label="Temporary Modifier"
+/>
 
 <MacroTextArea
 	bind:value={c.skills[key].skills[index].notes}

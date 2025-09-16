@@ -16,29 +16,27 @@
 	<div class="flex flex-row gap-2">Spell DC</div>
 </div>
 
-<div class="flex flex-row gap-1">
-	<Select
-		name="dcAbility"
-		label="DC Ability"
-		options={ABILITY_KEYS}
-		noneOption="-"
-		bind:value={c.spells.dcAbility}
-	>
-		{#snippet children({ option: key })}
-			<option value={key}>
-				{$t(`abilities.${key}.full`)}
-			</option>
-		{/snippet}
-	</Select>
+<Select
+	name="dcAbility"
+	label="DC Ability"
+	options={ABILITY_KEYS}
+	noneOption="-"
+	bind:value={c.spells.dcAbility}
+>
+	{#snippet children({ option: key })}
+		<option value={key}>
+			{$t(`abilities.${key}.full`)}
+		</option>
+	{/snippet}
+</Select>
 
-	<MacroInteger
-		optional
-		placeholder="0"
-		label="DC Bonus"
-		name="dcBonus"
-		bind:value={c.spells.$dcBonus.expr}
-	/>
-</div>
+<MacroInteger
+	optional
+	placeholder="0"
+	label="DC Bonus"
+	name="dcBonus"
+	bind:value={c.spells.$dcBonus.expr}
+/>
 
 <div>
 	{#each SPELL_LEVELS as level, idx (level)}

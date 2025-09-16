@@ -31,8 +31,8 @@ const TokenSpec: [RegExp, TokenType | null][] = [
 
 export type Token = {
 	type: TokenType;
-	start: number;
-	end: number;
+	from: number;
+	to: number;
 	value: string;
 };
 
@@ -66,8 +66,8 @@ export class Tokenizer {
 
 				yield {
 					type,
-					start: cursor - tokenValue.length,
-					end: cursor,
+					from: cursor - tokenValue.length,
+					to: cursor,
 					value: tokenValue,
 				};
 				continue tokenLoop;
@@ -76,8 +76,8 @@ export class Tokenizer {
 			// No rule matched, yield invalid token and stop iterator
 			yield {
 				type: TokenType.INVALID,
-				start: cursor,
-				end: cursor + 1,
+				from: cursor,
+				to: cursor + 1,
 				value: inputSlice[0],
 			};
 			cursor += 1;

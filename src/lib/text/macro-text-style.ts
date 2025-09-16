@@ -1,4 +1,5 @@
 import type { RichInputTextProperties } from '$lib/components/input/rich-input.svelte';
+import type { ParserError, RuntimeError } from '$lib/macro/errors';
 import { Tokenizer, TokenType } from '$lib/macro/tokenizer';
 
 import { RangedProperties } from './ranged-properties';
@@ -13,7 +14,7 @@ export function computeMacroStyle(input: string) {
 			prop: P,
 			value: RichInputTextProperties[P],
 		) => {
-			textStyle.setProp(prop, value, token.start, token.end - token.start);
+			textStyle.setProp(prop, value, token.from, token.to - token.from);
 		};
 
 		switch (token.type) {
@@ -45,6 +46,20 @@ export function computeMacroStyle(input: string) {
 	}
 
 	return textStyle;
+}
+
+export function computeMacroStyleWithError(error?: ParserError | RuntimeError) {
+	return (input: string) => {
+		const style = computeMacroStyle(input);
+
+		if (error) {
+			const end = error.to - error.from;
+			style.setProp('color', 'var(--color-error)', error.from, end);
+			style.setProp('decoration', 'underline var(--color-error) wavy', error.from, end);
+		}
+
+		return style;
+	};
 }
 
 export function computeMacroInTextStyle(input: string) {

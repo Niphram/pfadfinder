@@ -53,9 +53,7 @@
 			{prefix}{NODE_TYPES[node.type]}
 		</summary>
 		<ul>
-			{#if node.type === AstNodeType.Error}
-				<li><p>Error: {node.message}</p></li>
-			{:else if node.type === AstNodeType.Constant}
+			{#if node.type === AstNodeType.Constant}
 				<li><p>Value: {node.constant}</p></li>
 			{:else if node.type === AstNodeType.Attribute}
 				<li><p>Path: {node.path.join('.')} (= {evalNode(node, c)})</p></li>

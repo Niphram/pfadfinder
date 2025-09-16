@@ -23,7 +23,7 @@
 		class?: ClassValue;
 		keyPrefix?: string;
 		element?: string;
-		onMove?: ((item: T, targetArray: T[]) => boolean) | undefined;
+		onMove?: (item: T, targetArray: T[]) => boolean;
 		children?: Snippet<[{ item: T; index: number }]>;
 		fallback?: Snippet;
 	}

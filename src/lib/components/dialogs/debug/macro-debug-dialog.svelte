@@ -2,15 +2,11 @@
 	import Button from '$lib/atoms/button.svelte';
 	import Divider from '$lib/atoms/divider.svelte';
 	import { title } from '$lib/components/dialog.svelte';
-	import Fieldset from '$lib/components/input/fieldset.svelte';
-	import RichInput from '$lib/components/input/rich-input.svelte';
-	import { getChar } from '$lib/data/context';
+	import MacroInteger from '$lib/components/input/macro-integer.svelte';
 	import { Tokenizer, TokenType } from '$lib/macro/tokenizer';
 	import { macro } from '$lib/serde';
-	import { computeMacroStyle } from '$lib/text/macro-text-style';
-	import MacroAstTree from './macro-ast-tree.svelte';
 
-	const { c } = $derived(getChar());
+	import MacroAstTree from './macro-ast-tree.svelte';
 
 	$title = 'Macro debugging';
 
@@ -34,11 +30,7 @@
 </script>
 
 <div class="flex flex-col gap-2">
-	<Fieldset legend="Debug Macro">
-		<RichInput name="macroTest" bind:value={testMacro.expr} computeTextStyle={computeMacroStyle} />
-	</Fieldset>
-
-	<p>Evaluates to: {testMacro.eval(c)}</p>
+	<MacroInteger label="Debug Macro" name="debugMacro" bind:value={testMacro.expr} alwaysCommit />
 
 	<Divider>Tokens</Divider>
 
@@ -57,9 +49,13 @@
 		</Button>
 	</Divider>
 
-	<ul class="menu menu-sm bg-base-200 w-full rounded-md">
-		<li>
-			<MacroAstTree node={testMacro.node} open={astOpen} />
-		</li>
-	</ul>
+	{#if testMacro.parseResult.ok}
+		<ul class="menu menu-sm bg-base-200 w-full rounded-md">
+			<li>
+				<MacroAstTree node={testMacro.parseResult.value} open={astOpen} />
+			</li>
+		</ul>
+	{:else}
+		<p>Could not generate AST</p>
+	{/if}
 </div>

@@ -5,14 +5,16 @@ import { Parser } from './parser';
 
 describe('evaluateNode', () => {
 	test.each([
-		['', NaN],
 		['123', 123],
 		['123 - 100', 23],
 		['1 + 2 * 3', 7],
 		['1 * (2 + 3)', 5],
 	])('"%s" should evaluate to %s', (input, expected) => {
-		const ast = Parser.parse(input);
-		const result = evalNode(ast, {});
+		const astResult = Parser.parse(input);
+
+		expect(astResult.ok).toBe(true);
+
+		const result = evalNode(astResult.value!, {});
 
 		expect(result).toBe(expected);
 	});
@@ -31,8 +33,11 @@ describe('evaluateNode', () => {
 			['step(0, 5)', 0],
 			['step(10, 5)', 1],
 		])('"%s" should evaluate to %s', (input, expected) => {
-			const ast = Parser.parse(input);
-			const result = evalNode(ast, {});
+			const astResult = Parser.parse(input);
+
+			expect(astResult.ok).toBe(true);
+
+			const result = evalNode(astResult.value!, {});
 
 			expect(result).toBe(expected);
 		});
@@ -50,8 +55,11 @@ describe('evaluateNode', () => {
 			['@nested.foo', 1],
 			['@array.1', 3],
 		])('Attribute "%s" should evaluate to %s', (input, expected) => {
-			const ast = Parser.parse(input);
-			const result = evalNode(ast, new TestChar());
+			const astResult = Parser.parse(input);
+
+			expect(astResult.ok).toBe(true);
+
+			const result = evalNode(astResult.value!, new TestChar());
 
 			expect(result).toBe(expected);
 		});

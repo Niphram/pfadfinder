@@ -17,20 +17,22 @@
 	$title = $t(`abilities.${ability.key}.full`);
 </script>
 
-<MacroInteger
-	bind:value={ability.$base.expr}
-	name="abilityBase"
-	label="Base Ability Score"
-	noNegatives
-/>
-<MacroInteger bind:value={ability.$bonus.expr} name="abilityBonus" label="Bonus" />
-<MacroInteger bind:value={ability.$temp.expr} name="abilityTemp" label="Temp" />
-<Integer bind:value={ability.damage} name="abilityDamage" label="Damage" noNegatives />
+<div class="flex flex-col gap-2">
+	<MacroInteger
+		bind:value={ability.$base.expr}
+		name="abilityBase"
+		label="Base Ability Score"
+		noNegatives
+	/>
+	<MacroInteger bind:value={ability.$bonus.expr} name="abilityBonus" label="Bonus" />
+	<MacroInteger bind:value={ability.$temp.expr} name="abilityTemp" label="Temp" />
+	<Integer bind:value={ability.damage} name="abilityDamage" label="Damage" noNegatives />
 
-<MacroTextArea
-	bind:value={ability.notes}
-	label="Notes"
-	name="abilityNotes"
-	placeholder="Enter Notes"
-	rows={10}
-/>
+	<MacroTextArea
+		bind:value={ability.notes}
+		label="Notes"
+		name="abilityNotes"
+		placeholder="Enter Notes"
+		rows={10}
+	/>
+</div>

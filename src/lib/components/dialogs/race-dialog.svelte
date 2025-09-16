@@ -14,16 +14,14 @@
 <div class="flex flex-col gap-2">
 	<Input name="raceName" label="Name" placeholder="Race" bind:value={c.race.name} />
 
-	<div class="grid grid-cols-3 gap-2">
-		{#each ABILITY_KEYS as key (key)}
-			<MacroInteger
-				bind:value={c.race[`$${key}`].expr}
-				name="race{key}"
-				label={$t(`abilities.${key}.full`)}
-				placeholder={$t(`abilities.${key}.short`)}
-			/>
-		{/each}
-	</div>
+	{#each ABILITY_KEYS as key (key)}
+		<MacroInteger
+			bind:value={c.race[`$${key}`].expr}
+			name="race{key}"
+			label={$t(`abilities.${key}.full`)}
+			placeholder={$t(`abilities.${key}.short`)}
+		/>
+	{/each}
 
 	<MacroInteger
 		bind:value={c.race.$speed.expr}

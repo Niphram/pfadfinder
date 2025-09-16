@@ -12,11 +12,14 @@ describe('Parser', () => {
 			['0.0', 0],
 			['0.123', 0.123],
 		])('should parse "%s" to a ConstantNode with value %d', (input, expected) => {
-			const parser = Parser.parse(input);
+			const parseResult = Parser.parse(input);
 
-			expect(parser).toEqual({
+			expect(parseResult.ok).toBe(true);
+			expect(parseResult.value).toEqual({
 				type: AstNodeType.Constant,
 				constant: expected,
+				from: 0,
+				to: input.length,
 			});
 		});
 	});
@@ -36,25 +39,30 @@ describe('Parser', () => {
 			['clamp(0,1,2)', 'clamp', 3],
 			['step(0,1)', 'step', 2],
 		])('should parse "%s" to a FuncNode of type "%s" with %d expressions', (input, func, args) => {
-			const parser = Parser.parse(input);
+			const parsed = Parser.parse(input);
 
-			expect(parser).toEqual({
+			expect(parsed.ok).toBe(true);
+			expect(parsed.value).toEqual({
 				type: AstNodeType.Func,
 				func,
 				nodes: expect.objectContaining({
 					length: args,
 				}),
+				from: 0,
+				to: input.length,
 			});
 		});
 	});
 
 	describe('Whitespace', () => {
-		test.each(['', ' ', '\t', '\n'])('should parse %j to ErrorNode', (input) => {
-			const parser = Parser.parse(input);
+		test.each(['', ' ', '\t', '\n'])('should return error when parsing %j', (input) => {
+			const parsed = Parser.parse(input);
 
-			expect(parser).toEqual({
-				type: AstNodeType.Error,
+			expect(parsed.ok).toBe(false);
+			expect(parsed.error).toEqual({
 				message: 'Unexpected end of input, expected a valid expression.',
+				from: 0,
+				to: 0,
 			});
 		});
 	});

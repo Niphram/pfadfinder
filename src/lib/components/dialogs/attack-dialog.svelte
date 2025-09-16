@@ -68,14 +68,15 @@
 						<option value={option}>{option}</option>
 					{/snippet}
 				</Select>
-				<MacroInteger
-					optional
-					placeholder="0"
-					label="Bonus"
-					name="attackBonusMod"
-					bind:value={c.combat.attacks[index].attack.$bonusModifier.expr}
-				></MacroInteger>
 			</div>
+
+			<MacroInteger
+				optional
+				placeholder="0"
+				label="Attack Bonus"
+				name="attackBonusMod"
+				bind:value={c.combat.attacks[index].attack.$bonusModifier.expr}
+			></MacroInteger>
 
 			<div class="flex flex-row gap-1">
 				<Input

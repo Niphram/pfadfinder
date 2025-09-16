@@ -1,14 +1,37 @@
-import { evalNode } from '$lib/macro/evaluate';
+import type { RuntimeError } from '$lib/macro/errors';
+import { evalNode, evalNodeGen } from '$lib/macro/evaluate';
 import { Parser } from '$lib/macro/parser';
+import { iteratorResultToResult, type Result } from '$lib/utils';
+
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../interfaces';
 
 export class Macro implements Serializable {
 	expr = $state('');
 
-	readonly node = $derived(Parser.parse(this.expr));
+	readonly parseResult = $derived(Parser.parse(this.expr));
 
+	/**
+	 * Tries to evaluate this macro. Will return NaN when any error occurs.
+	 * @param c the character to use when resolving attributes
+	 */
 	eval(c: object) {
-		return evalNode(this.node, c);
+		if (!this.parseResult.ok) {
+			return NaN;
+		}
+
+		return evalNode(this.parseResult.value, c);
+	}
+
+	/**
+	 * Tries to evaluate this macro. Will return a result that may or may not be an error
+	 * @param c the character to use when resolving attributes
+	 */
+	evalE(c: object): Result<number, RuntimeError> {
+		if (!this.parseResult.ok) {
+			return this.parseResult;
+		}
+
+		return iteratorResultToResult(evalNodeGen(this.parseResult.value, c).next());
 	}
 
 	constructor(expr: string) {
