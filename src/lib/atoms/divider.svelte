@@ -11,7 +11,9 @@
 </script>
 
 <div class={['divider', className]}>
-	<div class="flex flex-row items-center gap-2">
-		{@render children?.()}
-	</div>
+	{#if children}
+		<div class="flex min-w-max flex-row items-center gap-2">
+			{@render children()}
+		</div>
+	{/if}
 </div>

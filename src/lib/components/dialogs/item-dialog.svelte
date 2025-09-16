@@ -4,6 +4,7 @@
 	import { t } from '$lib/i18n';
 	import type { SerdeProxy } from '$lib/serde/proxy';
 
+	import Divider from '../../atoms/divider.svelte';
 	import { title } from '../dialog.svelte';
 	import Input from '../input/input.svelte';
 	import Integer from '../input/integer.svelte';
@@ -48,16 +49,19 @@
 			<Toggle name="isEquipped" label="Equipped?" bind:checked={list[index].equipped} />
 		{/if}
 
-		<div class="divider mb-0">
-			<div class="flex flex-row items-center gap-2">
-				<span>Charges</span>
-				<Select name="itemChargeType" options={CHARGE_TYPES} bind:value={list[index].chargeType}>
-					{#snippet children({ option: value })}
-						<option {value}>{$t(`equipment.chargeType.${value}`)}</option>
-					{/snippet}
-				</Select>
-			</div>
-		</div>
+		<Divider>
+			<span>Charges</span>
+			<Select
+				name="itemChargeType"
+				size="small"
+				options={CHARGE_TYPES}
+				bind:value={list[index].chargeType}
+			>
+				{#snippet children({ option: value })}
+					<option {value}>{$t(`equipment.chargeType.${value}`)}</option>
+				{/snippet}
+			</Select>
+		</Divider>
 
 		{#if list[index].chargeType !== 'none'}
 			<div class="flex flex-row gap-2">
