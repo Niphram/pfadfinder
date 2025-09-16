@@ -72,7 +72,6 @@
 			</div>
 
 			<MacroInteger
-				optional
 				placeholder="0"
 				label="Attack Bonus"
 				name="attackBonusMod"
