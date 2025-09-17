@@ -8,8 +8,8 @@ import { Character } from './character';
  * that will be called afterwards with the already deserialized character.
  */
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const UPGRADES: ((
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	char: any,
 ) => void | ((char: SerdeProxy<Character>) => void))[] = [
 	// Version 2, rename spell levels
