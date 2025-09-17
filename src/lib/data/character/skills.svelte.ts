@@ -10,7 +10,7 @@ import {
 } from '$lib/serde';
 import { mapSum } from '$lib/utils';
 
-import type { AbilityKey } from './abilities.svelte';
+import { ABILITY_KEYS } from './abilities.svelte';
 import { Character } from './character.svelte';
 
 const SKILLS = {
@@ -56,7 +56,7 @@ export type SkillKey = keyof typeof SKILLS;
 export class Skill extends ClassSerializer {
 	name = string('Unnamed Skill', { minLength: 1, maxLength: 100 });
 
-	ability = enumeration<AbilityKey>('str');
+	ability = enumeration(ABILITY_KEYS, 'str');
 
 	penalty = boolean(false);
 

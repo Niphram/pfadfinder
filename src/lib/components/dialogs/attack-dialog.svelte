@@ -10,7 +10,7 @@
 	import MacroText from '$lib/components/input/macro-text.svelte';
 	import Select from '$lib/components/input/select.svelte';
 
-	import { ABILITY_KEYS, ATTACK_TYPES, getChar } from '$lib/data';
+	import { getChar } from '$lib/data';
 
 	interface Props {
 		index: number;
@@ -19,8 +19,6 @@
 	let { index }: Props = $props();
 
 	const { c } = $derived(getChar());
-
-	const attackAbilities = ['none', ...ABILITY_KEYS];
 
 	function deleteAttack() {
 		c.combat.attacks.splice(index, 1);
@@ -48,25 +46,17 @@
 		{#if c.combat.attacks[index].hasAttack}
 			<div class="flex flex-row gap-1">
 				<Select
-					bind:value={c.combat.attacks[index].attack.baseModifier}
+					value={c.combat.attacks[index].attack.$.baseModifier}
 					name="attackBaseMod"
 					label="Base"
-					options={ATTACK_TYPES}
-				>
-					{#snippet children({ option })}
-						<option value={option}>{$t(`combat.attackTypes.${option}`)}</option>
-					{/snippet}
-				</Select>
+					translate={(key) => $t(`combat.attackTypes.${key}`)}
+				/>
 				<Select
-					bind:value={c.combat.attacks[index].attack.abilityModifier}
+					value={c.combat.attacks[index].attack.$.abilityModifier}
 					name="attackAbilityMod"
 					label="Ability"
-					options={attackAbilities}
-				>
-					{#snippet children({ option })}
-						<option value={option}>{option}</option>
-					{/snippet}
-				</Select>
+					translate={(key) => (key ? $t(`abilities.${key}.short`) : 'None')}
+				/>
 			</div>
 
 			<MacroNumber

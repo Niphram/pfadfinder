@@ -7,8 +7,8 @@
 
 	interface Props {
 		name: string;
-		label?: string | undefined;
-		placeholder?: string | undefined;
+		label?: string;
+		placeholder?: string;
 		rows?: number;
 
 		// Not bindable, uses internal mutation

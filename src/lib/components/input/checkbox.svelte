@@ -6,8 +6,8 @@
 	interface Props {
 		checked: boolean;
 		name: string;
-		label?: string | undefined;
-		class?: ClassValue | undefined;
+		label?: string;
+		class?: ClassValue;
 		disabled?: boolean;
 		onchange?: ChangeEventHandler<HTMLInputElement>;
 	}

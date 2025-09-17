@@ -18,7 +18,7 @@ export class NumberWrapper<IsOptional extends boolean> implements Serializable {
 	}
 
 	result(): Result<Option<number, IsOptional>, string> {
-		if (this.value !== undefined && this.value !== null) {
+		if (this.value !== null) {
 			// Could this even happen?
 			if (typeof this.value !== 'number') {
 				return Err('Not a number');
@@ -41,7 +41,9 @@ export class NumberWrapper<IsOptional extends boolean> implements Serializable {
 	}
 
 	[DESERIALIZE_SYMBOL](value: unknown) {
-		if (typeof value === 'number') {
+		if (value === null && this.options.optional) {
+			this.value = null as Option<number, IsOptional>;
+		} else if (typeof value === 'number') {
 			this.value = value;
 		}
 	}

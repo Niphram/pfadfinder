@@ -8,7 +8,7 @@
 	import Select from '$lib/components/input/select.svelte';
 	import TextArea from '$lib/components/input/text-area.svelte';
 
-	import { ABILITY_KEYS, getChar } from '$lib/data';
+	import { getChar } from '$lib/data';
 
 	const { c } = $derived(getChar());
 
@@ -18,29 +18,16 @@
 <Select
 	name="acPrimaryAbility"
 	label="Primary Ability"
-	options={ABILITY_KEYS}
-	bind:value={c.ac.primaryAbility}
->
-	{#snippet children({ option: key })}
-		<option value={key}>
-			{$t(`abilities.${key}.full`)}
-		</option>
-	{/snippet}
-</Select>
+	value={c.ac.$.primaryAbility}
+	translate={(key) => $t(`abilities.${key}.full`)}
+/>
 
 <Select
 	name="acSecondaryAbility"
 	label="Secondary Ability"
-	options={ABILITY_KEYS}
-	noneOption="None"
-	bind:value={c.ac.secondaryAbility}
->
-	{#snippet children({ option: key })}
-		<option value={key}>
-			{$t(`abilities.${key}.full`)}
-		</option>
-	{/snippet}
-</Select>
+	value={c.ac.$.secondaryAbility}
+	translate={(key) => (key ? $t(`abilities.${key}.full`) : 'None')}
+/>
 
 <Divider />
 

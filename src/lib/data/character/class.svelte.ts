@@ -3,14 +3,8 @@ import { mapSum } from '$lib/utils';
 
 import { Character } from './character.svelte';
 
-export enum Dice {
-	D4 = 4,
-	D6 = 6,
-	D8 = 8,
-	D10 = 10,
-	D12 = 12,
-	D20 = 20,
-}
+export const DICE = [4, 6, 8, 10, 12, 20] as const;
+export type Dice = (typeof DICE)[number];
 
 export class Class extends ClassSerializer {
 	name = string('Unnamed Class', { minLength: 1, maxLength: 100 });
@@ -19,7 +13,7 @@ export class Class extends ClassSerializer {
 
 	level = number(1, { min: 1 });
 
-	hitDice = enumeration(Dice.D4);
+	hitDice = enumeration(DICE, 4);
 
 	bab = number(0);
 

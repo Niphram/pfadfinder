@@ -17,7 +17,7 @@
 
 	interface Props {
 		items: T[];
-		options?: Options | undefined;
+		options?: Options;
 		keyProp: keyof T;
 		disabled?: boolean;
 		class?: ClassValue;
@@ -30,13 +30,13 @@
 
 	let {
 		items = $bindable(),
-		options = undefined,
+		options,
 		keyProp,
 		disabled = false,
 		class: className,
 		keyPrefix = '',
 		element = 'div',
-		onMove = undefined,
+		onMove,
 		children,
 		fallback,
 	}: Props = $props();

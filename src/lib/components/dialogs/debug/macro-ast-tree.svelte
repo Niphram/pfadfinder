@@ -9,7 +9,7 @@
 	const { c } = $derived(getChar());
 
 	interface Props {
-		node: AstNode | undefined;
+		node?: AstNode;
 		open?: boolean;
 		prefix?: string;
 	}

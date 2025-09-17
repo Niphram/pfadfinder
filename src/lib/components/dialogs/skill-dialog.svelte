@@ -9,7 +9,7 @@
 	import Select from '$lib/components/input/select.svelte';
 	import Toggle from '$lib/components/input/toggle.svelte';
 
-	import { ABILITY_KEYS, getChar, type SkillKey } from '$lib/data';
+	import { getChar, type SkillKey } from '$lib/data';
 
 	interface Props {
 		key?: SkillKey;
@@ -40,14 +40,10 @@
 	<Select
 		name="skillBaseAbility"
 		label="Base Ability"
-		options={ABILITY_KEYS}
-		bind:value={c.skills[key].skills[index].ability}
-		size="small"
-	>
-		{#snippet children({ option: key })}
-			<option value={key}>{$t(`abilities.${key}.full`)}</option>
-		{/snippet}
-	</Select>
+		class="select-sm"
+		value={c.skills[key].skills[index].$.ability}
+		translate={(key) => $t(`abilities.${key}.full`)}
+	/>
 </div>
 
 <Toggle

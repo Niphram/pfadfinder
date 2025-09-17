@@ -1,6 +1,14 @@
 import { nanoid } from 'nanoid';
 
-import { array, boolean, ClassSerializer, number, string, type SerdeProxy } from '$lib/serde';
+import {
+	array,
+	boolean,
+	ClassSerializer,
+	enumeration,
+	number,
+	string,
+	type SerdeProxy,
+} from '$lib/serde';
 import { mapMin, mapSum } from '$lib/utils';
 
 export const ARMOR_TYPES = ['light', 'medium', 'heavy', 'shield', 'misc'] as const;
@@ -20,7 +28,7 @@ export class Item extends ClassSerializer {
 
 	weight = number(0, { integer: false, min: 0 });
 
-	chargeType = string<ChargeType>('none');
+	chargeType = enumeration(CHARGE_TYPES, 'none');
 
 	remaining = number(0, { min: 0 });
 
@@ -65,11 +73,11 @@ export class AcItem extends ClassSerializer {
 
 	dodBonus = number(0);
 
-	type = string<ArmorType>('medium');
+	type = enumeration(ARMOR_TYPES, 'medium');
 
 	chkPenalty = number(0, { min: 0 });
 
-	maxDexBonus = number(undefined, { optional: true });
+	maxDexBonus = number(null, { optional: true });
 
 	spellFailure = number(0);
 

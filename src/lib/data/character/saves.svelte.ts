@@ -1,6 +1,6 @@
-import { ClassSerializer, derive, enumeration, EnumWrapper, macro, string } from '$lib/serde';
+import { ClassSerializer, derive, enumeration, macro, string } from '$lib/serde';
 
-import type { AbilityKey } from './abilities.svelte';
+import { ABILITY_KEYS } from './abilities.svelte';
 import { Character } from './character.svelte';
 
 export const SAVE_KEYS = ['fort', 'ref', 'will'] as const;
@@ -13,7 +13,7 @@ const DefaultBaseAbility = {
 } as const;
 
 export class Save extends ClassSerializer {
-	ability: EnumWrapper<AbilityKey, false>;
+	ability;
 
 	bonus = macro('0');
 
@@ -28,6 +28,6 @@ export class Save extends ClassSerializer {
 	constructor(public readonly key: SaveKey) {
 		super();
 
-		this.ability = enumeration(DefaultBaseAbility[key]);
+		this.ability = enumeration(ABILITY_KEYS, DefaultBaseAbility[key]);
 	}
 }

@@ -33,7 +33,7 @@ export class Macro<IsOptional extends boolean> implements Serializable {
 	result(c: object): Result<Option<number, IsOptional>, RuntimeError> {
 		// If the expression is empty and this macro is optional
 		if (!this.expr.trim() && this.options.optional) {
-			return Ok(undefined) as Result<Option<number, IsOptional>, RuntimeError>;
+			return Ok(null) as Result<Option<number, IsOptional>, RuntimeError>;
 		}
 
 		// Could not parse the expression

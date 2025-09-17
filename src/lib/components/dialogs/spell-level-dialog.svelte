@@ -6,7 +6,7 @@
 	import Number from '$lib/components/input/number.svelte';
 	import Select from '$lib/components/input/select.svelte';
 
-	import { ABILITY_KEYS, getChar, SPELL_LEVELS } from '$lib/data';
+	import { getChar, SPELL_LEVELS } from '$lib/data';
 
 	const { c } = $derived(getChar());
 
@@ -20,16 +20,9 @@
 <Select
 	name="dcAbility"
 	label="DC Ability"
-	options={ABILITY_KEYS}
-	noneOption="-"
-	bind:value={c.spells.dcAbility}
->
-	{#snippet children({ option: key })}
-		<option value={key}>
-			{$t(`abilities.${key}.full`)}
-		</option>
-	{/snippet}
-</Select>
+	value={c.spells.$.dcAbility}
+	translate={(key) => (key ? $t(`abilities.${key}.full`) : '-')}
+/>
 
 <MacroNumber placeholder="0" label="DC Bonus" name="dcBonus" value={c.spells.$.dcBonus} />
 

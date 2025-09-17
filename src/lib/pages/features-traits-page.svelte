@@ -124,7 +124,7 @@
 					>
 						{item.name}
 					</button>
-					{#if item.perDay !== undefined}
+					{#if item.perDay !== null}
 						<button
 							class="btn btn-accent btn-sm md:btn-md w-32"
 							onclick={() => useTrait(index)}

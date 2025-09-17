@@ -12,7 +12,7 @@
 	interface Props {
 		name: string;
 		label: string;
-		placeholder?: string | undefined;
+		placeholder?: string;
 
 		value: Macro<IsOptional>;
 
@@ -22,7 +22,7 @@
 	let {
 		name,
 		label,
-		placeholder = undefined,
+		placeholder,
 
 		// Not bindable, uses internal mutation
 		value,

@@ -9,7 +9,7 @@
 	import Select from '$lib/components/input/select.svelte';
 	import Toggle from '$lib/components/input/toggle.svelte';
 
-	import { getChar, SPELL_ATTACK_TYPE, SpellAttackDamage, type SpellLevel } from '$lib/data';
+	import { getChar, SpellAttackDamage, type SpellLevel } from '$lib/data';
 
 	interface Props {
 		spellLevel: SpellLevel;
@@ -174,15 +174,11 @@
 		{#if c.spells[spellLevel].spells[spellIdx].attack.hasAttack}
 			<div class="flex flex-row gap-2">
 				<Select
-					bind:value={c.spells[spellLevel].spells[spellIdx].attack.type}
+					value={c.spells[spellLevel].spells[spellIdx].attack.$.type}
 					name="spellAttackType"
 					label="Type"
-					options={SPELL_ATTACK_TYPE}
-				>
-					{#snippet children({ option })}
-						<option value={option}>{$t(`spell.attackType.${option}`)}</option>
-					{/snippet}
-				</Select>
+					translate={(key) => $t(`spell.attackType.${key}`)}
+				/>
 				<Number
 					label="Attack Mod"
 					name="attackBonus"

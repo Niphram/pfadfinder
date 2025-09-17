@@ -24,7 +24,7 @@ export class Feat extends ClassSerializer {
 
 	prerequisites = string('', { maxLength: 1000 });
 
-	type = enumeration<FeatType>('general');
+	type = enumeration(FEAT_TYPES, 'general');
 
 	benefits = string('', { maxLength: 1000 });
 

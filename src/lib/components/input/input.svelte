@@ -5,8 +5,8 @@
 
 	interface Props {
 		name: string;
-		label?: string | undefined;
-		placeholder?: string | undefined;
+		label?: string;
+		placeholder?: string;
 
 		// Not bindable, uses internal mutation
 		value: StringWrapper<string>;

@@ -32,6 +32,22 @@ const UPGRADES: ((char: any) => void | ((char: SerdeProxy<Character>) => void))[
 			char.hp.damageTaken = oldMax - oldCurrent;
 		};
 	},
+	// Version 4: Breaking change for attack type
+	(char: {
+		combat: {
+			attacks: {
+				attack: {
+					abilityModifier: string | null;
+				};
+			}[];
+		};
+	}) => {
+		char.combat.attacks.forEach((attack) => {
+			if (attack.attack.abilityModifier === 'none') {
+				attack.attack.abilityModifier = null;
+			}
+		});
+	},
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

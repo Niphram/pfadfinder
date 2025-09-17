@@ -11,7 +11,7 @@
 	import Select from '$lib/components/input/select.svelte';
 	import Toggle from '$lib/components/input/toggle.svelte';
 
-	import { CHARGE_TYPES, getChar, Item } from '$lib/data';
+	import { getChar, Item } from '$lib/data';
 
 	interface Props {
 		list?: SerdeProxy<Item>[];
@@ -53,14 +53,10 @@
 			<span>Charges</span>
 			<Select
 				name="itemChargeType"
-				size="small"
-				options={CHARGE_TYPES}
-				bind:value={list[index].chargeType}
-			>
-				{#snippet children({ option: value })}
-					<option {value}>{$t(`equipment.chargeType.${value}`)}</option>
-				{/snippet}
-			</Select>
+				class="select-sm"
+				value={list[index].$.chargeType}
+				translate={(key) => $t(`equipment.chargeType.${key}`)}
+			/>
 		</Divider>
 
 		{#if list[index].chargeType !== 'none'}

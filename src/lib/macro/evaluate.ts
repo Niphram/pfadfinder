@@ -16,8 +16,7 @@ function* evalAttribute(node: AttributeNode, char: object): Generator<RuntimeErr
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		let val: any = char;
 		for (const p of node.path) {
-			if (val[p] === undefined)
-				return yield runtimeError(`Attribute is unknown`, node.from, node.to);
+			if (!(p in val)) return yield runtimeError(`Attribute is unknown`, node.from, node.to);
 
 			val = val[p];
 		}

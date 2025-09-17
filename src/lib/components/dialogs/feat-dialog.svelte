@@ -6,7 +6,7 @@
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
 	import Select from '$lib/components/input/select.svelte';
 
-	import { FEAT_TYPES, getChar } from '$lib/data';
+	import { getChar } from '$lib/data';
 
 	interface Props {
 		index: number;
@@ -35,11 +35,12 @@
 			value={c.feats[index].$.prerequisites}
 		/>
 
-		<Select label="Type" name="featType" bind:value={c.feats[index].type} options={FEAT_TYPES}>
-			{#snippet children({ option })}
-				<option value={option}>{$t(`feats.type.${option}`)}</option>
-			{/snippet}
-		</Select>
+		<Select
+			label="Type"
+			name="featType"
+			value={c.feats[index].$.type}
+			translate={(key) => $t(`feats.type.${key}`)}
+		/>
 
 		<MacroTextArea
 			name="featBenefits"

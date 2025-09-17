@@ -17,7 +17,7 @@ export type SerdeProxy<T> =
 	: // eslint-disable-next-line @typescript-eslint/no-explicit-any
 	T extends Derive<any, infer R> ? R
 	: T extends Macro<false> ? number
-	: T extends Macro<true> ? number | undefined
+	: T extends Macro<true> ? number | null
 	: T extends ArrayWrapper<infer A> ? SerdeProxy<A>[]
 	: T extends Array<infer A> ? SerdeProxy<A>[] & { $: Array<A> }
 	: // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -31,7 +31,7 @@ export type SerdeProxy<T> =
 export function charProxy<T extends object>(char: T) {
 	const proxyFactory = makeCachedProxyFactory();
 
-	const dp = (function makeCharProxy(value: object) {
+	function makeCharProxy(value: object) {
 		return proxyFactory(value, {
 			get(target, key) {
 				if (key === '$') {
@@ -74,7 +74,8 @@ export function charProxy<T extends object>(char: T) {
 				return Reflect.set(target, key, newValue);
 			},
 		});
-	})(char) as SerdeProxy<T>;
+	}
 
+	const dp = makeCharProxy(char) as SerdeProxy<T>;
 	return dp;
 }

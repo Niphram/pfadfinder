@@ -1,44 +1,59 @@
-<script lang="ts" module>
-	const SIZES = {
-		small: 'select-sm',
-		medium: 'select-md',
-		large: 'select-lg',
-	};
-</script>
+<script lang="ts" generics="Values extends readonly (string|number)[], IsOptional extends boolean">
+	import type { ClassValue } from 'svelte/elements';
 
-<script lang="ts" generics="V, T">
-	import type { Snippet } from 'svelte';
+	import type { EnumWrapper } from '$lib/serde';
+	import type { Option } from '$lib/serde/optional';
 
 	import InputWrapper from '$lib/atoms/input-wrapper.svelte';
 
 	interface Props {
 		name: string;
 		label?: string;
-		options?: readonly T[];
-		noneOption?: string;
-		value: V;
-		size?: keyof typeof SIZES;
-		children?: Snippet<[{ option: T }]>;
+
+		translate?: (value: Option<Values[number], IsOptional>) => string;
+
+		class?: ClassValue;
+
+		// Not bindable, uses internal mutation
+		value: EnumWrapper<Values, IsOptional>;
 	}
 
 	let {
 		name,
 		label,
-		options = [],
-		noneOption,
+
+		translate,
+
+		class: className,
+
 		value = $bindable(),
-		size = 'medium',
-		children,
 	}: Props = $props();
+
+	const tempEnum = $derived(value.clone());
+
+	const result = $derived(tempEnum.result());
+
+	$effect.pre(() => {
+		if (result.ok) {
+			value.value = result.value;
+		}
+	});
+
+	const hint = 'select';
+
+	const feedback = $derived({
+		feedback: result.error,
+		feedbackClass: result.ok ? 'hidden' : 'text-error',
+	});
 </script>
 
-<InputWrapper legend={label} hint="select">
-	<select {name} class={['select w-full', SIZES[size]]} bind:value>
-		{#if noneOption}
-			<option value={undefined}>{noneOption}</option>
+<InputWrapper legend={label} {hint} {...feedback}>
+	<select {name} class={['select w-full', className]} bind:value={tempEnum.value}>
+		{#if value.options.optional}
+			<option value={null}>{translate?.(null as Option<Values[number], IsOptional>) ?? '-'}</option>
 		{/if}
-		{#each options as option (option)}
-			{@render children?.({ option })}
+		{#each value.values as option (option)}
+			<option value={option}>{translate?.(option) ?? `${option}`}</option>
 		{/each}
 	</select>
 </InputWrapper>

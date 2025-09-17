@@ -11,7 +11,7 @@
 	import Select from '$lib/components/input/select.svelte';
 	import Toggle from '$lib/components/input/toggle.svelte';
 
-	import { getChar, SPELL_ATTACK_TYPE, SPELL_LIKE_COUNT_TYPES, SpellAttackDamage } from '$lib/data';
+	import { getChar, SpellAttackDamage } from '$lib/data';
 
 	const { c } = $derived(getChar());
 
@@ -49,16 +49,10 @@
 			<span>Type</span>
 			<Select
 				name="slaType"
-				options={SPELL_LIKE_COUNT_TYPES}
-				bind:value={c.spells.spellLikeAbilities[slaIndex].type}
-				size="small"
-			>
-				{#snippet children({ option: slaType })}
-					<option value={slaType}>
-						{$t(`spell.slaType.${slaType}`)}
-					</option>
-				{/snippet}
-			</Select>
+				class="select-sm"
+				value={c.spells.spellLikeAbilities[slaIndex].$.type}
+				translate={(key) => $t(`spell.slaType.${key}`)}
+			/>
 		</Divider>
 
 		{#if c.spells.spellLikeAbilities[slaIndex].type === 'perDay'}
@@ -172,15 +166,11 @@
 		{#if c.spells.spellLikeAbilities[slaIndex].attack.hasAttack}
 			<div class="flex flex-row gap-2">
 				<Select
-					bind:value={c.spells.spellLikeAbilities[slaIndex].attack.type}
+					value={c.spells.spellLikeAbilities[slaIndex].attack.$.type}
 					name="spellAttackType"
 					label="Type"
-					options={SPELL_ATTACK_TYPE}
-				>
-					{#snippet children({ option })}
-						<option value={option}>{$t(`spell.attackType.${option}`)}</option>
-					{/snippet}
-				</Select>
+					translate={(key) => $t(`spell.attackType.${key}`)}
+				/>
 				<Number
 					label="Attack Mod"
 					name="attackBonus"

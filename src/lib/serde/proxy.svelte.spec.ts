@@ -1,4 +1,4 @@
-import { randBoolean, randNumber, randText, toCollection } from '@ngneat/falso';
+import { rand, randBoolean, randNumber, randText, toCollection } from '@ngneat/falso';
 import { describe, expect, test } from 'vitest';
 
 import { ClassSerializer } from './class-serializer';
@@ -21,6 +21,8 @@ class SubClass extends ClassSerializer {
 	sub = new SubSubClass();
 }
 
+const ENUM_EXAMPLE = ['a', 'b', 'c'] as const;
+
 class TestClass extends ClassSerializer {
 	string = string(randText());
 
@@ -28,9 +30,9 @@ class TestClass extends ClassSerializer {
 
 	boolean = boolean(randBoolean());
 
-	enumeration = enumeration(randText());
+	enumeration = enumeration(ENUM_EXAMPLE, rand(ENUM_EXAMPLE));
 
-	optionalEnumeration = enumeration(randText(), { optional: true });
+	optionalEnumeration = enumeration(ENUM_EXAMPLE, rand(ENUM_EXAMPLE), { optional: true });
 
 	array = array(() => number(randNumber()), []);
 
@@ -73,7 +75,7 @@ describe('Proxy', () => {
 		});
 
 		test('EnumWrapper', () => {
-			const text = randText();
+			const text = rand(ENUM_EXAMPLE);
 
 			const sut = charProxy(new TestClass());
 			sut.enumeration = text;
@@ -83,9 +85,9 @@ describe('Proxy', () => {
 
 		test('optional EnumWrapper', () => {
 			const sut = charProxy(new TestClass());
-			sut.optionalEnumeration = undefined;
+			sut.optionalEnumeration = null;
 
-			expect(sut.optionalEnumeration).toBeUndefined();
+			expect(sut.optionalEnumeration).toBeNull();
 		});
 
 		test('ArrayWrapper', () => {

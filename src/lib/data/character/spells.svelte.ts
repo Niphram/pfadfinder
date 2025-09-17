@@ -13,7 +13,7 @@ import {
 } from '$lib/serde';
 import { mapSum, withSign } from '$lib/utils';
 
-import { Character, type AbilityKey } from '.';
+import { ABILITY_KEYS, Character } from '.';
 
 export const SPELL_LEVELS = [
 	'level_0',
@@ -52,7 +52,7 @@ export class SpellAttackDamage extends ClassSerializer {
 export class SpellAttack extends ClassSerializer {
 	hasAttack = boolean(false);
 
-	type = enumeration<SpellAttackType>('none');
+	type = enumeration(SPELL_ATTACK_TYPE, 'none');
 
 	mod = number(0);
 
@@ -167,7 +167,7 @@ export const SPELL_LIKE_COUNT_TYPES = ['constant', 'atWill', 'perDay'] as const;
 export type SpellLikeCountTypes = (typeof SPELL_LIKE_COUNT_TYPES)[number];
 
 export class SpellLikeAbility extends SpellCommonProps {
-	type = enumeration<SpellLikeCountTypes>('atWill');
+	type = enumeration(SPELL_LIKE_COUNT_TYPES, 'atWill');
 
 	perDay = number(1, { min: 0 });
 
@@ -225,7 +225,7 @@ export class SpellLevelList extends ClassSerializer {
 }
 
 export class Spells extends ClassSerializer {
-	dcAbility = enumeration<AbilityKey, true>(undefined);
+	dcAbility = enumeration(ABILITY_KEYS, null, { optional: true });
 
 	dcBonus = macro('', { optional: true });
 

@@ -15,7 +15,7 @@ export function observeMutations<T extends object>(obj: T, cb: (obj: T) => void)
 				const prop = Reflect.get(target, key);
 
 				// Create nested proxy if the property is an object
-				if (typeof prop === 'object') return makeObserverProxy(prop);
+				if (prop !== null && typeof prop === 'object') return makeObserverProxy(prop);
 
 				return prop;
 			},

@@ -8,7 +8,7 @@
 	import Select from '$lib/components/input/select.svelte';
 	import Toggle from '$lib/components/input/toggle.svelte';
 
-	import { ARMOR_TYPES, getChar } from '$lib/data';
+	import { getChar } from '$lib/data';
 
 	interface Props {
 		index: number;
@@ -60,15 +60,11 @@
 		</div>
 
 		<Select
-			bind:value={c.equipment.acItems[index].type}
+			value={c.equipment.acItems[index].$.type}
 			name="itemType"
 			label="Type"
-			options={ARMOR_TYPES}
-		>
-			{#snippet children({ option })}
-				<option value={option}>{$t(`equipment.armorType.${option}`)}</option>
-			{/snippet}
-		</Select>
+			translate={(key) => $t(`equipment.armorType.${key}`)}
+		/>
 
 		<div class="grid grid-cols-3 gap-2">
 			<Number

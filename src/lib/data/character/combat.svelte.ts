@@ -1,13 +1,13 @@
 import { nanoid } from 'nanoid';
 
 import { parseTextWithMacros } from '$lib/macro/text';
-import { array, boolean, ClassSerializer, derive, macro, string } from '$lib/serde';
+import { array, boolean, ClassSerializer, derive, enumeration, macro, string } from '$lib/serde';
 import { withSign } from '$lib/utils';
 
-import type { AbilityKey } from './abilities.svelte';
+import { ABILITY_KEYS, type AbilityKey } from './abilities.svelte';
 import { Character } from './character.svelte';
 
-export const sizeKeys = [
+export const SIZES = [
 	'fine',
 	'diminutive',
 	'tiny',
@@ -18,7 +18,7 @@ export const sizeKeys = [
 	'gargantuan',
 	'colossal',
 ];
-export type SizeKey = (typeof sizeKeys)[number];
+export type SizeKey = (typeof SIZES)[number];
 
 const sizeModifiers: Record<SizeKey, { mod: number; ability: AbilityKey }> = {
 	fine: { ability: 'dex', mod: -8 },
@@ -82,9 +82,9 @@ export const ATTACK_TYPES = [
 export type AttackType = (typeof ATTACK_TYPES)[number];
 
 export class AttackRoll extends ClassSerializer {
-	baseModifier = string<AttackType>('babFull');
+	baseModifier = enumeration(ATTACK_TYPES, 'babFull');
 
-	abilityModifier = string<AbilityKey | 'none'>('none');
+	abilityModifier = enumeration(ABILITY_KEYS, null, { optional: true });
 
 	bonusModifier = macro('', { optional: true });
 
@@ -107,14 +107,13 @@ export class AttackRoll extends ClassSerializer {
 	);
 
 	readonly abilityModValue = derive<Character>((c) =>
-		this.abilityModifier.value !== 'none' ? c[this.abilityModifier.value].mod : 0,
+		this.abilityModifier.value ? c[this.abilityModifier.value].mod : 0,
 	);
 
 	readonly attacks = derive<Character, number[]>((c) => {
 		const bab = c.combat.bab.mod;
 		const fullAttackCount = Math.max(Math.ceil(bab / 5), 1);
-		const abilityMod =
-			this.abilityModifier.value !== 'none' ? c[this.abilityModifier.value].mod : 0;
+		const abilityMod = this.abilityModifier.value ? c[this.abilityModifier.value].mod : 0;
 		const bonus = this.bonusModifier.eval(c) ?? 0;
 
 		switch (this.baseModifier.value) {
