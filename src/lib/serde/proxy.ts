@@ -9,7 +9,7 @@ import { NumberWrapper } from './types/number.svelte';
 import { StringWrapper } from './types/string.svelte';
 
 export type SerdeProxy<T> =
-	T extends StringWrapper<string, boolean> ? T['value']
+	T extends StringWrapper<string> ? T['value']
 	: T extends NumberWrapper<boolean> ? T['value']
 	: T extends BoolWrapper ? T['value']
 	: // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,12 +19,12 @@ export type SerdeProxy<T> =
 	: T extends Macro<false> ? number
 	: T extends Macro<true> ? number | undefined
 	: T extends ArrayWrapper<infer A> ? SerdeProxy<A>[]
-	: T extends Array<infer A> ? SerdeProxy<A>[] & Record<`$${number}`, A>
+	: T extends Array<infer A> ? SerdeProxy<A>[] & { $: Array<A> }
 	: // eslint-disable-next-line @typescript-eslint/no-explicit-any
 	T extends (this: SerdeProxy<any>, ...args: infer Args) => infer R ? (...args: Args) => R
 	: T extends object ?
 		{ [K in keyof T]: SerdeProxy<T[K]> } & {
-			[K in Extract<keyof T, string> as `$${K}`]: T[K];
+			$: T;
 		}
 	:	T;
 
@@ -34,8 +34,8 @@ export function charProxy<T extends object>(char: T) {
 	const dp = (function makeCharProxy(value: object) {
 		return proxyFactory(value, {
 			get(target, key) {
-				if (typeof key === 'string' && key.startsWith('$')) {
-					return Reflect.get(target, key.slice(1));
+				if (key === '$') {
+					return target;
 				}
 
 				const property = Reflect.get(target, key);

@@ -9,7 +9,7 @@
 	const { c } = $derived(getChar());
 
 	function addClass() {
-		c.classes.$list.value.push(new Class());
+		c.classes.$.list.value.push(new Class());
 
 		openDialog(ClassDialog, { classIndex: c.classes.list.length - 1 });
 	}

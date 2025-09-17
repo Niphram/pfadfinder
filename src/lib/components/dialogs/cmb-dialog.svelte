@@ -9,4 +9,4 @@
 	$title = 'Combat Maneuver Bonus';
 </script>
 
-<MacroTextArea bind:value={c.combat.cmb.notes} name="cmbNotes" label="Notes" placeholder="Notes" />
+<MacroTextArea value={c.combat.cmb.$.notes} name="cmbNotes" label="Notes" placeholder="Notes" />

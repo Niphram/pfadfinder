@@ -6,7 +6,6 @@
 
 	import { title } from '$lib/components/dialog.svelte';
 	import Input from '$lib/components/input/input.svelte';
-	import Integer from '$lib/components/input/integer.svelte';
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
 	import Number from '$lib/components/input/number.svelte';
 	import Select from '$lib/components/input/select.svelte';
@@ -32,11 +31,11 @@
 
 <div class="flex flex-col gap-2">
 	{#if index < list.length}
-		<Input name="itemName" label="Name" placeholder="Type here" bind:value={list[index].name} />
+		<Input name="itemName" label="Name" placeholder="Type here" value={list[index].$.name} />
 
 		<div class="flex flex-row gap-2">
-			<Integer bind:value={list[index].quantity} name="itemQuantity" label="Quantity" noNegatives />
-			<Number bind:value={list[index].weight} name="itemWeight" label="Weight" />
+			<Number value={list[index].$.quantity} name="itemQuantity" label="Quantity" />
+			<Number value={list[index].$.weight} name="itemWeight" label="Weight" />
 		</div>
 
 		<Toggle
@@ -66,27 +65,16 @@
 
 		{#if list[index].chargeType !== 'none'}
 			<div class="flex flex-row gap-2">
-				<Integer
-					label="Remaining charges"
-					name="itemCharges"
-					noNegatives
-					bind:value={list[index].remaining}
-				/>
+				<Number label="Remaining charges" name="itemCharges" value={list[index].$.remaining} />
 
 				{#if list[index].chargeType === 'perDay'}
-					<Integer
-						label="Per Day"
-						name="itemChargesPerDay"
-						noNegatives
-						noZero
-						bind:value={list[index].perDay}
-					/>
+					<Number label="Per Day" name="itemChargesPerDay" value={list[index].$.perDay} />
 				{/if}
 			</div>
 		{/if}
 
 		<MacroTextArea
-			bind:value={list[index].description}
+			value={list[index].$.description}
 			name="itemNotes"
 			placeholder="Description"
 			label="Description"

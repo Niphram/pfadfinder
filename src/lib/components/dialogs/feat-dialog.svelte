@@ -25,14 +25,14 @@
 
 <div class="flex flex-col gap-2">
 	{#if index < c.feats.length}
-		<Input name="featName" label="Name" placeholder="Type here" bind:value={c.feats[index].name} />
+		<Input name="featName" label="Name" placeholder="Type here" value={c.feats[index].$.name} />
 
 		<MacroTextArea
 			name="featPrerequisites"
 			label="Prerequisites"
 			placeholder="Enter Prerequisites"
 			rows={5}
-			bind:value={c.feats[index].prerequisites}
+			value={c.feats[index].$.prerequisites}
 		/>
 
 		<Select label="Type" name="featType" bind:value={c.feats[index].type} options={FEAT_TYPES}>
@@ -46,7 +46,7 @@
 			label="Benefits"
 			placeholder="Enter Benefits"
 			rows={5}
-			bind:value={c.feats[index].benefits}
+			value={c.feats[index].$.benefits}
 		/>
 
 		<MacroTextArea
@@ -54,7 +54,7 @@
 			label="Normal"
 			placeholder="Enter Normal"
 			rows={5}
-			bind:value={c.feats[index].normal}
+			value={c.feats[index].$.normal}
 		/>
 
 		<MacroTextArea
@@ -62,7 +62,7 @@
 			label="Special"
 			placeholder="Enter Special"
 			rows={5}
-			bind:value={c.feats[index].special}
+			value={c.feats[index].$.special}
 		/>
 	{/if}
 

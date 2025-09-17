@@ -20,15 +20,15 @@ export type FeatType = (typeof FEAT_TYPES)[number];
 export class Feat extends ClassSerializer {
 	id = string(nanoid());
 
-	name = string('New Feat');
+	name = string('Unnamed Feat', { minLength: 1, maxLength: 100 });
 
-	prerequisites = string('');
+	prerequisites = string('', { maxLength: 1000 });
 
 	type = enumeration<FeatType>('general');
 
-	benefits = string('');
+	benefits = string('', { maxLength: 1000 });
 
-	normal = string('');
+	normal = string('', { maxLength: 1000 });
 
-	special = string('');
+	special = string('', { maxLength: 1000 });
 }

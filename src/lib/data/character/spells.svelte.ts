@@ -44,9 +44,9 @@ export const SPELL_ATTACK_TYPE = [
 export type SpellAttackType = (typeof SPELL_ATTACK_TYPE)[number];
 
 export class SpellAttackDamage extends ClassSerializer {
-	damage = string('');
+	damage = string('', { maxLength: 1000 });
 
-	type = string('');
+	type = string('', { maxLength: 100 });
 }
 
 export class SpellAttack extends ClassSerializer {
@@ -56,15 +56,15 @@ export class SpellAttack extends ClassSerializer {
 
 	mod = number(0);
 
-	critRange = number(20);
+	critRange = number(20, { min: 0, max: 20 });
 
-	critMultiplier = number(2);
+	critMultiplier = number(2, { min: 1 });
 }
 
 export class SpellSave extends ClassSerializer {
 	hasSave = boolean(false);
 
-	effect = string('');
+	effect = string('', { maxLength: 100 });
 
 	dcMod = number(0);
 }
@@ -72,45 +72,45 @@ export class SpellSave extends ClassSerializer {
 export class SpellCommonProps extends ClassSerializer {
 	id = nanoid();
 
-	name = string('Unnamed Spell');
+	name = string('Unnamed Spell', { minLength: 1, maxLength: 100 });
 
-	school = string('');
+	school = string('', { maxLength: 100 });
 
-	classAndLevel = string('');
+	classAndLevel = string('', { maxLength: 100 });
 
-	castingTime = string('');
+	castingTime = string('', { maxLength: 100 });
 
-	range = string('');
+	range = string('', { maxLength: 100 });
 
-	area = string('');
+	area = string('', { maxLength: 100 });
 
-	targets = string('');
+	targets = string('', { maxLength: 100 });
 
-	effect = string('');
+	effect = string('', { maxLength: 100 });
 
-	duration = string('');
+	duration = string('', { maxLength: 100 });
 
 	readonly savingThrow = new SpellSave();
 
-	spellResistance = string('');
+	spellResistance = string('', { maxLength: 100 });
 
 	readonly attack = new SpellAttack();
 
 	damage = array(() => new SpellAttackDamage(), []);
 
-	description = string('');
+	description = string('', { maxLength: 2000 });
 
-	notes = string('');
+	notes = string('', { maxLength: 2000 });
 }
 
 export class Spell extends SpellCommonProps {
-	prepared = number(0);
+	prepared = number(0, { min: 0 });
 
-	used = number(0);
+	used = number(0, { min: 0 });
 
 	isDomainSpell = boolean(false);
 
-	components = string('');
+	components = string('', { maxLength: 100 });
 
 	details(this: SerdeProxy<Spell>, level: number, c: SerdeProxy<Character>): [string, boolean][] {
 		const dcAbility = c.spells.dcAbility;
@@ -169,9 +169,9 @@ export type SpellLikeCountTypes = (typeof SPELL_LIKE_COUNT_TYPES)[number];
 export class SpellLikeAbility extends SpellCommonProps {
 	type = enumeration<SpellLikeCountTypes>('atWill');
 
-	perDay = number(1);
+	perDay = number(1, { min: 0 });
 
-	remaining = number(0);
+	remaining = number(0, { min: 0 });
 
 	readonly details = $derived(
 		[
@@ -197,9 +197,9 @@ export class SpellLikeAbility extends SpellCommonProps {
 }
 
 export class SpellLevelList extends ClassSerializer {
-	known = number(0);
+	known = number(0, { min: 0 });
 
-	perDay = number(0);
+	perDay = number(0, { min: 0 });
 
 	perDayBonus = number(0);
 

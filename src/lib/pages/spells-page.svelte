@@ -23,11 +23,11 @@
 	}
 
 	function addSpell(level: SpellLevel) {
-		c.spells[level].$spells.value.push(new Spell());
+		c.spells[level].$.spells.value.push(new Spell());
 	}
 
 	function addSLA() {
-		c.spells.$spellLikeAbilities.value.push(new SpellLikeAbility());
+		c.spells.$.spellLikeAbilities.value.push(new SpellLikeAbility());
 	}
 
 	function castSpell(level: SpellLevel, index: number) {

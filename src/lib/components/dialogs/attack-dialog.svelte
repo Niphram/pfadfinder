@@ -1,15 +1,13 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
-	import { computeMacroInTextStyle } from '$lib/text/macro-text-style';
 
 	import Divider from '$lib/atoms/divider.svelte';
 
 	import { title } from '$lib/components/dialog.svelte';
-	import Fieldset from '$lib/components/input/fieldset.svelte';
 	import Input from '$lib/components/input/input.svelte';
 	import MacroNumber from '$lib/components/input/macro-number.svelte';
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
-	import RichInput from '$lib/components/input/rich-input.svelte';
+	import MacroText from '$lib/components/input/macro-text.svelte';
 	import Select from '$lib/components/input/select.svelte';
 
 	import { ABILITY_KEYS, ATTACK_TYPES, getChar } from '$lib/data';
@@ -37,7 +35,7 @@
 			name="className"
 			label="Name"
 			placeholder="Type here"
-			bind:value={c.combat.attacks[index].name}
+			value={c.combat.attacks[index].$.name}
 		/>
 
 		<div class="divider">
@@ -75,7 +73,7 @@
 				placeholder="0"
 				label="Attack Bonus"
 				name="attackBonusMod"
-				value={c.combat.attacks[index].attack.$bonusModifier}
+				value={c.combat.attacks[index].attack.$.bonusModifier}
 			/>
 
 			<div class="flex flex-row gap-1">
@@ -83,14 +81,14 @@
 					name="attackCritRange"
 					label="Critical Range"
 					placeholder="19-20"
-					bind:value={c.combat.attacks[index].attack.critRange}
+					value={c.combat.attacks[index].attack.$.critRange}
 				/>
 
 				<Input
 					name="attackRange"
 					label="Range"
 					placeholder="5 feet"
-					bind:value={c.combat.attacks[index].attack.range}
+					value={c.combat.attacks[index].attack.$.range}
 				/>
 			</div>
 		{/if}
@@ -103,20 +101,18 @@
 		</div>
 
 		{#if c.combat.attacks[index].hasDamage}
-			<Fieldset legend="Damage">
-				<RichInput
-					name="damage"
-					placeholder="1d6 Piercing + STR"
-					bind:value={c.combat.attacks[index].damage.damage}
-					computeTextStyle={computeMacroInTextStyle}
-				/>
-			</Fieldset>
+			<MacroText
+				name="damage"
+				label="Damage"
+				placeholder="1d6 Piercing + STR"
+				value={c.combat.attacks[index].damage.$.damage}
+			/>
 		{/if}
 
 		<Divider>Notes</Divider>
 
 		<MacroTextArea
-			bind:value={c.combat.attacks[index].notes}
+			value={c.combat.attacks[index].$.notes}
 			name="acItemNotes"
 			placeholder="Notes"
 			label="Notes"

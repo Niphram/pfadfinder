@@ -4,7 +4,7 @@ import { mapSum } from '$lib/utils';
 import { Character } from './character.svelte';
 
 export class HitPoints extends ClassSerializer {
-	rolled = number(0);
+	rolled = number(0, { min: 0 });
 
 	bonus = macro('0');
 
@@ -23,9 +23,9 @@ export class HitPoints extends ClassSerializer {
 
 	temp = number(0);
 
-	damageTaken = number(0);
+	damageTaken = number(0, { min: 0 });
 
-	nonlethalDamage = number(0);
+	nonlethalDamage = number(0, { min: 0 });
 
 	readonly current = derive<Character>((c) => c.hp.max - this.damageTaken.value);
 

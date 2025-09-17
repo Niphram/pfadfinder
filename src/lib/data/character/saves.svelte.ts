@@ -19,7 +19,7 @@ export class Save extends ClassSerializer {
 
 	misc = macro('0');
 
-	notes = string('');
+	notes = string('', { maxLength: 1000 });
 
 	readonly mod = derive<Character>(
 		(c) => c.classes[this.key] + c[this.ability.value].mod + c[this.key].bonus + c[this.key].misc,

@@ -9,4 +9,4 @@
 	$title = 'Character Details';
 </script>
 
-<Input name="characterName" label="Name" placeholder="Name" bind:value={c.name} />
+<Input name="characterName" label="Name" placeholder="Name" value={c.$.name} />

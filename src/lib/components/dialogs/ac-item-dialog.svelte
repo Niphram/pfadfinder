@@ -3,9 +3,8 @@
 
 	import { title } from '$lib/components/dialog.svelte';
 	import Input from '$lib/components/input/input.svelte';
-	import Integer from '$lib/components/input/integer.svelte';
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
-	import OptionalInteger from '$lib/components/input/optional-integer.svelte';
+	import Number from '$lib/components/input/number.svelte';
 	import Select from '$lib/components/input/select.svelte';
 	import Toggle from '$lib/components/input/toggle.svelte';
 
@@ -41,7 +40,7 @@
 			name="className"
 			label="Name"
 			placeholder="Type here"
-			bind:value={c.equipment.acItems[index].name}
+			value={c.equipment.acItems[index].$.name}
 		/>
 
 		<Toggle
@@ -52,8 +51,8 @@
 
 		<div class="grid grid-cols-3 gap-2">
 			{#each bonusKeys as key (key)}
-				<Integer
-					bind:value={c.equipment.acItems[index][key]}
+				<Number
+					value={c.equipment.acItems[index].$[key]}
 					name="class{key}"
 					label={$t(`equipment.acBonuses.${key}.short`)}
 				/>
@@ -72,26 +71,25 @@
 		</Select>
 
 		<div class="grid grid-cols-3 gap-2">
-			<Integer
-				bind:value={c.equipment.acItems[index].chkPenalty}
-				noPositive
+			<Number
+				value={c.equipment.acItems[index].$.chkPenalty}
 				name="chkPenalty"
 				label={$t(`equipment.penalties.chkPenalty.short`)}
 			/>
-			<OptionalInteger
-				bind:value={c.equipment.acItems[index].maxDexBonus}
+			<Number
+				value={c.equipment.acItems[index].$.maxDexBonus}
 				name="maxDexBonus"
 				label={$t(`equipment.penalties.maxDexBonus.short`)}
 			/>
-			<Integer
-				bind:value={c.equipment.acItems[index].spellFailure}
+			<Number
+				value={c.equipment.acItems[index].$.spellFailure}
 				name="spellFailure"
 				label={$t(`equipment.penalties.spellFailure.short`)}
 			/>
 		</div>
 
 		<MacroTextArea
-			bind:value={c.equipment.acItems[index].notes}
+			value={c.equipment.acItems[index].$.notes}
 			name="acItemNotes"
 			placeholder="Notes"
 			label="Notes"

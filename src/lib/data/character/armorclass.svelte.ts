@@ -14,7 +14,7 @@ export class ArmorClass extends ClassSerializer {
 
 	bonusFf = macro('0');
 
-	notes = string('');
+	notes = string('', { maxLength: 2000 });
 
 	readonly abilityMod = derive<Character>((c) => {
 		const primaryMax = this.primaryAbility.value === 'dex' ? c.equipment.maxDexBonus : Infinity;

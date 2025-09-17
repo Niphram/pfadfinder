@@ -3,9 +3,9 @@
 
 	import { title } from '$lib/components/dialog.svelte';
 	import Checkbox from '$lib/components/input/checkbox.svelte';
-	import Integer from '$lib/components/input/integer.svelte';
 	import MacroNumber from '$lib/components/input/macro-number.svelte';
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
+	import Number from '$lib/components/input/number.svelte';
 	import Select from '$lib/components/input/select.svelte';
 	import Toggle from '$lib/components/input/toggle.svelte';
 
@@ -56,22 +56,22 @@
 	bind:checked={c.skills[key].skills[index].penalty}
 />
 
-<Integer bind:value={c.skills[key].skills[index].ranks} name="skillRanks" label="Ranks" />
+<Number value={c.skills[key].skills[index].$.ranks} name="skillRanks" label="Ranks" />
 
 <MacroNumber
-	value={c.skills[key].skills[index].$misc}
+	value={c.skills[key].skills[index].$.misc}
 	name="skillMisc"
 	label="Miscellaneous Bonus"
 />
 
 <MacroNumber
-	value={c.skills[key].skills[index].$temp}
+	value={c.skills[key].skills[index].$.temp}
 	name="skillBonus"
 	label="Temporary Modifier"
 />
 
 <MacroTextArea
-	bind:value={c.skills[key].skills[index].notes}
+	value={c.skills[key].skills[index].$.notes}
 	name="skillNotes"
 	label="Notes"
 	placeholder="Notes"

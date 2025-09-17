@@ -13,16 +13,16 @@
 </script>
 
 <div class="flex flex-col gap-2">
-	<Input name="raceName" label="Name" placeholder="Race" bind:value={c.race.name} />
+	<Input name="raceName" label="Name" placeholder="Race" value={c.race.$.name} />
 
 	{#each ABILITY_KEYS as key (key)}
 		<MacroNumber
-			value={c.race[`$${key}`]}
+			value={c.race.$[key]}
 			name="race{key}"
 			label={$t(`abilities.${key}.full`)}
 			placeholder={$t(`abilities.${key}.short`)}
 		/>
 	{/each}
 
-	<MacroNumber value={c.race.$speed} name="raceSpeed" label="Speed" placeholder="Speed" />
+	<MacroNumber value={c.race.$.speed} name="raceSpeed" label="Speed" placeholder="Speed" />
 </div>

@@ -92,17 +92,17 @@ describe('Proxy', () => {
 			const array = toCollection(() => number(randNumber()));
 
 			const sut = charProxy(new TestClass());
-			sut.$array.value = array;
+			sut.$.array.value = array;
 
 			expect(sut.array).toStrictEqual(array.map((c) => c.value));
-			expect(sut.$array.value).toStrictEqual(array);
+			expect(sut.$.array.value).toStrictEqual(array);
 		});
 
 		test('ArrayWrapper Object', () => {
 			const array = toCollection(() => new SubClass());
 
 			const sut = charProxy(new TestClass());
-			sut.$subarray.value = array;
+			sut.$.subarray.value = array;
 
 			expect(sut.subarray).toStrictEqual(array);
 		});
@@ -122,12 +122,12 @@ describe('Proxy', () => {
 			const sut = charProxy(new TestClass());
 			sut.number = number;
 
-			expect(sut.$macro.expr).toBe('@number');
+			expect(sut.$.macro.expr).toBe('@number');
 			expect(sut.macro).toBe(number);
 
-			sut.$macro.expr = '@number * 3';
+			sut.$.macro.expr = '@number * 3';
 
-			expect(sut.$macro.expr).toBe('@number * 3');
+			expect(sut.$.macro.expr).toBe('@number * 3');
 			expect(sut.macro).toBe(number * 3);
 		});
 	});
@@ -137,7 +137,7 @@ describe('Proxy', () => {
 			const sut = charProxy(new TestClass());
 
 			expect(sut.array).toBeInstanceOf(Array);
-			expect(sut.$array).toBeInstanceOf(ArrayWrapper);
+			expect(sut.$.array).toBeInstanceOf(ArrayWrapper);
 		});
 	});
 });

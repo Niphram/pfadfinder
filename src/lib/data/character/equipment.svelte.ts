@@ -12,19 +12,19 @@ export type ChargeType = (typeof CHARGE_TYPES)[number];
 export class Item extends ClassSerializer {
 	id = nanoid();
 
-	name = string('Unnamed Item');
+	name = string('Unnamed Item', { minLength: 1, maxLength: 100 });
 
-	quantity = number(1, { integer: true, min: 0 });
+	quantity = number(1, { min: 0 });
 
 	equipped = boolean(true);
 
-	weight = number(0, { min: 0 });
+	weight = number(0, { integer: false, min: 0 });
 
 	chargeType = string<ChargeType>('none');
 
-	remaining = number(0, { integer: true, min: 0 });
+	remaining = number(0, { min: 0 });
 
-	perDay = number(1, { integer: true, min: 0 });
+	perDay = number(1, { min: 0 });
 
 	description = string('', { maxLength: 2000 });
 
@@ -49,7 +49,7 @@ export class Item extends ClassSerializer {
 export class AcItem extends ClassSerializer {
 	id = nanoid();
 
-	name = string('Unnamed Item');
+	name = string('Unnamed Item', { minLength: 1, maxLength: 100 });
 
 	equipped = boolean(false);
 
@@ -67,7 +67,7 @@ export class AcItem extends ClassSerializer {
 
 	type = string<ArmorType>('medium');
 
-	chkPenalty = number(0);
+	chkPenalty = number(0, { min: 0 });
 
 	maxDexBonus = number(undefined, { optional: true });
 

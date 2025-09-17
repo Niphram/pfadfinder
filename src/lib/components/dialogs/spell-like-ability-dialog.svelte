@@ -2,10 +2,12 @@
 	import { t } from '$lib/i18n';
 	import { preventDefault } from '$lib/utils';
 
+	import Divider from '$lib/atoms/divider.svelte';
+
 	import { title } from '$lib/components/dialog.svelte';
 	import Input from '$lib/components/input/input.svelte';
-	import Integer from '$lib/components/input/integer.svelte';
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
+	import Number from '$lib/components/input/number.svelte';
 	import Select from '$lib/components/input/select.svelte';
 	import Toggle from '$lib/components/input/toggle.svelte';
 
@@ -24,7 +26,7 @@
 	}
 
 	function addDamageToSLA() {
-		c.spells.spellLikeAbilities[slaIndex].$damage.value.push(new SpellAttackDamage());
+		c.spells.spellLikeAbilities[slaIndex].$.damage.value.push(new SpellAttackDamage());
 	}
 
 	function removeDamageFromSLA(idx: number) {
@@ -40,42 +42,37 @@
 			name="slaName"
 			label="Name"
 			placeholder="Name"
-			bind:value={c.spells.spellLikeAbilities[slaIndex].name}
+			value={c.spells.spellLikeAbilities[slaIndex].$.name}
 		/>
 
-		<div class="divider mb-0">
-			<div class="flex flex-row items-center gap-2">
-				<span>Type</span>
-				<Select
-					name="slaType"
-					options={SPELL_LIKE_COUNT_TYPES}
-					bind:value={c.spells.spellLikeAbilities[slaIndex].type}
-					size="small"
-				>
-					{#snippet children({ option: slaType })}
-						<option value={slaType}>
-							{$t(`spell.slaType.${slaType}`)}
-						</option>
-					{/snippet}
-				</Select>
-			</div>
-		</div>
+		<Divider>
+			<span>Type</span>
+			<Select
+				name="slaType"
+				options={SPELL_LIKE_COUNT_TYPES}
+				bind:value={c.spells.spellLikeAbilities[slaIndex].type}
+				size="small"
+			>
+				{#snippet children({ option: slaType })}
+					<option value={slaType}>
+						{$t(`spell.slaType.${slaType}`)}
+					</option>
+				{/snippet}
+			</Select>
+		</Divider>
 
 		{#if c.spells.spellLikeAbilities[slaIndex].type === 'perDay'}
 			<div class="flex flex-row gap-2">
-				<Integer
+				<Number
 					label="Remaining charges"
 					name="slaCharges"
-					noNegatives
-					bind:value={c.spells.spellLikeAbilities[slaIndex].remaining}
+					value={c.spells.spellLikeAbilities[slaIndex].$.remaining}
 				/>
 
-				<Integer
+				<Number
 					label="Per Day"
 					name="slaChargesPerDay"
-					noNegatives
-					noZero
-					bind:value={c.spells.spellLikeAbilities[slaIndex].perDay}
+					value={c.spells.spellLikeAbilities[slaIndex].$.perDay}
 				/>
 			</div>
 		{/if}
@@ -84,56 +81,56 @@
 			name="spellSchool"
 			label="School"
 			placeholder="School/Domain/Elemental"
-			bind:value={c.spells.spellLikeAbilities[slaIndex].school}
+			value={c.spells.spellLikeAbilities[slaIndex].$.school}
 		/>
 
 		<Input
 			name="classAndLevel"
 			label="Class/Level"
 			placeholder="Sorcerer/Wizard 3"
-			bind:value={c.spells.spellLikeAbilities[slaIndex].classAndLevel}
+			value={c.spells.spellLikeAbilities[slaIndex].$.classAndLevel}
 		/>
 
 		<Input
 			name="castingTime"
 			label="Casting Time"
 			placeholder="1 standard action"
-			bind:value={c.spells.spellLikeAbilities[slaIndex].castingTime}
+			value={c.spells.spellLikeAbilities[slaIndex].$.castingTime}
 		/>
 
 		<Input
 			name="range"
 			label="Range"
 			placeholder="Long (400 ft. + 40 ft./level)"
-			bind:value={c.spells.spellLikeAbilities[slaIndex].range}
+			value={c.spells.spellLikeAbilities[slaIndex].$.range}
 		/>
 
 		<Input
 			name="area"
 			label="Area"
 			placeholder="20-ft.-radius spread"
-			bind:value={c.spells.spellLikeAbilities[slaIndex].area}
+			value={c.spells.spellLikeAbilities[slaIndex].$.area}
 		/>
 
 		<Input
 			name="targets"
 			label="Targets"
 			placeholder="up to five creatures"
-			bind:value={c.spells.spellLikeAbilities[slaIndex].targets}
+			value={c.spells.spellLikeAbilities[slaIndex].$.targets}
 		/>
 
 		<Input
 			name="effect"
 			label="Effect"
 			placeholder="Heal 1d6+CasterLevel"
-			bind:value={c.spells.spellLikeAbilities[slaIndex].effect}
+			value={c.spells.spellLikeAbilities[slaIndex].$.effect}
 		/>
 
 		<Input
 			name="duration"
 			label="Duration"
 			placeholder="Instantaneous"
-			bind:value={c.spells.spellLikeAbilities[slaIndex].duration}
+			value={c.spells.spellLikeAbilities[slaIndex].$.duration}
 		/>
 
 		<div class="divider">
@@ -151,31 +148,26 @@
 				name="saveEffect"
 				label="Effect"
 				placeholder="Reflex Half"
-				bind:value={c.spells.spellLikeAbilities[slaIndex].savingThrow.effect}
+				value={c.spells.spellLikeAbilities[slaIndex].savingThrow.$.effect}
 			/>
 
-			<Integer
+			<Number
 				label="DC"
 				name="saveDc"
-				bind:value={c.spells.spellLikeAbilities[slaIndex].savingThrow.dcMod}
+				value={c.spells.spellLikeAbilities[slaIndex].savingThrow.$.dcMod}
 			/>
 		{/if}
 
 		<Input
 			name="sr"
 			label="Spell Resistance"
-			bind:value={c.spells.spellLikeAbilities[slaIndex].spellResistance}
+			value={c.spells.spellLikeAbilities[slaIndex].$.spellResistance}
 		/>
 
-		<div class="divider">
-			<div class="flex flex-row gap-2">
-				Attack
-				<Toggle
-					name="attack"
-					bind:checked={c.spells.spellLikeAbilities[slaIndex].attack.hasAttack}
-				/>
-			</div>
-		</div>
+		<Divider>
+			Attack
+			<Toggle name="attack" bind:checked={c.spells.spellLikeAbilities[slaIndex].attack.hasAttack} />
+		</Divider>
 
 		{#if c.spells.spellLikeAbilities[slaIndex].attack.hasAttack}
 			<div class="flex flex-row gap-2">
@@ -189,40 +181,36 @@
 						<option value={option}>{$t(`spell.attackType.${option}`)}</option>
 					{/snippet}
 				</Select>
-				<Integer
+				<Number
 					label="Attack Mod"
 					name="attackBonus"
-					bind:value={c.spells.spellLikeAbilities[slaIndex].attack.mod}
+					value={c.spells.spellLikeAbilities[slaIndex].attack.$.mod}
 				/>
 			</div>
 
 			<div class="flex flex-row gap-2">
-				<Integer
+				<Number
 					label="Critical Range"
 					name="critRange"
-					bind:value={c.spells.spellLikeAbilities[slaIndex].attack.critRange}
+					value={c.spells.spellLikeAbilities[slaIndex].attack.$.critRange}
 				/>
-				<Integer
+				<Number
 					label="Multiplier"
 					name="critMult"
-					bind:value={c.spells.spellLikeAbilities[slaIndex].attack.critMultiplier}
+					value={c.spells.spellLikeAbilities[slaIndex].attack.$.critMultiplier}
 				/>
 			</div>
 		{/if}
 
-		<div class="divider mb-0">
-			<div class="flex flex-row gap-2">
-				Damage
-				<button class="btn btn-secondary btn-xs" onclick={preventDefault(addDamageToSLA)}
-					>Add</button
-				>
-			</div>
-		</div>
+		<Divider>
+			Damage
+			<button class="btn btn-secondary btn-xs" onclick={preventDefault(addDamageToSLA)}>Add</button>
+		</Divider>
 
 		{#each c.spells.spellLikeAbilities[slaIndex].damage as damage, damageIdx (damageIdx)}
 			<div class="flex flex-row items-center gap-2">
-				<Input name="spellDamage" placeholder="1d6" bind:value={damage.damage} />
-				<Input name="damageTyoe" placeholder="Fire" bind:value={damage.type} />
+				<Input name="spellDamage" placeholder="1d6" value={damage.$.damage} />
+				<Input name="damageTyoe" placeholder="Fire" value={damage.$.type} />
 				<button
 					class="btn btn-warning"
 					onclick={preventDefault(() => {
@@ -235,7 +223,7 @@
 		<MacroTextArea
 			name="spellDescription"
 			label="Description"
-			bind:value={c.spells.spellLikeAbilities[slaIndex].description}
+			value={c.spells.spellLikeAbilities[slaIndex].$.description}
 		/>
 	{/if}
 

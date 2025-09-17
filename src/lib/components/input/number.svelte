@@ -1,49 +1,51 @@
-<script lang="ts">
-	import Fieldset from '$lib/components/input/fieldset.svelte';
+<script lang="ts" generics="IsOptional extends boolean">
+	import type { NumberWrapper } from '$lib/serde';
+
+	import InputWrapper from '$lib/atoms/input-wrapper.svelte';
 
 	interface Props {
-		noNegatives?: boolean;
-		noZero?: boolean;
-		noPositive?: boolean;
-		value: number;
 		name: string;
 		label: string;
-		placeholder?: string | undefined;
-		step?: number;
+		placeholder?: string;
+
+		// Not bindable, uses internal mutation
+		value: NumberWrapper<IsOptional>;
 	}
 
-	let {
-		noNegatives = false,
-		noZero = false,
-		noPositive = false,
-		value = $bindable(),
-		name,
-		label,
-		placeholder = undefined,
-		step = 0.001,
-	}: Props = $props();
+	let { name, label, placeholder, value }: Props = $props();
 
-	let current = $state(value);
+	const tempNumber = $derived(value.clone());
 
-	let valid = $derived(
-		!(noNegatives && current < 0) && !(noZero && current === 0) && !(noPositive && current > 0),
-	);
+	const result = $derived(tempNumber.result());
 
 	$effect.pre(() => {
-		if (valid) {
-			value = current;
+		if (result.ok) {
+			value.value = result.value;
 		}
+	});
+
+	const hint = $derived(
+		[value.options.optional && 'optional', value.options.integer ? 'integer' : 'number']
+			.filter(Boolean)
+			.join(' '),
+	);
+
+	const feedback = $derived({
+		feedback: result.error,
+		feedbackClass: result.ok ? 'hidden' : 'text-error',
 	});
 </script>
 
-<Fieldset legend={label}>
+<InputWrapper legend={label} {hint} {...feedback}>
 	<input
 		{name}
 		type="number"
 		{placeholder}
-		class="input input-bordered w-full"
-		class:input-error={!valid}
-		bind:value={current}
-		{step}
+		class={['input input-bordered w-full', !result.ok && 'input-error']}
+		bind:value={tempNumber.value}
+		min={value.options.min}
+		max={value.options.max}
+		step={value.options.integer ? 1 : 0.001}
+		required={!value.options.optional}
 	/>
-</Fieldset>
+</InputWrapper>

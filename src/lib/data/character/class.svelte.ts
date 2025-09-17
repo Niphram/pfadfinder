@@ -13,11 +13,11 @@ export enum Dice {
 }
 
 export class Class extends ClassSerializer {
-	name = string('Unnamed Class', { maxLength: 50 });
+	name = string('Unnamed Class', { minLength: 1, maxLength: 100 });
 
 	favored = boolean(false);
 
-	level = number(1);
+	level = number(1, { min: 1 });
 
 	hitDice = enumeration(Dice.D4);
 
@@ -29,9 +29,9 @@ export class Class extends ClassSerializer {
 
 	will = number(0);
 
-	speed = number(0);
+	speed = number(0, { min: 0 });
 
-	levelRanks = number(0);
+	levelRanks = number(0, { min: 0 });
 
 	miscRanks = number(0);
 }

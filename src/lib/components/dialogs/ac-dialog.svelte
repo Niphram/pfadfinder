@@ -44,10 +44,10 @@
 
 <Divider />
 
-<MacroNumber name="bonusAc" label="Bonus to AC" value={c.ac.$bonusAc} />
+<MacroNumber name="bonusAc" label="Bonus to AC" value={c.ac.$.bonusAc} />
 
-<MacroNumber name="bonusTouch" label="Bonus to touch AC" value={c.ac.$bonusTouch} />
+<MacroNumber name="bonusTouch" label="Bonus to touch AC" value={c.ac.$.bonusTouch} />
 
-<MacroNumber name="bonusFf" label="Bonus to flat-footed AC" value={c.ac.$bonusFf} />
+<MacroNumber name="bonusFf" label="Bonus to flat-footed AC" value={c.ac.$.bonusFf} />
 
-<TextArea name="acNotes" label="Notes" rows={5} bind:value={c.ac.notes} />
+<TextArea name="acNotes" label="Notes" rows={5} value={c.ac.$.notes} />

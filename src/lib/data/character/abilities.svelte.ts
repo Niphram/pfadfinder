@@ -12,7 +12,7 @@ export class Ability extends ClassSerializer {
 
 	temp = macro('0');
 
-	damage = number(0, { min: 0, integer: true });
+	damage = number(0, { min: 0 });
 
 	notes = string('', { maxLength: 2000 });
 

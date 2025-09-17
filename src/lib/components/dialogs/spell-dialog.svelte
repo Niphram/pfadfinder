@@ -4,8 +4,8 @@
 
 	import { title } from '$lib/components/dialog.svelte';
 	import Input from '$lib/components/input/input.svelte';
-	import Integer from '$lib/components/input/integer.svelte';
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
+	import Number from '$lib/components/input/number.svelte';
 	import Select from '$lib/components/input/select.svelte';
 	import Toggle from '$lib/components/input/toggle.svelte';
 
@@ -25,7 +25,7 @@
 	}
 
 	function addDamageToSpell() {
-		c.spells[spellLevel].spells[spellIdx].$damage.value.push(new SpellAttackDamage());
+		c.spells[spellLevel].spells[spellIdx].$.damage.value.push(new SpellAttackDamage());
 	}
 
 	function removeDamageFromSpell(idx: number) {
@@ -41,21 +41,21 @@
 			name="spellName"
 			label="Name"
 			placeholder="Name"
-			bind:value={c.spells[spellLevel].spells[spellIdx].name}
+			value={c.spells[spellLevel].spells[spellIdx].$.name}
 		/>
 
 		<div class="divider">Preperation</div>
 
 		<div class="flex flex-row gap-2">
-			<Integer
+			<Number
 				label="Used today"
 				name="spellUsage"
-				bind:value={c.spells[spellLevel].spells[spellIdx].used}
+				value={c.spells[spellLevel].spells[spellIdx].$.used}
 			/>
-			<Integer
+			<Number
 				label="Prepared today"
 				name="spellPrepared"
-				bind:value={c.spells[spellLevel].spells[spellIdx].prepared}
+				value={c.spells[spellLevel].spells[spellIdx].$.prepared}
 			/>
 		</div>
 
@@ -71,63 +71,63 @@
 			name="spellSchool"
 			label="School"
 			placeholder="School/Domain/Elemental"
-			bind:value={c.spells[spellLevel].spells[spellIdx].school}
+			value={c.spells[spellLevel].spells[spellIdx].$.school}
 		/>
 
 		<Input
 			name="classAndLevel"
 			label="Class/Level"
 			placeholder="Sorcerer/Wizard 3"
-			bind:value={c.spells[spellLevel].spells[spellIdx].classAndLevel}
+			value={c.spells[spellLevel].spells[spellIdx].$.classAndLevel}
 		/>
 
 		<Input
 			name="castingTime"
 			label="Casting Time"
 			placeholder="1 standard action"
-			bind:value={c.spells[spellLevel].spells[spellIdx].castingTime}
+			value={c.spells[spellLevel].spells[spellIdx].$.castingTime}
 		/>
 
 		<Input
 			name="components"
 			label="Components"
 			placeholder="V, S, M (a ball of bat guano and sulfur)"
-			bind:value={c.spells[spellLevel].spells[spellIdx].components}
+			value={c.spells[spellLevel].spells[spellIdx].$.components}
 		/>
 
 		<Input
 			name="range"
 			label="Range"
 			placeholder="Long (400 ft. + 40 ft./level)"
-			bind:value={c.spells[spellLevel].spells[spellIdx].range}
+			value={c.spells[spellLevel].spells[spellIdx].$.range}
 		/>
 
 		<Input
 			name="area"
 			label="Area"
 			placeholder="20-ft.-radius spread"
-			bind:value={c.spells[spellLevel].spells[spellIdx].area}
+			value={c.spells[spellLevel].spells[spellIdx].$.area}
 		/>
 
 		<Input
 			name="targets"
 			label="Targets"
 			placeholder="up to five creatures"
-			bind:value={c.spells[spellLevel].spells[spellIdx].targets}
+			value={c.spells[spellLevel].spells[spellIdx].$.targets}
 		/>
 
 		<Input
 			name="effect"
 			label="Effect"
 			placeholder="Heal 1d6+CasterLevel"
-			bind:value={c.spells[spellLevel].spells[spellIdx].effect}
+			value={c.spells[spellLevel].spells[spellIdx].$.effect}
 		/>
 
 		<Input
 			name="duration"
 			label="Duration"
 			placeholder="Instantaneous"
-			bind:value={c.spells[spellLevel].spells[spellIdx].duration}
+			value={c.spells[spellLevel].spells[spellIdx].$.duration}
 		/>
 
 		<div class="divider">
@@ -145,20 +145,20 @@
 				name="savingThrowEffect"
 				label="Effect"
 				placeholder="Reflex Half"
-				bind:value={c.spells[spellLevel].spells[spellIdx].savingThrow.effect}
+				value={c.spells[spellLevel].spells[spellIdx].savingThrow.$.effect}
 			/>
 
-			<Integer
+			<Number
 				label="DC Bonus"
 				name="saveDcMod"
-				bind:value={c.spells[spellLevel].spells[spellIdx].savingThrow.dcMod}
+				value={c.spells[spellLevel].spells[spellIdx].savingThrow.$.dcMod}
 			/>
 		{/if}
 
 		<Input
 			name="sr"
 			label="Spell Resistance"
-			bind:value={c.spells[spellLevel].spells[spellIdx].spellResistance}
+			value={c.spells[spellLevel].spells[spellIdx].$.spellResistance}
 		/>
 
 		<div class="divider">
@@ -183,23 +183,23 @@
 						<option value={option}>{$t(`spell.attackType.${option}`)}</option>
 					{/snippet}
 				</Select>
-				<Integer
+				<Number
 					label="Attack Mod"
 					name="attackBonus"
-					bind:value={c.spells[spellLevel].spells[spellIdx].attack.mod}
+					value={c.spells[spellLevel].spells[spellIdx].attack.$.mod}
 				/>
 			</div>
 
 			<div class="flex flex-row gap-2">
-				<Integer
+				<Number
 					label="Critical Range"
 					name="critRange"
-					bind:value={c.spells[spellLevel].spells[spellIdx].attack.critRange}
+					value={c.spells[spellLevel].spells[spellIdx].attack.$.critRange}
 				/>
-				<Integer
+				<Number
 					label="Multiplier"
 					name="critMult"
-					bind:value={c.spells[spellLevel].spells[spellIdx].attack.critMultiplier}
+					value={c.spells[spellLevel].spells[spellIdx].attack.$.critMultiplier}
 				/>
 			</div>
 		{/if}
@@ -239,7 +239,7 @@
 		<MacroTextArea
 			name="spellDescription"
 			label="Description"
-			bind:value={c.spells[spellLevel].spells[spellIdx].description}
+			value={c.spells[spellLevel].spells[spellIdx].$.description}
 		/>
 	{/if}
 

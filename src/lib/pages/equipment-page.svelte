@@ -7,7 +7,7 @@
 	import AcItemDialog from '$lib/components/dialogs/ac-item-dialog.svelte';
 	import ItemDialog from '$lib/components/dialogs/item-dialog.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
-	import Integer from '$lib/components/input/integer.svelte';
+	import Number from '$lib/components/input/number.svelte';
 	import TextArea from '$lib/components/input/text-area.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 
@@ -16,13 +16,13 @@
 	const { c } = $derived(getChar());
 
 	function addItem() {
-		c.equipment.$items.value.push(new Item());
+		c.equipment.$.items.value.push(new Item());
 
 		openDialog(ItemDialog, { list: c.equipment.items, index: c.equipment.items.length - 1 });
 	}
 
 	function addAcItem() {
-		c.equipment.$acItems.value.push(new AcItem());
+		c.equipment.$.acItems.value.push(new AcItem());
 
 		openDialog(AcItemDialog, { index: c.equipment.acItems.length - 1 });
 	}
@@ -32,13 +32,19 @@
 	<div class="divider mb-0">Money</div>
 
 	<div class="flex flex-row gap-2">
-		<Integer bind:value={c.money.cp} label="CP" name="cp" placeholder="Copper" />
-		<Integer bind:value={c.money.sp} label="SP" name="sp" placeholder="Silver" />
-		<Integer bind:value={c.money.gp} label="GP" name="gp" placeholder="Gold" />
-		<Integer bind:value={c.money.pp} label="PP" name="pp" placeholder="Platinum" />
+		<Number value={c.money.$.cp} label="CP" name="cp" placeholder="Copper" />
+		<Number value={c.money.$.sp} label="SP" name="sp" placeholder="Silver" />
+		<Number value={c.money.$.gp} label="GP" name="gp" placeholder="Gold" />
+		<Number value={c.money.$.pp} label="PP" name="pp" placeholder="Platinum" />
 	</div>
 
-	<TextArea bind:value={c.money.notes} name="valuables" placeholder="Other Valuables" rows={1} />
+	<TextArea
+		value={c.money.$.notes}
+		name="valuables"
+		label="Other valuables"
+		placeholder="Other valuables"
+		rows={1}
+	/>
 
 	<div class="divider">
 		<div class="flex flex-row items-center gap-2">

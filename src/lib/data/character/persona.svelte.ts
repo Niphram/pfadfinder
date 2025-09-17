@@ -11,9 +11,9 @@ export const FACET_KEYS = [
 export type FacetKey = (typeof FACET_KEYS)[number];
 
 class Facet extends ClassSerializer {
-	rank = number(0);
+	rank = number(0, { min: 0 });
 
-	notes = string('');
+	notes = string('', { maxLength: 1000 });
 }
 
 export class Persona extends ClassSerializer {
@@ -29,5 +29,5 @@ export class Persona extends ClassSerializer {
 
 	subterfuge = new Facet();
 
-	notes = string('');
+	notes = string('', { maxLength: 1000 });
 }

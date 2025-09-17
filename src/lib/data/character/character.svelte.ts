@@ -26,7 +26,7 @@ export class Character extends ClassSerializer {
 
 	version = number(VERSION_NUMBER);
 
-	name = string('Unnamed Character');
+	name = string('Unnamed Character', { minLength: 1, maxLength: 100 });
 
 	system = string('pathfinder');
 

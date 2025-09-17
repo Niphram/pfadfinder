@@ -5,8 +5,8 @@
 	import Divider from '$lib/atoms/divider.svelte';
 
 	import { title } from '$lib/components/dialog.svelte';
-	import Integer from '$lib/components/input/integer.svelte';
 	import MacroNumber from '$lib/components/input/macro-number.svelte';
+	import Number from '$lib/components/input/number.svelte';
 
 	import { getChar } from '$lib/data';
 
@@ -79,6 +79,7 @@
 				type="number"
 				class="input input-bordered h-auto w-24 text-center text-6xl"
 				min="0"
+				step="1"
 				bind:value={modifyAmount}
 			/>
 			<div class="flex flex-1 basis-0 flex-col gap-2">
@@ -129,13 +130,8 @@
 			</Alert>
 		{/if}
 
-		<Integer
-			label="Rolled Hitpoints (excluding CON)"
-			name="rolled_hp"
-			bind:value={c.hp.rolled}
-			noNegatives
-		/>
+		<Number label="Rolled Hitpoints (excluding CON)" name="rolled_hp" value={c.hp.$.rolled} />
 
-		<MacroNumber label="Bonus HP" value={c.hp.$bonus} name="bonus_hp" />
+		<MacroNumber label="Bonus HP" value={c.hp.$.bonus} name="bonus_hp" />
 	</div>
 </div>

@@ -2,8 +2,8 @@
 	import { Macro } from '$lib/serde';
 	import { computeMacroStyleWithError } from '$lib/text/macro-text-style';
 
-	import Fieldset from '$lib/components/input/fieldset.svelte';
-	import RichInput from '$lib/components/input/rich-input.svelte';
+	import InputWrapper from '$lib/atoms/input-wrapper.svelte';
+	import RichInput from '$lib/atoms/rich-input.svelte';
 
 	import { getChar } from '$lib/data';
 
@@ -24,7 +24,8 @@
 		label,
 		placeholder = undefined,
 
-		value = $bindable(),
+		// Not bindable, uses internal mutation
+		value,
 
 		ignoreValidation,
 	}: Props = $props();
@@ -39,9 +40,27 @@
 			value.expr = tempMacro.expr;
 		}
 	});
+
+	const hint = $derived(
+		[value.options.optional && 'optional', 'macro', value.options.integer ? 'integer' : 'number']
+			.filter(Boolean)
+			.join(' '),
+	);
+
+	const feedback = $derived(
+		validateResult.ok ?
+			{
+				feedback: `Evaluates to: ${validateResult.value ?? '-'}`,
+				feedbackClass: '',
+			}
+		:	{
+				feedback: validateResult.error.message,
+				feedbackClass: 'text-error',
+			},
+	);
 </script>
 
-<Fieldset legend={label} class="gap-y-0">
+<InputWrapper legend={label} {hint} {...feedback}>
 	<RichInput
 		{name}
 		bind:value={tempMacro.expr}
@@ -49,15 +68,4 @@
 		{placeholder}
 		computeTextStyle={styleComputer}
 	/>
-	<div class="flex flex-row justify-between">
-		{#if validateResult.ok}
-			<p class="label">Evaluates to: {validateResult.value ?? '-'}</p>
-		{:else}
-			<p class="label text-error">{validateResult.error.message}</p>
-		{/if}
-
-		<div class="tooltip tooltip-left" data-tip="This input allows macro syntax">
-			<span class="badge badge-xs">{tempMacro.options.optional ? 'Optional Macro' : 'Macro'}</span>
-		</div>
-	</div>
-</Fieldset>
+</InputWrapper>

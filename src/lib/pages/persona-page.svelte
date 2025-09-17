@@ -33,5 +33,5 @@
 
 	<div class="divider">Notes</div>
 
-	<TextArea name="notes" bind:value={c.persona.notes} rows={10} placeholder="Notes" />
+	<TextArea name="notes" label="Notes" value={c.persona.$.notes} rows={10} placeholder="Notes" />
 </div>

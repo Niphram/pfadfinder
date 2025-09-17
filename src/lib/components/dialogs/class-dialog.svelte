@@ -5,7 +5,7 @@
 
 	import { title } from '$lib/components/dialog.svelte';
 	import Input from '$lib/components/input/input.svelte';
-	import Integer from '$lib/components/input/integer.svelte';
+	import Number from '$lib/components/input/number.svelte';
 	import Toggle from '$lib/components/input/toggle.svelte';
 
 	import { getChar, SAVE_KEYS } from '$lib/data';
@@ -43,16 +43,10 @@
 				name="className"
 				label="Name"
 				placeholder="Type here"
-				bind:value={c.classes.list[classIndex].name}
+				value={c.classes.list[classIndex].$.name}
 			/>
 
-			<Integer
-				bind:value={c.classes.list[classIndex].level}
-				name="classLevel"
-				label="Level"
-				noNegatives
-				noZero
-			/>
+			<Number value={c.classes.list[classIndex].$.level} name="classLevel" label="Level" />
 		</div>
 
 		<Toggle
@@ -62,13 +56,13 @@
 		/>
 
 		<div class="grid grid-cols-2 gap-4">
-			<Integer bind:value={c.classes.list[classIndex].bab} name="bab" label="Base Attack Bonus" />
-			<Integer bind:value={c.classes.list[classIndex].speed} name="classSpeed" label="Speed" />
+			<Number value={c.classes.list[classIndex].$.bab} name="bab" label="Base Attack Bonus" />
+			<Number value={c.classes.list[classIndex].$.speed} name="classSpeed" label="Speed" />
 		</div>
 		<div class="grid grid-cols-3 gap-2">
 			{#each SAVE_KEYS as key (key)}
-				<Integer
-					bind:value={c.classes.list[classIndex][key]}
+				<Number
+					value={c.classes.list[classIndex].$[key]}
 					name="class{key}"
 					label={$t(`saves.${key}.full`)}
 				/>
@@ -76,13 +70,13 @@
 		</div>
 		<div class="divider mb-0">Ranks</div>
 		<div class="flex flex-row gap-2">
-			<Integer
-				bind:value={c.classes.list[classIndex].levelRanks}
+			<Number
+				value={c.classes.list[classIndex].$.levelRanks}
 				name="classRanksLevel"
 				label="Ranks/Level"
 			/>
-			<Integer
-				bind:value={c.classes.list[classIndex].miscRanks}
+			<Number
+				value={c.classes.list[classIndex].$.miscRanks}
 				name="classRanksMisc"
 				label="Misc Ranks"
 			/>

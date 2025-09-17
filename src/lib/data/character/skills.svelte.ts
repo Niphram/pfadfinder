@@ -54,13 +54,13 @@ export const SKILL_KEYS = Object.keys(SKILLS);
 export type SkillKey = keyof typeof SKILLS;
 
 export class Skill extends ClassSerializer {
-	name = string('');
+	name = string('Unnamed Skill', { minLength: 1, maxLength: 100 });
 
 	ability = enumeration<AbilityKey>('str');
 
 	penalty = boolean(false);
 
-	ranks = number(0);
+	ranks = number(0, { min: 0 });
 
 	misc = macro('0');
 
@@ -68,7 +68,7 @@ export class Skill extends ClassSerializer {
 
 	classSkill = boolean(false);
 
-	notes = string('');
+	notes = string('', { maxLength: 2000 });
 
 	readonly mod = derive<Character>(
 		(c) =>

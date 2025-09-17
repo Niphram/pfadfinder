@@ -88,11 +88,11 @@ export class AttackRoll extends ClassSerializer {
 
 	bonusModifier = macro('', { optional: true });
 
-	versus = string('AC');
+	versus = string('AC', { maxLength: 100 });
 
-	critRange = string('20');
+	critRange = string('20', { maxLength: 100 });
 
-	range = string('');
+	range = string('', { maxLength: 100 });
 
 	readonly baseModValue = derive<Character>((c) =>
 		// TODO: Check this
@@ -135,7 +135,7 @@ export class AttackRoll extends ClassSerializer {
 }
 
 export class Damage extends ClassSerializer {
-	damage = string('');
+	damage = string('', { maxLength: 1000 });
 }
 
 export class Attack extends ClassSerializer {
@@ -143,11 +143,11 @@ export class Attack extends ClassSerializer {
 
 	open = boolean(false);
 
-	name = string('Unnamed Attack');
+	name = string('Unnamed Attack', { minLength: 1, maxLength: 100 });
 
-	category = string('');
+	category = string('', { maxLength: 100 });
 
-	type = string('');
+	type = string('', { maxLength: 100 });
 
 	hasAttack = boolean(false);
 

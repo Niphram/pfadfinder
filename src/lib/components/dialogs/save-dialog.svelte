@@ -30,7 +30,7 @@
 	{/snippet}
 </Select>
 
-<MacroNumber value={c[key].$misc} name="saveMisc" label="Misc" />
-<MacroNumber value={c[key].$bonus} name="saveBonus" label="Temp Mod" />
+<MacroNumber value={c[key].$.misc} name="saveMisc" label="Misc" />
+<MacroNumber value={c[key].$.bonus} name="saveBonus" label="Temp Mod" />
 
-<MacroTextArea bind:value={c[key].notes} name="saveNotes" label="Notes" placeholder="Notes" />
+<MacroTextArea value={c[key].$.notes} name="saveNotes" label="Notes" placeholder="Notes" />

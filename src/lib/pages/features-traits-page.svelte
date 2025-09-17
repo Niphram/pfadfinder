@@ -16,13 +16,13 @@
 	const { c } = $derived(getChar());
 
 	function addFeat() {
-		c.$feats.value.push(new Feat());
+		c.$.feats.value.push(new Feat());
 
 		openDialog(FeatDialog, { index: c.feats.length - 1 });
 	}
 
 	function addTrait() {
-		c.$traits.value.push(new Trait());
+		c.$.traits.value.push(new Trait());
 
 		openDialog(TraitDialog, { index: c.traits.length - 1 });
 	}
@@ -124,7 +124,7 @@
 					>
 						{item.name}
 					</button>
-					{#if item.$perDay.expr}
+					{#if item.perDay !== undefined}
 						<button
 							class="btn btn-accent btn-sm md:btn-md w-32"
 							onclick={() => useTrait(index)}

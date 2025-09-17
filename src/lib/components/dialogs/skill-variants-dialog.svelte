@@ -10,7 +10,7 @@
 	const { c } = $derived(getChar());
 
 	function addSkill(skill: SkillKey) {
-		c.skills[skill].$skills.value.push(new Skill(skill));
+		c.skills[skill].$.skills.value.push(new Skill(skill));
 	}
 
 	function removeSkill(skill: SkillKey, idx: number) {
@@ -28,7 +28,7 @@
 
 		{#each c.skills[key].skills as skill, idx (idx)}
 			<div class="flex w-full flex-row items-center gap-2">
-				<Input name="variant-{idx}" bind:value={skill.name} />
+				<Input name="variant-{idx}" value={skill.$.name} />
 				<button
 					onclick={preventDefault(() => {
 						removeSkill(key, idx);

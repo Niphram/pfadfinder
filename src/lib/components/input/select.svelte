@@ -9,7 +9,7 @@
 <script lang="ts" generics="V, T">
 	import type { Snippet } from 'svelte';
 
-	import Fieldset from '$lib/components/input/fieldset.svelte';
+	import InputWrapper from '$lib/atoms/input-wrapper.svelte';
 
 	interface Props {
 		name: string;
@@ -32,7 +32,7 @@
 	}: Props = $props();
 </script>
 
-<Fieldset legend={label}>
+<InputWrapper legend={label} hint="select">
 	<select {name} class={['select w-full', SIZES[size]]} bind:value>
 		{#if noneOption}
 			<option value={undefined}>{noneOption}</option>
@@ -41,4 +41,4 @@
 			{@render children?.({ option })}
 		{/each}
 	</select>
-</Fieldset>
+</InputWrapper>

@@ -90,12 +90,27 @@ export class Macro<IsOptional extends boolean> implements Serializable {
 	}
 }
 
-type MacroOptions<IsOptional extends boolean> = {
-	readonly optional: IsOptional;
-	readonly min: number;
-	readonly max: number;
-	readonly integer: boolean;
-};
+type MacroOptions<IsOptional extends boolean> = Readonly<{
+	/**
+	 * @default false
+	 */
+	optional: IsOptional;
+
+	/**
+	 * @default -Infinity
+	 */
+	min: number;
+
+	/**
+	 * @default Infinity
+	 */
+	max: number;
+
+	/**
+	 * @default true
+	 */
+	integer: boolean;
+}>;
 
 const DEFAULT_OPTIONS: MacroOptions<boolean> = {
 	optional: false,

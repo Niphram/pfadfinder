@@ -1,21 +1,24 @@
 <script lang="ts">
 	import type { StringWrapper } from '$lib/serde';
+	import { computeMacroInTextStyle } from '$lib/text/macro-text-style';
 
 	import InputWrapper from '$lib/atoms/input-wrapper.svelte';
+	import RichInput from '$lib/atoms/rich-input.svelte';
 
 	interface Props {
 		name: string;
-		label?: string | undefined;
-		placeholder?: string | undefined;
+		label: string;
+		placeholder?: string;
 
 		// Not bindable, uses internal mutation
 		value: StringWrapper<string>;
 	}
 
-	let { value, name, label, placeholder }: Props = $props();
+	let { name, label, placeholder, value }: Props = $props();
 
 	const tempString = $derived(value.clone());
 
+	// TODO: Validate macros in text and show errors
 	const result = $derived(tempString.result());
 
 	$effect.pre(() => {
@@ -25,7 +28,7 @@
 	});
 
 	const hint = $derived(
-		[value.options.minLength === 0 && 'optional', 'text'].filter(Boolean).join(' '),
+		[value.options.minLength === 0 && 'optional', 'macro-text'].filter(Boolean).join(' '),
 	);
 
 	const feedback = $derived({
@@ -35,10 +38,11 @@
 </script>
 
 <InputWrapper legend={label} {hint} {...feedback}>
-	<input
+	<RichInput
 		{name}
 		{placeholder}
-		class={['input input-bordered w-full', !result.ok && 'input-error']}
+		class={[!result.ok && 'input-error']}
+		computeTextStyle={computeMacroInTextStyle}
 		bind:value={tempString.value}
 	/>
 </InputWrapper>

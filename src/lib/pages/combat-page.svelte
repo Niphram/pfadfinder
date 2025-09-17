@@ -22,7 +22,7 @@
 	const { c } = $derived(getChar());
 
 	function addAttack() {
-		c.combat.$attacks.value.push(new Attack());
+		c.combat.$.attacks.value.push(new Attack());
 
 		openDialog(AttackDialog, { index: c.combat.attacks.length - 1 });
 	}

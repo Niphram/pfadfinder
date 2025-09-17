@@ -1,16 +1,29 @@
-import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../interfaces';
-import type { Option } from '../optional';
+import { Err, Ok, type Result } from '$lib/utils';
 
-export class StringWrapper<Values extends string, IsOptional extends boolean>
-	implements Serializable
-{
-	value: Option<Values, IsOptional>;
+import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../interfaces';
+
+export class StringWrapper<Values extends string> implements Serializable {
+	value: Values;
 
 	constructor(
-		value: Option<Values, IsOptional>,
-		private readonly options: StringOptions<IsOptional>,
+		value: Values,
+		public readonly options: StringOptions,
 	) {
 		this.value = $state(value);
+	}
+
+	clone() {
+		return new StringWrapper(this.value, this.options);
+	}
+
+	result(): Result<Values, string> {
+		if (this.value.length < this.options.minLength)
+			return Err(`Length must be at least ${this.options.minLength}`);
+
+		if (this.value.length > this.options.maxLength)
+			return Err(`Length must be at most ${this.options.maxLength}`);
+
+		return Ok(this.value);
 	}
 
 	[SERIALIZE_SYMBOL](): unknown {
@@ -19,34 +32,33 @@ export class StringWrapper<Values extends string, IsOptional extends boolean>
 
 	[DESERIALIZE_SYMBOL](value: unknown) {
 		if (typeof value === 'string') {
-			this.value = value as Option<Values, IsOptional>;
+			this.value = value as Values;
 		}
 	}
 }
 
-type StringOptions<IsOptional extends boolean> = Partial<{
-	optional: IsOptional;
-	minLength?: number;
-	maxLength?: number;
+type StringOptions = Readonly<{
+	/**
+	 * @default 0
+	 */
+	minLength: number;
+
+	/**
+	 * @default Infinity
+	 */
+	maxLength: number;
 }>;
 
-const DEFAULT_OPTIONS: StringOptions<boolean> = {
-	optional: false,
+const DEFAULT_OPTIONS: StringOptions = {
 	minLength: 0,
 	maxLength: Infinity,
 };
 
-export function string<IsOptional extends boolean = false>(
-	value: Option<string, IsOptional>,
-	options?: StringOptions<IsOptional>,
-): StringWrapper<string, IsOptional>;
-export function string<Values extends string, IsOptional extends boolean = false>(
-	value: Option<Values, IsOptional>,
-	options?: StringOptions<IsOptional>,
-): StringWrapper<Values, IsOptional>;
-export function string<Values extends string, IsOptional extends boolean = false>(
-	value: Option<Values, IsOptional>,
-	options?: StringOptions<IsOptional>,
-) {
-	return new StringWrapper<Values, IsOptional>(value, Object.assign({}, DEFAULT_OPTIONS, options));
+export function string(value: string, options?: Partial<StringOptions>): StringWrapper<string>;
+export function string<Values extends string>(
+	value: Values,
+	options?: Partial<StringOptions>,
+): StringWrapper<Values>;
+export function string<Values extends string>(value: Values, options?: Partial<StringOptions>) {
+	return new StringWrapper<Values>(value, Object.assign({}, DEFAULT_OPTIONS, options));
 }
