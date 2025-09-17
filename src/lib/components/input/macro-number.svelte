@@ -33,7 +33,9 @@
 	const tempMacro = $derived(value.clone());
 
 	const validateResult = $derived(tempMacro.result(c));
-	const styleComputer = $derived(computeMacroStyleWithError(validateResult.error));
+	const styleComputer = $derived(
+		computeMacroStyleWithError(validateResult.error),
+	);
 
 	$effect.pre(() => {
 		if (ignoreValidation || validateResult.ok) {
@@ -42,7 +44,11 @@
 	});
 
 	const hint = $derived(
-		[value.options.optional && 'optional', 'macro', value.options.integer ? 'integer' : 'number']
+		[
+			value.options.optional && 'optional',
+			'macro',
+			value.options.integer ? 'integer' : 'number',
+		]
 			.filter(Boolean)
 			.join(' '),
 	);

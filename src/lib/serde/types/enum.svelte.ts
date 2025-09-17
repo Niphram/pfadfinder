@@ -1,10 +1,16 @@
 import { Err, Ok, type Result } from '$lib/utils';
 
-import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../interfaces';
+import {
+	DESERIALIZE_SYMBOL,
+	SERIALIZE_SYMBOL,
+	type Serializable,
+} from '../interfaces';
 import type { Option } from '../optional';
 
-export class EnumWrapper<Values extends readonly (string | number)[], IsOptional extends boolean>
-	implements Serializable
+export class EnumWrapper<
+	Values extends readonly (string | number)[],
+	IsOptional extends boolean,
+> implements Serializable
 {
 	value: Option<Values[number], IsOptional>;
 
@@ -37,7 +43,10 @@ export class EnumWrapper<Values extends readonly (string | number)[], IsOptional
 	[DESERIALIZE_SYMBOL](value: unknown) {
 		if (value === null && this.options.optional) {
 			this.value = null as Option<Values[number], IsOptional>;
-		} else if (value !== null && this.values.includes(value as Values[number])) {
+		} else if (
+			value !== null &&
+			this.values.includes(value as Values[number])
+		) {
 			this.value = value as Option<Values[number], IsOptional>;
 		}
 	}
@@ -59,5 +68,9 @@ export function enumeration<
 	value: Option<Values[number], IsOptional>,
 	options?: Partial<EnumerationOptions<IsOptional>>,
 ) {
-	return new EnumWrapper(values, value, Object.assign({}, DEFAULT_OPTIONS, options));
+	return new EnumWrapper(
+		values,
+		value,
+		Object.assign({}, DEFAULT_OPTIONS, options),
+	);
 }

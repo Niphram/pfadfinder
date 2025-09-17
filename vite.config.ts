@@ -5,7 +5,9 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
 	plugins: [sveltekit()],
 	define: {
-		__BUILD_DATE__: JSON.stringify(new Date().toISOString().replace(/[^0-9]/g, '')),
+		__BUILD_DATE__: JSON.stringify(
+			new Date().toISOString().replace(/[^0-9]/g, ''),
+		),
 	},
 	test: {
 		projects: [

@@ -25,7 +25,10 @@
 	});
 
 	const hint = $derived(
-		[value.options.optional && 'optional', value.options.integer ? 'integer' : 'number']
+		[
+			value.options.optional && 'optional',
+			value.options.integer ? 'integer' : 'number',
+		]
 			.filter(Boolean)
 			.join(' '),
 	);

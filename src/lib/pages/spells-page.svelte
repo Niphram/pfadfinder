@@ -14,7 +14,13 @@
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 
-	import { getChar, Spell, SPELL_LEVELS, SpellLikeAbility, type SpellLevel } from '$lib/data';
+	import {
+		getChar,
+		Spell,
+		SPELL_LEVELS,
+		SpellLikeAbility,
+		type SpellLevel,
+	} from '$lib/data';
 
 	const { c } = $derived(getChar());
 
@@ -50,7 +56,9 @@
 		{#if c.spells[level].perDay > 0}
 			<Divider>
 				{$t(`spell.level.${level}`)}
-				<Button size="xs" color="secondary" onclick={() => addSpell(level)}>Add</Button>
+				<Button size="xs" color="secondary" onclick={() => addSpell(level)}
+					>Add</Button
+				>
 			</Divider>
 
 			<div class="mb-2 flex flex-row justify-center gap-2">
@@ -90,7 +98,8 @@
 
 						<Collapse
 							icon="arrow"
-							oncontextmenu={() => openDialog(SpellDialog, { spellIdx, spellLevel: level })}
+							oncontextmenu={() =>
+								openDialog(SpellDialog, { spellIdx, spellLevel: level })}
 						>
 							{#snippet title()}
 								<div class="flex flex-row">
@@ -98,7 +107,9 @@
 									{#if spell.prepared > 0}
 										<button
 											class="btn btn-accent btn-xs w-16"
-											onclick={stopPropagation(preventDefault(() => castSpell(level, spellIdx)))}
+											onclick={stopPropagation(
+												preventDefault(() => castSpell(level, spellIdx)),
+											)}
 										>
 											{spell.prepared - spell.used} / {spell.prepared}
 										</button>
@@ -151,7 +162,11 @@
 
 		{#snippet children({ item: sla, index: slaIndex })}
 			<div class="flex w-full flex-row">
-				<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
+				<div
+					class="drag-handle flex w-6 items-center justify-center"
+					role="button"
+					tabindex="0"
+				>
 					<DragHandle />
 				</div>
 

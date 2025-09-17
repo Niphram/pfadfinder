@@ -57,16 +57,24 @@
 	>
 		{#snippet children(props)}
 			<div class="flex w-full flex-auto flex-row">
-				<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
+				<div
+					class="drag-handle flex w-6 items-center justify-center"
+					role="button"
+					tabindex="0"
+				>
 					<DragHandle />
 				</div>
 
 				{#if !props.item.isContainer}
 					<button
 						class="btn btn-sm md:btn-md min-w-0 flex-auto truncate"
-						onclick={stopPropagation(() => macroNotify(props.item.name, props.item.description, c))}
+						onclick={stopPropagation(() =>
+							macroNotify(props.item.name, props.item.description, c),
+						)}
 						oncontextmenu={stopPropagation(
-							preventDefault(() => openDialog(ItemDialog, { list: items, index: props.index })),
+							preventDefault(() =>
+								openDialog(ItemDialog, { list: items, index: props.index }),
+							),
 						)}
 					>
 						<span class="truncate">
@@ -77,7 +85,9 @@
 						<button
 							class="btn btn-accent btn-sm md:btn-md ml-2 w-28 px-2"
 							onclick={stopPropagation(
-								() => items[props.index].remaining > 0 && items[props.index].remaining--,
+								() =>
+									items[props.index].remaining > 0 &&
+									items[props.index].remaining--,
 							)}
 						>
 							{props.item.remaining}{#if props.item.chargeType === 'perDay'}
@@ -89,10 +99,14 @@
 					<Collapse
 						icon="arrow"
 						bind:open={items[props.index].containerOpen}
-						oncontextmenu={() => openDialog(ItemDialog, { list: items, index: props.index })}
+						oncontextmenu={() =>
+							openDialog(ItemDialog, { list: items, index: props.index })}
 					>
 						{#snippet title()}
-							<span class="text-sm font-semibold" class:underline={props.item.equipped}>
+							<span
+								class="text-sm font-semibold"
+								class:underline={props.item.equipped}
+							>
 								{props.item.name}
 							</span>
 							<span class="badge badge-md">

@@ -1,4 +1,10 @@
-import { ClassSerializer, derive, macro, number, type SerdeProxy } from '$lib/serde';
+import {
+	ClassSerializer,
+	derive,
+	macro,
+	number,
+	type SerdeProxy,
+} from '$lib/serde';
 import { mapSum } from '$lib/utils';
 
 import { Character } from './character.svelte';
@@ -27,7 +33,9 @@ export class HitPoints extends ClassSerializer {
 
 	nonlethalDamage = number(0, { min: 0 });
 
-	readonly current = derive<Character>((c) => c.hp.max - this.damageTaken.value);
+	readonly current = derive<Character>(
+		(c) => c.hp.max - this.damageTaken.value,
+	);
 
 	readonly conHp = derive<Character>((c) => c.classes.levels * c.con.mod);
 

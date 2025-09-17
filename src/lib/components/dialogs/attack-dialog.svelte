@@ -39,7 +39,11 @@
 		<div class="divider">
 			<div class="flex flex-row gap-2">
 				Attack
-				<input type="checkbox" class="toggle" bind:checked={c.combat.attacks[index].hasAttack} />
+				<input
+					type="checkbox"
+					class="toggle"
+					bind:checked={c.combat.attacks[index].hasAttack}
+				/>
 			</div>
 		</div>
 
@@ -86,7 +90,11 @@
 		<div class="divider">
 			<div class="flex flex-row gap-2">
 				Damage
-				<input type="checkbox" class="toggle" bind:checked={c.combat.attacks[index].hasDamage} />
+				<input
+					type="checkbox"
+					class="toggle"
+					bind:checked={c.combat.attacks[index].hasDamage}
+				/>
 			</div>
 		</div>
 
@@ -110,11 +118,18 @@
 
 		<label class="label">
 			Show notes in overview
-			<input type="checkbox" bind:checked={c.combat.attacks[index].showNotes} class="toggle" />
+			<input
+				type="checkbox"
+				bind:checked={c.combat.attacks[index].showNotes}
+				class="toggle"
+			/>
 		</label>
 	{/if}
 
-	<button onclick={deleteAttack} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button
+		onclick={deleteAttack}
+		class="btn btn-error mt-4 w-max self-center uppercase"
+	>
 		Delete
 	</button>
 </div>

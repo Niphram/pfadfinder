@@ -11,7 +11,12 @@ export class RangedProperties<T extends Record<string, string | number>> {
 		this.spans = [{ start: 0, length, props: {} }];
 	}
 
-	public setProp<P extends keyof T>(prop: P, value: T[P], start: number, length: number) {
+	public setProp<P extends keyof T>(
+		prop: P,
+		value: T[P],
+		start: number,
+		length: number,
+	) {
 		const startSpanIdx = this.splitAt(start) ?? 0;
 		const endSpanIdx = this.splitAt(start + length) ?? this.spans.length;
 
@@ -63,7 +68,9 @@ export class RangedProperties<T extends Record<string, string | number>> {
 		return spanIdx + 1;
 	}
 
-	private indexToSpan(idx: number): [spanIdx: number, idxInSpan: number] | undefined {
+	private indexToSpan(
+		idx: number,
+	): [spanIdx: number, idxInSpan: number] | undefined {
 		for (let i = 0; i < this.spans.length; i++) {
 			const span = this.spans[i];
 			const spanEndIdx = span.start + span.length;

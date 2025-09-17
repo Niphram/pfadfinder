@@ -31,10 +31,19 @@
 
 <div class="flex flex-col gap-2">
 	{#if index < list.length}
-		<Input name="itemName" label="Name" placeholder="Type here" value={list[index].$.name} />
+		<Input
+			name="itemName"
+			label="Name"
+			placeholder="Type here"
+			value={list[index].$.name}
+		/>
 
 		<div class="flex flex-row gap-2">
-			<Number value={list[index].$.quantity} name="itemQuantity" label="Quantity" />
+			<Number
+				value={list[index].$.quantity}
+				name="itemQuantity"
+				label="Quantity"
+			/>
 			<Number value={list[index].$.weight} name="itemWeight" label="Weight" />
 		</div>
 
@@ -46,7 +55,11 @@
 		/>
 
 		{#if list[index].isContainer}
-			<Toggle name="isEquipped" label="Equipped?" bind:checked={list[index].equipped} />
+			<Toggle
+				name="isEquipped"
+				label="Equipped?"
+				bind:checked={list[index].equipped}
+			/>
 		{/if}
 
 		<Divider>
@@ -61,10 +74,18 @@
 
 		{#if list[index].chargeType !== 'none'}
 			<div class="flex flex-row gap-2">
-				<Number label="Remaining charges" name="itemCharges" value={list[index].$.remaining} />
+				<Number
+					label="Remaining charges"
+					name="itemCharges"
+					value={list[index].$.remaining}
+				/>
 
 				{#if list[index].chargeType === 'perDay'}
-					<Number label="Per Day" name="itemChargesPerDay" value={list[index].$.perDay} />
+					<Number
+						label="Per Day"
+						name="itemChargesPerDay"
+						value={list[index].$.perDay}
+					/>
 				{/if}
 			</div>
 		{/if}
@@ -77,7 +98,10 @@
 		/>
 	{/if}
 
-	<button onclick={deleteItem} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button
+		onclick={deleteItem}
+		class="btn btn-error mt-4 w-max self-center uppercase"
+	>
 		Delete
 	</button>
 </div>

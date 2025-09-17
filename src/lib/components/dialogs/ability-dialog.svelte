@@ -19,7 +19,11 @@
 </script>
 
 <div class="flex flex-col gap-2">
-	<MacroNumber value={ability.$.base} name="abilityBase" label="Base Ability Score" />
+	<MacroNumber
+		value={ability.$.base}
+		name="abilityBase"
+		label="Base Ability Score"
+	/>
 	<MacroNumber value={ability.$.bonus} name="abilityBonus" label="Bonus" />
 	<MacroNumber value={ability.$.temp} name="abilityTemp" label="Temp" />
 	<Number value={ability.$.damage} name="abilityDamage" label="Damage" />

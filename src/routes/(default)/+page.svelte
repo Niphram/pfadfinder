@@ -28,7 +28,9 @@
 	}
 
 	let files = $state<FileList>();
-	const validInputFile = $derived(files?.length === 1 && files[0].type === 'application/json');
+	const validInputFile = $derived(
+		files?.length === 1 && files[0].type === 'application/json',
+	);
 
 	async function importChar() {
 		if (files?.length !== 1) {
@@ -54,9 +56,13 @@
 
 		if (!char) return;
 
-		const file = new File([JSON.stringify(char[SERIALIZE_SYMBOL]())], `${char.name.value}.json`, {
-			type: 'application/json',
-		});
+		const file = new File(
+			[JSON.stringify(char[SERIALIZE_SYMBOL]())],
+			`${char.name.value}.json`,
+			{
+				type: 'application/json',
+			},
+		);
 
 		const link = document.createElement('a');
 		const url = URL.createObjectURL(file);
@@ -83,17 +89,26 @@
 	<div class="modal-box">
 		<form method="dialog" class="modal-backdrop">
 			<div class="flex flex-col gap-4">
-				<h3 class="text-primary-content text-lg font-bold">Character options</h3>
+				<h3 class="text-primary-content text-lg font-bold">
+					Character options
+				</h3>
 
-				<button class="btn btn-secondary" onclick={() => duplicateChar(selectedCharacter)}>
+				<button
+					class="btn btn-secondary"
+					onclick={() => duplicateChar(selectedCharacter)}
+				>
 					Copy
 				</button>
-				<button class="btn btn-secondary" onclick={() => exportChar(selectedCharacter)}>
+				<button
+					class="btn btn-secondary"
+					onclick={() => exportChar(selectedCharacter)}
+				>
 					Export
 				</button>
 				<button
 					class="btn btn-warning"
-					onclick={() => confirm('Are you sure?') && deleteChar(selectedCharacter)}
+					onclick={() =>
+						confirm('Are you sure?') && deleteChar(selectedCharacter)}
 				>
 					Delete
 				</button>
@@ -121,16 +136,24 @@
 					>
 						<div class="list-col-grow overflow-hidden">
 							<div class="min-w-0 truncate">{name}</div>
-							<div class="min-w-0 truncate text-xs font-semibold uppercase opacity-60">
+							<div
+								class="min-w-0 truncate text-xs font-semibold uppercase opacity-60"
+							>
 								{description}
 							</div>
 						</div>
 						<div class="flex flex-col items-end justify-center">
-							<div class="badge badge-xs badge-soft badge-neutral uppercase">{system}</div>
-							<div class="text-right text-xs font-semibold uppercase opacity-60">
+							<div class="badge badge-xs badge-soft badge-neutral uppercase">
+								{system}
+							</div>
+							<div
+								class="text-right text-xs font-semibold uppercase opacity-60"
+							>
 								{updated_at.toLocaleDateString()}
 							</div>
-							<div class="text-right text-xs font-semibold uppercase opacity-60">
+							<div
+								class="text-right text-xs font-semibold uppercase opacity-60"
+							>
 								{updated_at.toLocaleTimeString()}
 							</div>
 						</div>
@@ -139,7 +162,9 @@
 			{/each}
 		</ul>
 
-		<button onclick={() => createChar()} class="btn btn-primary">New Character</button>
+		<button onclick={() => createChar()} class="btn btn-primary"
+			>New Character</button
+		>
 
 		<div class="flex flex-row gap-2">
 			<label class="form-control w-full">
@@ -150,7 +175,11 @@
 					class="file-input file-input-bordered w-full"
 				/>
 			</label>
-			<button class="btn btn-secondary" disabled={!validInputFile} onclick={importChar}>
+			<button
+				class="btn btn-secondary"
+				disabled={!validInputFile}
+				onclick={importChar}
+			>
 				Import
 			</button>
 		</div>

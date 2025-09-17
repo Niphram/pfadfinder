@@ -63,7 +63,10 @@
 	tabindex="0"
 >
 	{#if title}
-		<div class={['collapse-title h-min min-h-0 py-2 md:py-4', titleClass]} class:pe-4={!icon}>
+		<div
+			class={['collapse-title h-min min-h-0 py-2 md:py-4', titleClass]}
+			class:pe-4={!icon}
+		>
 			{@render title?.({ open })}
 		</div>
 	{/if}

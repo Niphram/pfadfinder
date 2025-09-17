@@ -10,7 +10,8 @@
 		decoration: string;
 	};
 
-	export type RichInputRangedProperties = RangedProperties<RichInputTextProperties>;
+	export type RichInputRangedProperties =
+		RangedProperties<RichInputTextProperties>;
 
 	type Props = {
 		value: string;

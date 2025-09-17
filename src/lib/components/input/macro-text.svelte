@@ -28,7 +28,9 @@
 	});
 
 	const hint = $derived(
-		[value.options.minLength === 0 && 'optional', 'macro-text'].filter(Boolean).join(' '),
+		[value.options.minLength === 0 && 'optional', 'macro-text']
+			.filter(Boolean)
+			.join(' '),
 	);
 
 	const feedback = $derived({

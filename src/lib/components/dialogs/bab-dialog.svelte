@@ -9,4 +9,9 @@
 	$title = 'Base Attack Bonus';
 </script>
 
-<MacroTextArea value={c.combat.bab.$.notes} name="babNotes" label="Notes" placeholder="Notes" />
+<MacroTextArea
+	value={c.combat.bab.$.notes}
+	name="babNotes"
+	label="Notes"
+	placeholder="Notes"
+/>

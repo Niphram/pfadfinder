@@ -16,7 +16,9 @@
 	let { text, element = 'p', class: className }: Props = $props();
 
 	let parsed = $derived(parseTextWithMacros(text, c));
-	let lines = $derived(parsed.split('\n').filter((line) => line.trim().length > 0));
+	let lines = $derived(
+		parsed.split('\n').filter((line) => line.trim().length > 0),
+	);
 </script>
 
 {#each lines as line, i (i)}

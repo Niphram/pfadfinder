@@ -19,7 +19,10 @@
 		// Load theme from local storage
 		if (browser) {
 			// Check OS preferred color scheme
-			if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+			if (
+				window.matchMedia &&
+				window.matchMedia('(prefers-color-scheme: dark)').matches
+			) {
 				set(true);
 			}
 
@@ -51,7 +54,10 @@
 
 	$effect.pre(() => {
 		if (browser) {
-			document.body.setAttribute('data-theme', $isDarkMode ? darkTheme : lightTheme);
+			document.body.setAttribute(
+				'data-theme',
+				$isDarkMode ? darkTheme : lightTheme,
+			);
 		}
 	});
 </script>

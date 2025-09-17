@@ -26,7 +26,9 @@
 	}
 
 	function addDamageToSLA() {
-		c.spells.spellLikeAbilities[slaIndex].$.damage.value.push(new SpellAttackDamage());
+		c.spells.spellLikeAbilities[slaIndex].$.damage.value.push(
+			new SpellAttackDamage(),
+		);
 	}
 
 	function removeDamageFromSLA(idx: number) {
@@ -132,7 +134,9 @@
 				Saving Throw
 				<Toggle
 					name="savingThrow"
-					bind:checked={c.spells.spellLikeAbilities[slaIndex].savingThrow.hasSave}
+					bind:checked={
+						c.spells.spellLikeAbilities[slaIndex].savingThrow.hasSave
+					}
 				/>
 			</div>
 		</div>
@@ -160,7 +164,10 @@
 
 		<Divider>
 			Attack
-			<Toggle name="attack" bind:checked={c.spells.spellLikeAbilities[slaIndex].attack.hasAttack} />
+			<Toggle
+				name="attack"
+				bind:checked={c.spells.spellLikeAbilities[slaIndex].attack.hasAttack}
+			/>
 		</Divider>
 
 		{#if c.spells.spellLikeAbilities[slaIndex].attack.hasAttack}
@@ -194,7 +201,10 @@
 
 		<Divider>
 			Damage
-			<button class="btn btn-secondary btn-xs" onclick={preventDefault(addDamageToSLA)}>Add</button>
+			<button
+				class="btn btn-secondary btn-xs"
+				onclick={preventDefault(addDamageToSLA)}>Add</button
+			>
 		</Divider>
 
 		{#each c.spells.spellLikeAbilities[slaIndex].damage as damage, damageIdx (damageIdx)}
@@ -217,7 +227,10 @@
 		/>
 	{/if}
 
-	<button onclick={deleteSLA} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button
+		onclick={deleteSLA}
+		class="btn btn-error mt-4 w-max self-center uppercase"
+	>
 		Delete
 	</button>
 </div>

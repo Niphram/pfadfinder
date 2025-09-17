@@ -92,7 +92,10 @@
 		/>
 	{/if}
 
-	<button onclick={deleteAcItem} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button
+		onclick={deleteAcItem}
+		class="btn btn-error mt-4 w-max self-center uppercase"
+	>
 		Delete
 	</button>
 </div>

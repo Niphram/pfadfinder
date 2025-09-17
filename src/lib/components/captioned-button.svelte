@@ -11,7 +11,13 @@
 		oncontextmenu?: MouseEventHandler<HTMLButtonElement>;
 	}
 
-	let { label, caption, underline = false, onclick, oncontextmenu }: Props = $props();
+	let {
+		label,
+		caption,
+		underline = false,
+		onclick,
+		oncontextmenu,
+	}: Props = $props();
 </script>
 
 <button

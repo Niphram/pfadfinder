@@ -57,12 +57,21 @@
 	>
 		{#snippet children({ item, index })}
 			<div class="flex w-full flex-row">
-				<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
+				<div
+					class="drag-handle flex w-6 items-center justify-center"
+					role="button"
+					tabindex="0"
+				>
 					<DragHandle />
 				</div>
-				<Collapse icon="arrow" oncontextmenu={() => openDialog(FeatDialog, { index })}>
+				<Collapse
+					icon="arrow"
+					oncontextmenu={() => openDialog(FeatDialog, { index })}
+				>
 					{#snippet title()}
-						<span class="text-sm font-semibold">{item.name} ({$t(`feats.type.${item.type}`)})</span>
+						<span class="text-sm font-semibold"
+							>{item.name} ({$t(`feats.type.${item.type}`)})</span
+						>
 					{/snippet}
 
 					<div class="flex flex-col gap-2">
@@ -113,14 +122,20 @@
 	>
 		{#snippet children({ item, index })}
 			<div class="flex w-full flex-row items-stretch">
-				<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
+				<div
+					class="drag-handle flex w-6 items-center justify-center"
+					role="button"
+					tabindex="0"
+				>
 					<DragHandle />
 				</div>
 				<div class="flex grow flex-row items-stretch gap-2">
 					<button
 						class="btn btn-sm md:btn-md flex-1"
 						onclick={() => macroNotify(item.name, item.description, c)}
-						oncontextmenu={preventDefault(() => openDialog(TraitDialog, { index }))}
+						oncontextmenu={preventDefault(() =>
+							openDialog(TraitDialog, { index }),
+						)}
 					>
 						{item.name}
 					</button>

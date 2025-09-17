@@ -7,7 +7,10 @@ import { Parser } from './parser';
 
 const MACRO = /{{(.*?)}}/g;
 
-export function parseTextWithMacros(input: string, char: SerdeProxy<Character>): string {
+export function parseTextWithMacros(
+	input: string,
+	char: SerdeProxy<Character>,
+): string {
 	const parsed = input.replaceAll(MACRO, (match) => {
 		const macro = match.substring(2, match.length - 2);
 

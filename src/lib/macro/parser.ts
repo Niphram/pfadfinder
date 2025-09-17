@@ -20,7 +20,11 @@ const enum Precedence {
 	UNARY,
 }
 
-function parserError(message: string, fromToken?: Token, toToken?: Token): ParserError {
+function parserError(
+	message: string,
+	fromToken?: Token,
+	toToken?: Token,
+): ParserError {
 	const from = fromToken?.from ?? 0;
 	const to = toToken?.to ?? fromToken?.to ?? 0;
 
@@ -52,7 +56,10 @@ export class Parser {
 		const result = yield* this.Expression();
 
 		if (this.lookahead) {
-			return yield parserError(`Unexpected Token: ${this.lookahead.value}`, this.lookahead);
+			return yield parserError(
+				`Unexpected Token: ${this.lookahead.value}`,
+				this.lookahead,
+			);
 		}
 
 		return result;
@@ -78,7 +85,9 @@ export class Parser {
 		const token = this.lookahead;
 
 		if (!token) {
-			return yield parserError(`Unexpected end of input, expected "${tokenType}".`);
+			return yield parserError(
+				`Unexpected end of input, expected "${tokenType}".`,
+			);
 		}
 
 		if (token.type !== tokenType) {
@@ -95,14 +104,18 @@ export class Parser {
 	}
 
 	// Try to consume the expected token, but don't fail otherwise
-	private *consumeOpt(tokenType: TokenType): Generator<ParserError, Token | undefined> {
+	private *consumeOpt(
+		tokenType: TokenType,
+	): Generator<ParserError, Token | undefined> {
 		if (this.lookahead?.type !== tokenType) return undefined;
 
 		return yield* this.consume(tokenType);
 	}
 
 	// Try each expected token and consume the first matching one
-	private *consumeOneOf(...tokenTypes: TokenType[]): Generator<ParserError, Token> {
+	private *consumeOneOf(
+		...tokenTypes: TokenType[]
+	): Generator<ParserError, Token> {
 		if (!this.lookahead) {
 			return yield parserError(
 				`Unexpected end of input, expected one of "${tokenTypes.join(', ')}".`,
@@ -124,10 +137,15 @@ export class Parser {
 	 * Expression
 	 *    = Prefix (Infix)*
 	 */
-	private *Expression(prec: Precedence = Precedence.DEFAULT): Generator<ParserError, AstNode> {
+	private *Expression(
+		prec: Precedence = Precedence.DEFAULT,
+	): Generator<ParserError, AstNode> {
 		let left = yield* this.Prefix();
 
-		while (this.lookahead && prec < this.getOperatorPrecedence(this.lookahead.value)) {
+		while (
+			this.lookahead &&
+			prec < this.getOperatorPrecedence(this.lookahead.value)
+		) {
 			left = yield* this.Infix(left, this.lookahead.type);
 		}
 
@@ -158,7 +176,9 @@ export class Parser {
 	 */
 	private *Prefix(): Generator<ParserError, AstNode> {
 		if (!this.lookahead) {
-			return yield parserError(`Unexpected end of input, expected a valid expression.`);
+			return yield parserError(
+				`Unexpected end of input, expected a valid expression.`,
+			);
 		}
 
 		switch (this.lookahead?.type) {
@@ -175,14 +195,20 @@ export class Parser {
 				return yield* this.Attribute();
 		}
 
-		return yield parserError(`Unexpected Token: "${this.lookahead?.value}".`, this.lookahead);
+		return yield parserError(
+			`Unexpected Token: "${this.lookahead?.value}".`,
+			this.lookahead,
+		);
 	}
 
 	/**
 	 * Infix
 	 *    = ("+" / "-" / "*" / "/" / "%") Expression
 	 */
-	private *Infix(left: AstNode, operatorType: TokenType): Generator<ParserError, BinaryNode> {
+	private *Infix(
+		left: AstNode,
+		operatorType: TokenType,
+	): Generator<ParserError, BinaryNode> {
 		const token = yield* this.consume(operatorType);
 		const newPrec = this.getOperatorPrecedence(token.value);
 
@@ -240,7 +266,10 @@ export class Parser {
 				};
 
 			default:
-				return yield parserError(`Unexpected Token: "${token.value}", expected "+" or "-".`, token);
+				return yield parserError(
+					`Unexpected Token: "${token.value}", expected "+" or "-".`,
+					token,
+				);
 		}
 	}
 
@@ -250,7 +279,10 @@ export class Parser {
 	 *    / DECIMAL
 	 */
 	private *Constant(): Generator<ParserError, ConstantNode> {
-		const token = yield* this.consumeOneOf(TokenType.INTEGER, TokenType.DECIMAL);
+		const token = yield* this.consumeOneOf(
+			TokenType.INTEGER,
+			TokenType.DECIMAL,
+		);
 
 		return {
 			type: AstNodeType.Constant,
@@ -271,7 +303,10 @@ export class Parser {
 
 		let endToken = atToken;
 		do {
-			endToken = yield* this.consumeOneOf(TokenType.IDENTIFIER, TokenType.INTEGER);
+			endToken = yield* this.consumeOneOf(
+				TokenType.IDENTIFIER,
+				TokenType.INTEGER,
+			);
 			path.push(endToken.value);
 		} while (yield* this.consumeOpt(TokenType.PERIOD));
 
@@ -323,7 +358,8 @@ export class Parser {
 	 * 	  / "step" "(" Expression "," Expression ")"
 	 */
 	private *Function(): Generator<ParserError, FuncNode> {
-		const [func, expectedArgs, fromToken] = yield* this.FunctionNameAndArgsCount();
+		const [func, expectedArgs, fromToken] =
+			yield* this.FunctionNameAndArgsCount();
 		const lParenthesisToken = yield* this.consume(TokenType.PARENTHESIS_LEFT);
 		const nodes = yield* this.CommaSeperatedExpressions();
 

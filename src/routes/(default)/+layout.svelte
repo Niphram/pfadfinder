@@ -7,7 +7,10 @@
 <div class="flex min-h-screen flex-col items-stretch gap-4">
 	<div class="flex grow flex-col gap-4">
 		<!-- HEADER -->
-		<div id="header" class="bg-base-200 sticky top-0 z-40 flex w-full flex-col drop-shadow-xl">
+		<div
+			id="header"
+			class="bg-base-200 sticky top-0 z-40 flex w-full flex-col drop-shadow-xl"
+		>
 			<div class="flex flex-row items-center gap-2 p-2">
 				<p class="text-lg font-bold">Pfadfinder</p>
 			</div>

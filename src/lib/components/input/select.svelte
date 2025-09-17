@@ -1,4 +1,7 @@
-<script lang="ts" generics="Values extends readonly (string|number)[], IsOptional extends boolean">
+<script
+	lang="ts"
+	generics="Values extends readonly (string|number)[], IsOptional extends boolean"
+>
 	import type { ClassValue } from 'svelte/elements';
 
 	import type { EnumWrapper } from '$lib/serde';
@@ -48,9 +51,16 @@
 </script>
 
 <InputWrapper legend={label} {hint} {...feedback}>
-	<select {name} class={['select w-full', className]} bind:value={tempEnum.value}>
+	<select
+		{name}
+		class={['select w-full', className]}
+		bind:value={tempEnum.value}
+	>
 		{#if value.options.optional}
-			<option value={null}>{translate?.(null as Option<Values[number], IsOptional>) ?? '-'}</option>
+			<option value={null}
+				>{translate?.(null as Option<Values[number], IsOptional>) ??
+					'-'}</option
+			>
 		{/if}
 		{#each value.values as option (option)}
 			<option value={option}>{translate?.(option) ?? `${option}`}</option>

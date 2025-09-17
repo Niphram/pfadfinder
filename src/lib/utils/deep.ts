@@ -7,7 +7,11 @@ export function getDeep<T, P extends Paths<T>>(obj: T, key: P): Get<T, P> {
 	return parts.reduce((obj, p) => obj[p], obj);
 }
 
-export function setDeep<T, P extends Paths<T>, V extends Get<T, P>>(obj: T, key: P, val: V) {
+export function setDeep<T, P extends Paths<T>, V extends Get<T, P>>(
+	obj: T,
+	key: P,
+	val: V,
+) {
 	const parts = key.split('.');
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

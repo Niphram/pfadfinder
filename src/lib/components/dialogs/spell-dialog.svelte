@@ -25,7 +25,9 @@
 	}
 
 	function addDamageToSpell() {
-		c.spells[spellLevel].spells[spellIdx].$.damage.value.push(new SpellAttackDamage());
+		c.spells[spellLevel].spells[spellIdx].$.damage.value.push(
+			new SpellAttackDamage(),
+		);
 	}
 
 	function removeDamageFromSpell(idx: number) {
@@ -135,7 +137,9 @@
 				Saving Throw
 				<Toggle
 					name="savingThrow"
-					bind:checked={c.spells[spellLevel].spells[spellIdx].savingThrow.hasSave}
+					bind:checked={
+						c.spells[spellLevel].spells[spellIdx].savingThrow.hasSave
+					}
 				/>
 			</div>
 		</div>
@@ -203,8 +207,9 @@
 		<div class="divider mb-0">
 			<div class="flex flex-row gap-2">
 				Damage
-				<button class="btn btn-secondary btn-xs" onclick={preventDefault(addDamageToSpell)}
-					>Add</button
+				<button
+					class="btn btn-secondary btn-xs"
+					onclick={preventDefault(addDamageToSpell)}>Add</button
 				>
 			</div>
 		</div>
@@ -239,7 +244,10 @@
 		/>
 	{/if}
 
-	<button onclick={deleteSpell} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button
+		onclick={deleteSpell}
+		class="btn btn-error mt-4 w-max self-center uppercase"
+	>
 		Delete
 	</button>
 </div>

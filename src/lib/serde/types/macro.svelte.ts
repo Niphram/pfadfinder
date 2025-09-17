@@ -3,7 +3,11 @@ import { evalNodeGen } from '$lib/macro/evaluate';
 import { Parser } from '$lib/macro/parser';
 import { Err, iteratorResultToResult, Ok, type Result } from '$lib/utils';
 
-import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../interfaces';
+import {
+	DESERIALIZE_SYMBOL,
+	SERIALIZE_SYMBOL,
+	type Serializable,
+} from '../interfaces';
 import type { Option } from '../optional';
 
 function validationError<T>(message: string): Result<T, RuntimeError> {
@@ -41,7 +45,9 @@ export class Macro<IsOptional extends boolean> implements Serializable {
 			return this.parseResult;
 		}
 
-		const result = iteratorResultToResult(evalNodeGen(this.parseResult.value, c).next());
+		const result = iteratorResultToResult(
+			evalNodeGen(this.parseResult.value, c).next(),
+		);
 
 		// Validate the result
 		if (result.ok) {

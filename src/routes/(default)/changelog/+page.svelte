@@ -16,7 +16,11 @@
 
 	<ul>
 		{#each data.changelogs as { title } (title)}
-			<li><a href={resolve('/(default)/changelog/[version]', { version: title })}>{title}</a></li>
+			<li>
+				<a href={resolve('/(default)/changelog/[version]', { version: title })}
+					>{title}</a
+				>
+			</li>
 		{/each}
 	</ul>
 </article>

@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
 
-	import { closeDialog, openDialog, title } from '$lib/components/dialog.svelte';
+	import {
+		closeDialog,
+		openDialog,
+		title,
+	} from '$lib/components/dialog.svelte';
 	import RestDialog from '$lib/components/dialogs/rest-dialog.svelte';
 	import SettingsDialog from '$lib/components/dialogs/settings-dialog.svelte';
 
@@ -31,7 +35,11 @@
 				onclick={() => {
 					// Quick fix after switching to hash-routing.
 					const page = document.getElementById(key);
-					page?.parentElement?.scrollTo({ behavior: 'smooth', left: page?.offsetLeft, top: 0 });
+					page?.parentElement?.scrollTo({
+						behavior: 'smooth',
+						left: page?.offsetLeft,
+						top: 0,
+					});
 					closeDialog();
 				}}>{$t(`texts.pages.${key}`)}</button
 			>
@@ -40,11 +48,15 @@
 
 	<div class="grow"></div>
 
-	<button class="btn btn-accent w-full" onclick={() => openDialog(RestDialog, {})}>Rest</button>
+	<button
+		class="btn btn-accent w-full"
+		onclick={() => openDialog(RestDialog, {})}>Rest</button
+	>
 
 	<div class="divider">Options</div>
 
-	<button class="btn btn-outline btn-accent w-full" onclick={() => openDialog(SettingsDialog, {})}
-		>Settings</button
+	<button
+		class="btn btn-outline btn-accent w-full"
+		onclick={() => openDialog(SettingsDialog, {})}>Settings</button
 	>
 </div>

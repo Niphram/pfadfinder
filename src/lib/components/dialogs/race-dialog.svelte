@@ -13,7 +13,12 @@
 </script>
 
 <div class="flex flex-col gap-2">
-	<Input name="raceName" label="Name" placeholder="Race" value={c.race.$.name} />
+	<Input
+		name="raceName"
+		label="Name"
+		placeholder="Race"
+		value={c.race.$.name}
+	/>
 
 	{#each ABILITY_KEYS as key (key)}
 		<MacroNumber
@@ -24,5 +29,10 @@
 		/>
 	{/each}
 
-	<MacroNumber value={c.race.$.speed} name="raceSpeed" label="Speed" placeholder="Speed" />
+	<MacroNumber
+		value={c.race.$.speed}
+		name="raceSpeed"
+		label="Speed"
+		placeholder="Speed"
+	/>
 </div>

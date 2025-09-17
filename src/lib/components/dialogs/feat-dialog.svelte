@@ -25,7 +25,12 @@
 
 <div class="flex flex-col gap-2">
 	{#if index < c.feats.length}
-		<Input name="featName" label="Name" placeholder="Type here" value={c.feats[index].$.name} />
+		<Input
+			name="featName"
+			label="Name"
+			placeholder="Type here"
+			value={c.feats[index].$.name}
+		/>
 
 		<MacroTextArea
 			name="featPrerequisites"
@@ -67,7 +72,10 @@
 		/>
 	{/if}
 
-	<button onclick={deleteFeat} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button
+		onclick={deleteFeat}
+		class="btn btn-error mt-4 w-max self-center uppercase"
+	>
 		Delete
 	</button>
 </div>

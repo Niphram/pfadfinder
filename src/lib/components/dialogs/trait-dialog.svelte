@@ -23,7 +23,12 @@
 
 <div class="flex flex-col gap-2">
 	{#if index < c.traits.length}
-		<Input name="traitName" label="Name" placeholder="Type here" value={c.traits[index].$.name} />
+		<Input
+			name="traitName"
+			label="Name"
+			placeholder="Type here"
+			value={c.traits[index].$.name}
+		/>
 
 		<MacroNumber
 			value={c.traits[index].$.perDay}
@@ -40,7 +45,10 @@
 		/>
 	{/if}
 
-	<button onclick={deleteTrait} class="btn btn-error mt-4 w-max self-center uppercase">
+	<button
+		onclick={deleteTrait}
+		class="btn btn-error mt-4 w-max self-center uppercase"
+	>
 		Delete
 	</button>
 </div>

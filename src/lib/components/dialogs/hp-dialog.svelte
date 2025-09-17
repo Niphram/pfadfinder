@@ -89,7 +89,8 @@
 				>
 				<button
 					onclick={preventDefault(() => c.hp.dealNonlethal(modifyAmount))}
-					class="btn grow bg-orange-500 px-2 text-lg lg:text-xl">Nonlethal</button
+					class="btn grow bg-orange-500 px-2 text-lg lg:text-xl"
+					>Nonlethal</button
 				>
 			</div>
 		</div>
@@ -103,20 +104,24 @@
 		{:else if currentAndTempHp === 0}
 			<Alert level="warning">Character's hitpoints are equal to zero</Alert>
 		{:else if c.hp.nonlethalDamage > currentAndTempHp}
-			<Alert level="warning">Nonlethal damage exceeds character's hitpoints</Alert>
+			<Alert level="warning"
+				>Nonlethal damage exceeds character's hitpoints</Alert
+			>
 		{/if}
 
 		{#if c.hp.nonlethalDamage >= c.hp.max}
 			<Alert level="warning">
-				Unless you have some ability that says otherwise, nonlethal damage is capped at your maximum
-				hitpoints and any additional nonlethal damage should be treated as lethal damage.
+				Unless you have some ability that says otherwise, nonlethal damage is
+				capped at your maximum hitpoints and any additional nonlethal damage
+				should be treated as lethal damage.
 			</Alert>
 		{/if}
 
 		{#if c.hp.nonlethalDamage > 0}
 			<Alert level="info">
-				Nonlethal damage heals at a rate of 1 hit point per hour per character level. Spells or
-				abilities that restore hitpoints, additionally heal nonlethal damage.
+				Nonlethal damage heals at a rate of 1 hit point per hour per character
+				level. Spells or abilities that restore hitpoints, additionally heal
+				nonlethal damage.
 			</Alert>
 		{/if}
 	</div>
@@ -126,11 +131,16 @@
 
 		{#if conHp !== 0}
 			<Alert level="info">
-				Constitution Mod: {Math.abs(conHp)} HP will be {conHp < 0 ? 'subtracted' : 'added'}
+				Constitution Mod: {Math.abs(conHp)} HP will be {conHp < 0 ? 'subtracted'
+				:	'added'}
 			</Alert>
 		{/if}
 
-		<Number label="Rolled Hitpoints (excluding CON)" name="rolled_hp" value={c.hp.$.rolled} />
+		<Number
+			label="Rolled Hitpoints (excluding CON)"
+			name="rolled_hp"
+			value={c.hp.$.rolled}
+		/>
 
 		<MacroNumber label="Bonus HP" value={c.hp.$.bonus} name="bonus_hp" />
 	</div>

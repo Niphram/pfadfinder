@@ -18,7 +18,10 @@
 	function addItem() {
 		c.equipment.$.items.value.push(new Item());
 
-		openDialog(ItemDialog, { list: c.equipment.items, index: c.equipment.items.length - 1 });
+		openDialog(ItemDialog, {
+			list: c.equipment.items,
+			index: c.equipment.items.length - 1,
+		});
 	}
 
 	function addAcItem() {
@@ -49,7 +52,9 @@
 	<div class="divider">
 		<div class="flex flex-row items-center gap-2">
 			Gear
-			<div class="badge badge-neutral badge-outline">{c.equipment.totalWeight} lb.</div>
+			<div class="badge badge-neutral badge-outline">
+				{c.equipment.totalWeight} lb.
+			</div>
 			<button class="btn btn-secondary btn-xs" onclick={addItem}>Add</button>
 		</div>
 	</div>
@@ -78,13 +83,19 @@
 	>
 		{#snippet children({ item, index })}
 			<div class="flex w-full flex-auto flex-row">
-				<div class="drag-handle flex w-6 items-center justify-center" role="button" tabindex="0">
+				<div
+					class="drag-handle flex w-6 items-center justify-center"
+					role="button"
+					tabindex="0"
+				>
 					<DragHandle />
 				</div>
 				<button
 					class="btn btn-sm md:btn-md min-w-0 flex-auto truncate"
 					onclick={() => macroNotify(item.name, item.notes, c)}
-					oncontextmenu={preventDefault(() => openDialog(AcItemDialog, { index }))}
+					oncontextmenu={preventDefault(() =>
+						openDialog(AcItemDialog, { index }),
+					)}
 				>
 					<span class="truncate" class:underline={item.equipped}>
 						{item.name} ({$t(`equipment.armorType.${item.type}`)})

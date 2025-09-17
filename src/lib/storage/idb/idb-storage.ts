@@ -30,23 +30,32 @@ export class IDBStorage {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const serialized: any = char[SERIALIZE_SYMBOL]();
 
-		await this.db.transaction('rw!', [this.db.characters, this.db.characterMetadata], async () =>
-			Promise.all([
-				this.db.characters.put(serialized),
-				this.db.characterMetadata.put({
-					id: char.id.value,
-					name: char.name.value,
-					description: char.description,
-					system: char.system.value,
-					updated_at: new Date(),
-				}),
-			]),
+		await this.db.transaction(
+			'rw!',
+			[this.db.characters, this.db.characterMetadata],
+			async () =>
+				Promise.all([
+					this.db.characters.put(serialized),
+					this.db.characterMetadata.put({
+						id: char.id.value,
+						name: char.name.value,
+						description: char.description,
+						system: char.system.value,
+						updated_at: new Date(),
+					}),
+				]),
 		);
 	}
 
 	async deleteCharacter(id: string) {
-		await this.db.transaction('rw!', [this.db.characters, this.db.characterMetadata], async () =>
-			Promise.all([this.db.characters.delete(id), this.db.characterMetadata.delete(id)]),
+		await this.db.transaction(
+			'rw!',
+			[this.db.characters, this.db.characterMetadata],
+			async () =>
+				Promise.all([
+					this.db.characters.delete(id),
+					this.db.characterMetadata.delete(id),
+				]),
 		);
 	}
 

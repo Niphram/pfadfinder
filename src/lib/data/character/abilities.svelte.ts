@@ -19,14 +19,20 @@ export class Ability extends ClassSerializer {
 	readonly damageMod = $derived(Math.trunc(this.damage.value / 2));
 
 	readonly total = derive<Character>(
-		(c) => c[this.key].base + c.race[this.key] + c[this.key].bonus + c[this.key].temp,
+		(c) =>
+			c[this.key].base +
+			c.race[this.key] +
+			c[this.key].bonus +
+			c[this.key].temp,
 	);
 
 	readonly totalNoTemp = derive<Character>(
 		(c) => c[this.key].base + c.race[this.key] + c[this.key].bonus,
 	);
 
-	readonly mod = derive<Character>((c) => Math.floor(c[this.key].total / 2) - 5 - this.damageMod);
+	readonly mod = derive<Character>(
+		(c) => Math.floor(c[this.key].total / 2) - 5 - this.damageMod,
+	);
 
 	readonly skillCheckMod = this.mod;
 

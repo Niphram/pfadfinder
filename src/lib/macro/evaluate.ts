@@ -11,12 +11,16 @@ function runtimeError(message: string, from: number, to: number): RuntimeError {
 	};
 }
 
-function* evalAttribute(node: AttributeNode, char: object): Generator<RuntimeError, number> {
+function* evalAttribute(
+	node: AttributeNode,
+	char: object,
+): Generator<RuntimeError, number> {
 	try {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		let val: any = char;
 		for (const p of node.path) {
-			if (!(p in val)) return yield runtimeError(`Attribute is unknown`, node.from, node.to);
+			if (!(p in val))
+				return yield runtimeError(`Attribute is unknown`, node.from, node.to);
 
 			val = val[p];
 		}
@@ -35,7 +39,11 @@ function evalUnary(op: '+' | '-', value: number): number {
 	return op === '+' ? value : -value;
 }
 
-function evalBinary(op: '+' | '-' | '*' | '/' | '%', left: number, right: number): number {
+function evalBinary(
+	op: '+' | '-' | '*' | '/' | '%',
+	left: number,
+	right: number,
+): number {
 	switch (op) {
 		case '+':
 			return left + right;
@@ -74,7 +82,10 @@ function evalFunc(
 	}
 }
 
-export function* evalNodeGen(node: AstNode, char: object): Generator<RuntimeError, number> {
+export function* evalNodeGen(
+	node: AstNode,
+	char: object,
+): Generator<RuntimeError, number> {
 	switch (node.type) {
 		case AstNodeType.Constant:
 			return node.constant;

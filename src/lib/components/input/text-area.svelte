@@ -26,7 +26,9 @@
 	});
 
 	const hint = $derived(
-		[value.options.minLength === 0 && 'optional', 'text'].filter(Boolean).join(' '),
+		[value.options.minLength === 0 && 'optional', 'text']
+			.filter(Boolean)
+			.join(' '),
 	);
 
 	const feedback = $derived({
@@ -40,7 +42,10 @@
 		{name}
 		{placeholder}
 		{rows}
-		class={['textarea textarea-bordered w-full resize-none', !result.ok && 'input-error']}
+		class={[
+			'textarea textarea-bordered w-full resize-none',
+			!result.ok && 'input-error',
+		]}
 		bind:value={tempString.value}
 	></textarea>
 </InputWrapper>

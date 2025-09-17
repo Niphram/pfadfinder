@@ -11,12 +11,25 @@
 		onchange?: ChangeEventHandler<HTMLInputElement>;
 	}
 
-	let { checked = $bindable(), name, label, disabled, onchange }: Props = $props();
+	let {
+		checked = $bindable(),
+		name,
+		label,
+		disabled,
+		onchange,
+	}: Props = $props();
 </script>
 
 <Fieldset>
 	<label class="fieldset-label">
-		<input {name} type="checkbox" bind:checked class="toggle" {onchange} {disabled} />
+		<input
+			{name}
+			type="checkbox"
+			bind:checked
+			class="toggle"
+			{onchange}
+			{disabled}
+		/>
 		{label}
 	</label>
 </Fieldset>

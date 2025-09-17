@@ -46,7 +46,11 @@
 				value={c.classes.list[classIndex].$.name}
 			/>
 
-			<Number value={c.classes.list[classIndex].$.level} name="classLevel" label="Level" />
+			<Number
+				value={c.classes.list[classIndex].$.level}
+				name="classLevel"
+				label="Level"
+			/>
 		</div>
 
 		<Toggle
@@ -56,8 +60,16 @@
 		/>
 
 		<div class="grid grid-cols-2 gap-4">
-			<Number value={c.classes.list[classIndex].$.bab} name="bab" label="Base Attack Bonus" />
-			<Number value={c.classes.list[classIndex].$.speed} name="classSpeed" label="Speed" />
+			<Number
+				value={c.classes.list[classIndex].$.bab}
+				name="bab"
+				label="Base Attack Bonus"
+			/>
+			<Number
+				value={c.classes.list[classIndex].$.speed}
+				name="classSpeed"
+				label="Speed"
+			/>
 		</div>
 		<div class="grid grid-cols-3 gap-2">
 			{#each SAVE_KEYS as key (key)}
@@ -86,6 +98,7 @@
 	<button
 		onclick={deleteClass}
 		class="btn btn-error mt-4 w-max self-center uppercase"
-		class:btn-outline={!deleteConfirm}>{deleteConfirm ? 'Are you sure?' : 'Delete'}</button
+		class:btn-outline={!deleteConfirm}
+		>{deleteConfirm ? 'Are you sure?' : 'Delete'}</button
 	>
 </div>

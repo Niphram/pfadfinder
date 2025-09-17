@@ -11,7 +11,13 @@ import {
 } from '$lib/serde';
 import { mapMin, mapSum } from '$lib/utils';
 
-export const ARMOR_TYPES = ['light', 'medium', 'heavy', 'shield', 'misc'] as const;
+export const ARMOR_TYPES = [
+	'light',
+	'medium',
+	'heavy',
+	'shield',
+	'misc',
+] as const;
 export type ArmorType = (typeof ARMOR_TYPES)[number];
 
 export const CHARGE_TYPES = ['none', 'perDay', 'total'] as const;
@@ -44,7 +50,9 @@ export class Item extends ClassSerializer {
 
 	readonly totalWeight: number = $derived(
 		this.quantity.value * this.weight.value +
-			(this.isContainer.value ? mapSum(this.children.value, (item) => item.totalWeight) : 0),
+			(this.isContainer.value ?
+				mapSum(this.children.value, (item) => item.totalWeight)
+			:	0),
 	);
 
 	recharge(this: SerdeProxy<Item>) {
@@ -94,12 +102,17 @@ export class Equipment extends ClassSerializer {
 	);
 
 	readonly maxDexBonus = $derived(
-		mapMin(this.acItems.value, (i) => i.maxDexBonus.value ?? Infinity) ?? Infinity,
+		mapMin(this.acItems.value, (i) => i.maxDexBonus.value ?? Infinity) ??
+			Infinity,
 	);
 
-	readonly armorCheckPenalty = $derived(mapSum(this.acItems.value, (i) => i.chkPenalty.value));
+	readonly armorCheckPenalty = $derived(
+		mapSum(this.acItems.value, (i) => i.chkPenalty.value),
+	);
 
 	readonly totalWeight = $derived(
-		mapSum(this.items.value, (i) => (!i.isContainer.value || i.equipped.value ? i.totalWeight : 0)),
+		mapSum(this.items.value, (i) =>
+			!i.isContainer.value || i.equipped.value ? i.totalWeight : 0,
+		),
 	);
 }

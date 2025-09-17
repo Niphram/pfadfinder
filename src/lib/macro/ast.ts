@@ -12,7 +12,12 @@ type NodeCommon = {
 	to: number;
 };
 
-export type AstNode = ConstantNode | AttributeNode | UnaryNode | BinaryNode | FuncNode;
+export type AstNode =
+	| ConstantNode
+	| AttributeNode
+	| UnaryNode
+	| BinaryNode
+	| FuncNode;
 
 export type ConstantNode = {
 	type: AstNodeType.Constant;

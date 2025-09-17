@@ -1,4 +1,12 @@
-import { array, boolean, ClassSerializer, derive, enumeration, number, string } from '$lib/serde';
+import {
+	array,
+	boolean,
+	ClassSerializer,
+	derive,
+	enumeration,
+	number,
+	string,
+} from '$lib/serde';
 import { mapSum } from '$lib/utils';
 
 import { Character } from './character.svelte';

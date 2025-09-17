@@ -10,7 +10,22 @@
 	$title = 'Spell Resistance';
 </script>
 
-<MacroNumber value={c.combat.sr.$.base} name="srBase" label="Base" placeholder="Base" />
-<MacroNumber value={c.combat.sr.$.misc} name="srMisc" label="Misc" placeholder="Misc" />
+<MacroNumber
+	value={c.combat.sr.$.base}
+	name="srBase"
+	label="Base"
+	placeholder="Base"
+/>
+<MacroNumber
+	value={c.combat.sr.$.misc}
+	name="srMisc"
+	label="Misc"
+	placeholder="Misc"
+/>
 
-<MacroTextArea value={c.combat.sr.$.notes} name="srNotes" label="Notes" placeholder="Notes" />
+<MacroTextArea
+	value={c.combat.sr.$.notes}
+	name="srNotes"
+	label="Notes"
+	placeholder="Notes"
+/>

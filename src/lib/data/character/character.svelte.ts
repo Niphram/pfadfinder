@@ -31,7 +31,9 @@ export class Character extends ClassSerializer {
 	system = string('pathfinder');
 
 	get description() {
-		return this.classes.list.value.map((c) => `${c.name.value} ${c.level.value}`).join(', ');
+		return this.classes.list.value
+			.map((c) => `${c.name.value} ${c.level.value}`)
+			.join(', ');
 	}
 
 	readonly race = new Race();

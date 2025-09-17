@@ -1,9 +1,18 @@
-import { derived, writable, type Readable, type Updater, type Writable } from 'svelte/store';
+import {
+	derived,
+	writable,
+	type Readable,
+	type Updater,
+	type Writable,
+} from 'svelte/store';
 
 import { getDeep, setDeep } from './deep';
 import type { Get, Paths, Predicate } from './utilTypes';
 
-export function substore<T, P extends Paths<T>>(store: Writable<T>, key: P): Writable<Get<T, P>> {
+export function substore<T, P extends Paths<T>>(
+	store: Writable<T>,
+	key: P,
+): Writable<Get<T, P>> {
 	const { subscribe } = derived(store, (val) => getDeep(val, key));
 
 	const set = (val: Get<T, P>) => {
@@ -11,7 +20,12 @@ export function substore<T, P extends Paths<T>>(store: Writable<T>, key: P): Wri
 	};
 
 	const update = (cb: Updater<Get<T, P>>) => {
-		store.update((storeVal) => (setDeep(storeVal, key, cb(getDeep(storeVal, key))), storeVal));
+		store.update(
+			(storeVal) => (
+				setDeep(storeVal, key, cb(getDeep(storeVal, key))),
+				storeVal
+			),
+		);
 	};
 
 	return { subscribe, set, update };

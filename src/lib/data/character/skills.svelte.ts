@@ -94,7 +94,9 @@ export class SkillGroup extends ClassSerializer {
 
 	readonly trained: boolean;
 
-	readonly ranks = $derived(mapSum(this.skills.value, (skill) => skill.ranks.value));
+	readonly ranks = $derived(
+		mapSum(this.skills.value, (skill) => skill.ranks.value),
+	);
 
 	constructor(key: SkillKey) {
 		super();

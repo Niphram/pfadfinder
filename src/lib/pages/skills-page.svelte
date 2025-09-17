@@ -12,14 +12,20 @@
 </script>
 
 <div class="flex flex-col gap-2">
-	<div class="divider">Skills (Ranks {c.skills.skillRanks}/{c.classes.ranks})</div>
+	<div class="divider">
+		Skills (Ranks {c.skills.skillRanks}/{c.classes.ranks})
+	</div>
 
 	{#each SKILL_KEYS as key (key)}
 		{#each c.skills[key].skills as variant, index (index)}
 			{@const ability = c.skills[key].skills[index].ability}
 			{@const penalty = c[ability].skillCheckMod !== c[ability].mod}
 
-			{@const skillTags = [penalty && '!', variant.classSkill && 'c', variant.ranks > 0 && 't']
+			{@const skillTags = [
+				penalty && '!',
+				variant.classSkill && 'c',
+				variant.ranks > 0 && 't',
+			]
 				.filter(Boolean)
 				.join(', ')}
 
@@ -31,7 +37,9 @@
 						variant.notes + (penalty ? '\n\nApplied penalty due to armor' : ''),
 						c,
 					)}
-				oncontextmenu={preventDefault(() => openDialog(SkillDialog, { key, index }))}
+				oncontextmenu={preventDefault(() =>
+					openDialog(SkillDialog, { key, index }),
+				)}
 			>
 				<div class="btn btn-ghost join btn-sm flex flex-row gap-1 p-0">
 					<div
@@ -40,11 +48,15 @@
 					>
 						<span class="w-16">{skillTags}</span>
 					</div>
-					<div class="join-item bg-base-200 text-base-content flex grow items-center">
+					<div
+						class="join-item bg-base-200 text-base-content flex grow items-center"
+					>
 						<span
 							class="join-item grow align-middle decoration-wavy"
 							class:underline={variant.notes}
-							>{$t(`skills.${key}`)}{variant.name ? ` (${variant.name})` : ''}</span
+							>{$t(`skills.${key}`)}{variant.name ?
+								` (${variant.name})`
+							:	''}</span
 						>
 					</div>
 					<div

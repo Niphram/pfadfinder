@@ -23,5 +23,12 @@
 </script>
 
 <Fieldset legend={label} class={classname}>
-	<input {name} type="checkbox" bind:checked class="checkbox checkbox-xl" {onchange} {disabled} />
+	<input
+		{name}
+		type="checkbox"
+		bind:checked
+		class="checkbox checkbox-xl"
+		{onchange}
+		{disabled}
+	/>
 </Fieldset>

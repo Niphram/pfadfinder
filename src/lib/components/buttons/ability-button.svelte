@@ -34,11 +34,16 @@
 
 <button
 	onclick={() => notify()}
-	oncontextmenu={preventDefault(() => openDialog(AbilityDialog, { ability: c[key] }))}
+	oncontextmenu={preventDefault(() =>
+		openDialog(AbilityDialog, { ability: c[key] }),
+	)}
 	class="btn h-min p-0"
 >
 	<div class="divide-base-100 flex w-full flex-col divide-y-2 text-center">
-		<div class="py-1 text-3xl font-extrabold" class:text-red-700={c[key].damage > 0}>
+		<div
+			class="py-1 text-3xl font-extrabold"
+			class:text-red-700={c[key].damage > 0}
+		>
 			{withSign(c[key].mod)}
 		</div>
 		<div class="py-1 text-xs decoration-wavy" class:underline={!!c[key].notes}>
@@ -50,7 +55,10 @@
 				</span>
 			{/if}
 		</div>
-		<div class="py-1 uppercase decoration-wavy" class:underline={!!c[key].notes}>
+		<div
+			class="py-1 uppercase decoration-wavy"
+			class:underline={!!c[key].notes}
+		>
 			{$t(`abilities.${key}.short`)}
 		</div>
 	</div>

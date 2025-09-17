@@ -56,7 +56,12 @@ export function computeMacroStyleWithError(error?: ParserError | RuntimeError) {
 		if (error) {
 			const end = error.to - error.from;
 			style.setProp('color', 'var(--color-error)', error.from, end);
-			style.setProp('decoration', 'underline var(--color-error) wavy', error.from, end);
+			style.setProp(
+				'decoration',
+				'underline var(--color-error) wavy',
+				error.from,
+				end,
+			);
 		}
 
 		return style;
@@ -81,8 +86,18 @@ export function computeMacroInTextStyle(input: string) {
 			subTextStyle = computeMacroStyle(content);
 		}
 
-		textStyle.setProp('color', 'var(--color-secondary)', match.index, offset + 2);
-		textStyle.setProp('color', 'var(--color-secondary)', match.index + match[0].length - 2, 2);
+		textStyle.setProp(
+			'color',
+			'var(--color-secondary)',
+			match.index,
+			offset + 2,
+		);
+		textStyle.setProp(
+			'color',
+			'var(--color-secondary)',
+			match.index + match[0].length - 2,
+			2,
+		);
 
 		textStyle.add(subTextStyle, match.index + 2 + offset);
 	}

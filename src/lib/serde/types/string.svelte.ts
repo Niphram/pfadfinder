@@ -1,6 +1,10 @@
 import { Err, Ok, type Result } from '$lib/utils';
 
-import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../interfaces';
+import {
+	DESERIALIZE_SYMBOL,
+	SERIALIZE_SYMBOL,
+	type Serializable,
+} from '../interfaces';
 
 export class StringWrapper<Values extends string> implements Serializable {
 	value: Values;
@@ -54,11 +58,20 @@ const DEFAULT_OPTIONS: StringOptions = {
 	maxLength: Infinity,
 };
 
-export function string(value: string, options?: Partial<StringOptions>): StringWrapper<string>;
+export function string(
+	value: string,
+	options?: Partial<StringOptions>,
+): StringWrapper<string>;
 export function string<Values extends string>(
 	value: Values,
 	options?: Partial<StringOptions>,
 ): StringWrapper<Values>;
-export function string<Values extends string>(value: Values, options?: Partial<StringOptions>) {
-	return new StringWrapper<Values>(value, Object.assign({}, DEFAULT_OPTIONS, options));
+export function string<Values extends string>(
+	value: Values,
+	options?: Partial<StringOptions>,
+) {
+	return new StringWrapper<Values>(
+		value,
+		Object.assign({}, DEFAULT_OPTIONS, options),
+	);
 }

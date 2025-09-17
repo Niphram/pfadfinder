@@ -12,7 +12,9 @@
 
 	$title = 'Macro debugging';
 
-	const testMacro = macro('floor(@classes.list.0.level * 5 / 6) + @int.mod + 3');
+	const testMacro = macro(
+		'floor(@classes.list.0.level * 5 / 6) + @int.mod + 3',
+	);
 	const tokens = $derived(new Tokenizer(testMacro.expr).allTokens());
 
 	const TOKEN_COLORS: Record<TokenType, string> = {
@@ -32,13 +34,21 @@
 </script>
 
 <div class="flex flex-col gap-2">
-	<MacroNumber label="Debug Macro" name="debugMacro" value={testMacro} ignoreValidation />
+	<MacroNumber
+		label="Debug Macro"
+		name="debugMacro"
+		value={testMacro}
+		ignoreValidation
+	/>
 
 	<Divider>Tokens</Divider>
 
 	<div class="bg-base-200 flex w-full flex-row flex-wrap gap-1 rounded-md p-2">
 		{#each tokens as { type, value }, i (i)}
-			<div class={['tooltip badge badge-sm', TOKEN_COLORS[type]]} data-tip={type}>
+			<div
+				class={['tooltip badge badge-sm', TOKEN_COLORS[type]]}
+				data-tip={type}
+			>
 				{value}
 			</div>
 		{/each}
@@ -46,7 +56,11 @@
 
 	<Divider>
 		Abstract Syntax Tree
-		<Button size="xs" color="neutral" onclick={(e) => (e.preventDefault(), (astOpen = !astOpen))}>
+		<Button
+			size="xs"
+			color="neutral"
+			onclick={(e) => (e.preventDefault(), (astOpen = !astOpen))}
+		>
 			toggle all
 		</Button>
 	</Divider>

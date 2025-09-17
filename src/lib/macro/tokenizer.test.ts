@@ -21,7 +21,15 @@ describe('Tokenizer', () => {
 		['@', [TokenType.AT]],
 		['.', [TokenType.PERIOD]],
 		['123 + 456', [TokenType.INTEGER, TokenType.OPERATOR, TokenType.INTEGER]],
-		['@dex.mod', [TokenType.AT, TokenType.IDENTIFIER, TokenType.PERIOD, TokenType.IDENTIFIER]],
+		[
+			'@dex.mod',
+			[
+				TokenType.AT,
+				TokenType.IDENTIFIER,
+				TokenType.PERIOD,
+				TokenType.IDENTIFIER,
+			],
+		],
 		[';', [TokenType.INVALID]],
 	])('"%s" should tokenize to "%s"', (input, tokens) => {
 		const tokenizer = new Tokenizer(input);

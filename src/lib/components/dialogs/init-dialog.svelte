@@ -10,6 +10,16 @@
 	$title = 'Initiative';
 </script>
 
-<MacroNumber value={c.init.$.misc} name="initMisc" label="Misc" placeholder="Initiative Misc" />
+<MacroNumber
+	value={c.init.$.misc}
+	name="initMisc"
+	label="Misc"
+	placeholder="Initiative Misc"
+/>
 
-<MacroTextArea value={c.init.$.notes} name="notes" label="Notes" placeholder="Notes" />
+<MacroTextArea
+	value={c.init.$.notes}
+	name="notes"
+	label="Notes"
+	placeholder="Notes"
+/>

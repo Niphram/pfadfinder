@@ -112,9 +112,14 @@ export class Spell extends SpellCommonProps {
 
 	components = string('', { maxLength: 100 });
 
-	details(this: SerdeProxy<Spell>, level: number, c: SerdeProxy<Character>): [string, boolean][] {
+	details(
+		this: SerdeProxy<Spell>,
+		level: number,
+		c: SerdeProxy<Character>,
+	): [string, boolean][] {
 		const dcAbility = c.spells.dcAbility;
-		const abilityDc = (dcAbility ? c[dcAbility].mod : 0) + (c.spells.dcBonus ?? 0);
+		const abilityDc =
+			(dcAbility ? c[dcAbility].mod : 0) + (c.spells.dcBonus ?? 0);
 		const saveDc = 10 + level + this.savingThrow.dcMod + abilityDc;
 
 		let attackBonus = this.attack.mod;
@@ -149,7 +154,10 @@ export class Spell extends SpellCommonProps {
 			['Targets', this.targets],
 			['Duration', this.duration],
 			['Effect', this.effect],
-			['Saving Throw', this.savingThrow.hasSave && `${this.savingThrow.effect} (DC ${saveDc})`],
+			[
+				'Saving Throw',
+				this.savingThrow.hasSave && `${this.savingThrow.effect} (DC ${saveDc})`,
+			],
 			['Spell Resistance', this.spellResistance],
 			[
 				'Attack',
@@ -158,7 +166,10 @@ export class Spell extends SpellCommonProps {
 						this.attack.critMultiplier
 					})`,
 			],
-			...this.damage.map((d, i) => [`Damage #${i + 1}`, `${d.damage} ${d.type}`]),
+			...this.damage.map((d, i) => [
+				`Damage #${i + 1}`,
+				`${d.damage} ${d.type}`,
+			]),
 		].filter((e) => !!e[1]) as [string, boolean][];
 	}
 }
@@ -215,7 +226,9 @@ export class SpellLevelList extends ClassSerializer {
 		(c) => c.spells[this.level].perDay + c.spells[this.level].perDayBonus,
 	);
 
-	readonly prepared = $derived(mapSum(this.spells.value, (s) => s.prepared.value));
+	readonly prepared = $derived(
+		mapSum(this.spells.value, (s) => s.prepared.value),
+	);
 
 	readonly used = $derived(mapSum(this.spells.value, (s) => s.used.value));
 

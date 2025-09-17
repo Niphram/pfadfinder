@@ -28,7 +28,11 @@
 		{ key: 'features_traits', component: FeaturesTraitsPage, active: true },
 		{ key: 'equipment', component: EquipmentPage, active: true },
 		{ key: 'character', component: CharacterPage, active: true },
-		{ key: 'persona', component: PersonaPage, active: c.settings.usePersonaSystem },
+		{
+			key: 'persona',
+			component: PersonaPage,
+			active: c.settings.usePersonaSystem,
+		},
 	] as const);
 </script>
 
@@ -41,10 +45,14 @@
 <div class="flex h-screen flex-col">
 	<div class="bg-base-200 sticky top-0 z-40 w-full drop-shadow-xl">
 		<div class="flex flex-row items-stretch gap-2 p-2 align-middle">
-			<button class="grow text-left" onclick={() => openDialog(CharacterInfoDialog, {})}>
+			<button
+				class="grow text-left"
+				onclick={() => openDialog(CharacterInfoDialog, {})}
+			>
 				<div class="flex flex-col">
 					<p class="text-lg font-bold">
-						{c.name} <span class="text-sm font-normal">(Lvl. {c.classes.levels})</span>
+						{c.name}
+						<span class="text-sm font-normal">(Lvl. {c.classes.levels})</span>
 					</p>
 					<span class="text-sm">
 						{c.classes.list.map((c) => `${c.name} ${c.level}`).join(', ')}
@@ -55,11 +63,16 @@
 		</div>
 	</div>
 
-	<div class="flex grow snap-x snap-mandatory flex-row flex-nowrap overflow-x-scroll scroll-smooth">
+	<div
+		class="flex grow snap-x snap-mandatory flex-row flex-nowrap overflow-x-scroll scroll-smooth"
+	>
 		{#each pages as { key, component, active } (key)}
 			{#if active}
 				{@const SvelteComponent = component}
-				<div id={key} class="w-full flex-none snap-center snap-always overflow-y-scroll p-4">
+				<div
+					id={key}
+					class="w-full flex-none snap-center snap-always overflow-y-scroll p-4"
+				>
 					<SvelteComponent />
 					<div class="h-16"></div>
 				</div>

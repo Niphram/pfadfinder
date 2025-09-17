@@ -21,7 +21,8 @@ export type SerdeProxy<T> =
 	: T extends ArrayWrapper<infer A> ? SerdeProxy<A>[]
 	: T extends Array<infer A> ? SerdeProxy<A>[] & { $: Array<A> }
 	: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-	T extends (this: SerdeProxy<any>, ...args: infer Args) => infer R ? (...args: Args) => R
+	T extends (this: SerdeProxy<any>, ...args: infer Args) => infer R ?
+		(...args: Args) => R
 	: T extends object ?
 		{ [K in keyof T]: SerdeProxy<T[K]> } & {
 			$: T;

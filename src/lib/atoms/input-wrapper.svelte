@@ -13,7 +13,14 @@
 		feedbackClass?: ClassValue;
 	};
 
-	const { legend, hint, feedback, children, fieldsetClass, feedbackClass }: Props = $props();
+	const {
+		legend,
+		hint,
+		feedback,
+		children,
+		fieldsetClass,
+		feedbackClass,
+	}: Props = $props();
 </script>
 
 <fieldset class={['fieldset w-full', fieldsetClass]}>

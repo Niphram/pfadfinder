@@ -21,7 +21,9 @@
 	const { c } = $derived(getChar());
 
 	let variant = $derived(
-		c.skills[key].skills[index].name ? ` (${c.skills[key].skills[index].name})` : '',
+		c.skills[key].skills[index].name ?
+			` (${c.skills[key].skills[index].name})`
+		:	'',
 	);
 
 	$effect(() => {
@@ -52,7 +54,11 @@
 	bind:checked={c.skills[key].skills[index].penalty}
 />
 
-<Number value={c.skills[key].skills[index].$.ranks} name="skillRanks" label="Ranks" />
+<Number
+	value={c.skills[key].skills[index].$.ranks}
+	name="skillRanks"
+	label="Ranks"
+/>
 
 <MacroNumber
 	value={c.skills[key].skills[index].$.misc}

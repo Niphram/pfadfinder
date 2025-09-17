@@ -16,7 +16,9 @@ export const entries: EntryGenerator = async () => {
 };
 
 export const load: PageServerLoad = async ({ params }) => {
-	const fileContent = (await readFile(resolve('changelog', `${params.version}.md`))).toString();
+	const fileContent = (
+		await readFile(resolve('changelog', `${params.version}.md`))
+	).toString();
 
 	const { html } = parseMarkdown(fileContent);
 	return {

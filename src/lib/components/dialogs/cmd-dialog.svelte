@@ -9,4 +9,9 @@
 	$title = 'Combat Maneuver Defense';
 </script>
 
-<MacroTextArea value={c.combat.cmd.$.notes} name="cmdNotes" label="Notes" placeholder="Notes" />
+<MacroTextArea
+	value={c.combat.cmd.$.notes}
+	name="cmdNotes"
+	label="Notes"
+	placeholder="Notes"
+/>

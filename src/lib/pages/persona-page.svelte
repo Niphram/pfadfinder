@@ -18,12 +18,20 @@
 		{#each FACET_KEYS as key (key)}
 			<button
 				class="btn h-min p-0"
-				onclick={() => macroNotify($t(`persona.${key}`), c.persona[key].notes, c)}
-				oncontextmenu={preventDefault(() => openDialog(PersonaScoreDialog, { key }))}
+				onclick={() =>
+					macroNotify($t(`persona.${key}`), c.persona[key].notes, c)}
+				oncontextmenu={preventDefault(() =>
+					openDialog(PersonaScoreDialog, { key }),
+				)}
 			>
-				<div class="divide-base-100 flex w-full flex-col divide-y-2 text-center">
+				<div
+					class="divide-base-100 flex w-full flex-col divide-y-2 text-center"
+				>
 					<div class="py-1 text-3xl font-extrabold">{c.persona[key].rank}</div>
-					<div class="py-1 uppercase decoration-wavy" class:underline={!!c.persona[key].notes}>
+					<div
+						class="py-1 uppercase decoration-wavy"
+						class:underline={!!c.persona[key].notes}
+					>
 						{$t(`persona.${key}`)}
 					</div>
 				</div>
@@ -33,5 +41,11 @@
 
 	<div class="divider">Notes</div>
 
-	<TextArea name="notes" label="Notes" value={c.persona.$.notes} rows={10} placeholder="Notes" />
+	<TextArea
+		name="notes"
+		label="Notes"
+		value={c.persona.$.notes}
+		rows={10}
+		placeholder="Notes"
+	/>
 </div>

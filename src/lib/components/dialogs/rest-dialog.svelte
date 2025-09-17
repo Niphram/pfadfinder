@@ -24,20 +24,26 @@
 
 		// Heal ability damage
 		if (c.settings.healAbilityDamage)
-			ABILITY_KEYS.forEach((key) => (c[key].damage -= Math.sign(c[key].damage)));
+			ABILITY_KEYS.forEach(
+				(key) => (c[key].damage -= Math.sign(c[key].damage)),
+			);
 
 		// Recharge all SLAs
-		if (c.settings.rechargeSLA) c.spells.spellLikeAbilities.forEach((sla) => sla.recharge());
+		if (c.settings.rechargeSLA)
+			c.spells.spellLikeAbilities.forEach((sla) => sla.recharge());
 
 		// Recharge all features/traits
-		if (c.settings.rechargeTraits) c.traits.forEach((trait) => trait.recharge());
+		if (c.settings.rechargeTraits)
+			c.traits.forEach((trait) => trait.recharge());
 
 		// Recharge all items
 		if (c.settings.rechargeItems) rechargeItems(c.equipment.items);
 
 		// Reset spell usage
 		if (c.settings.resetSpellUsage) {
-			SPELL_LEVELS.forEach((level) => c.spells[level].spells.forEach((spell) => (spell.used = 0)));
+			SPELL_LEVELS.forEach((level) =>
+				c.spells[level].spells.forEach((spell) => (spell.used = 0)),
+			);
 		}
 
 		// Reset prepared spells
@@ -76,9 +82,17 @@
 		bind:checked={c.settings.rechargeSLA}
 	/>
 
-	<Toggle name="rechargeTraits" label="Recharge traits" bind:checked={c.settings.rechargeTraits} />
+	<Toggle
+		name="rechargeTraits"
+		label="Recharge traits"
+		bind:checked={c.settings.rechargeTraits}
+	/>
 
-	<Toggle name="rechargeItems" label="Recharge items" bind:checked={c.settings.rechargeItems} />
+	<Toggle
+		name="rechargeItems"
+		label="Recharge items"
+		bind:checked={c.settings.rechargeItems}
+	/>
 
 	<Toggle
 		name="resetSpellsUsage"

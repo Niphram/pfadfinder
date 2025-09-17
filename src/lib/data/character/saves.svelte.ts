@@ -1,4 +1,10 @@
-import { ClassSerializer, derive, enumeration, macro, string } from '$lib/serde';
+import {
+	ClassSerializer,
+	derive,
+	enumeration,
+	macro,
+	string,
+} from '$lib/serde';
 
 import { ABILITY_KEYS } from './abilities.svelte';
 import { Character } from './character.svelte';
@@ -22,7 +28,11 @@ export class Save extends ClassSerializer {
 	notes = string('', { maxLength: 1000 });
 
 	readonly mod = derive<Character>(
-		(c) => c.classes[this.key] + c[this.ability.value].mod + c[this.key].bonus + c[this.key].misc,
+		(c) =>
+			c.classes[this.key] +
+			c[this.ability.value].mod +
+			c[this.key].bonus +
+			c[this.key].misc,
 	);
 
 	constructor(public readonly key: SaveKey) {

@@ -1,7 +1,15 @@
 import { nanoid } from 'nanoid';
 
 import { parseTextWithMacros } from '$lib/macro/text';
-import { array, boolean, ClassSerializer, derive, enumeration, macro, string } from '$lib/serde';
+import {
+	array,
+	boolean,
+	ClassSerializer,
+	derive,
+	enumeration,
+	macro,
+	string,
+} from '$lib/serde';
 import { withSign } from '$lib/utils';
 
 import { ABILITY_KEYS, type AbilityKey } from './abilities.svelte';
@@ -43,7 +51,9 @@ export class SpellResistance extends ClassSerializer {
 
 	notes = string('', { maxLength: 1000 });
 
-	readonly total = derive<Character>((c) => c.combat.sr.base + c.combat.sr.misc);
+	readonly total = derive<Character>(
+		(c) => c.combat.sr.base + c.combat.sr.misc,
+	);
 }
 
 export class BaseAttackBonus extends ClassSerializer {
@@ -113,14 +123,21 @@ export class AttackRoll extends ClassSerializer {
 	readonly attacks = derive<Character, number[]>((c) => {
 		const bab = c.combat.bab.mod;
 		const fullAttackCount = Math.max(Math.ceil(bab / 5), 1);
-		const abilityMod = this.abilityModifier.value ? c[this.abilityModifier.value].mod : 0;
+		const abilityMod =
+			this.abilityModifier.value ? c[this.abilityModifier.value].mod : 0;
 		const bonus = this.bonusModifier.eval(c) ?? 0;
 
 		switch (this.baseModifier.value) {
 			case 'meelee':
-				return attackArray(fullAttackCount, bab + c.str.mod + abilityMod + bonus);
+				return attackArray(
+					fullAttackCount,
+					bab + c.str.mod + abilityMod + bonus,
+				);
 			case 'ranged':
-				return attackArray(fullAttackCount, bab + c.dex.mod + abilityMod + bonus);
+				return attackArray(
+					fullAttackCount,
+					bab + c.dex.mod + abilityMod + bonus,
+				);
 			case 'babFull':
 				return attackArray(fullAttackCount, bab + abilityMod + bonus);
 			case 'babMax':
@@ -168,21 +185,29 @@ export class Attack extends ClassSerializer {
 		return total;
 	});
 
-	readonly details = derive<Character, [label: string, value: string][]>((c) => {
-		const details: [string, string | undefined][] = [];
+	readonly details = derive<Character, [label: string, value: string][]>(
+		(c) => {
+			const details: [string, string | undefined][] = [];
 
-		if (this.hasAttack.value) {
-			details.push(['Crit Range', this.attack.critRange.value]);
-			details.push(['Attacks', this.attack.attacks.eval(c).map(withSign).join('/')]);
-			details.push(['Range', this.attack.range.value]);
-		}
+			if (this.hasAttack.value) {
+				details.push(['Crit Range', this.attack.critRange.value]);
+				details.push([
+					'Attacks',
+					this.attack.attacks.eval(c).map(withSign).join('/'),
+				]);
+				details.push(['Range', this.attack.range.value]);
+			}
 
-		if (this.hasDamage.value) {
-			details.push(['Damage', parseTextWithMacros(this.damage.damage.value, c)]);
-		}
+			if (this.hasDamage.value) {
+				details.push([
+					'Damage',
+					parseTextWithMacros(this.damage.damage.value, c),
+				]);
+			}
 
-		return details.filter((e) => !!e[1]) as [string, string][];
-	});
+			return details.filter((e) => !!e[1]) as [string, string][];
+		},
+	);
 }
 
 export class Combat extends ClassSerializer {

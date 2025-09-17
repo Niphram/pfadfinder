@@ -9,7 +9,9 @@ import { Character } from './character';
  */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const UPGRADES: ((char: any) => void | ((char: SerdeProxy<Character>) => void))[] = [
+const UPGRADES: ((
+	char: any,
+) => void | ((char: SerdeProxy<Character>) => void))[] = [
 	// Version 2, rename spell levels
 	(char: { spells: Record<`level_${number}` | number, unknown> }) => {
 		for (let i = 0; i <= 9; i++) {

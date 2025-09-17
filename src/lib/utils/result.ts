@@ -26,7 +26,9 @@ export function Err<T, E>(error: E): Result<T, E> {
 	};
 }
 
-export function iteratorResultToResult<T, E>(iresult: IteratorResult<E, T>): Result<T, E> {
+export function iteratorResultToResult<T, E>(
+	iresult: IteratorResult<E, T>,
+): Result<T, E> {
 	if (iresult.done) {
 		return Ok(iresult.value);
 	} else {

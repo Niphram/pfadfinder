@@ -1,4 +1,8 @@
-import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL, type Serializable } from '../interfaces';
+import {
+	DESERIALIZE_SYMBOL,
+	SERIALIZE_SYMBOL,
+	type Serializable,
+} from '../interfaces';
 
 export class BoolWrapper implements Serializable {
 	value: boolean;

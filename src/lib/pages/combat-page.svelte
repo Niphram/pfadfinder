@@ -50,14 +50,16 @@
 			label={withSign(c.combat.cmb.mod)}
 			caption="CMB"
 			underline={!!c.combat.cmb.notes}
-			onclick={() => macroNotify('Combat Manouver Bonus', c.combat.cmb.notes, c)}
+			onclick={() =>
+				macroNotify('Combat Manouver Bonus', c.combat.cmb.notes, c)}
 			oncontextmenu={() => openDialog(CmbDialog, {})}
 		/>
 		<CaptionedButton
 			label={c.combat.cmd.mod}
 			caption="CMD"
 			underline={!!c.combat.cmd.notes}
-			onclick={() => macroNotify('Combat Manouver Defense', c.combat.cmd.notes, c)}
+			onclick={() =>
+				macroNotify('Combat Manouver Defense', c.combat.cmd.notes, c)}
 			oncontextmenu={() => openDialog(CmdDialog, {})}
 		/>
 	</div>
@@ -73,7 +75,9 @@
 		<div
 			class="grid w-full grid-flow-row grid-cols-[min-content_repeat(4,auto)] justify-stretch gap-y-2"
 		>
-			<div class="col-span-5 grid grid-cols-subgrid text-center text-sm font-bold text-neutral-500">
+			<div
+				class="col-span-5 grid grid-cols-subgrid text-center text-sm font-bold text-neutral-500"
+			>
 				<div></div>
 				<div>Name</div>
 				<div>Atk</div>
@@ -107,11 +111,15 @@
 							titleClass="col-span-4 grid grid-cols-subgrid text-sm"
 							contentClass="col-span-4 text-sm"
 							icon="arrow"
-							oncontextmenu={preventDefault(() => openDialog(AttackDialog, { index }))}
+							oncontextmenu={preventDefault(() =>
+								openDialog(AttackDialog, { index }),
+							)}
 							bind:open={attack.open}
 						>
 							{#snippet title({ open })}
-								<div class="col-span-4 grid grid-cols-subgrid items-center gap-x-2">
+								<div
+									class="col-span-4 grid grid-cols-subgrid items-center gap-x-2"
+								>
 									<div
 										class={[
 											'text-ellipsis',
@@ -124,7 +132,9 @@
 									</div>
 									{#if !open}
 										<div class="text-center">
-											{attack.hasAttack ? attack.attack.attacks.map(withSign).join('/') : '-'}
+											{attack.hasAttack ?
+												attack.attack.attacks.map(withSign).join('/')
+											:	'-'}
 										</div>
 										<div class="text-center">
 											{(attack.hasAttack && attack.attack.critRange) || '-'}
@@ -134,7 +144,9 @@
 											class:overflow-hidden={!open}
 											class:whitespace-nowrap={!open}
 										>
-											{(attack.hasDamage && parseTextWithMacros(attack.damage.damage, c)) || '-'}
+											{(attack.hasDamage &&
+												parseTextWithMacros(attack.damage.damage, c)) ||
+												'-'}
 										</div>
 									{/if}
 								</div>

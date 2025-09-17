@@ -24,7 +24,12 @@
 	translate={(key) => (key ? $t(`abilities.${key}.full`) : '-')}
 />
 
-<MacroNumber placeholder="0" label="DC Bonus" name="dcBonus" value={c.spells.$.dcBonus} />
+<MacroNumber
+	placeholder="0"
+	label="DC Bonus"
+	name="dcBonus"
+	value={c.spells.$.dcBonus}
+/>
 
 <div>
 	{#each SPELL_LEVELS as level, idx (level)}
@@ -32,7 +37,11 @@
 		<div class="flex flex-row gap-1">
 			<Number value={c.spells[level].$.known} label="Known" name="known" />
 			<Number value={c.spells[level].$.perDay} label="Per Day" name="perDay" />
-			<Number value={c.spells[level].$.perDayBonus} label="Bonus" name="perDayBonus" />
+			<Number
+				value={c.spells[level].$.perDayBonus}
+				label="Bonus"
+				name="perDayBonus"
+			/>
 		</div>
 	{/each}
 </div>

@@ -1,4 +1,10 @@
-import { rand, randBoolean, randNumber, randText, toCollection } from '@ngneat/falso';
+import {
+	rand,
+	randBoolean,
+	randNumber,
+	randText,
+	toCollection,
+} from '@ngneat/falso';
 import { describe, expect, test } from 'vitest';
 
 import { ClassSerializer } from './class-serializer';
@@ -32,7 +38,9 @@ class TestClass extends ClassSerializer {
 
 	enumeration = enumeration(ENUM_EXAMPLE, rand(ENUM_EXAMPLE));
 
-	optionalEnumeration = enumeration(ENUM_EXAMPLE, rand(ENUM_EXAMPLE), { optional: true });
+	optionalEnumeration = enumeration(ENUM_EXAMPLE, rand(ENUM_EXAMPLE), {
+		optional: true,
+	});
 
 	array = array(() => number(randNumber()), []);
 

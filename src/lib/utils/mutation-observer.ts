@@ -6,7 +6,10 @@ import { makeCachedProxyFactory } from './cached-proxy';
  * @param obj object to be proxied
  * @param cb callback to be invoked on [[Set]] calls
  */
-export function observeMutations<T extends object>(obj: T, cb: (obj: T) => void) {
+export function observeMutations<T extends object>(
+	obj: T,
+	cb: (obj: T) => void,
+) {
 	const proxyFactory = makeCachedProxyFactory();
 
 	function makeObserverProxy(value: object) {
@@ -15,7 +18,8 @@ export function observeMutations<T extends object>(obj: T, cb: (obj: T) => void)
 				const prop = Reflect.get(target, key);
 
 				// Create nested proxy if the property is an object
-				if (prop !== null && typeof prop === 'object') return makeObserverProxy(prop);
+				if (prop !== null && typeof prop === 'object')
+					return makeObserverProxy(prop);
 
 				return prop;
 			},
