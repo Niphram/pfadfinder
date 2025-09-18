@@ -34,7 +34,7 @@ const UPGRADES: ((
 			char.hp.damageTaken = oldMax - oldCurrent;
 		};
 	},
-	// Version 4: Breaking change for attack type
+	// Version 4: Breaking change for attack abilityModifier
 	(char: {
 		combat: {
 			attacks: {
