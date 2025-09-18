@@ -1,11 +1,10 @@
-import { liveQuery } from 'dexie';
-
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ parent }) => {
+export const load: PageLoad = async ({ parent, depends }) => {
 	const { db } = await parent();
 
-	const characters = liveQuery(() => db.getCharactersMetadata());
+	depends('characters:list');
+	const characters = await db.getCharactersMetadata();
 
 	return {
 		db,

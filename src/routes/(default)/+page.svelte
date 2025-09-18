@@ -3,6 +3,7 @@
 
 	import type { PageProps } from './$types';
 
+	import { invalidate } from '$app/navigation';
 	import { resolve } from '$app/paths';
 
 	import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
@@ -12,19 +13,26 @@
 	import { upgradeCharacterAndDeserialize } from '$lib/data/upgrade';
 
 	const { data }: PageProps = $props();
-	const { characters, db } = data;
+	const { characters, db } = $derived(data);
+
+	function invalidateCharacters() {
+		invalidate('characters:list');
+	}
 
 	async function createChar() {
 		const char = new Character();
 		await db.saveCharacter(char);
+		invalidateCharacters();
 	}
 
 	async function deleteChar(id: string) {
 		await db.deleteCharacter(id);
+		invalidateCharacters();
 	}
 
 	async function duplicateChar(id: string) {
 		await db.duplicateCharacterById(id);
+		invalidateCharacters();
 	}
 
 	let files = $state<FileList>();
@@ -49,6 +57,8 @@
 		} catch (_err) {
 			alert('Could not import character!');
 		}
+
+		invalidateCharacters();
 	}
 
 	async function exportChar(id: string) {
@@ -125,7 +135,7 @@
 		<ul class="list bg-base-100 card card-border shadow-sm">
 			<li class="p-4 pb-2 text-xs tracking-wide opacity-60">Characters</li>
 
-			{#each $characters as { id, name, description, system, updated_at } (id)}
+			{#each characters as { id, name, description, system, updated_at } (id)}
 				<li class="p-2">
 					<a
 						href={resolve('/(app)/character/[id]', { id })}
