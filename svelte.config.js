@@ -7,12 +7,6 @@ const config = {
 	// for more information about preprocessors
 	preprocess: vitePreprocess(),
 
-	compilerOptions: {
-		experimental: {
-			async: true,
-		},
-	},
-
 	kit: {
 		paths: {
 			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
