@@ -7,4 +7,5 @@ export * from './lazy';
 export * from './mutation-observer';
 export * from './notes';
 export * from './result';
+export * from './throttle';
 export * from './utilTypes';

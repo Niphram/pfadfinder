@@ -201,6 +201,7 @@ export default {
 		},
 		general: {
 			unsaved: 'unsaved',
+			saving: 'Saving...',
 			close: 'close',
 		},
 	},
