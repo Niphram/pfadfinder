@@ -12,7 +12,6 @@
 		'bg-transparent transition-opacity delay-300 duration-500',
 		'grid items-center justify-items-center',
 		'pointer-events-none invisible opacity-0',
-		,
 		loading && 'pointer-events-auto! visible! bg-black/40! opacity-100!',
 	]}
 >
