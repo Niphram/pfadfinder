@@ -5,7 +5,7 @@
 	import Collapse from '$lib/atoms/collapse.svelte';
 	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
 
-	import { openDialog } from '$lib/components/dialog.svelte';
+	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import FeatDialog from '$lib/components/dialogs/feat-dialog.svelte';
 	import TraitDialog from '$lib/components/dialogs/trait-dialog.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
@@ -13,6 +13,7 @@
 
 	import { Feat, getChar, Trait } from '$lib/data';
 
+	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());
 
 	function addFeat() {

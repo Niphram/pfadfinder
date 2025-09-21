@@ -3,14 +3,12 @@
 	import { macro } from '$lib/serde';
 
 	import Button from '$lib/atoms/button.svelte';
+	import DialogBase from '$lib/atoms/dialog-base.svelte';
 	import Divider from '$lib/atoms/divider.svelte';
 
-	import { title } from '$lib/components/dialog.svelte';
 	import MacroNumber from '$lib/components/input/macro-number.svelte';
 
 	import MacroAstTree from './macro-ast-tree.svelte';
-
-	$title = 'Macro debugging';
 
 	const testMacro = macro(
 		'floor(@classes.list.0.level * 5 / 6) + @int.mod + 3',
@@ -33,45 +31,49 @@
 	let astOpen = $state(true);
 </script>
 
-<div class="flex flex-col gap-2">
-	<MacroNumber
-		label="Debug Macro"
-		name="debugMacro"
-		value={testMacro}
-		ignoreValidation
-	/>
+<DialogBase title="Macro debugging">
+	<div class="flex flex-col gap-2">
+		<MacroNumber
+			label="Debug Macro"
+			name="debugMacro"
+			value={testMacro}
+			ignoreValidation
+		/>
 
-	<Divider>Tokens</Divider>
+		<Divider>Tokens</Divider>
 
-	<div class="bg-base-200 flex w-full flex-row flex-wrap gap-1 rounded-md p-2">
-		{#each tokens as { type, value }, i (i)}
-			<div
-				class={['tooltip badge badge-sm', TOKEN_COLORS[type]]}
-				data-tip={type}
-			>
-				{value}
-			</div>
-		{/each}
-	</div>
-
-	<Divider>
-		Abstract Syntax Tree
-		<Button
-			size="xs"
-			color="neutral"
-			onclick={(e) => (e.preventDefault(), (astOpen = !astOpen))}
+		<div
+			class="bg-base-200 flex w-full flex-row flex-wrap gap-1 rounded-md p-2"
 		>
-			toggle all
-		</Button>
-	</Divider>
+			{#each tokens as { type, value }, i (i)}
+				<div
+					class={['tooltip badge badge-sm', TOKEN_COLORS[type]]}
+					data-tip={type}
+				>
+					{value}
+				</div>
+			{/each}
+		</div>
 
-	{#if testMacro.parseResult.ok}
-		<ul class="menu menu-sm bg-base-200 w-full rounded-md">
-			<li>
-				<MacroAstTree node={testMacro.parseResult.value} open={astOpen} />
-			</li>
-		</ul>
-	{:else}
-		<p>Could not generate AST</p>
-	{/if}
-</div>
+		<Divider>
+			Abstract Syntax Tree
+			<Button
+				size="xs"
+				color="neutral"
+				onclick={(e) => (e.preventDefault(), (astOpen = !astOpen))}
+			>
+				toggle all
+			</Button>
+		</Divider>
+
+		{#if testMacro.parseResult.ok}
+			<ul class="menu menu-sm bg-base-200 w-full rounded-md">
+				<li>
+					<MacroAstTree node={testMacro.parseResult.value} open={astOpen} />
+				</li>
+			</ul>
+		{:else}
+			<p>Could not generate AST</p>
+		{/if}
+	</div>
+</DialogBase>

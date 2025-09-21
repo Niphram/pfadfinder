@@ -2,9 +2,9 @@
 	import { t } from '$lib/i18n';
 	import { preventDefault } from '$lib/utils';
 
+	import DialogBase from '$lib/atoms/dialog-base.svelte';
 	import Divider from '$lib/atoms/divider.svelte';
 
-	import { title } from '$lib/components/dialog.svelte';
 	import Input from '$lib/components/input/input.svelte';
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
 	import Number from '$lib/components/input/number.svelte';
@@ -34,203 +34,204 @@
 	function removeDamageFromSLA(idx: number) {
 		c.spells.spellLikeAbilities[slaIndex].damage.splice(idx, 1);
 	}
-
-	$title = 'Spell-Like Ability';
 </script>
 
-<div class="flex flex-col gap-2">
-	{#if slaIndex < c.spells.spellLikeAbilities.length}
-		<Input
-			name="slaName"
-			label="Name"
-			placeholder="Name"
-			value={c.spells.spellLikeAbilities[slaIndex].$.name}
-		/>
-
-		<Divider>
-			<span>Type</span>
-			<Select
-				name="slaType"
-				class="select-sm"
-				value={c.spells.spellLikeAbilities[slaIndex].$.type}
-				translate={(key) => $t(`spell.slaType.${key}`)}
-			/>
-		</Divider>
-
-		{#if c.spells.spellLikeAbilities[slaIndex].type === 'perDay'}
-			<div class="flex flex-row gap-2">
-				<Number
-					label="Remaining charges"
-					name="slaCharges"
-					value={c.spells.spellLikeAbilities[slaIndex].$.remaining}
-				/>
-
-				<Number
-					label="Per Day"
-					name="slaChargesPerDay"
-					value={c.spells.spellLikeAbilities[slaIndex].$.perDay}
-				/>
-			</div>
-		{/if}
-
-		<Input
-			name="spellSchool"
-			label="School"
-			placeholder="School/Domain/Elemental"
-			value={c.spells.spellLikeAbilities[slaIndex].$.school}
-		/>
-
-		<Input
-			name="classAndLevel"
-			label="Class/Level"
-			placeholder="Sorcerer/Wizard 3"
-			value={c.spells.spellLikeAbilities[slaIndex].$.classAndLevel}
-		/>
-
-		<Input
-			name="castingTime"
-			label="Casting Time"
-			placeholder="1 standard action"
-			value={c.spells.spellLikeAbilities[slaIndex].$.castingTime}
-		/>
-
-		<Input
-			name="range"
-			label="Range"
-			placeholder="Long (400 ft. + 40 ft./level)"
-			value={c.spells.spellLikeAbilities[slaIndex].$.range}
-		/>
-
-		<Input
-			name="area"
-			label="Area"
-			placeholder="20-ft.-radius spread"
-			value={c.spells.spellLikeAbilities[slaIndex].$.area}
-		/>
-
-		<Input
-			name="targets"
-			label="Targets"
-			placeholder="up to five creatures"
-			value={c.spells.spellLikeAbilities[slaIndex].$.targets}
-		/>
-
-		<Input
-			name="effect"
-			label="Effect"
-			placeholder="Heal 1d6+CasterLevel"
-			value={c.spells.spellLikeAbilities[slaIndex].$.effect}
-		/>
-
-		<Input
-			name="duration"
-			label="Duration"
-			placeholder="Instantaneous"
-			value={c.spells.spellLikeAbilities[slaIndex].$.duration}
-		/>
-
-		<div class="divider">
-			<div class="flex flex-row gap-2">
-				Saving Throw
-				<Toggle
-					name="savingThrow"
-					bind:checked={
-						c.spells.spellLikeAbilities[slaIndex].savingThrow.hasSave
-					}
-				/>
-			</div>
-		</div>
-
-		{#if c.spells.spellLikeAbilities[slaIndex].savingThrow.hasSave}
+<DialogBase title="Spell-Like Ability">
+	<div class="flex flex-col gap-2">
+		{#if slaIndex < c.spells.spellLikeAbilities.length}
 			<Input
-				name="saveEffect"
-				label="Effect"
-				placeholder="Reflex Half"
-				value={c.spells.spellLikeAbilities[slaIndex].savingThrow.$.effect}
+				name="slaName"
+				label="Name"
+				placeholder="Name"
+				value={c.spells.spellLikeAbilities[slaIndex].$.name}
 			/>
 
-			<Number
-				label="DC"
-				name="saveDc"
-				value={c.spells.spellLikeAbilities[slaIndex].savingThrow.$.dcMod}
-			/>
-		{/if}
-
-		<Input
-			name="sr"
-			label="Spell Resistance"
-			value={c.spells.spellLikeAbilities[slaIndex].$.spellResistance}
-		/>
-
-		<Divider>
-			Attack
-			<Toggle
-				name="attack"
-				bind:checked={c.spells.spellLikeAbilities[slaIndex].attack.hasAttack}
-			/>
-		</Divider>
-
-		{#if c.spells.spellLikeAbilities[slaIndex].attack.hasAttack}
-			<div class="flex flex-row gap-2">
+			<Divider>
+				<span>Type</span>
 				<Select
-					value={c.spells.spellLikeAbilities[slaIndex].attack.$.type}
-					name="spellAttackType"
-					label="Type"
-					translate={(key) => $t(`spell.attackType.${key}`)}
+					name="slaType"
+					class="select-sm"
+					value={c.spells.spellLikeAbilities[slaIndex].$.type}
+					translate={(key) => $t(`spell.slaType.${key}`)}
 				/>
-				<Number
-					label="Attack Mod"
-					name="attackBonus"
-					value={c.spells.spellLikeAbilities[slaIndex].attack.$.mod}
-				/>
+			</Divider>
+
+			{#if c.spells.spellLikeAbilities[slaIndex].type === 'perDay'}
+				<div class="flex flex-row gap-2">
+					<Number
+						label="Remaining charges"
+						name="slaCharges"
+						value={c.spells.spellLikeAbilities[slaIndex].$.remaining}
+					/>
+
+					<Number
+						label="Per Day"
+						name="slaChargesPerDay"
+						value={c.spells.spellLikeAbilities[slaIndex].$.perDay}
+					/>
+				</div>
+			{/if}
+
+			<Input
+				name="spellSchool"
+				label="School"
+				placeholder="School/Domain/Elemental"
+				value={c.spells.spellLikeAbilities[slaIndex].$.school}
+			/>
+
+			<Input
+				name="classAndLevel"
+				label="Class/Level"
+				placeholder="Sorcerer/Wizard 3"
+				value={c.spells.spellLikeAbilities[slaIndex].$.classAndLevel}
+			/>
+
+			<Input
+				name="castingTime"
+				label="Casting Time"
+				placeholder="1 standard action"
+				value={c.spells.spellLikeAbilities[slaIndex].$.castingTime}
+			/>
+
+			<Input
+				name="range"
+				label="Range"
+				placeholder="Long (400 ft. + 40 ft./level)"
+				value={c.spells.spellLikeAbilities[slaIndex].$.range}
+			/>
+
+			<Input
+				name="area"
+				label="Area"
+				placeholder="20-ft.-radius spread"
+				value={c.spells.spellLikeAbilities[slaIndex].$.area}
+			/>
+
+			<Input
+				name="targets"
+				label="Targets"
+				placeholder="up to five creatures"
+				value={c.spells.spellLikeAbilities[slaIndex].$.targets}
+			/>
+
+			<Input
+				name="effect"
+				label="Effect"
+				placeholder="Heal 1d6+CasterLevel"
+				value={c.spells.spellLikeAbilities[slaIndex].$.effect}
+			/>
+
+			<Input
+				name="duration"
+				label="Duration"
+				placeholder="Instantaneous"
+				value={c.spells.spellLikeAbilities[slaIndex].$.duration}
+			/>
+
+			<div class="divider">
+				<div class="flex flex-row gap-2">
+					Saving Throw
+					<Toggle
+						name="savingThrow"
+						bind:checked={
+							c.spells.spellLikeAbilities[slaIndex].savingThrow.hasSave
+						}
+					/>
+				</div>
 			</div>
 
-			<div class="flex flex-row gap-2">
-				<Number
-					label="Critical Range"
-					name="critRange"
-					value={c.spells.spellLikeAbilities[slaIndex].attack.$.critRange}
+			{#if c.spells.spellLikeAbilities[slaIndex].savingThrow.hasSave}
+				<Input
+					name="saveEffect"
+					label="Effect"
+					placeholder="Reflex Half"
+					value={c.spells.spellLikeAbilities[slaIndex].savingThrow.$.effect}
 				/>
+
 				<Number
-					label="Multiplier"
-					name="critMult"
-					value={c.spells.spellLikeAbilities[slaIndex].attack.$.critMultiplier}
+					label="DC"
+					name="saveDc"
+					value={c.spells.spellLikeAbilities[slaIndex].savingThrow.$.dcMod}
 				/>
-			</div>
+			{/if}
+
+			<Input
+				name="sr"
+				label="Spell Resistance"
+				value={c.spells.spellLikeAbilities[slaIndex].$.spellResistance}
+			/>
+
+			<Divider>
+				Attack
+				<Toggle
+					name="attack"
+					bind:checked={c.spells.spellLikeAbilities[slaIndex].attack.hasAttack}
+				/>
+			</Divider>
+
+			{#if c.spells.spellLikeAbilities[slaIndex].attack.hasAttack}
+				<div class="flex flex-row gap-2">
+					<Select
+						value={c.spells.spellLikeAbilities[slaIndex].attack.$.type}
+						name="spellAttackType"
+						label="Type"
+						translate={(key) => $t(`spell.attackType.${key}`)}
+					/>
+					<Number
+						label="Attack Mod"
+						name="attackBonus"
+						value={c.spells.spellLikeAbilities[slaIndex].attack.$.mod}
+					/>
+				</div>
+
+				<div class="flex flex-row gap-2">
+					<Number
+						label="Critical Range"
+						name="critRange"
+						value={c.spells.spellLikeAbilities[slaIndex].attack.$.critRange}
+					/>
+					<Number
+						label="Multiplier"
+						name="critMult"
+						value={c.spells.spellLikeAbilities[slaIndex].attack.$
+							.critMultiplier}
+					/>
+				</div>
+			{/if}
+
+			<Divider>
+				Damage
+				<button
+					class="btn btn-secondary btn-xs"
+					onclick={preventDefault(addDamageToSLA)}>Add</button
+				>
+			</Divider>
+
+			{#each c.spells.spellLikeAbilities[slaIndex].damage as damage, damageIdx (damageIdx)}
+				<div class="flex flex-row items-center gap-2">
+					<Input name="spellDamage" placeholder="1d6" value={damage.$.damage} />
+					<Input name="damageTyoe" placeholder="Fire" value={damage.$.type} />
+					<button
+						class="btn btn-warning"
+						onclick={preventDefault(() => {
+							removeDamageFromSLA(damageIdx);
+						})}>Delete</button
+					>
+				</div>
+			{/each}
+
+			<MacroTextArea
+				name="spellDescription"
+				label="Description"
+				value={c.spells.spellLikeAbilities[slaIndex].$.description}
+			/>
 		{/if}
 
-		<Divider>
-			Damage
-			<button
-				class="btn btn-secondary btn-xs"
-				onclick={preventDefault(addDamageToSLA)}>Add</button
-			>
-		</Divider>
-
-		{#each c.spells.spellLikeAbilities[slaIndex].damage as damage, damageIdx (damageIdx)}
-			<div class="flex flex-row items-center gap-2">
-				<Input name="spellDamage" placeholder="1d6" value={damage.$.damage} />
-				<Input name="damageTyoe" placeholder="Fire" value={damage.$.type} />
-				<button
-					class="btn btn-warning"
-					onclick={preventDefault(() => {
-						removeDamageFromSLA(damageIdx);
-					})}>Delete</button
-				>
-			</div>
-		{/each}
-
-		<MacroTextArea
-			name="spellDescription"
-			label="Description"
-			value={c.spells.spellLikeAbilities[slaIndex].$.description}
-		/>
-	{/if}
-
-	<button
-		onclick={deleteSLA}
-		class="btn btn-error mt-4 w-max self-center uppercase"
-	>
-		Delete
-	</button>
-</div>
+		<button
+			onclick={deleteSLA}
+			class="btn btn-error mt-4 w-max self-center uppercase"
+		>
+			Delete
+		</button>
+	</div>
+</DialogBase>

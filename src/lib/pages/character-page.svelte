@@ -1,11 +1,12 @@
 <script lang="ts">
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
-	import { openDialog } from '$lib/components/dialog.svelte';
+	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import ClassDialog from '$lib/components/dialogs/class-dialog.svelte';
 	import RaceDialog from '$lib/components/dialogs/race-dialog.svelte';
 
 	import { Class, getChar } from '$lib/data';
 
+	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());
 
 	function addClass() {

@@ -1,6 +1,7 @@
 export * from './array';
 export * from './cached-proxy';
 export * from './debounce';
+export * from './double-raf';
 export * from './event-modifiers';
 export * from './format';
 export * from './lazy';

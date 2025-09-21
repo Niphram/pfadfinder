@@ -2,7 +2,7 @@
 	import { t } from '$lib/i18n';
 	import { macroNotify, preventDefault, withSign } from '$lib/utils';
 
-	import { openDialog } from '$lib/components/dialog.svelte';
+	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import AbilityDialog from '$lib/components/dialogs/ability-dialog.svelte';
 
 	import { getChar, type AbilityKey } from '$lib/data';
@@ -13,6 +13,7 @@
 
 	let { key }: Props = $props();
 
+	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());
 
 	let temp = $derived(c[key].temp);

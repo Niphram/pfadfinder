@@ -8,7 +8,7 @@
 	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
 
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
-	import { openDialog } from '$lib/components/dialog.svelte';
+	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import AttackDialog from '$lib/components/dialogs/attack-dialog.svelte';
 	import BabDialog from '$lib/components/dialogs/bab-dialog.svelte';
 	import CmbDialog from '$lib/components/dialogs/cmb-dialog.svelte';
@@ -19,6 +19,7 @@
 
 	import { Attack, getChar } from '$lib/data';
 
+	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());
 
 	function addAttack() {

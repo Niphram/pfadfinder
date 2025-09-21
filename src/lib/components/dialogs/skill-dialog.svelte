@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
 
-	import { title } from '$lib/components/dialog.svelte';
+	import DialogBase from '$lib/atoms/dialog-base.svelte';
+
 	import Checkbox from '$lib/components/input/checkbox.svelte';
 	import MacroNumber from '$lib/components/input/macro-number.svelte';
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
@@ -25,56 +26,54 @@
 			` (${c.skills[key].skills[index].name})`
 		:	'',
 	);
-
-	$effect(() => {
-		$title = $t(`skills.${key}`) + variant;
-	});
 </script>
 
-<div class="flex flex-row gap-2">
-	<Checkbox
-		class="max-w-min"
-		name="classSkill"
-		label="C?"
-		bind:checked={c.skills[key].skills[index].classSkill}
+<DialogBase title={$t(`skills.${key}`) + variant}>
+	<div class="flex flex-row gap-2">
+		<Checkbox
+			class="max-w-min"
+			name="classSkill"
+			label="C?"
+			bind:checked={c.skills[key].skills[index].classSkill}
+		/>
+
+		<Select
+			name="skillBaseAbility"
+			label="Base Ability"
+			class="select-sm"
+			value={c.skills[key].skills[index].$.ability}
+			translate={(key) => $t(`abilities.${key}.full`)}
+		/>
+	</div>
+
+	<Toggle
+		name="armorPenalty"
+		label="Armor Penalty?"
+		bind:checked={c.skills[key].skills[index].penalty}
 	/>
 
-	<Select
-		name="skillBaseAbility"
-		label="Base Ability"
-		class="select-sm"
-		value={c.skills[key].skills[index].$.ability}
-		translate={(key) => $t(`abilities.${key}.full`)}
+	<Number
+		value={c.skills[key].skills[index].$.ranks}
+		name="skillRanks"
+		label="Ranks"
 	/>
-</div>
 
-<Toggle
-	name="armorPenalty"
-	label="Armor Penalty?"
-	bind:checked={c.skills[key].skills[index].penalty}
-/>
+	<MacroNumber
+		value={c.skills[key].skills[index].$.misc}
+		name="skillMisc"
+		label="Miscellaneous Bonus"
+	/>
 
-<Number
-	value={c.skills[key].skills[index].$.ranks}
-	name="skillRanks"
-	label="Ranks"
-/>
+	<MacroNumber
+		value={c.skills[key].skills[index].$.temp}
+		name="skillBonus"
+		label="Temporary Modifier"
+	/>
 
-<MacroNumber
-	value={c.skills[key].skills[index].$.misc}
-	name="skillMisc"
-	label="Miscellaneous Bonus"
-/>
-
-<MacroNumber
-	value={c.skills[key].skills[index].$.temp}
-	name="skillBonus"
-	label="Temporary Modifier"
-/>
-
-<MacroTextArea
-	value={c.skills[key].skills[index].$.notes}
-	name="skillNotes"
-	label="Notes"
-	placeholder="Notes"
-/>
+	<MacroTextArea
+		value={c.skills[key].skills[index].$.notes}
+		name="skillNotes"
+		label="Notes"
+		placeholder="Notes"
+	/>
+</DialogBase>

@@ -3,7 +3,7 @@
 	import NestedEquipmentList from '$lib/nested-equipment-list.svelte';
 	import { macroNotify, preventDefault } from '$lib/utils';
 
-	import { openDialog } from '$lib/components/dialog.svelte';
+	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import AcItemDialog from '$lib/components/dialogs/ac-item-dialog.svelte';
 	import ItemDialog from '$lib/components/dialogs/item-dialog.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
@@ -13,6 +13,7 @@
 
 	import { AcItem, getChar, Item } from '$lib/data';
 
+	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());
 
 	function addItem() {

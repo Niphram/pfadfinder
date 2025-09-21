@@ -1,14 +1,13 @@
 <script lang="ts">
 	import type { SerdeProxy } from '$lib/serde/proxy';
 
-	import { title } from '$lib/components/dialog.svelte';
+	import DialogBase from '$lib/atoms/dialog-base.svelte';
+
 	import Toggle from '$lib/components/input/toggle.svelte';
 
 	import { ABILITY_KEYS, getChar, Item, SPELL_LEVELS } from '$lib/data';
 
 	const { c } = $derived(getChar());
-
-	$title = 'Rest';
 
 	function rechargeItems(items: SerdeProxy<Item>[]) {
 		items.forEach((item) => {
@@ -55,58 +54,60 @@
 	}
 </script>
 
-<div class="flex flex-col">
-	<div class="divider">Options</div>
+<DialogBase title="Rest">
+	<div class="flex flex-col">
+		<div class="divider">Options</div>
 
-	<Toggle
-		name="healLevel"
-		label="Heal for 1 HP per level ({c.classes.levels} HP)"
-		bind:checked={c.settings.heal}
-	/>
+		<Toggle
+			name="healLevel"
+			label="Heal for 1 HP per level ({c.classes.levels} HP)"
+			bind:checked={c.settings.heal}
+		/>
 
-	<Toggle
-		name="addCon"
-		label="Add CON when healing ({Math.max(0, c.con.mod)} HP)"
-		bind:checked={c.settings.addConToHeal}
-	/>
+		<Toggle
+			name="addCon"
+			label="Add CON when healing ({Math.max(0, c.con.mod)} HP)"
+			bind:checked={c.settings.addConToHeal}
+		/>
 
-	<Toggle
-		name="healAbilityDamage"
-		label="Heal ability damage"
-		bind:checked={c.settings.healAbilityDamage}
-	/>
+		<Toggle
+			name="healAbilityDamage"
+			label="Heal ability damage"
+			bind:checked={c.settings.healAbilityDamage}
+		/>
 
-	<Toggle
-		name="rechargeSLA"
-		label="Recharge Spell-Like Abilities"
-		bind:checked={c.settings.rechargeSLA}
-	/>
+		<Toggle
+			name="rechargeSLA"
+			label="Recharge Spell-Like Abilities"
+			bind:checked={c.settings.rechargeSLA}
+		/>
 
-	<Toggle
-		name="rechargeTraits"
-		label="Recharge traits"
-		bind:checked={c.settings.rechargeTraits}
-	/>
+		<Toggle
+			name="rechargeTraits"
+			label="Recharge traits"
+			bind:checked={c.settings.rechargeTraits}
+		/>
 
-	<Toggle
-		name="rechargeItems"
-		label="Recharge items"
-		bind:checked={c.settings.rechargeItems}
-	/>
+		<Toggle
+			name="rechargeItems"
+			label="Recharge items"
+			bind:checked={c.settings.rechargeItems}
+		/>
 
-	<Toggle
-		name="resetSpellsUsage"
-		label="Reset spell usage"
-		bind:checked={c.settings.resetSpellUsage}
-	/>
+		<Toggle
+			name="resetSpellsUsage"
+			label="Reset spell usage"
+			bind:checked={c.settings.resetSpellUsage}
+		/>
 
-	<Toggle
-		name="resetPreparedSpells"
-		label="Reset prepared spells"
-		bind:checked={c.settings.resetPreparedSpells}
-	/>
+		<Toggle
+			name="resetPreparedSpells"
+			label="Reset prepared spells"
+			bind:checked={c.settings.resetPreparedSpells}
+		/>
 
-	<div class="divider"></div>
+		<div class="divider"></div>
 
-	<button class="btn" onclick={() => rest8Hours()}>8 hours</button>
-</div>
+		<button class="btn" onclick={() => rest8Hours()}>8 hours</button>
+	</div>
+</DialogBase>

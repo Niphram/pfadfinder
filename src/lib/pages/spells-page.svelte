@@ -7,7 +7,7 @@
 	import Divider from '$lib/atoms/divider.svelte';
 	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
 
-	import { openDialog } from '$lib/components/dialog.svelte';
+	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import SpellDialog from '$lib/components/dialogs/spell-dialog.svelte';
 	import SpellLevelDialog from '$lib/components/dialogs/spell-level-dialog.svelte';
 	import SpellLikeAbilityDialog from '$lib/components/dialogs/spell-like-ability-dialog.svelte';
@@ -22,6 +22,7 @@
 		type SpellLevel,
 	} from '$lib/data';
 
+	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());
 
 	function openConfigDialog() {

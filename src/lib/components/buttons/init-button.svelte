@@ -2,11 +2,12 @@
 	import { macroNotify, withSign } from '$lib/utils';
 
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
-	import { openDialog } from '$lib/components/dialog.svelte';
+	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import InitDialog from '$lib/components/dialogs/init-dialog.svelte';
 
 	import { getChar } from '$lib/data';
 
+	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());
 </script>
 

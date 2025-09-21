@@ -9,11 +9,16 @@
 	import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
 	import { preventDefault } from '$lib/utils';
 
+	import { useDialog } from '$lib/components/dialog-provider.svelte';
+	import CharacterOptionsDialog from '$lib/components/dialogs/character-options-dialog.svelte';
+
 	import { Character } from '$lib/data';
 	import { upgradeCharacterAndDeserialize } from '$lib/data/upgrade';
 
 	const { data }: PageProps = $props();
 	const { characters, db } = $derived(data);
+
+	const { openDialog } = useDialog();
 
 	function invalidateCharacters() {
 		invalidate('characters:list');
@@ -86,49 +91,15 @@
 		window.URL.revokeObjectURL(url);
 	}
 
-	let characterModal = $state<HTMLDialogElement>();
-	let selectedCharacter = $state('');
-
 	function openCharacterDialog(id: string) {
-		selectedCharacter = id;
-		characterModal?.showModal();
+		openDialog(CharacterOptionsDialog, {
+			charId: id,
+			oncopy: duplicateChar,
+			onexport: exportChar,
+			ondelete: deleteChar,
+		});
 	}
 </script>
-
-<dialog bind:this={characterModal} class="modal">
-	<div class="modal-box">
-		<form method="dialog" class="modal-backdrop">
-			<div class="flex flex-col gap-4">
-				<h3 class="text-primary-content text-lg font-bold">
-					Character options
-				</h3>
-
-				<button
-					class="btn btn-secondary"
-					onclick={() => duplicateChar(selectedCharacter)}
-				>
-					Copy
-				</button>
-				<button
-					class="btn btn-secondary"
-					onclick={() => exportChar(selectedCharacter)}
-				>
-					Export
-				</button>
-				<button
-					class="btn btn-warning"
-					onclick={() =>
-						confirm('Are you sure?') && deleteChar(selectedCharacter)}
-				>
-					Delete
-				</button>
-			</div>
-		</form>
-	</div>
-	<form method="dialog" class="modal-backdrop">
-		<button>close</button>
-	</form>
-</dialog>
 
 <div class="flex w-full justify-center">
 	<div class="flex w-full max-w-3xl flex-col gap-4">

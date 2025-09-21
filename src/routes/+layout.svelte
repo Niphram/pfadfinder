@@ -4,6 +4,7 @@
 
 	import { onNavigate } from '$app/navigation';
 
+	import DialogProvider from '$lib/components/dialog-provider.svelte';
 	import ThemeChanger from '$lib/components/theme-changer.svelte';
 
 	// Nice looking transitions (if supported)
@@ -22,5 +23,7 @@
 </script>
 
 <ThemeChanger>
-	{@render children()}
+	<DialogProvider>
+		{@render children()}
+	</DialogProvider>
 </ThemeChanger>

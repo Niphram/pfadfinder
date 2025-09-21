@@ -77,6 +77,7 @@ export class IDBStorage {
 		if (!char) return;
 
 		char.id.value = nanoid();
+		char.name.value = `${char.name.value} (Copy)`;
 
 		this.saveCharacter(char);
 	}

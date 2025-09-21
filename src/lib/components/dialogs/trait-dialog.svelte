@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { title } from '$lib/components/dialog.svelte';
+	import DialogBase from '$lib/atoms/dialog-base.svelte';
+
 	import Input from '$lib/components/input/input.svelte';
 	import MacroNumber from '$lib/components/input/macro-number.svelte';
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
@@ -17,38 +18,38 @@
 	function deleteTrait() {
 		c.traits.splice(index, 1);
 	}
-
-	$title = 'Feature/Trait';
 </script>
 
-<div class="flex flex-col gap-2">
-	{#if index < c.traits.length}
-		<Input
-			name="traitName"
-			label="Name"
-			placeholder="Type here"
-			value={c.traits[index].$.name}
-		/>
+<DialogBase title="Feature/Trait">
+	<div class="flex flex-col gap-2">
+		{#if index < c.traits.length}
+			<Input
+				name="traitName"
+				label="Name"
+				placeholder="Type here"
+				value={c.traits[index].$.name}
+			/>
 
-		<MacroNumber
-			value={c.traits[index].$.perDay}
-			name="traitPerDay"
-			label="Per Day"
-			placeholder="Uses per day"
-		/>
+			<MacroNumber
+				value={c.traits[index].$.perDay}
+				name="traitPerDay"
+				label="Per Day"
+				placeholder="Uses per day"
+			/>
 
-		<MacroTextArea
-			name="traitDescription"
-			label="Description"
-			rows={10}
-			value={c.traits[index].$.description}
-		/>
-	{/if}
+			<MacroTextArea
+				name="traitDescription"
+				label="Description"
+				rows={10}
+				value={c.traits[index].$.description}
+			/>
+		{/if}
 
-	<button
-		onclick={deleteTrait}
-		class="btn btn-error mt-4 w-max self-center uppercase"
-	>
-		Delete
-	</button>
-</div>
+		<button
+			onclick={deleteTrait}
+			class="btn btn-error mt-4 w-max self-center uppercase"
+		>
+			Delete
+		</button>
+	</div>
+</DialogBase>

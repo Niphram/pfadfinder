@@ -2,12 +2,13 @@
 	import { t } from '$lib/i18n';
 	import { macroNotify, preventDefault } from '$lib/utils';
 
-	import { openDialog } from '$lib/components/dialog.svelte';
+	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import PersonaScoreDialog from '$lib/components/dialogs/persona-facet-dialog.svelte';
 	import TextArea from '$lib/components/input/text-area.svelte';
 
 	import { FACET_KEYS, getChar } from '$lib/data';
 
+	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());
 </script>
 

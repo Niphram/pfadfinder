@@ -7,7 +7,6 @@
 
 	import Status from '$lib/atoms/status.svelte';
 
-	import Dialog from '$lib/components/dialog.svelte';
 	import ToastProvider from '$lib/components/toast-provider.svelte';
 
 	import type { Character } from '$lib/data';
@@ -44,7 +43,6 @@
 		<p class="text-xs opacity-50">{$t('texts.general.saving')}</p>
 	</div>
 
-	<Dialog />
 	<ToastProvider />
 
 	<div class="h-screen w-screen">

@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
+	import { preventDefault } from '$lib/utils';
 
-	import {
-		closeDialog,
-		openDialog,
-		title,
-	} from '$lib/components/dialog.svelte';
+	import DialogBase from '$lib/atoms/dialog-base.svelte';
+
+	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import RestDialog from '$lib/components/dialogs/rest-dialog.svelte';
 	import SettingsDialog from '$lib/components/dialogs/settings-dialog.svelte';
 
 	import { getChar } from '$lib/data';
 
+	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());
 
 	let navButtons = $derived([
@@ -23,40 +23,41 @@
 		{ key: 'character', active: true },
 		{ key: 'persona', active: c.settings.usePersonaSystem },
 	] as const);
-
-	$title = '';
 </script>
 
-<div class="flex h-full flex-col gap-2">
-	{#each navButtons as { key, active } (key)}
-		{#if active}
-			<button
-				class="btn w-full"
-				onclick={() => {
-					// Quick fix after switching to hash-routing.
-					const page = document.getElementById(key);
-					page?.parentElement?.scrollTo({
-						behavior: 'smooth',
-						left: page?.offsetLeft,
-						top: 0,
-					});
-					closeDialog();
-				}}>{$t(`texts.pages.${key}`)}</button
-			>
-		{/if}
-	{/each}
+<DialogBase title="">
+	<div class="flex h-full flex-col gap-2">
+		{#each navButtons as { key, active } (key)}
+			{#if active}
+				<button
+					class="btn w-full"
+					onclick={() => {
+						// Quick fix after switching to hash-routing.
+						const page = document.getElementById(key);
+						page?.parentElement?.scrollTo({
+							behavior: 'smooth',
+							left: page?.offsetLeft,
+							top: 0,
+						});
+					}}>{$t(`texts.pages.${key}`)}</button
+				>
+			{/if}
+		{/each}
 
-	<div class="grow"></div>
+		<div class="grow"></div>
 
-	<button
-		class="btn btn-accent w-full"
-		onclick={() => openDialog(RestDialog, {})}>Rest</button
-	>
+		<button
+			class="btn btn-accent w-full"
+			onclick={preventDefault(() => openDialog(RestDialog, {}))}>Rest</button
+		>
 
-	<div class="divider">Options</div>
+		<div class="divider">Options</div>
 
-	<button
-		class="btn btn-outline btn-accent w-full"
-		onclick={() => openDialog(SettingsDialog, {})}>Settings</button
-	>
-</div>
+		<button
+			class="btn btn-outline btn-accent w-full"
+			onclick={preventDefault(() => openDialog(SettingsDialog, {}))}
+		>
+			Settings
+		</button>
+	</div>
+</DialogBase>

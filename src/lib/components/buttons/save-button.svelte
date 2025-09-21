@@ -3,7 +3,7 @@
 	import { macroNotify, withSign } from '$lib/utils';
 
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
-	import { openDialog } from '$lib/components/dialog.svelte';
+	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import SaveDialog from '$lib/components/dialogs/save-dialog.svelte';
 
 	import { getChar, type SaveKey } from '$lib/data';
@@ -14,6 +14,7 @@
 
 	let { key }: Props = $props();
 
+	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());
 </script>
 

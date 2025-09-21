@@ -2,7 +2,8 @@
 	import { t } from '$lib/i18n';
 	import { preventDefault } from '$lib/utils';
 
-	import { title } from '$lib/components/dialog.svelte';
+	import DialogBase from '$lib/atoms/dialog-base.svelte';
+
 	import Input from '$lib/components/input/input.svelte';
 
 	import { getChar, Skill, type SkillKey } from '$lib/data';
@@ -18,30 +19,30 @@
 	}
 
 	const skills = ['craft', 'perform', 'profession'] as const;
-
-	$title = 'Variant Skills';
 </script>
 
-<div class="flex flex-col gap-2">
-	{#each skills as key (key)}
-		<div class="divider">{$t(`skills.${key}`)}</div>
+<DialogBase title="Variant Skills">
+	<div class="flex flex-col gap-2">
+		{#each skills as key (key)}
+			<div class="divider">{$t(`skills.${key}`)}</div>
 
-		{#each c.skills[key].skills as skill, idx (idx)}
-			<div class="flex w-full flex-row items-center gap-2">
-				<Input name="variant-{idx}" value={skill.$.name} />
+			{#each c.skills[key].skills as skill, idx (idx)}
+				<div class="flex w-full flex-row items-center gap-2">
+					<Input name="variant-{idx}" value={skill.$.name} />
+					<button
+						onclick={preventDefault(() => {
+							removeSkill(key, idx);
+						})}
+						class="btn btn-warning join-item">Delete</button
+					>
+				</div>
+			{/each}
+			<div class="flex flex-row justify-center">
 				<button
-					onclick={preventDefault(() => {
-						removeSkill(key, idx);
-					})}
-					class="btn btn-warning join-item">Delete</button
+					class="btn btn-circle btn-primary btn-sm"
+					onclick={preventDefault(() => addSkill(key))}>+</button
 				>
 			</div>
 		{/each}
-		<div class="flex flex-row justify-center">
-			<button
-				class="btn btn-circle btn-primary btn-sm"
-				onclick={preventDefault(() => addSkill(key))}>+</button
-			>
-		</div>
-	{/each}
-</div>
+	</div>
+</DialogBase>

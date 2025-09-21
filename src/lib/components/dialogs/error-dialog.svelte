@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { title } from '$lib/components/dialog.svelte';
+	import DialogBase from '$lib/atoms/dialog-base.svelte';
 
 	interface Props {
 		message: string;
 	}
 
 	let { message }: Props = $props();
-
-	$title = 'Error';
 </script>
 
-<div>{message}</div>
+<DialogBase title="Error">
+	<div>{message}</div>
 
-<div class="modal-action">
-	<button class="btn">Close</button>
-</div>
+	<div class="modal-action">
+		<button class="btn">Close</button>
+	</div>
+</DialogBase>

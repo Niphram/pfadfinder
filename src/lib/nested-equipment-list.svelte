@@ -7,7 +7,7 @@
 
 	import Collapse from '$lib/atoms/collapse.svelte';
 
-	import { openDialog } from '$lib/components/dialog.svelte';
+	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import ItemDialog from '$lib/components/dialogs/item-dialog.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
@@ -16,6 +16,7 @@
 
 	import Self from './nested-equipment-list.svelte';
 
+	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());
 
 	interface Props {
