@@ -4,7 +4,7 @@
 	let { children } = $props();
 </script>
 
-<div class="flex min-h-screen flex-col items-stretch gap-4">
+<div class="flex min-h-dvh flex-col items-stretch gap-4">
 	<div class="flex grow flex-col gap-4">
 		<!-- HEADER -->
 		<div

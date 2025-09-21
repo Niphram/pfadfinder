@@ -43,7 +43,7 @@
 	</title>
 </svelte:head>
 
-<div class="flex h-screen flex-col">
+<div class="flex h-dvh flex-col">
 	<div class="bg-base-200 sticky top-0 z-40 w-full drop-shadow-xl">
 		<div class="flex flex-row items-stretch gap-2 p-2 align-middle">
 			<button
