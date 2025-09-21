@@ -3,8 +3,10 @@
 	import './transition.css';
 
 	import { onNavigate } from '$app/navigation';
+	import { navigating } from '$app/state';
 
 	import DialogProvider from '$lib/components/dialog-provider.svelte';
+	import PageLoader from '$lib/components/page-loader.svelte';
 	import ThemeChanger from '$lib/components/theme-changer.svelte';
 
 	// Nice looking transitions (if supported)
@@ -21,6 +23,8 @@
 
 	let { children } = $props();
 </script>
+
+<PageLoader loading={navigating.complete !== null} />
 
 <ThemeChanger>
 	<DialogProvider>

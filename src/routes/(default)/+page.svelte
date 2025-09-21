@@ -107,12 +107,12 @@
 			<li class="p-4 pb-2 text-xs tracking-wide opacity-60">Characters</li>
 
 			{#each characters as { id, name, description, system, updated_at } (id)}
-				<li class="p-2">
+				<li class="list-row p-2">
 					<a
 						href={resolve('/(app)/character/[id]', { id })}
 						aria-label="Open {name}"
-						data-sveltekit-preload-data="off"
-						class="list-row hover:bg-base-200 rounded-box col-span-3 items-center p-2 align-middle transition"
+						role="button"
+						class="btn btn-ghost btn-block col-span-2 grid h-max grid-cols-subgrid items-center p-2 text-left align-middle font-normal"
 						oncontextmenu={preventDefault(() => openCharacterDialog(id))}
 					>
 						<div class="list-col-grow overflow-hidden">
