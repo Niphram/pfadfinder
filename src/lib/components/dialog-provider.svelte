@@ -89,7 +89,7 @@
 </script>
 
 <dialog
-	class="modal"
+	class="modal max-h-screen! max-w-screen!"
 	{@attach dialogAttachment}
 	onclose={() => (dialogSystemContext.content = undefined)}
 ></dialog>
