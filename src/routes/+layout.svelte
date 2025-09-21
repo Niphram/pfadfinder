@@ -24,10 +24,12 @@
 	let { children } = $props();
 </script>
 
-<PageLoader loading={navigating.complete !== null} />
+<div class="h-screen min-h-screen w-screen min-w-screen">
+	<PageLoader loading={navigating.complete !== null} />
 
-<ThemeChanger>
-	<DialogProvider>
-		{@render children()}
-	</DialogProvider>
-</ThemeChanger>
+	<ThemeChanger>
+		<DialogProvider>
+			{@render children()}
+		</DialogProvider>
+	</ThemeChanger>
+</div>
