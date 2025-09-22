@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid';
 
 import {
+	boolean,
 	ClassSerializer,
 	macro,
 	number,
@@ -10,6 +11,8 @@ import {
 
 export class Trait extends ClassSerializer {
 	id = string(nanoid());
+
+	open = boolean(false);
 
 	name = string('Unnamed Trait', { minLength: 1, maxLength: 100 });
 

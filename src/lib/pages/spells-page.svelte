@@ -101,6 +101,7 @@
 							icon="arrow"
 							oncontextmenu={() =>
 								openDialog(SpellDialog, { spellIdx, spellLevel: level })}
+							bind:open={spell.open}
 						>
 							{#snippet title()}
 								<div class="flex flex-row">
@@ -174,6 +175,7 @@
 				<Collapse
 					icon="arrow"
 					oncontextmenu={() => openDialog(SpellLikeAbilityDialog, { slaIndex })}
+					bind:open={sla.open}
 				>
 					{#snippet title()}
 						<div class="flex flex-row items-center">

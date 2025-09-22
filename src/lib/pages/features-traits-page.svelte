@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
-	import { macroNotify, preventDefault } from '$lib/utils';
+	import { preventDefault, stopPropagation } from '$lib/utils';
 
 	import Collapse from '$lib/atoms/collapse.svelte';
 	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
@@ -68,11 +68,18 @@
 				<Collapse
 					icon="arrow"
 					oncontextmenu={() => openDialog(FeatDialog, { index })}
+					titleClass="overflow-hidden"
+					bind:open={item.open}
 				>
-					{#snippet title()}
-						<span class="text-sm font-semibold"
-							>{item.name} ({$t(`feats.type.${item.type}`)})</span
+					{#snippet title({ open })}
+						<div
+							class={[
+								'overflow-hidden text-sm font-semibold text-ellipsis',
+								!open && 'whitespace-nowrap',
+							]}
 						>
+							{item.name} ({$t(`feats.type.${item.type}`)})
+						</div>
 					{/snippet}
 
 					<div class="flex flex-col gap-2">
@@ -130,26 +137,42 @@
 				>
 					<DragHandle />
 				</div>
-				<div class="flex grow flex-row items-stretch gap-2">
-					<button
-						class="btn btn-sm md:btn-md flex-1"
-						onclick={() => macroNotify(item.name, item.description, c)}
-						oncontextmenu={preventDefault(() =>
-							openDialog(TraitDialog, { index }),
-						)}
-					>
-						{item.name}
-					</button>
-					{#if item.perDay !== null}
-						<button
-							class="btn btn-accent btn-sm md:btn-md w-32"
-							onclick={() => useTrait(index)}
-							oncontextmenu={preventDefault(() => refillTrait(index))}
-						>
-							{item.remaining}/{item.perDay} per day
-						</button>
-					{/if}
-				</div>
+				<Collapse
+					bind:open={item.open}
+					icon="arrow"
+					titleClass="py-0! overflow-hidden"
+					oncontextmenu={preventDefault(() =>
+						openDialog(TraitDialog, { index }),
+					)}
+				>
+					{#snippet title({ open })}
+						<div class="flex flex-row items-center justify-between gap-2">
+							<span
+								class={[
+									'overflow-hidden py-2 text-sm font-semibold text-ellipsis md:py-4',
+									!open && 'whitespace-nowrap',
+								]}>{item.name}</span
+							>
+
+							{#if item.perDay !== null}
+								<button
+									class="btn btn-accent btn-xs md:btn-md w-16 md:w-24"
+									onclick={stopPropagation(() => useTrait(index))}
+									oncontextmenu={stopPropagation(
+										preventDefault(() => refillTrait(index)),
+									)}
+								>
+									{item.remaining} of {item.perDay}
+								</button>
+							{/if}
+						</div>
+					{/snippet}
+
+					<MultilineMacro
+						text={item.description}
+						class="mb-4 text-justify text-sm hyphens-auto last:mb-0"
+					/>
+				</Collapse>
 			</div>
 		{/snippet}
 	</SortableList>

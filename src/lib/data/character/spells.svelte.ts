@@ -72,6 +72,8 @@ export class SpellSave extends ClassSerializer {
 export class SpellCommonProps extends ClassSerializer {
 	id = nanoid();
 
+	open = boolean(false);
+
 	name = string('Unnamed Spell', { minLength: 1, maxLength: 100 });
 
 	school = string('', { maxLength: 100 });
