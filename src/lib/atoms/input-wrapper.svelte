@@ -23,12 +23,16 @@
 	}: Props = $props();
 </script>
 
-<fieldset class={['fieldset w-full', fieldsetClass]}>
+<fieldset class={['fieldset w-full min-w-0', fieldsetClass]}>
 	{#if legend}
 		<legend class="fieldset-legend w-full py-1">
 			<span>{legend}</span>
 			{#if hint}
-				<span class="badge badge-xs">{hint}</span>
+				<div class="badge badge-xs overflow-hidden">
+					<span class="overflow-hidden overflow-ellipsis whitespace-nowrap">
+						{hint}
+					</span>
+				</div>
 			{/if}
 		</legend>
 	{/if}
