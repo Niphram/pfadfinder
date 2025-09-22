@@ -3,12 +3,14 @@
 
 	const DIALOG_SYSTEM_CONTEXT = Symbol('dialog-system-context');
 
+	type DialogContent<Props extends Record<string, unknown>> = {
+		component: Component<Props>;
+		props: Props;
+		context: Map<unknown, unknown>;
+	};
+
 	type DialogSystemContext<Props extends Record<string, unknown>> = {
-		content?: {
-			component: Component<Props>;
-			props: Props;
-			context: Map<unknown, unknown>;
-		};
+		content: DialogContent<Props>[];
 	};
 
 	/**
@@ -22,19 +24,46 @@
 		) as DialogSystemContext<any>;
 
 		return {
+			/**
+			 * Opens a new dialog
+			 */
 			openDialog: <Props extends Record<string, unknown>>(
 				component: Component<Props>,
 				props: Props,
 			) => {
-				dialogContext.content = {
+				dialogContext.content.push({
+					component,
+					props,
+					context: capturedContext,
+				});
+			},
+
+			/**
+			 * Replaces the current dialog
+			 */
+			replaceDialog: <Props extends Record<string, unknown>>(
+				component: Component<Props>,
+				props: Props,
+			) => {
+				dialogContext.content[dialogContext.content.length - 1] = {
 					component,
 					props,
 					context: capturedContext,
 				};
 			},
 
-			closeDialog() {
-				dialogContext.content = undefined;
+			/**
+			 * Closes the newest dialog
+			 */
+			popDialog() {
+				dialogContext.content.pop();
+			},
+
+			/**
+			 * Closes all open dialogs
+			 */
+			closeAll() {
+				dialogContext.content = [];
 			},
 		};
 	}
@@ -54,44 +83,64 @@
 
 	const dialogSystemContext: DialogSystemContext<Record<string, unknown>> =
 		$state({
-			content: undefined,
+			content: [],
 		});
 
-	const dialogAttachment: Attachment<HTMLDialogElement> = (el) => {
-		let mountedDialog: Record<string, unknown> | undefined;
+	function dialogAttachment(
+		content: DialogContent<Record<string, unknown>>,
+	): Attachment<HTMLDialogElement> {
+		return (el) => {
+			el.addEventListener(
+				'close',
+				() => {
+					// Remove the content from context when the dialog closes
+					const index = dialogSystemContext.content.indexOf(content);
+					if (index >= 0) {
+						dialogSystemContext.content.splice(index, 1);
+					}
+				},
+				{
+					capture: false,
+					once: true,
+					passive: true,
+				},
+			);
 
-		if (dialogSystemContext.content) {
 			// Mount the content
-			mountedDialog = mount(dialogSystemContext.content.component, {
+			const mountedDialog = mount(content.component, {
 				target: el,
-				props: dialogSystemContext.content.props,
-				context: dialogSystemContext.content.context,
+				props: content.props,
+				context: content.context,
 			});
 
 			// double raf so intro transition can play
 			rafraf(() => el.showModal());
-		} else {
-			// when no content, close the dialog
-			el.close();
-		}
 
-		return () => {
-			if (mountedDialog) {
-				// Wait a bit before unmounting to allow transitions to finish
-				setTimeout(() => {
-					unmount(mountedDialog);
-				}, 500);
-			}
+			return () => {
+				unmount(mountedDialog);
+			};
 		};
-	};
+	}
+
+	// simple "transition" to allow css animations to end
+	function waitTransition(el: HTMLDialogElement) {
+		// Make sure the dialog actually closes
+		el.close();
+
+		return {
+			duration: 500,
+		};
+	}
 
 	setContext(DIALOG_SYSTEM_CONTEXT, dialogSystemContext);
 </script>
 
-<dialog
-	class="modal"
-	{@attach dialogAttachment}
-	onclose={() => (dialogSystemContext.content = undefined)}
-></dialog>
+{#each dialogSystemContext.content as content (content)}
+	<dialog
+		class="modal"
+		{@attach dialogAttachment(content)}
+		out:waitTransition
+	></dialog>
+{/each}
 
 {@render children()}
