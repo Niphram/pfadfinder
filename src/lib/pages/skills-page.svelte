@@ -21,6 +21,7 @@
 		{#each c.skills[key].skills as variant, index (index)}
 			{@const ability = c.skills[key].skills[index].ability}
 			{@const penalty = c[ability].skillCheckMod !== c[ability].mod}
+			{@const trainedOnly = c.skills[key].trained}
 
 			{@const skillTags = [
 				penalty && '!',
@@ -55,8 +56,10 @@
 						<span
 							class="join-item grow align-middle decoration-wavy"
 							class:underline={variant.notes}
-							>{$t(`skills.${key}`)}{variant.name ?
-								` (${variant.name})`
+							>{$t(`skills.${key}`)}{variant.name ? ` (${variant.name})` : ''}{(
+								trainedOnly
+							) ?
+								'*'
 							:	''}</span
 						>
 					</div>
