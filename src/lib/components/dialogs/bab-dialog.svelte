@@ -1,6 +1,7 @@
 <script lang="ts">
 	import DialogBase from '$lib/atoms/dialog-base.svelte';
 
+	import MacroNumber from '$lib/components/input/macro-number.svelte';
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
 
 	import { getChar } from '$lib/data';
@@ -9,6 +10,13 @@
 </script>
 
 <DialogBase title="Base Attack Bonus">
+	<MacroNumber
+		value={c.combat.bab.$.bonus}
+		name="babBonus"
+		label="Bonus"
+		placeholder="BAB Bonus"
+	/>
+
 	<MacroTextArea
 		value={c.combat.bab.$.notes}
 		name="babNotes"

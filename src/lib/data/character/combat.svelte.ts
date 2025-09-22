@@ -57,26 +57,34 @@ export class SpellResistance extends ClassSerializer {
 }
 
 export class BaseAttackBonus extends ClassSerializer {
+	bonus = macro('0');
+
 	notes = string('', { maxLength: 1000 });
 
-	readonly mod = derive<Character>((c) => c.classes.bab);
+	readonly mod = derive<Character>((c) => c.classes.bab + this.bonus.eval(c));
 }
 
 export class CombatManeuverBonus extends ClassSerializer {
+	bonus = macro('0');
+
 	notes = string('', { maxLength: 1000 });
 
 	readonly mod = derive<Character>((c) => {
 		const { ability, mod } = sizeModifiers[c.race.size];
-		return c.combat.bab.mod + mod + c[ability].mod;
+		return c.combat.bab.mod + mod + c[ability].mod + this.bonus.eval(c);
 	});
 }
 
 export class CombatManeuverDefense extends ClassSerializer {
+	bonus = macro('0');
+
 	notes = string('', { maxLength: 1000 });
 
 	readonly mod = derive<Character>((c) => {
 		const { mod } = sizeModifiers[c.race.size];
-		return 10 + c.combat.bab.mod + c.str.mod + c.dex.mod + mod;
+		return (
+			10 + c.combat.bab.mod + c.str.mod + c.dex.mod + mod + this.bonus.eval(c)
+		);
 	});
 }
 
