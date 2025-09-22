@@ -104,6 +104,14 @@
 					placeholder="1d6 Piercing + STR"
 					value={c.combat.attacks[index].damage.$.damage}
 				/>
+
+				<MacroTextArea
+					name="damageNotes"
+					label="Damage Notes"
+					placeholder="Additional notes (damage type etc.)"
+					rows={3}
+					value={c.combat.attacks[index].damage.$.notes}
+				/>
 			{/if}
 
 			<Divider>Notes</Divider>

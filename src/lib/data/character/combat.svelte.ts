@@ -152,6 +152,8 @@ export class AttackRoll extends ClassSerializer {
 
 export class Damage extends ClassSerializer {
 	damage = string('', { maxLength: 1000 });
+
+	notes = string('', { maxLength: 100 });
 }
 
 export class Attack extends ClassSerializer {
@@ -202,6 +204,11 @@ export class Attack extends ClassSerializer {
 				details.push([
 					'Damage',
 					parseTextWithMacros(this.damage.damage.value, c),
+				]);
+
+				details.push([
+					'Damage Notes',
+					parseTextWithMacros(this.damage.notes.value, c),
 				]);
 			}
 

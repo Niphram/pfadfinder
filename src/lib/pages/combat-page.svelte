@@ -74,16 +74,16 @@
 
 	{#if c.combat.attacks.length > 0}
 		<div
-			class="grid w-full grid-flow-row grid-cols-[min-content_repeat(4,auto)] justify-stretch gap-y-2"
+			class="grid w-full grid-flow-row grid-cols-[min-content_auto_repeat(2,min-content)_minmax(auto,min-content)] justify-stretch gap-0 gap-y-2"
 		>
 			<div
-				class="col-span-5 grid grid-cols-subgrid text-center text-sm font-bold text-neutral-500"
+				class="col-span-5 grid grid-cols-subgrid gap-x-1 text-center text-sm font-bold text-neutral-500"
 			>
 				<div></div>
-				<div>Name</div>
-				<div>Atk</div>
-				<div>Crit Range</div>
-				<div class="pr-12">Damage</div>
+				<div class="whitespace-nowrap">Name</div>
+				<div class="whitespace-nowrap">Atk</div>
+				<div class="whitespace-nowrap">Crt</div>
+				<div class="pr-12 whitespace-nowrap">Dmg</div>
 			</div>
 
 			<SortableList
@@ -119,31 +119,30 @@
 						>
 							{#snippet title({ open })}
 								<div
-									class="col-span-4 grid grid-cols-subgrid items-center gap-x-2"
+									class={[
+										'col-span-4 grid items-center gap-x-2',
+										!open && 'grid-cols-subgrid',
+									]}
 								>
-									<div
-										class={[
-											'text-ellipsis',
-											'whitespace-nowrap',
-											'overflow-hidden',
-											open && 'col-span-4',
-										]}
-									>
+									<div class="overflow-hidden text-ellipsis whitespace-nowrap">
 										{attack.name}
 									</div>
 									{#if !open}
-										<div class="text-center">
+										<div class="text-center whitespace-nowrap">
 											{attack.hasAttack ?
-												attack.attack.attacks.map(withSign).join('/')
+												attack.attack.attacks
+													.map((v, i) => (i === 0 ? withSign(v) : v))
+													.join('/')
 											:	'-'}
 										</div>
-										<div class="text-center">
+										<div class="text-center whitespace-nowrap">
 											{(attack.hasAttack && attack.attack.critRange) || '-'}
 										</div>
 										<div
-											class="text-center text-ellipsis"
-											class:overflow-hidden={!open}
-											class:whitespace-nowrap={!open}
+											class={[
+												'text-center text-ellipsis',
+												!open && 'overflow-hidden whitespace-nowrap',
+											]}
 										>
 											{(attack.hasDamage &&
 												parseTextWithMacros(attack.damage.damage, c)) ||

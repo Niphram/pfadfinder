@@ -78,12 +78,16 @@
 				className,
 			]}
 		>
-			{#each textStyle.spans as { start, length, props }, i (i)}
-				{@const { color, decoration } = props}
-				<span style:color style:text-decoration={decoration}
-					>{value.substring(start, start + length)}</span
-				>
-			{/each}
+			{#if value.length === 0}
+				<span class="text-current/50">{placeholder}</span>
+			{:else}
+				{#each textStyle.spans as { start, length, props }, i (i)}
+					{@const { color, decoration } = props}
+					<span style:color style:text-decoration={decoration}
+						>{value.substring(start, start + length)}</span
+					>
+				{/each}
+			{/if}
 		</div>
 	{/if}
 </div>
