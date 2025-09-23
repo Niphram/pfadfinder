@@ -3,6 +3,9 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 import { dev } from '$app/environment';
+import { resolve } from '$app/paths';
+
+import { ICON_PUPOSES_SIZES } from '$lib/server/icon';
 
 export const prerender = true;
 
@@ -12,22 +15,16 @@ export const prerender = true;
 export const GET: RequestHandler = () => {
 	const appNameSuffix = dev ? ' DEV' : '';
 	const appIdSuffix = dev ? '-dev' : '';
-	const iconSuffix = dev ? '_dev' : '';
 
-	const iconSizes = [512, 192];
-
-	const icons = iconSizes.flatMap((size) => [
+	const icons = ICON_PUPOSES_SIZES.flatMap(({ purpose, size }) => [
 		{
-			src: `./icons/${size}_maskable${iconSuffix}.png`,
+			src: resolve('/(default)/icons/[purpose]/[size].png', {
+				purpose,
+				size: `${size}`,
+			}),
 			type: 'image/png',
 			sizes: `${size}x${size}`,
-			purpose: 'maskable',
-		},
-		{
-			src: `./icons/${size}${iconSuffix}.png`,
-			type: 'image/png',
-			sizes: `${size}x${size}`,
-			purpose: 'any',
+			purpose,
 		},
 	]);
 
