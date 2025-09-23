@@ -14,6 +14,23 @@ export const GET: RequestHandler = () => {
 	const appIdSuffix = dev ? '-dev' : '';
 	const iconSuffix = dev ? '_dev' : '';
 
+	const iconSizes = [512, 192];
+
+	const icons = iconSizes.flatMap((size) => [
+		{
+			src: `./icons/${size}_maskable${iconSuffix}.png`,
+			type: 'image/png',
+			sizes: `${size}x${size}`,
+			purpose: 'maskable',
+		},
+		{
+			src: `./icons/${size}${iconSuffix}.png`,
+			type: 'image/png',
+			sizes: `${size}x${size}`,
+			purpose: 'any',
+		},
+	]);
+
 	return json({
 		name: `Pfadfinder${appNameSuffix}`,
 		short_name: `Pfadfinder${appNameSuffix}`,
@@ -24,17 +41,6 @@ export const GET: RequestHandler = () => {
 		scope: './',
 		start_url: './',
 		id: `pfadfinder${appIdSuffix}`,
-		icons: [
-			{
-				src: `./icons/512${iconSuffix}.png`,
-				type: 'image/png',
-				sizes: '512x512',
-			},
-			{
-				src: `./icons/192${iconSuffix}.png`,
-				type: 'image/png',
-				sizes: '192x192',
-			},
-		],
+		icons,
 	});
 };
