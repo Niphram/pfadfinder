@@ -3,7 +3,7 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 import { dev } from '$app/environment';
-import { resolve } from '$app/paths';
+import { asset, resolve } from '$app/paths';
 
 import { ICON_PUPOSES_SIZES } from '$lib/server/icon';
 
@@ -16,17 +16,28 @@ export const GET: RequestHandler = () => {
 	const appNameSuffix = dev ? ' DEV' : '';
 	const appIdSuffix = dev ? '-dev' : '';
 
-	const icons = ICON_PUPOSES_SIZES.flatMap(({ purpose, size }) => [
+	const iconPath = dev ? '/icons/icon_dev.svg' : '/icons/icon.svg';
+
+	const icons = [
 		{
-			src: resolve('/(default)/icons/[purpose]/[size].png', {
-				purpose,
-				size: `${size}`,
-			}),
-			type: 'image/png',
-			sizes: `${size}x${size}`,
-			purpose,
+			src: asset(iconPath),
+			type: 'image/svg+xml',
+			purpose: 'maskable',
 		},
-	]);
+
+		// Generated icons
+		...ICON_PUPOSES_SIZES.flatMap(({ purpose, size }) => [
+			{
+				src: resolve('/(default)/icons/[purpose]/[size].png', {
+					purpose,
+					size: `${size}`,
+				}),
+				type: 'image/png',
+				sizes: `${size}x${size}`,
+				purpose,
+			},
+		]),
+	];
 
 	return json({
 		name: `Pfadfinder${appNameSuffix}`,

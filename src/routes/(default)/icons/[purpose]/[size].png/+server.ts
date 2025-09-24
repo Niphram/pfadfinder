@@ -30,7 +30,7 @@ export const GET: RequestHandler = async ({ params }) => {
 	if (!isIconPurpose(purpose)) error(404);
 	if (!isIconSize(size)) error(404);
 
-	const ICON_PATH = join('assets', dev ? 'icon_dev.png' : 'icon.png');
+	const ICON_PATH = join('static', 'icons', dev ? 'icon_dev.svg' : 'icon.svg');
 
 	const image = generateIcon(ICON_PATH, {
 		size,
