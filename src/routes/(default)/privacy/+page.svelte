@@ -15,6 +15,10 @@
 	</svelte:element>
 {/snippet}
 
+<svelte:head>
+	<title>Privacy-Policy - Pfadfinder</title>
+</svelte:head>
+
 <article class="prose mx-auto p-4 select-text">
 	<p>
 		&lt;

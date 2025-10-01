@@ -101,6 +101,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Character List - Pfadfinder</title>
+</svelte:head>
+
 <div class="flex w-full justify-center">
 	<div class="flex w-full max-w-3xl flex-col gap-4">
 		<ul class="list bg-base-100 card card-border shadow-sm">

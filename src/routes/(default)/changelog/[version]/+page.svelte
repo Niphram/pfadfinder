@@ -7,6 +7,10 @@
 	/* eslint svelte/no-at-html-tags: "off" */
 </script>
 
+<svelte:head>
+	<title>{data.title} - Pfadfinder</title>
+</svelte:head>
+
 <article class="prose mx-auto p-4 select-text">
 	<p>
 		&lt;

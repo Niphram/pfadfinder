@@ -4,6 +4,10 @@
 	const { data } = $props();
 </script>
 
+<svelte:head>
+	<title>Changelogs - Pfadfinder</title>
+</svelte:head>
+
 <p class="text-xs opacity-30">Build {__BUILD_DATE__}</p>
 
 <article class="prose p-4 select-text">

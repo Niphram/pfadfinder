@@ -22,6 +22,7 @@ export const load: PageServerLoad = async ({ params }) => {
 
 	const { html } = parseMarkdown(fileContent);
 	return {
+		title: params.version,
 		changelogHtml: html,
 	};
 };
