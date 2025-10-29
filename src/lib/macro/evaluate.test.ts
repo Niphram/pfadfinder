@@ -1,5 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
+import { charProxy, derive, macro, type SerdeProxy } from '$lib/serde';
+
 import { evalNode } from './evaluate';
 import { Parser } from './parser';
 
@@ -43,14 +45,14 @@ describe('evaluateNode', () => {
 		});
 	});
 
-	class TestChar {
-		nested = {
-			foo: 1,
-		};
-		array = [2, 3, 4];
-	}
-
 	describe('Attributes', () => {
+		class TestChar {
+			nested = {
+				foo: 1,
+			};
+			array = [2, 3, 4];
+		}
+
 		test.each([
 			['@nested.foo', 1],
 			['@array.1', 3],
@@ -62,6 +64,51 @@ describe('evaluateNode', () => {
 			const result = evalNode(astResult.value!, new TestChar());
 
 			expect(result).toBe(expected);
+		});
+	});
+
+	describe('Recursion detection', () => {
+		class TestChar {
+			self = macro('@self');
+
+			indirectA = macro('@indirectB');
+			indirectB = macro('@indirectC');
+			indirectC = macro('@indirectA');
+
+			foo = macro('@bar');
+			bar = derive((c: SerdeProxy<TestChar>) => c.foo);
+		}
+
+		const char = charProxy(new TestChar());
+
+		test('Should detect direct recursion', () => {
+			const res = char.$.self.result(char);
+
+			expect(res.error).toEqual(
+				expect.objectContaining({
+					message: 'Circular attribute: @self',
+				}),
+			);
+		});
+
+		test('Should detect indirect recursion', () => {
+			const res = char.$.indirectA.result(char);
+
+			expect(res.error).toEqual(
+				expect.objectContaining({
+					message: 'Circular attribute: @indirectB',
+				}),
+			);
+		});
+
+		test('Should detect recursion through other attributes', () => {
+			const res = char.$.foo.result(char);
+
+			expect(res.error).toEqual(
+				expect.objectContaining({
+					message: 'Circular attribute: @bar',
+				}),
+			);
 		});
 	});
 });

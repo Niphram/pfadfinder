@@ -1,4 +1,4 @@
-import { iteratorResultToResult } from '$lib/utils';
+import { iteratorResultToResult, unreachable } from '$lib/utils';
 
 import { AstNodeType, type AstNode, type AttributeNode } from './ast';
 import type { RuntimeError } from './errors';
@@ -11,7 +11,37 @@ function runtimeError(message: string, from: number, to: number): RuntimeError {
 	};
 }
 
+// Detect circular attributes by constructing a callstack of attributes
+const attributePathCallstack: string[] = [];
+// When a loop is detected, the first element of the stack is saved as the problematic attribute
+let circularAttribute: string | undefined;
+
 function* evalAttribute(
+	node: AttributeNode,
+	char: object,
+): Generator<RuntimeError, number> {
+	const joinedPath = node.path.join('.');
+
+	if (attributePathCallstack.includes(joinedPath)) {
+		circularAttribute = attributePathCallstack[0];
+
+		// Return value is going to be ignored, since a circular dependency takes priority
+		return NaN;
+	}
+
+	// Wrap internal eval with callstack
+	attributePathCallstack.push(joinedPath);
+	const result = internalEvalAttribute(node, char).next();
+	attributePathCallstack.pop();
+
+	if (result.done) {
+		return result.value;
+	} else {
+		return yield result.value;
+	}
+}
+
+function* internalEvalAttribute(
 	node: AttributeNode,
 	char: object,
 ): Generator<RuntimeError, number> {
@@ -19,8 +49,9 @@ function* evalAttribute(
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		let val: any = char;
 		for (const p of node.path) {
-			if (!(p in val))
+			if (!(p in val)) {
 				return yield runtimeError(`Attribute is unknown`, node.from, node.to);
+			}
 
 			val = val[p];
 		}
@@ -86,29 +117,48 @@ export function* evalNodeGen(
 	node: AstNode,
 	char: object,
 ): Generator<RuntimeError, number> {
-	switch (node.type) {
-		case AstNodeType.Constant:
-			return node.constant;
-		case AstNodeType.Attribute:
-			return yield* evalAttribute(node, char);
-		case AstNodeType.Unary:
-			return evalUnary(node.op, yield* evalNodeGen(node.node, char));
-		case AstNodeType.Binary:
-			return evalBinary(
-				node.op,
-				yield* evalNodeGen(node.left, char),
-				yield* evalNodeGen(node.right, char),
-			);
-		case AstNodeType.Func: {
-			const nodes: number[] = [];
+	try {
+		switch (node.type) {
+			case AstNodeType.Constant:
+				return node.constant;
+			case AstNodeType.Attribute:
+				return yield* evalAttribute(node, char);
+			case AstNodeType.Unary:
+				return evalUnary(node.op, yield* evalNodeGen(node.node, char));
+			case AstNodeType.Binary:
+				return evalBinary(
+					node.op,
+					yield* evalNodeGen(node.left, char),
+					yield* evalNodeGen(node.right, char),
+				);
+			case AstNodeType.Func: {
+				const nodes: number[] = [];
 
-			for (const n of node.nodes) {
-				nodes.push(yield* evalNodeGen(n, char));
+				for (const n of node.nodes) {
+					nodes.push(yield* evalNodeGen(n, char));
+				}
+
+				return evalFunc(node.func, nodes);
 			}
+		}
+	} finally {
+		// Caution: "finally" is weird when used with generator functions. It works here, since all the "yield" are actually "yield*"
 
-			return evalFunc(node.func, nodes);
+		// If the callstack is empty (this call was the initiating call) and there was a circular dependency
+		if (attributePathCallstack.length === 0 && circularAttribute) {
+			const error = runtimeError(
+				`Circular attribute: @${circularAttribute}`,
+				node.from,
+				node.to,
+			);
+
+			circularAttribute = undefined;
+
+			yield error;
 		}
 	}
+
+	unreachable();
 }
 
 export function evalNode(node: AstNode, char: object) {

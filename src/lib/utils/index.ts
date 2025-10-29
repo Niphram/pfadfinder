@@ -9,4 +9,5 @@ export * from './mutation-observer';
 export * from './notes';
 export * from './result';
 export * from './throttle';
+export * from './unreachable';
 export * from './utilTypes';
