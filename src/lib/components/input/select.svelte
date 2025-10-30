@@ -53,7 +53,7 @@
 <InputWrapper legend={label} {hint} {...feedback}>
 	<select
 		{name}
-		class={['select w-full', className]}
+		class={['select w-full appearance-none', className]}
 		bind:value={tempEnum.value}
 	>
 		{#if value.options.optional}
