@@ -1,7 +1,8 @@
 <script module lang="ts">
-	import { getAllContexts, getContext, type Component } from 'svelte';
+	import { createContext, getAllContexts, type Component } from 'svelte';
 
-	const DIALOG_SYSTEM_CONTEXT = Symbol('dialog-system-context');
+	const [getDialogContext, setDialogContext] =
+		createContext<DialogSystemContext<any>>();
 
 	type DialogContent<Props extends Record<string, unknown>> = {
 		component: Component<Props>;
@@ -18,10 +19,7 @@
 	 */
 	export function useDialog() {
 		const capturedContext = getAllContexts();
-		const dialogContext = getContext(
-			DIALOG_SYSTEM_CONTEXT,
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		) as DialogSystemContext<any>;
+		const dialogContext = getDialogContext();
 
 		return {
 			/**
@@ -70,7 +68,7 @@
 </script>
 
 <script lang="ts">
-	import { mount, setContext, unmount, type Snippet } from 'svelte';
+	import { mount, unmount, type Snippet } from 'svelte';
 	import type { Attachment } from 'svelte/attachments';
 
 	import { rafraf } from '$lib/utils';
@@ -132,7 +130,7 @@
 		};
 	}
 
-	setContext(DIALOG_SYSTEM_CONTEXT, dialogSystemContext);
+	setDialogContext(dialogSystemContext);
 </script>
 
 {#each dialogSystemContext.content as content (content)}
