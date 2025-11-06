@@ -2,6 +2,7 @@
 	import { createContext, getAllContexts, type Component } from 'svelte';
 
 	const [getDialogContext, setDialogContext] =
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		createContext<DialogSystemContext<any>>();
 
 	type DialogContent<Props extends Record<string, unknown>> = {
