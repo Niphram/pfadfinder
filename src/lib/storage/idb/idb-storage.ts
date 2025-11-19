@@ -2,10 +2,10 @@ import Dexie from 'dexie';
 import { nanoid } from 'nanoid';
 
 import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
+import { SYSTEMS_MAP } from '$lib/systems';
 import { lazy } from '$lib/utils';
 
 import { Character } from '$lib/data';
-import { upgradeCharacterAndDeserialize } from '$lib/data/upgrade';
 
 import { VERSIONS, type Schema } from './versions';
 
@@ -65,15 +65,22 @@ export class IDBStorage {
 
 	async getCharacterById(id: string) {
 		const charData = await this.db.characters.get(id);
+		if (!charData) return;
 
-		return charData && upgradeCharacterAndDeserialize(charData);
+		const system = SYSTEMS_MAP[charData.system as keyof typeof SYSTEMS_MAP];
+		if (!system) return;
+
+		return system.upgradeCharacterAndDeserialize(charData);
 	}
 
 	async duplicateCharacterById(id: string) {
 		const charData = await this.db.characters.get(id);
 		if (!charData) return;
 
-		const char = upgradeCharacterAndDeserialize(charData);
+		const system = SYSTEMS_MAP[charData.system as keyof typeof SYSTEMS_MAP];
+		if (!system) return;
+
+		const char = system.upgradeCharacterAndDeserialize(charData);
 		if (!char) return;
 
 		char.id.value = nanoid();

@@ -7,13 +7,13 @@
 	import { resolve } from '$app/paths';
 
 	import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
+	import { SYSTEMS_MAP } from '$lib/systems';
 	import { preventDefault } from '$lib/utils';
 
 	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import CharacterOptionsDialog from '$lib/components/dialogs/character-options-dialog.svelte';
 
 	import { Character } from '$lib/data';
-	import { upgradeCharacterAndDeserialize } from '$lib/data/upgrade';
 
 	const { data }: PageProps = $props();
 	const { characters, db } = $derived(data);
@@ -54,11 +54,21 @@
 			const file = files[0];
 			const fileContent = await file.text();
 
-			const newChar = upgradeCharacterAndDeserialize(JSON.parse(fileContent));
-			newChar.id.value = nanoid();
+			const parsed = JSON.parse(fileContent) as { system: string };
 
-			await db.saveCharacter(newChar);
-			files = undefined;
+			if (parsed.system in SYSTEMS_MAP) {
+				const newChar =
+					SYSTEMS_MAP[
+						parsed.system as keyof typeof SYSTEMS_MAP
+					].upgradeCharacterAndDeserialize(parsed);
+
+				newChar.id.value = nanoid();
+
+				await db.saveCharacter(newChar);
+				files = undefined;
+			} else {
+				throw new Error('');
+			}
 		} catch (_err) {
 			alert('Could not import character!');
 		}

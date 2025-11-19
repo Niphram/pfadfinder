@@ -1,14 +1,8 @@
-import { charProxy, DESERIALIZE_SYMBOL, type SerdeProxy } from '$lib/serde';
+import type { SerdeProxy } from '$lib/serde';
 
-import { Character } from './character';
+import type { Character } from './character';
 
-/**
- * Upgrade functions will be called before deserializing the stored character.
- * Optionally, the upgrade-function can return a callback,
- * that will be called afterwards with the already deserialized character.
- */
-
-const UPGRADES: ((
+export const UPGRADES: ((
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	char: any,
 ) => void | ((char: SerdeProxy<Character>) => void))[] = [
@@ -51,30 +45,5 @@ const UPGRADES: ((
 		});
 	},
 ];
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function upgradeCharacterAndDeserialize(char: any) {
-	const postUpgrades: ((char: SerdeProxy<Character>) => void)[] = [];
-
-	for (let v = char.version; v <= UPGRADES.length; v++) {
-		const postUpgrade = UPGRADES[v - 1](char);
-
-		if (postUpgrade) {
-			postUpgrades.push(postUpgrade);
-		}
-
-		char.version = v + 1;
-	}
-
-	const deserializedChar = new Character();
-	deserializedChar[DESERIALIZE_SYMBOL](char);
-
-	const proxy = charProxy(deserializedChar);
-
-	// Apply post-upgrades
-	postUpgrades.forEach((postUpgrade) => postUpgrade(proxy));
-
-	return deserializedChar;
-}
 
 export const VERSION_NUMBER = UPGRADES.length + 1;
