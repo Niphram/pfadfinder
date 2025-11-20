@@ -1,6 +1,5 @@
-import { nanoid } from 'nanoid';
-
-import { array, ClassSerializer, number, string } from '$lib/serde';
+import { array } from '$lib/serde';
+import { BaseCharacter } from '$lib/systems/character';
 import { VERSION_NUMBER } from '$lib/systems/pathfinder/migrations';
 
 import { Ability } from './abilities.svelte';
@@ -20,16 +19,12 @@ import { SkillList } from './skills.svelte';
 import { Spells } from './spells.svelte';
 import { Trait } from './trait.svelte';
 
-export class Character extends ClassSerializer {
-	id = string(nanoid());
+export class Character extends BaseCharacter {
+	constructor() {
+		super('pathfinder', VERSION_NUMBER);
+	}
 
-	version = number(VERSION_NUMBER);
-
-	name = string('Unnamed Character', { minLength: 1, maxLength: 100 });
-
-	system = string('pathfinder');
-
-	get description() {
+	override get description() {
 		return this.classes.list.value
 			.map((c) => `${c.name.value} ${c.level.value}`)
 			.join(', ');

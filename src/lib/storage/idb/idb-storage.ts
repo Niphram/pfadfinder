@@ -3,9 +3,8 @@ import { nanoid } from 'nanoid';
 
 import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
 import { SYSTEMS_MAP } from '$lib/systems';
+import type { BaseCharacter } from '$lib/systems/character';
 import { lazy } from '$lib/utils';
-
-import { Character } from '$lib/data';
 
 import { VERSIONS, type Schema } from './versions';
 
@@ -26,7 +25,7 @@ export class IDBStorage {
 		return new IDBStorage(db);
 	});
 
-	async saveCharacter(char: Character) {
+	async saveCharacter(char: BaseCharacter) {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const serialized: any = char[SERIALIZE_SYMBOL]();
 

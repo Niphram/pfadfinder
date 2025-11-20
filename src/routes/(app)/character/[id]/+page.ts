@@ -1,8 +1,8 @@
 import { error } from '@sveltejs/kit';
 
-import type { LayoutLoad } from './$types';
+import type { PageLoad } from './$types';
 
-export const load: LayoutLoad = async ({ params, parent }) => {
+export const load: PageLoad = async ({ params, parent }) => {
 	const { db } = await parent();
 
 	const character = await db.getCharacterById(params.id);

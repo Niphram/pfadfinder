@@ -12,7 +12,6 @@ export type SchemaV1 = {
 		{
 			id: string;
 			name: string;
-			updated_at: Date;
 			system: string;
 		},
 		'id'

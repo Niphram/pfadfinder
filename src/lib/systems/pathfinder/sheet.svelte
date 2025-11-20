@@ -1,11 +1,13 @@
 <script lang="ts">
+	import type { SerdeProxy } from '$lib/serde';
+
 	import HpButton from '$lib/components/buttons/hp-button.svelte';
 	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import CharacterInfoDialog from '$lib/components/dialogs/character-info-dialog.svelte';
 	import HpDialog from '$lib/components/dialogs/hp-dialog.svelte';
 	import PageDialog from '$lib/components/dialogs/page-dialog.svelte';
 
-	import { getChar } from '$lib/data';
+	import { Character, getChar, setChar } from '$lib/data';
 
 	import AbilitiesPage from './pages/abilities-page.svelte';
 	import CharacterPage from './pages/character-page.svelte';
@@ -15,6 +17,17 @@
 	import PersonaPage from './pages/persona-page.svelte';
 	import SkillsPage from './pages/skills-page.svelte';
 	import SpellsPage from './pages/spells-page.svelte';
+
+	type Props = {
+		state: {
+			c: SerdeProxy<Character>;
+			dirty: boolean;
+		};
+	};
+
+	const { state }: Props = $props();
+
+	setChar(state);
 
 	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());
