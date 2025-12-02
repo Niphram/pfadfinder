@@ -6,6 +6,7 @@
 	import CharacterInfoDialog from '$lib/components/dialogs/character-info-dialog.svelte';
 	import HpDialog from '$lib/components/dialogs/hp-dialog.svelte';
 	import PageDialog from '$lib/components/dialogs/page-dialog.svelte';
+	import ToastProvider from '$lib/components/toast-provider.svelte';
 
 	import { Character, getChar, setChar } from '$lib/data';
 
@@ -47,6 +48,8 @@
 		},
 	] as const);
 </script>
+
+<ToastProvider />
 
 <div class="flex h-dvh flex-col">
 	<div class="bg-base-200 sticky top-0 z-40 w-full drop-shadow-xl">

@@ -9,8 +9,6 @@
 
 	import Status from '$lib/atoms/status.svelte';
 
-	import ToastProvider from '$lib/components/toast-provider.svelte';
-
 	const { data }: PageProps = $props();
 
 	const mutationCallback = (char: BaseCharacter) => {
@@ -44,8 +42,6 @@
 	<Status color="info" ping />
 	<p class="text-xs opacity-50">{$t('texts.general.saving')}</p>
 </div>
-
-<ToastProvider />
 
 <div class="h-dvh w-dvw">
 	<Sheet {state} />
