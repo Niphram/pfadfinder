@@ -1,15 +1,12 @@
-import { parseTextWithMacros } from '$lib/macro/text';
-import { type SerdeProxy } from '$lib/serde';
+import { useToast } from '$lib/components/toast-provider.svelte';
+import MultilineMacroToast from '$lib/components/toasts/multiline-macro-toast.svelte';
 
-import { showNotification } from '$lib/components/toast-provider.svelte';
+export function useMacroNotify() {
+	const { showToast } = useToast();
 
-import type { Character } from '$lib/data';
-
-export function macroNotify(
-	title: string,
-	notes: string,
-	char: SerdeProxy<Character>,
-) {
-	const content = parseTextWithMacros(notes, char);
-	showNotification(title, content, 5000);
+	return {
+		macroNotify(title: string, content: string) {
+			showToast(MultilineMacroToast, { title, content }, 5000);
+		},
+	};
 }

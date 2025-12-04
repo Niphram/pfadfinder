@@ -8,6 +8,7 @@
 	import DialogProvider from '$lib/components/dialog-provider.svelte';
 	import PageLoader from '$lib/components/page-loader.svelte';
 	import ThemeChanger from '$lib/components/theme-changer.svelte';
+	import ToastProvider from '$lib/components/toast-provider.svelte';
 
 	// Nice looking transitions (if supported)
 	onNavigate((navigation) => {
@@ -28,6 +29,8 @@
 
 <ThemeChanger>
 	<DialogProvider>
-		{@render children()}
+		<ToastProvider>
+			{@render children()}
+		</ToastProvider>
 	</DialogProvider>
 </ThemeChanger>

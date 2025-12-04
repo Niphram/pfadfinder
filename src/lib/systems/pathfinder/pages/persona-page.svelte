@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
-	import { macroNotify, preventDefault } from '$lib/utils';
+	import { preventDefault, useMacroNotify } from '$lib/utils';
 
 	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import PersonaScoreDialog from '$lib/components/dialogs/persona-facet-dialog.svelte';
@@ -9,6 +9,7 @@
 	import { FACET_KEYS, getChar } from '$lib/data';
 
 	const { openDialog } = useDialog();
+	const { macroNotify } = useMacroNotify();
 	const { c } = $derived(getChar());
 </script>
 
@@ -19,8 +20,7 @@
 		{#each FACET_KEYS as key (key)}
 			<button
 				class="btn h-min p-0"
-				onclick={() =>
-					macroNotify($t(`persona.${key}`), c.persona[key].notes, c)}
+				onclick={() => macroNotify($t(`persona.${key}`), c.persona[key].notes)}
 				oncontextmenu={preventDefault(() =>
 					openDialog(PersonaScoreDialog, { key }),
 				)}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
-	import { macroNotify, preventDefault, withSign } from '$lib/utils';
+	import { preventDefault, useMacroNotify, withSign } from '$lib/utils';
 
 	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import SkillDialog from '$lib/components/dialogs/skill-dialog.svelte';
@@ -9,6 +9,7 @@
 	import { getChar, SKILL_KEYS } from '$lib/data';
 
 	const { openDialog } = useDialog();
+	const { macroNotify } = useMacroNotify();
 	const { c } = $derived(getChar());
 </script>
 
@@ -37,7 +38,6 @@
 					macroNotify(
 						$t(`skills.${key}`),
 						variant.notes + (penalty ? '\n\nApplied penalty due to armor' : ''),
-						c,
 					)}
 				oncontextmenu={preventDefault(() =>
 					openDialog(SkillDialog, { key, index }),

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { parseTextWithMacros } from '$lib/macro/text';
-	import { macroNotify, preventDefault } from '$lib/utils';
+	import { preventDefault, useMacroNotify } from '$lib/utils';
 	import { withSign } from '$lib/utils/format';
 
 	import Collapse from '$lib/atoms/collapse.svelte';
@@ -20,6 +20,7 @@
 	import { Attack, getChar } from '$lib/data';
 
 	const { openDialog } = useDialog();
+	const { macroNotify } = useMacroNotify();
 	const { c } = $derived(getChar());
 
 	function addAttack() {
@@ -37,30 +38,28 @@
 			label={withSign(c.combat.bab.mod)}
 			caption="Base Attack Bonus"
 			underline={!!c.combat.bab.notes}
-			onclick={() => macroNotify('Base Attack Bonus', c.combat.bab.notes, c)}
+			onclick={() => macroNotify('Base Attack Bonus', c.combat.bab.notes)}
 			oncontextmenu={() => openDialog(BabDialog, {})}
 		/>
 		<CaptionedButton
 			label={withSign(c.combat.sr.total)}
 			caption="Spell Resistance"
 			underline={!!c.combat.sr.notes}
-			onclick={() => macroNotify('Spell Resistance', c.combat.sr.notes, c)}
+			onclick={() => macroNotify('Spell Resistance', c.combat.sr.notes)}
 			oncontextmenu={() => openDialog(SrDialog, {})}
 		/>
 		<CaptionedButton
 			label={withSign(c.combat.cmb.mod)}
 			caption="CMB"
 			underline={!!c.combat.cmb.notes}
-			onclick={() =>
-				macroNotify('Combat Manouver Bonus', c.combat.cmb.notes, c)}
+			onclick={() => macroNotify('Combat Manouver Bonus', c.combat.cmb.notes)}
 			oncontextmenu={() => openDialog(CmbDialog, {})}
 		/>
 		<CaptionedButton
 			label={c.combat.cmd.mod}
 			caption="CMD"
 			underline={!!c.combat.cmd.notes}
-			onclick={() =>
-				macroNotify('Combat Manouver Defense', c.combat.cmd.notes, c)}
+			onclick={() => macroNotify('Combat Manouver Defense', c.combat.cmd.notes)}
 			oncontextmenu={() => openDialog(CmdDialog, {})}
 		/>
 	</div>

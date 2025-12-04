@@ -1,45 +1,106 @@
-<script lang="ts" module>
-	import { fly } from 'svelte/transition';
+<script module lang="ts">
+	import { createContext, getAllContexts, type Component } from 'svelte';
 
-	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
+	const [getToastContext, setToastContext] =
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		createContext<ToastSystemContext<any>>();
 
-	type Notification = {
-		title: string;
-		content: string;
+	type ToastContent<Props extends Record<string, unknown>> = {
+		component: Component<Props>;
+		props: Props;
+		context: Map<unknown, unknown>;
+		timeout: number;
 	};
 
-	let notification: Notification | undefined = $state();
+	type ToastSystemContext<Props extends Record<string, unknown>> = {
+		toasts: ToastContent<Props>[];
+	};
 
-	let timeoutId: number | undefined = $state();
+	/**
+	 * Get access to the toast functions
+	 */
+	export function useToast() {
+		const capturedContext = getAllContexts();
+		const toastContext = getToastContext();
 
-	export function showNotification(
-		title: string,
-		content: string,
-		timeout = 5000,
-	) {
-		timeoutId && clearTimeout(timeoutId);
+		return {
+			/**
+			 * Shows a toast
+			 */
+			showToast: <Props extends Record<string, unknown>>(
+				component: Component<Props>,
+				props: Props,
+				timeout = 1000,
+			) => {
+				toastContext.toasts.unshift({
+					component,
+					props,
+					context: capturedContext,
+					timeout,
+				});
 
-		notification = { title, content };
-
-		timeoutId = window.setTimeout(() => (notification = undefined), timeout);
+				// Limit to three active toasts
+				toastContext.toasts = toastContext.toasts.slice(0, 3);
+			},
+		};
 	}
 </script>
 
+<script lang="ts">
+	import { mount, unmount, type Snippet } from 'svelte';
+	import type { Attachment } from 'svelte/attachments';
+	import { fly, slide } from 'svelte/transition';
+
+	type Props = {
+		children: Snippet;
+	};
+
+	const { children }: Props = $props();
+
+	const toastSystemContext: ToastSystemContext<Record<string, unknown>> =
+		$state({
+			toasts: [],
+		});
+
+	function toastAttachment(
+		toast: ToastContent<Record<string, unknown>>,
+	): Attachment<HTMLDivElement> {
+		return (el) => {
+			setTimeout(() => {
+				// Remove the toast after the timeout
+				const index = toastSystemContext.toasts.indexOf(toast);
+				if (index >= 0) {
+					toastSystemContext.toasts.splice(index, 1);
+				}
+			}, toast.timeout);
+
+			// Mount the content
+			const mountedToast = mount(toast.component, {
+				target: el,
+				props: toast.props,
+				context: toast.context,
+			});
+
+			return () => {
+				unmount(mountedToast);
+			};
+		};
+	}
+
+	setToastContext(toastSystemContext);
+</script>
+
 <div
-	class="pointer-events-none fixed right-0 bottom-0 left-0 z-50 flex flex-col gap-2 p-4"
+	class="pointer-events-none fixed right-0 bottom-0 left-0 z-50 flex flex-col"
 >
-	{#if notification}
-		<div transition:fly={{ x: -128 }} class="alert alert-info flex flex-col">
-			<span class="text-lg">{notification.title}</span>
-			{#if notification.content}
-				<div class="border-t pt-4">
-					<MultilineMacro
-						class="block"
-						element="span"
-						text={notification.content}
-					/>
-				</div>
-			{/if}
-		</div>
-	{/if}
+	{#each toastSystemContext.toasts as toast (toast)}
+		<div
+			in:fly={{ x: -128 }}
+			out:slide={{ axis: 'y' }}
+			{@attach toastAttachment(toast)}
+			class="p-2 pt-0"
+		></div>
+	{/each}
 </div>
+
+{@render children()}

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
 	import NestedEquipmentList from '$lib/nested-equipment-list.svelte';
-	import { macroNotify, preventDefault } from '$lib/utils';
+	import { preventDefault, useMacroNotify } from '$lib/utils';
 
 	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import AcItemDialog from '$lib/components/dialogs/ac-item-dialog.svelte';
@@ -14,6 +14,7 @@
 	import { AcItem, getChar, Item } from '$lib/data';
 
 	const { openDialog } = useDialog();
+	const { macroNotify } = useMacroNotify();
 	const { c } = $derived(getChar());
 
 	function addItem() {
@@ -93,7 +94,7 @@
 				</div>
 				<button
 					class="btn btn-sm md:btn-md min-w-0 flex-auto truncate"
-					onclick={() => macroNotify(item.name, item.notes, c)}
+					onclick={() => macroNotify(item.name, item.notes)}
 					oncontextmenu={preventDefault(() =>
 						openDialog(AcItemDialog, { index }),
 					)}

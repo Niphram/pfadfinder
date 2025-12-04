@@ -3,7 +3,7 @@
 
 	import { t } from '$lib/i18n';
 	import { type SerdeProxy } from '$lib/serde';
-	import { macroNotify, preventDefault, stopPropagation } from '$lib/utils';
+	import { preventDefault, stopPropagation, useMacroNotify } from '$lib/utils';
 
 	import Collapse from '$lib/atoms/collapse.svelte';
 
@@ -17,6 +17,7 @@
 	import Self from './nested-equipment-list.svelte';
 
 	const { openDialog } = useDialog();
+	const { macroNotify } = useMacroNotify();
 	const { c } = $derived(getChar());
 
 	interface Props {
@@ -70,7 +71,7 @@
 					<button
 						class="btn btn-sm md:btn-md min-w-0 flex-auto truncate"
 						onclick={stopPropagation(() =>
-							macroNotify(props.item.name, props.item.description, c),
+							macroNotify(props.item.name, props.item.description),
 						)}
 						oncontextmenu={stopPropagation(
 							preventDefault(() =>

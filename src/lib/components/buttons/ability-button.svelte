@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
-	import { macroNotify, preventDefault, withSign } from '$lib/utils';
+	import { preventDefault, useMacroNotify, withSign } from '$lib/utils';
 
 	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import AbilityDialog from '$lib/components/dialogs/ability-dialog.svelte';
@@ -14,6 +14,7 @@
 	let { key }: Props = $props();
 
 	const { openDialog } = useDialog();
+	const { macroNotify } = useMacroNotify();
 	const { c } = $derived(getChar());
 
 	let temp = $derived(c[key].temp);
@@ -29,7 +30,7 @@
 
 		notifyLines.push(c[key].notes);
 
-		macroNotify($t(`abilities.${key}.full`), notifyLines.join('\n'), c);
+		macroNotify($t(`abilities.${key}.full`), notifyLines.join('\n'));
 	}
 </script>
 

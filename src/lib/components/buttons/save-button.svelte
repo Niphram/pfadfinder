@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
-	import { macroNotify, withSign } from '$lib/utils';
+	import { useMacroNotify, withSign } from '$lib/utils';
 
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
 	import { useDialog } from '$lib/components/dialog-provider.svelte';
@@ -15,11 +15,12 @@
 	let { key }: Props = $props();
 
 	const { openDialog } = useDialog();
+	const { macroNotify } = useMacroNotify();
 	const { c } = $derived(getChar());
 </script>
 
 <CaptionedButton
-	onclick={() => macroNotify($t(`saves.${key}.full`), c[key].notes, c)}
+	onclick={() => macroNotify($t(`saves.${key}.full`), c[key].notes)}
 	oncontextmenu={() => openDialog(SaveDialog, { key })}
 	underline={!!c[key].notes}
 	label={withSign(c[key].mod)}
