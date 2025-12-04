@@ -1,3 +1,5 @@
+import type { BinaryOperator, FunctionName } from './constants';
+
 export const enum AstNodeType {
 	Error,
 	Constant,
@@ -37,13 +39,13 @@ export type UnaryNode = {
 
 export type BinaryNode = {
 	type: AstNodeType.Binary;
-	op: '+' | '-' | '*' | '/' | '%' | '//';
+	op: BinaryOperator;
 	left: AstNode;
 	right: AstNode;
 } & NodeCommon;
 
 export type FuncNode = {
 	type: AstNodeType.Func;
-	func: 'floor' | 'round' | 'ceil' | 'min' | 'max' | 'clamp' | 'abs' | 'step';
+	func: FunctionName;
 	nodes: AstNode[];
 } & NodeCommon;

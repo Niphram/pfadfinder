@@ -16,6 +16,7 @@ describe('Tokenizer', () => {
 		['/', [TokenType.OPERATOR]],
 		['%', [TokenType.OPERATOR]],
 		['//', [TokenType.OPERATOR]],
+		['**', [TokenType.OPERATOR]],
 		['(', [TokenType.PARENTHESIS_LEFT]],
 		[')', [TokenType.PARENTHESIS_RIGHT]],
 		[',', [TokenType.COMMA]],

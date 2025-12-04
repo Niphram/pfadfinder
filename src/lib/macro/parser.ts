@@ -9,6 +9,7 @@ import {
 	type FuncNode,
 	type UnaryNode,
 } from './ast';
+import { BINARY_OPERATORS, type BinaryOperator } from './constants';
 import type { ParserError } from './errors';
 import { Tokenizer, TokenType, type Token } from './tokenizer';
 
@@ -17,6 +18,7 @@ const enum Precedence {
 	DEFAULT = 0,
 	ADDITIVE,
 	MULTIPLICATIVE,
+	EXPONENTIATION,
 	UNARY,
 }
 
@@ -65,8 +67,10 @@ export class Parser {
 		return result;
 	}
 
-	private getOperatorPrecedence(op: string) {
+	private getOperatorPrecedence(op: BinaryOperator | string) {
 		switch (op) {
+			case '**':
+				return Precedence.EXPONENTIATION;
 			case '*':
 			case '/':
 			case '%':
@@ -204,7 +208,7 @@ export class Parser {
 
 	/**
 	 * Infix
-	 *    = ("+" / "-" / "*" / "/" / "%" / "//") Expression
+	 *    = ("+" / "-" / "*" / "/" / "%" / "//" / "**") Expression
 	 */
 	private *Infix(
 		left: AstNode,
@@ -220,6 +224,7 @@ export class Parser {
 			case '/':
 			case '%':
 			case '//':
+			case '**':
 				return {
 					type: AstNodeType.Binary,
 					op: token.value,
@@ -231,7 +236,7 @@ export class Parser {
 
 			default:
 				return yield parserError(
-					`Unexpected Operator: "${token.value}". Valid operators are + - * / % //.`,
+					`Unexpected Operator: "${token.value}". Valid operators are ${BINARY_OPERATORS.join(' ')}.`,
 					token,
 				);
 		}

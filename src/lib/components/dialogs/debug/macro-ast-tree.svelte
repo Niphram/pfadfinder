@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { AstNodeType, type AstNode } from '$lib/macro/ast';
+	import type { BinaryOperator } from '$lib/macro/constants';
 	import { evalNode } from '$lib/macro/evaluate';
 
 	import { getChar } from '$lib/data';
@@ -25,13 +26,14 @@
 		[AstNodeType.Func]: 'Function Expression',
 	};
 
-	const OP_TYPES = {
+	const OP_TYPES: Record<BinaryOperator, string> = {
 		'+': 'add',
 		'-': 'subtract',
 		'*': 'multiply',
 		'/': 'divide',
 		'%': 'modulus',
 		'//': 'integer division',
+		'**': 'exponentiation',
 	};
 </script>
 

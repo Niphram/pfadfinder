@@ -23,7 +23,7 @@ const TokenSpec: [RegExp, TokenType | null][] = [
 	[/^\d+/, TokenType.INTEGER], // Check for integer before identifier
 	[/^\w[\w\d]*/, TokenType.IDENTIFIER],
 
-	[/^(\+|-|\*|\/\/|\/|%)/, TokenType.OPERATOR],
+	[/^(\+|-|\*{1,2}|\/{1,2}|%)/, TokenType.OPERATOR],
 
 	[/^\(/, TokenType.PARENTHESIS_LEFT],
 	[/^\)/, TokenType.PARENTHESIS_RIGHT],

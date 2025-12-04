@@ -27,6 +27,7 @@ Macros currently support the following things:
 | Function         | Usage                                                                                                    |
 | ---------------- | -------------------------------------------------------------------------------------------------------- |
 | Arithmetic       | `<a> + <b>`, `<a> - <b>`, `<a> * <b>`, `<a> / <b>`                                                       |
+| Exponentiation   | `<a> ** <b>` Raises `a` to the power of `b`                                                              |
 | Integer Division | `<a> // <b>` Floors the result of division                                                               |
 | Parentheses      | Parentheses will be evaluated in the correct order. `4 / ( 2 + 2 )` = 1                                  |
 | Modulo           | `<a> % <b>` ([Wikipedia](https://en.wikipedia.org/wiki/Modulo))                                          |

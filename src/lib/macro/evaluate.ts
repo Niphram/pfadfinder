@@ -1,6 +1,7 @@
 import { iteratorResultToResult, unreachable } from '$lib/utils';
 
 import { AstNodeType, type AstNode, type AttributeNode } from './ast';
+import type { BinaryOperator, FunctionName, UnaryOperator } from './constants';
 import type { RuntimeError } from './errors';
 
 function runtimeError(message: string, from: number, to: number): RuntimeError {
@@ -66,15 +67,11 @@ function* internalEvalAttribute(
 	}
 }
 
-function evalUnary(op: '+' | '-', value: number): number {
+function evalUnary(op: UnaryOperator, value: number): number {
 	return op === '+' ? value : -value;
 }
 
-function evalBinary(
-	op: '+' | '-' | '*' | '/' | '%' | '//',
-	left: number,
-	right: number,
-): number {
+function evalBinary(op: BinaryOperator, left: number, right: number): number {
 	switch (op) {
 		case '+':
 			return left + right;
@@ -88,13 +85,12 @@ function evalBinary(
 			return Math.floor(left / right);
 		case '%':
 			return left % right;
+		case '**':
+			return left ** right;
 	}
 }
 
-function evalFunc(
-	func: 'floor' | 'round' | 'ceil' | 'min' | 'max' | 'clamp' | 'abs' | 'step',
-	values: number[],
-): number {
+function evalFunc(func: FunctionName, values: number[]): number {
 	switch (func) {
 		case 'floor':
 			return Math.floor(values[0]);
