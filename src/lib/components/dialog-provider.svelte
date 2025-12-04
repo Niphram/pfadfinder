@@ -1,5 +1,10 @@
 <script module lang="ts">
-	import { createContext, getAllContexts, type Component } from 'svelte';
+	import {
+		createContext,
+		getAllContexts,
+		type Component,
+		type ComponentProps,
+	} from 'svelte';
 
 	const [getDialogContext, setDialogContext] =
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,9 +31,10 @@
 			/**
 			 * Opens a new dialog
 			 */
-			openDialog: <Props extends Record<string, unknown>>(
-				component: Component<Props>,
-				props: Props,
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			openDialog: <C extends Component<any>>(
+				component: C,
+				props: ComponentProps<C>,
 			) => {
 				dialogContext.content.push({
 					component,
@@ -40,9 +46,10 @@
 			/**
 			 * Replaces the current dialog
 			 */
-			replaceDialog: <Props extends Record<string, unknown>>(
-				component: Component<Props>,
-				props: Props,
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			replaceDialog: <C extends Component<any>>(
+				component: C,
+				props: ComponentProps<C>,
 			) => {
 				dialogContext.content[dialogContext.content.length - 1] = {
 					component,

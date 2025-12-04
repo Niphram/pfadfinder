@@ -12,6 +12,8 @@
 
 	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import CharacterOptionsDialog from '$lib/components/dialogs/character-options-dialog.svelte';
+	import { useToast } from '$lib/components/toast-provider.svelte';
+	import SimpleToast from '$lib/components/toasts/simple-toast.svelte';
 
 	import { Character } from '$lib/data';
 
@@ -19,6 +21,7 @@
 	const { characters, db } = $derived(data);
 
 	const { openDialog } = useDialog();
+	const { showToast } = useToast();
 
 	function invalidateCharacters() {
 		invalidate('characters:list');
@@ -27,16 +30,31 @@
 	async function createChar() {
 		const char = new Character();
 		await db.saveCharacter(char);
+		showToast(SimpleToast, {
+			message: 'Character created!',
+			type: 'success',
+			icon: 'success',
+		});
 		invalidateCharacters();
 	}
 
 	async function deleteChar(id: string) {
 		await db.deleteCharacter(id);
+		showToast(SimpleToast, {
+			message: 'Character deleted!',
+			type: 'success',
+			icon: 'success',
+		});
 		invalidateCharacters();
 	}
 
 	async function duplicateChar(id: string) {
 		await db.duplicateCharacterById(id);
+		showToast(SimpleToast, {
+			message: 'Character duplicated!',
+			type: 'success',
+			icon: 'success',
+		});
 		invalidateCharacters();
 	}
 
@@ -66,6 +84,12 @@
 
 				await db.saveCharacter(newChar);
 				files = undefined;
+
+				showToast(SimpleToast, {
+					message: 'Character imported!',
+					type: 'success',
+					icon: 'success',
+				});
 			} else {
 				throw new Error('');
 			}
@@ -99,6 +123,12 @@
 
 		document.body.removeChild(link);
 		window.URL.revokeObjectURL(url);
+
+		showToast(SimpleToast, {
+			message: 'Character exported!',
+			type: 'success',
+			icon: 'success',
+		});
 	}
 
 	function openCharacterDialog(id: string) {

@@ -1,5 +1,10 @@
 <script module lang="ts">
-	import { createContext, getAllContexts, type Component } from 'svelte';
+	import {
+		createContext,
+		getAllContexts,
+		type Component,
+		type ComponentProps,
+	} from 'svelte';
 
 	const [getToastContext, setToastContext] =
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,10 +32,11 @@
 			/**
 			 * Shows a toast
 			 */
-			showToast: <Props extends Record<string, unknown>>(
-				component: Component<Props>,
-				props: Props,
-				timeout = 1000,
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			showToast: <C extends Component<any>>(
+				component: C,
+				props: ComponentProps<C>,
+				timeout = 2500,
 			) => {
 				toastContext.toasts.unshift({
 					component,
