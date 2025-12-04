@@ -71,7 +71,7 @@ function evalUnary(op: '+' | '-', value: number): number {
 }
 
 function evalBinary(
-	op: '+' | '-' | '*' | '/' | '%',
+	op: '+' | '-' | '*' | '/' | '%' | '//',
 	left: number,
 	right: number,
 ): number {
@@ -84,6 +84,8 @@ function evalBinary(
 			return left * right;
 		case '/':
 			return left / right;
+		case '//':
+			return Math.floor(left / right);
 		case '%':
 			return left % right;
 	}

@@ -24,16 +24,17 @@ When laying your hand upon a living creature, you channel positive energy that c
 
 Macros currently support the following things:
 
-| Function    | Usage                                                                                                    |
-| ----------- | -------------------------------------------------------------------------------------------------------- |
-| Arithmetic  | `<a> + <b>`, `<a> - <b>`, `<a> * <b>`, `<a> / <b>`,                                                      |
-| Parentheses | Parentheses will be evaluated in the correct order. `4 / ( 2 + 2 )` = 1                                  |
-| Modulo      | `<a> % <b>` ([Wikipedia](https://en.wikipedia.org/wiki/Modulo))                                          |
-| Absolute    | `abs(<value>)`                                                                                           |
-| Rounding    | `round(<value>)`, `ceil(<value>)`, `floor(<value>)`                                                      |
-| Min/Max     | `max(<a>, <b>, ...)`, `min(<a>, <b>, ...)` Takes any number of arguments, calculates the minimum/maximum |
-| Clamp       | `clamp(<value>, <min>, <max>)` Clamps `value` between `min` and `max`                                    |
-| Step        | `step(<value>, <threshold>)` Is `0` if `value < threshold` and `1` otherwise                             |
+| Function         | Usage                                                                                                    |
+| ---------------- | -------------------------------------------------------------------------------------------------------- |
+| Arithmetic       | `<a> + <b>`, `<a> - <b>`, `<a> * <b>`, `<a> / <b>`                                                       |
+| Integer Division | `<a> // <b>` Floors the result of division                                                               |
+| Parentheses      | Parentheses will be evaluated in the correct order. `4 / ( 2 + 2 )` = 1                                  |
+| Modulo           | `<a> % <b>` ([Wikipedia](https://en.wikipedia.org/wiki/Modulo))                                          |
+| Absolute         | `abs(<value>)`                                                                                           |
+| Rounding         | `round(<value>)`, `ceil(<value>)`, `floor(<value>)`                                                      |
+| Min/Max          | `max(<a>, <b>, ...)`, `min(<a>, <b>, ...)` Takes any number of arguments, calculates the minimum/maximum |
+| Clamp            | `clamp(<value>, <min>, <max>)` Clamps `value` between `min` and `max`                                    |
+| Step             | `step(<value>, <threshold>)` Is `0` if `value < threshold` and `1` otherwise                             |
 
 ### Character Data
 

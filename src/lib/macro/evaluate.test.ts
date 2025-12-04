@@ -11,6 +11,7 @@ describe('evaluateNode', () => {
 		['123 - 100', 23],
 		['1 + 2 * 3', 7],
 		['1 * (2 + 3)', 5],
+		['5 // 2', 2],
 	])('"%s" should evaluate to %s', (input, expected) => {
 		const astResult = Parser.parse(input);
 

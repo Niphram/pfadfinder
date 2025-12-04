@@ -70,6 +70,7 @@ export class Parser {
 			case '*':
 			case '/':
 			case '%':
+			case '//':
 				return Precedence.MULTIPLICATIVE;
 
 			case '+':
@@ -203,7 +204,7 @@ export class Parser {
 
 	/**
 	 * Infix
-	 *    = ("+" / "-" / "*" / "/" / "%") Expression
+	 *    = ("+" / "-" / "*" / "/" / "%" / "//") Expression
 	 */
 	private *Infix(
 		left: AstNode,
@@ -218,6 +219,7 @@ export class Parser {
 			case '*':
 			case '/':
 			case '%':
+			case '//':
 				return {
 					type: AstNodeType.Binary,
 					op: token.value,
@@ -229,7 +231,7 @@ export class Parser {
 
 			default:
 				return yield parserError(
-					`Unexpected Operator: "${token.value}". Valid operators are + - * / %.`,
+					`Unexpected Operator: "${token.value}". Valid operators are + - * / % //.`,
 					token,
 				);
 		}

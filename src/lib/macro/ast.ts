@@ -37,7 +37,7 @@ export type UnaryNode = {
 
 export type BinaryNode = {
 	type: AstNodeType.Binary;
-	op: '+' | '-' | '*' | '/' | '%';
+	op: '+' | '-' | '*' | '/' | '%' | '//';
 	left: AstNode;
 	right: AstNode;
 } & NodeCommon;
