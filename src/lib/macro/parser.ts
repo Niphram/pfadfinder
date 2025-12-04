@@ -1,4 +1,4 @@
-import { iteratorResultToResult } from '$lib/utils';
+import { isIn, iteratorResultToResult } from '$lib/utils';
 
 import {
 	AstNodeType,
@@ -9,13 +9,15 @@ import {
 	type FuncNode,
 	type UnaryNode,
 } from './ast';
-import { BINARY_OPERATORS, type BinaryOperator } from './constants';
+import { BINARY_OPERATORS, FUNCTION_NAMES, UNARY_OPERATORS } from './constants';
 import type { ParserError } from './errors';
 import { Tokenizer, TokenType, type Token } from './tokenizer';
 
 // Precedence-Values, higher values have more precedence
 const enum Precedence {
 	DEFAULT = 0,
+	EQUALITY,
+	RELATIONAL,
 	ADDITIVE,
 	MULTIPLICATIVE,
 	EXPONENTIATION,
@@ -67,19 +69,28 @@ export class Parser {
 		return result;
 	}
 
-	private getOperatorPrecedence(op: BinaryOperator | string) {
-		switch (op) {
-			case '**':
-				return Precedence.EXPONENTIATION;
-			case '*':
-			case '/':
-			case '%':
-			case '//':
-				return Precedence.MULTIPLICATIVE;
-
-			case '+':
-			case '-':
-				return Precedence.ADDITIVE;
+	private getOperatorPrecedence(op: string) {
+		if (isIn(BINARY_OPERATORS, op)) {
+			switch (op) {
+				case '**':
+					return Precedence.EXPONENTIATION;
+				case '*':
+				case '/':
+				case '%':
+				case '//':
+					return Precedence.MULTIPLICATIVE;
+				case '+':
+				case '-':
+					return Precedence.ADDITIVE;
+				case '<':
+				case '>':
+				case '>=':
+				case '<=':
+					return Precedence.RELATIONAL;
+				case '=':
+				case '!=':
+					return Precedence.EQUALITY;
+			}
 		}
 
 		return Precedence.DEFAULT;
@@ -198,17 +209,20 @@ export class Parser {
 				return yield* this.Constant();
 			case TokenType.AT:
 				return yield* this.Attribute();
-		}
 
-		return yield parserError(
-			`Unexpected Token: "${this.lookahead?.value}".`,
-			this.lookahead,
-		);
+			default:
+				return yield parserError(
+					`Unexpected Token: "${this.lookahead?.value}".`,
+					this.lookahead,
+				);
+		}
 	}
 
 	/**
 	 * Infix
-	 *    = ("+" / "-" / "*" / "/" / "%" / "//" / "**") Expression
+	 *    = (<BinaryOperator>) Expression
+	 *
+	 * @see {@link BINARY_OPERATORS}
 	 */
 	private *Infix(
 		left: AstNode,
@@ -217,29 +231,21 @@ export class Parser {
 		const token = yield* this.consume(operatorType);
 		const newPrec = this.getOperatorPrecedence(token.value);
 
-		switch (token.value) {
-			case '+':
-			case '-':
-			case '*':
-			case '/':
-			case '%':
-			case '//':
-			case '**':
-				return {
-					type: AstNodeType.Binary,
-					op: token.value,
-					left,
-					right: yield* this.Expression(newPrec),
-					from: token.from,
-					to: token.to,
-				};
-
-			default:
-				return yield parserError(
-					`Unexpected Operator: "${token.value}". Valid operators are ${BINARY_OPERATORS.join(' ')}.`,
-					token,
-				);
+		if (isIn(BINARY_OPERATORS, token.value)) {
+			return {
+				type: AstNodeType.Binary,
+				op: token.value,
+				left,
+				right: yield* this.Expression(newPrec),
+				from: token.from,
+				to: token.to,
+			};
 		}
+
+		return yield parserError(
+			`Unexpected Operator: "${token.value}". Valid operators are ${BINARY_OPERATORS.join(' ')}.`,
+			token,
+		);
 	}
 
 	/**
@@ -261,23 +267,20 @@ export class Parser {
 	private *UnaryExpression(): Generator<ParserError, UnaryNode> {
 		const token = yield* this.consume(TokenType.OPERATOR);
 
-		switch (token.value) {
-			case '+':
-			case '-':
-				return {
-					type: AstNodeType.Unary,
-					op: token.value,
-					node: yield* this.Expression(Precedence.UNARY),
-					from: token.from,
-					to: token.to,
-				};
-
-			default:
-				return yield parserError(
-					`Unexpected Token: "${token.value}", expected "+" or "-".`,
-					token,
-				);
+		if (isIn(UNARY_OPERATORS, token.value)) {
+			return {
+				type: AstNodeType.Unary,
+				op: token.value,
+				node: yield* this.Expression(Precedence.UNARY),
+				from: token.from,
+				to: token.to,
+			};
 		}
+
+		return yield parserError(
+			`Unexpected Token: "${token.value}", expected ${UNARY_OPERATORS.join(' ')}.`,
+			token,
+		);
 	}
 
 	/**
@@ -335,19 +338,21 @@ export class Parser {
 	> {
 		const token = yield* this.consume(TokenType.IDENTIFIER);
 
-		switch (token.value) {
-			case 'floor':
-			case 'round':
-			case 'ceil':
-			case 'abs':
-				return [token.value, 1, token];
-			case 'min':
-			case 'max':
-				return [token.value, undefined, token];
-			case 'clamp':
-				return [token.value, 3, token];
-			case 'step':
-				return [token.value, 2, token];
+		if (isIn(FUNCTION_NAMES, token.value)) {
+			switch (token.value) {
+				case 'floor':
+				case 'round':
+				case 'ceil':
+				case 'abs':
+					return [token.value, 1, token];
+				case 'min':
+				case 'max':
+					return [token.value, undefined, token];
+				case 'clamp':
+					return [token.value, 3, token];
+				case 'step':
+					return [token.value, 2, token];
+			}
 		}
 
 		return yield parserError(`Invalid function: "${token.value}".`, token);

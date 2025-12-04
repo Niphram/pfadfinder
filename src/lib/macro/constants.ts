@@ -1,7 +1,26 @@
 export const UNARY_OPERATORS = ['+', '-'] as const;
 export type UnaryOperator = (typeof UNARY_OPERATORS)[number];
 
-export const BINARY_OPERATORS = ['+', '-', '*', '/', '%', '//', '**'] as const;
+export const BINARY_OPERATORS = [
+	// exponentiation
+	'**',
+	// multiplicative
+	'*',
+	'/',
+	'%',
+	'//',
+	// additive
+	'+',
+	'-',
+	// relational
+	'<',
+	'>',
+	'<=',
+	'>=',
+	// equality
+	'=',
+	'!=',
+] as const;
 export type BinaryOperator = (typeof BINARY_OPERATORS)[number];
 
 export const FUNCTION_NAMES = [

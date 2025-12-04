@@ -13,3 +13,7 @@ export function mapMax<T>(arr: T[], get: (v: T) => number) {
 
 	return arr.reduce((min, v) => Math.max(min, get(v)), Infinity);
 }
+
+export function isIn<T>(values: readonly T[], x: unknown): x is T {
+	return (values as readonly unknown[]).includes(x);
+}

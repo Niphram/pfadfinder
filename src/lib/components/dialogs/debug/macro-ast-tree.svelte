@@ -34,6 +34,12 @@
 		'%': 'modulus',
 		'//': 'integer division',
 		'**': 'exponentiation',
+		'<': 'less than',
+		'>': 'greater than',
+		'<=': 'less or equal than',
+		'>=': 'greater or equal than',
+		'=': 'equal',
+		'!=': 'not equal',
 	};
 </script>
 

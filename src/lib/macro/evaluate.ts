@@ -87,6 +87,18 @@ function evalBinary(op: BinaryOperator, left: number, right: number): number {
 			return left % right;
 		case '**':
 			return left ** right;
+		case '<':
+			return left < right ? 1 : 0;
+		case '>':
+			return left > right ? 1 : 0;
+		case '<=':
+			return left <= right ? 1 : 0;
+		case '>=':
+			return left >= right ? 1 : 0;
+		case '=':
+			return left === right ? 1 : 0;
+		case '!=':
+			return left !== right ? 1 : 0;
 	}
 }
 
