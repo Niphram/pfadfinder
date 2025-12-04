@@ -10,9 +10,7 @@
 
 	import MacroAstTree from './macro-ast-tree.svelte';
 
-	const testMacro = macro(
-		'floor(@classes.list.0.level * 5 / 6) + @int.mod + 3',
-	);
+	const testMacro = macro('(@classes.list.0.level * 5 // 6) + @int.mod + 3');
 	const tokens = $derived(new Tokenizer(testMacro.expr).allTokens());
 
 	const TOKEN_COLORS: Record<TokenType, string> = {

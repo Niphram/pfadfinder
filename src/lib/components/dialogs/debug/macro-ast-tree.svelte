@@ -66,16 +66,20 @@
 			{#if node.type === AstNodeType.Constant}
 				<li><p>Value: {node.constant}</p></li>
 			{:else if node.type === AstNodeType.Attribute}
-				<li><p>Path: {node.path.join('.')} (= {evalNode(node, c)})</p></li>
+				<li><p>Path: {node.path.join('.')}</p></li>
+				<li><p>Evaluated: {evalNode(node, c)}</p></li>
 			{:else if node.type === AstNodeType.Unary}
 				<li><p>Operator: {OP_TYPES[node.op]}</p></li>
+				<li><p>Evaluated: {evalNode(node, c)}</p></li>
 				<li><Self {open} prefix="Value: " node={node.node}></Self></li>
 			{:else if node.type === AstNodeType.Binary}
 				<li><p>Operator: {OP_TYPES[node.op]}</p></li>
+				<li><p>Evaluated: {evalNode(node, c)}</p></li>
 				<li><Self {open} prefix="Left: " node={node.left}></Self></li>
 				<li><Self {open} prefix="Right: " node={node.right}></Self></li>
 			{:else if node.type === AstNodeType.Func}
 				<li><p>Type: {node.func ?? 'None (Just parentheses)'}</p></li>
+				<li><p>Evaluated: {evalNode(node, c)}</p></li>
 				{#each node.nodes as funcNode, i (i)}
 					<li>
 						<Self {open} prefix="Arg {i}: " node={funcNode}></Self>
