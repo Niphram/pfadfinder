@@ -31,6 +31,7 @@
 		'*': 'multiply',
 		'/': 'divide',
 		'%': 'modulus',
+		'//': 'integer division',
 	};
 </script>
 
