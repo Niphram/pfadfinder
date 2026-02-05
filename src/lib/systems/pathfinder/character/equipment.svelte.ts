@@ -83,7 +83,7 @@ export class AcItem extends ClassSerializer {
 
 	type = enumeration(ARMOR_TYPES, 'medium');
 
-	chkPenalty = number(0, { min: 0 });
+	chkPenalty = number(0);
 
 	maxDexBonus = number(null, { optional: true });
 
