@@ -23,11 +23,13 @@
 			{@const ability = c.skills[key].skills[index].ability}
 			{@const penalty = c[ability].skillCheckMod !== c[ability].mod}
 			{@const trainedOnly = c.skills[key].trained}
+			{@const condition = c.skills[key].skills[index].affectedByCondition}
 
 			{@const skillTags = [
 				penalty && '!',
 				variant.classSkill && 'c',
 				variant.ranks > 0 && 't',
+				condition && '?',
 			]
 				.filter(Boolean)
 				.join(', ')}
@@ -51,7 +53,10 @@
 						<span class="w-16">{skillTags}</span>
 					</div>
 					<div
-						class="join-item bg-base-200 text-base-content flex grow items-center"
+						class={[
+							'join-item bg-base-200 text-base-content flex grow items-center',
+							condition && 'bg-warning! text-warning-content!',
+						]}
 					>
 						<span
 							class="join-item grow align-middle decoration-wavy"

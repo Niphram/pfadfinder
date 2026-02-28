@@ -6,6 +6,7 @@ import { Ability } from './abilities.svelte';
 import { ArmorClass } from './armorclass.svelte';
 import { Classes } from './class.svelte';
 import { Combat } from './combat.svelte';
+import { Conditions } from './conditions.svelte';
 import { Equipment } from './equipment.svelte';
 import { Feat } from './feat.svelte';
 import { HitPoints } from './hitpoints.svelte';
@@ -66,6 +67,8 @@ export class Character extends BaseCharacter {
 	readonly money = new Money();
 
 	readonly persona = new Persona();
+
+	readonly conditions = new Conditions();
 
 	readonly settings = new Settings();
 }

@@ -23,27 +23,42 @@ export class ArmorClass extends ClassSerializer {
 	notes = string('', { maxLength: 2000 });
 
 	readonly abilityMod = derive<Character>((c) => {
-		const primaryMax =
-			this.primaryAbility.value === 'dex' ? c.equipment.maxDexBonus : Infinity;
-		const secondaryMax =
-			this.secondaryAbility.value === 'dex' ?
-				c.equipment.maxDexBonus
-			:	Infinity;
+		let primaryAbilityMod = c[this.primaryAbility.value].mod;
+		if (this.primaryAbility.value === 'dex') {
+			if (c.conditions.looseAcDexBonus) {
+				primaryAbilityMod = Math.min(0, primaryAbilityMod);
+			}
 
-		return (
-			Math.min(c[this.primaryAbility.value].mod, primaryMax) +
-			(this.secondaryAbility.value ?
-				Math.min(c[this.secondaryAbility.value].mod, secondaryMax)
-			:	0)
-		);
+			primaryAbilityMod = Math.min(primaryAbilityMod, c.equipment.maxDexBonus);
+		}
+
+		let secondaryAbilityMod =
+			this.secondaryAbility.value ? c[this.secondaryAbility.value].mod : 0;
+		if (this.secondaryAbility.value === 'dex') {
+			if (c.conditions.looseAcDexBonus) {
+				secondaryAbilityMod = Math.min(0, secondaryAbilityMod);
+			}
+
+			secondaryAbilityMod = Math.min(
+				secondaryAbilityMod,
+				c.equipment.maxDexBonus,
+			);
+		}
+
+		return primaryAbilityMod + secondaryAbilityMod;
 	});
 
 	readonly total = derive<Character>(
-		(c) => 10 + c.ac.abilityMod + c.equipment.acBonus + this.bonusAc.eval(c),
+		(c) =>
+			10 +
+			c.ac.abilityMod +
+			c.equipment.acBonus +
+			this.bonusAc.eval(c) +
+			c.conditions.acMod,
 	);
 
 	readonly touch = derive<Character>(
-		(c) => 10 + c.ac.abilityMod + this.bonusTouch.eval(c),
+		(c) => 10 + c.ac.abilityMod + this.bonusTouch.eval(c) + c.conditions.acMod,
 	);
 
 	readonly flatFooted = derive<Character>(
@@ -51,6 +66,12 @@ export class ArmorClass extends ClassSerializer {
 			10 +
 			c.equipment.acBonus +
 			Math.min(c.ac.abilityMod, 0) +
-			this.bonusFf.eval(c),
+			this.bonusFf.eval(c) +
+			c.conditions.acMod,
 	);
+
+	readonly affectedByCondition = derive<Character, boolean>((c) => {
+		// Todo, make this better
+		return c.conditions.looseAcDexBonus || c.conditions.acMod !== 0;
+	});
 }

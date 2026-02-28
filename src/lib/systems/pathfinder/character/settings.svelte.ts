@@ -23,6 +23,8 @@ export class Settings extends ClassSerializer {
 
 	useAverageHP = boolean(false);
 
+	enableExperimentalConditions = boolean(false);
+
 	enableMacroHighlighting = boolean(true);
 
 	experimentalFeatures = boolean(false);

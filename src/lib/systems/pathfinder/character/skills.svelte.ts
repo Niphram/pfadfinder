@@ -70,27 +70,31 @@ export class Skill extends ClassSerializer {
 
 	notes = string('', { maxLength: 2000 });
 
+	readonly affectedByCondition = derive<Character, boolean>((c) => {
+		// Todo, make this better
+		return c.conditions.skillCheckModifier(this) !== 0;
+	});
+
 	readonly mod = derive<Character>(
 		(c) =>
 			c[this.ability.value].skillCheckMod +
 			this.ranks.value +
 			this.misc.eval(c) +
 			this.temp.eval(c) +
-			(this.classSkill.value && this.ranks.value > 0 ? 3 : 0),
+			(this.classSkill.value && this.ranks.value > 0 ? 3 : 0) +
+			c.conditions.skillCheckModifier(this),
 	);
 
-	constructor(key?: SkillKey) {
+	constructor(public readonly key: SkillKey) {
 		super();
 
-		if (key) {
-			this.ability.value = SKILLS[key].ability;
-			this.penalty.value = SKILLS[key].penalty;
-		}
+		this.ability.value = SKILLS[key].ability;
+		this.penalty.value = SKILLS[key].penalty;
 	}
 }
 
 export class SkillGroup extends ClassSerializer {
-	skills = array(() => new Skill(), []);
+	skills = array(() => new Skill(this.key), []);
 
 	readonly trained: boolean;
 
@@ -98,7 +102,7 @@ export class SkillGroup extends ClassSerializer {
 		mapSum(this.skills.value, (skill) => skill.ranks.value),
 	);
 
-	constructor(key: SkillKey) {
+	constructor(private readonly key: SkillKey) {
 		super();
 
 		this.skills.value = [new Skill(key)];

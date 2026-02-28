@@ -10,6 +10,8 @@
 
 	import { getChar } from '$lib/data';
 
+	import ConditionsDialog from './conditions-dialog.svelte';
+
 	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());
 
@@ -45,6 +47,14 @@
 		{/each}
 
 		<div class="grow"></div>
+
+		{#if c.settings.enableExperimentalConditions}
+			<button
+				class="btn btn-accent w-full"
+				onclick={preventDefault(() => openDialog(ConditionsDialog, {}))}
+				>Conditions</button
+			>
+		{/if}
 
 		<button
 			class="btn btn-accent w-full"

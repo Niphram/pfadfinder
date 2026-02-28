@@ -42,6 +42,12 @@
 	/>
 
 	<Toggle
+		name="experimentalConditions"
+		label="Enable Conditions (work in progress)"
+		bind:checked={c.settings.enableExperimentalConditions}
+	/>
+
+	<Toggle
 		name="syntaxHighlighting"
 		label="Enable Macro Highlighting"
 		bind:checked={c.settings.enableMacroHighlighting}

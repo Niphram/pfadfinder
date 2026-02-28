@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { MouseEventHandler } from 'svelte/elements';
+	import type { ClassValue, MouseEventHandler } from 'svelte/elements';
 
 	import { preventDefault } from '$lib/utils';
 
@@ -8,15 +8,16 @@
 	interface Props {
 		onclick?: MouseEventHandler<HTMLButtonElement>;
 		oncontextmenu?: MouseEventHandler<HTMLButtonElement>;
+		class?: ClassValue;
 	}
 
-	const { onclick, oncontextmenu }: Props = $props();
+	const { onclick, oncontextmenu, class: className }: Props = $props();
 
 	const { c } = $derived(getChar());
 </script>
 
 <button
-	class="btn h-min px-0"
+	class={['btn h-min px-0', className]}
 	{onclick}
 	oncontextmenu={oncontextmenu && preventDefault(oncontextmenu)}
 >
