@@ -43,7 +43,8 @@ export class HitPoints extends ClassSerializer {
 		(c) =>
 			(c.settings.useAverageHP ? this.average.eval(c) : this.rolled.value) +
 			this.conHp.eval(c) +
-			this.bonus.eval(c),
+			this.bonus.eval(c) +
+			c.conditions.maxHpMod,
 	);
 
 	heal(this: SerdeProxy<HitPoints>, amount: number) {

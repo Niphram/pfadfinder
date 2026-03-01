@@ -46,7 +46,7 @@
 			class="py-1 text-3xl font-extrabold"
 			class:text-red-700={c[key].damage > 0}
 		>
-			{withSign(c[key].mod)}
+			{withSign(c[key].checkMod)}
 		</div>
 		<div class="py-1 text-xs decoration-wavy" class:underline={!!c[key].notes}>
 			{c[key].totalNoTemp}{#if temp !== 0}<span

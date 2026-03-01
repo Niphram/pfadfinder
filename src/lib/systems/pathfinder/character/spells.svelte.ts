@@ -124,7 +124,7 @@ export class Spell extends SpellCommonProps {
 			(dcAbility ? c[dcAbility].mod : 0) + (c.spells.dcBonus ?? 0);
 		const saveDc = 10 + level + this.savingThrow.dcMod + abilityDc;
 
-		let attackBonus = this.attack.mod;
+		let attackBonus = this.attack.mod - c.conditions.negative_levels; // TODO: Fix this
 
 		switch (this.attack.type) {
 			case 'touch':

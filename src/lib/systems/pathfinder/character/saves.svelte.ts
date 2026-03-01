@@ -32,7 +32,8 @@ export class Save extends ClassSerializer {
 			c.classes[this.key] +
 			c[this.ability.value].mod +
 			c[this.key].bonus +
-			c[this.key].misc,
+			c[this.key].misc +
+			c.conditions.saveMod(this),
 	);
 
 	constructor(public readonly key: SaveKey) {

@@ -36,6 +36,10 @@ export class Ability extends ClassSerializer {
 
 	readonly skillCheckMod = this.mod;
 
+	readonly checkMod = derive<Character>(
+		(c) => this.mod.eval(c) + c.conditions.abilityCheckMod(this),
+	);
+
 	constructor(public readonly key: AbilityKey) {
 		super();
 

@@ -12,7 +12,7 @@
 
 	import ConditionsDialog from './conditions-dialog.svelte';
 
-	const { openDialog } = useDialog();
+	const { openDialog, replaceDialog } = useDialog();
 	const { c } = $derived(getChar());
 
 	let navButtons = $derived([
@@ -51,7 +51,7 @@
 		{#if c.settings.enableExperimentalConditions}
 			<button
 				class="btn btn-accent w-full"
-				onclick={preventDefault(() => openDialog(ConditionsDialog, {}))}
+				onclick={preventDefault(() => replaceDialog(ConditionsDialog, {}))}
 				>Conditions</button
 			>
 		{/if}

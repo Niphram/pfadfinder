@@ -71,7 +71,14 @@ export class CombatManeuverBonus extends ClassSerializer {
 
 	readonly mod = derive<Character>((c) => {
 		const { ability, mod } = sizeModifiers[c.race.size];
-		return c.combat.bab.mod + mod + c[ability].mod + this.bonus.eval(c);
+		const conditionMod = c.conditions.cmbMod;
+		return (
+			c.combat.bab.mod +
+			mod +
+			c[ability].mod +
+			this.bonus.eval(c) +
+			conditionMod
+		);
 	});
 }
 
@@ -82,8 +89,15 @@ export class CombatManeuverDefense extends ClassSerializer {
 
 	readonly mod = derive<Character>((c) => {
 		const { mod } = sizeModifiers[c.race.size];
+		const conditionMod = c.conditions.cmdMod;
 		return (
-			10 + c.combat.bab.mod + c.str.mod + c.dex.mod + mod + this.bonus.eval(c)
+			10 +
+			c.combat.bab.mod +
+			c.str.mod +
+			c.dex.mod +
+			mod +
+			this.bonus.eval(c) +
+			conditionMod
 		);
 	});
 }
