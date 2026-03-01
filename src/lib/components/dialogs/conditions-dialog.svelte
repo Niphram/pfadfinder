@@ -10,4 +10,12 @@
 
 <DialogBase title="Conditions (work in progress)">
 	<Toggle name="blinded" label="Blinded" bind:checked={c.conditions.blinded} />
+
+	<Toggle
+		name="cowering"
+		label="Cowering"
+		bind:checked={c.conditions.cowering}
+	/>
+
+	<Toggle name="dazzled" label="Dazzled" bind:checked={c.conditions.dazzled} />
 </DialogBase>

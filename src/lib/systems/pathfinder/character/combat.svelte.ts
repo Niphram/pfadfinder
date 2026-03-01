@@ -134,26 +134,33 @@ export class AttackRoll extends ClassSerializer {
 		const abilityMod =
 			this.abilityModifier.value ? c[this.abilityModifier.value].mod : 0;
 		const bonus = this.bonusModifier.eval(c) ?? 0;
+		const conditionMod = c.conditions.attackRollModifier(this);
 
 		switch (this.baseModifier.value) {
 			case 'meelee':
 				return attackArray(
 					fullAttackCount,
-					bab + c.str.mod + abilityMod + bonus,
+					bab + c.str.mod + abilityMod + bonus + conditionMod,
 				);
 			case 'ranged':
 				return attackArray(
 					fullAttackCount,
-					bab + c.dex.mod + abilityMod + bonus,
+					bab + c.dex.mod + abilityMod + bonus + conditionMod,
 				);
 			case 'babFull':
-				return attackArray(fullAttackCount, bab + abilityMod + bonus);
+				return attackArray(
+					fullAttackCount,
+					bab + abilityMod + bonus + conditionMod,
+				);
 			case 'babMax':
-				return attackArray(1, bab + abilityMod + bonus);
+				return attackArray(1, bab + abilityMod + bonus + conditionMod);
 			case 'cmb':
-				return attackArray(1, c.combat.cmb.mod + abilityMod + bonus);
+				return attackArray(
+					1,
+					c.combat.cmb.mod + abilityMod + bonus + conditionMod,
+				);
 			default:
-				return attackArray(1, abilityMod + bonus);
+				return attackArray(1, abilityMod + bonus + conditionMod);
 		}
 	});
 }
