@@ -1,6 +1,8 @@
 name: Test and Deploy
 
-on: push
+on:
+  push: {}
+  workflow_dispatch: {}
 
 jobs:
   build_and_test:
