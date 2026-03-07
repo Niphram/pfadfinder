@@ -131,7 +131,7 @@
 
 			{#if c.conditions.mods.maxHp.messages.length > 0}
 				<Alert level="warning">
-					{#each c.conditions.mods.maxHp.messages as message, i (message)}
+					{#each c.conditions.mods.maxHp.messages as message (message)}
 						<p>{message}</p>
 					{/each}
 				</Alert>
