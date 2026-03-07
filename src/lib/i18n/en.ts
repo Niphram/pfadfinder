@@ -7,6 +7,15 @@ function count(word: string, amount: number) {
 }
 
 export default {
+	ui: {
+		theme: {
+			auto: 'System Preference',
+
+			light: 'Light Theme',
+			dark: 'Dark Theme',
+			wireframe: 'Test theme for Debugging',
+		},
+	},
 	hp: {
 		text: {
 			heal: 'Heal',

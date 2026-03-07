@@ -6,7 +6,8 @@
 	exclude: properties;
 	themes:
 		light --default,
-		dark --prefersdark;
+		dark --prefersdark,
+		wireframe;
 }
 
 @plugin 'daisyui/theme' {

@@ -1,19 +1,18 @@
 <script lang="ts">
+	import { t } from '$lib/i18n';
 	import { preventDefault } from '$lib/utils';
 
 	import DialogBase from '$lib/atoms/dialog-base.svelte';
 	import Divider from '$lib/atoms/divider.svelte';
+	import InputWrapper from '$lib/atoms/input-wrapper.svelte';
 
 	import MacroDebugDialog from '$lib/components/dialogs/debug/macro-debug-dialog.svelte';
 	import Toggle from '$lib/components/input/toggle.svelte';
-	import {
-		isDarkMode,
-		toggleDarkMode,
-	} from '$lib/components/theme-changer.svelte';
 
 	import { getChar, persisted } from '$lib/data';
 
 	import { useDialog } from '../dialog-provider.svelte';
+	import { selectedTheme, THEME_KEYS } from '../theme-changer.svelte';
 
 	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());
@@ -22,12 +21,19 @@
 </script>
 
 <DialogBase title="Settings">
-	<Toggle
-		name="darkMode"
-		label="Dark mode"
-		checked={$isDarkMode}
-		onchange={toggleDarkMode}
-	/>
+	<InputWrapper legend="Theme">
+		<select
+			name="theme"
+			class={['select w-full appearance-none']}
+			bind:value={$selectedTheme}
+		>
+			<option value={null}>{$t('ui.theme.auto')}</option>
+			<option disabled>-----</option>
+			{#each THEME_KEYS as key (key)}
+				<option value={key}>{$t(`ui.theme.${key}`)}</option>
+			{/each}
+		</select>
+	</InputWrapper>
 
 	<Toggle
 		name="magicPage"

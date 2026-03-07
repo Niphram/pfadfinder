@@ -1,43 +1,68 @@
 <script lang="ts" module>
-	import type { Snippet } from 'svelte';
-	import { readonly, writable } from 'svelte/store';
+	import { type Snippet } from 'svelte';
+	import { on } from 'svelte/events';
+	import { MediaQuery } from 'svelte/reactivity';
+	import { writable } from 'svelte/store';
 
 	import { browser } from '$app/environment';
 
-	const lightTheme = 'light';
-	const darkTheme = 'dark';
+	import { isIn } from '$lib/utils';
 
-	function persistDarkmode(value?: boolean) {
-		if (value !== undefined) {
-			window.localStorage.setItem('darkmode', `${value}`);
-		} else {
-			window.localStorage.removeItem('darkmode');
-		}
+	const STORAGE_KEY = 'theme';
+
+	const THEMES = {
+		light: {
+			color: '#DBCA9A',
+			background: '#ECE3CE',
+		},
+		dark: {
+			color: '#20222C',
+			background: '#0B0B0F',
+		},
+		wireframe: {
+			color: '#f5f5f5',
+			background: '#ffffff',
+		},
+	} satisfies Record<string, { color: string; background: string }>;
+
+	export const THEME_KEYS = Object.keys(THEMES);
+	export type ThemeKey = keyof typeof THEMES;
+
+	const lightKey: ThemeKey = 'light';
+	const darkKey: ThemeKey = 'dark';
+
+	function browserOrDefault<T>(cb: () => T, fallback: T) {
+		if (browser) return cb();
+		else return fallback;
 	}
 
-	const darkmodeStore = writable(false, (set) => {
-		// Load theme from local storage
-		if (browser) {
-			// Check OS preferred color scheme
-			if (
-				window.matchMedia
-				&& window.matchMedia('(prefers-color-scheme: dark)').matches
-			) {
-				set(true);
-			}
+	function themeOrNull(theme: string | null): ThemeKey | null {
+		if (isIn(THEME_KEYS, theme)) return theme;
+		else return null;
+	}
 
-			const savedDarkMode = window.localStorage.getItem('darkmode');
-			if (savedDarkMode === 'true') set(true);
-			if (savedDarkMode === 'false') set(false);
-		}
-	});
+	// Writable store that contains the theme key
+	export let selectedTheme = writable(
+		themeOrNull(
+			browserOrDefault(() => window.localStorage.getItem(STORAGE_KEY), null),
+		),
+	);
 
-	export const isDarkMode = readonly(darkmodeStore);
+	// Will never get unregistered
+	if (browser) {
+		// Update localstorage whenever theme changes
+		selectedTheme.subscribe((theme) => {
+			if (theme) window.localStorage.setItem(STORAGE_KEY, theme);
+			else window.localStorage.removeItem(STORAGE_KEY);
+		});
 
-	export function toggleDarkMode() {
-		darkmodeStore.update((current) => {
-			persistDarkmode(!current);
-			return !current;
+		// Listen to storage updates
+		on(window, 'storage', (ev) => {
+			// Abort if the event is for another key or the theme didn't actually change
+			if (ev.key !== STORAGE_KEY) return;
+			if (ev.newValue === ev.oldValue) return;
+
+			selectedTheme.set(themeOrNull(ev.newValue));
 		});
 	}
 </script>
@@ -49,22 +74,25 @@
 
 	let { children }: Props = $props();
 
-	let themeColor = $derived($isDarkMode ? '#20222C' : '#DBCA9A');
-	let backgroundColor = $derived($isDarkMode ? '#0B0B0F' : '#ECE3CE');
+	const darkPreferenceQuery = new MediaQuery('(prefers-color-scheme: dark)');
 
+	const themeKey = $derived(
+		$selectedTheme ? $selectedTheme
+		: darkPreferenceQuery.current ? darkKey
+		: lightKey,
+	);
+
+	const theme = $derived(THEMES[themeKey]);
+
+	// Update theme attribute
 	$effect.pre(() => {
-		if (browser) {
-			document.body.setAttribute(
-				'data-theme',
-				$isDarkMode ? darkTheme : lightTheme,
-			);
-		}
+		if (browser) document.body.setAttribute('data-theme', themeKey);
 	});
 </script>
 
 <svelte:head>
-	<meta name="theme-color" content={themeColor} />
-	<meta name="background-color" content={backgroundColor} />
+	<meta name="theme-color" content={theme.color} />
+	<meta name="background-color" content={theme.background} />
 </svelte:head>
 
 {@render children?.()}

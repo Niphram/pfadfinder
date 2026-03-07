@@ -73,7 +73,7 @@
 		<div
 			bind:this={renderEl}
 			class={[
-				'pointer-events-none absolute top-0 left-0 z-0 h-full overflow-scroll break-words whitespace-pre-wrap',
+				'pointer-events-none absolute top-0 left-0 z-0 h-full overflow-scroll wrap-break-word whitespace-pre-wrap',
 				commonClasses,
 				className,
 			]}
