@@ -9,4 +9,7 @@ type State = {
 	dirty: boolean;
 };
 
-export const [getChar, setChar] = createContext<State>();
+const [getCharInternal, setCharInternal] = createContext<() => State>();
+
+export const getChar = () => getCharInternal()();
+export const setChar = setCharInternal;

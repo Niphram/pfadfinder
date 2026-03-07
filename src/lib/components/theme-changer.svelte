@@ -20,8 +20,8 @@
 		if (browser) {
 			// Check OS preferred color scheme
 			if (
-				window.matchMedia &&
-				window.matchMedia('(prefers-color-scheme: dark)').matches
+				window.matchMedia
+				&& window.matchMedia('(prefers-color-scheme: dark)').matches
 			) {
 				set(true);
 			}

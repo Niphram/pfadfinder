@@ -10,8 +10,7 @@ import type { Option } from '../optional';
 export class EnumWrapper<
 	Values extends readonly (string | number)[],
 	IsOptional extends boolean,
-> implements Serializable
-{
+> implements Serializable {
 	value: Option<Values[number], IsOptional>;
 
 	constructor(
@@ -44,8 +43,8 @@ export class EnumWrapper<
 		if (value === null && this.options.optional) {
 			this.value = null as Option<Values[number], IsOptional>;
 		} else if (
-			value !== null &&
-			this.values.includes(value as Values[number])
+			value !== null
+			&& this.values.includes(value as Values[number])
 		) {
 			this.value = value as Option<Values[number], IsOptional>;
 		}

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { untrack } from 'svelte';
+
 	import type { PageProps } from './$types';
 
 	import { t } from '$lib/i18n';
@@ -22,7 +24,12 @@
 	}, 500);
 
 	const state = $state({
-		c: charProxy(observeMutations(data.character, mutationCallback)),
+		c: charProxy(
+			observeMutations(
+				untrack(() => data.character), // Make sure this doesn't break anything
+				mutationCallback,
+			),
+		),
 		dirty: false,
 	});
 </script>

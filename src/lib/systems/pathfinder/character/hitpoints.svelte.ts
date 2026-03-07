@@ -41,10 +41,10 @@ export class HitPoints extends ClassSerializer {
 
 	readonly max = derive<Character>(
 		(c) =>
-			(c.settings.useAverageHP ? this.average.eval(c) : this.rolled.value) +
-			this.conHp.eval(c) +
-			this.bonus.eval(c) +
-			c.conditions.maxHpMod,
+			(c.settings.useAverageHP ? this.average.eval(c) : this.rolled.value)
+			+ this.conHp.eval(c)
+			+ this.bonus.eval(c)
+			+ c.conditions.mods.maxHp.mod,
 	);
 
 	heal(this: SerdeProxy<HitPoints>, amount: number) {

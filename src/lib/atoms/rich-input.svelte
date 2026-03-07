@@ -58,8 +58,8 @@
 		autocomplete="off"
 		onscroll={synchronizeScroll}
 		class={[
-			c.settings.enableMacroHighlighting &&
-				'caret-base-content z-10 bg-transparent text-transparent',
+			c.settings.enableMacroHighlighting
+				&& 'caret-base-content z-10 bg-transparent text-transparent',
 			commonClasses,
 			className,
 		]}

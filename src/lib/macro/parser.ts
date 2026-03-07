@@ -159,8 +159,8 @@ export class Parser {
 		let left = yield* this.Prefix();
 
 		while (
-			this.lookahead &&
-			prec < this.getOperatorPrecedence(this.lookahead.value)
+			this.lookahead
+			&& prec < this.getOperatorPrecedence(this.lookahead.value)
 		) {
 			left = yield* this.Infix(left, this.lookahead.type);
 		}

@@ -25,3 +25,13 @@ export class BoolWrapper implements Serializable {
 export function boolean(value: boolean) {
 	return new BoolWrapper(value);
 }
+
+export class MappedBoolWrapper<T> extends BoolWrapper {
+	constructor(value: boolean, map: (value: boolean) => T) {
+		super(value);
+
+		this.effects = $derived(map(this.value));
+	}
+
+	readonly effects: T;
+}

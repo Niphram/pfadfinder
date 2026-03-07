@@ -34,8 +34,8 @@
 	<AcButton
 		oncontextmenu={() => openDialog(AcDialog, {})}
 		onclick={() =>
-			c.ac.affectedByCondition &&
-			showToast(SimpleToast, {
+			c.ac.affectedByCondition
+			&& showToast(SimpleToast, {
 				message: 'Affected by conditions!',
 				type: 'warning',
 				icon: 'warning',

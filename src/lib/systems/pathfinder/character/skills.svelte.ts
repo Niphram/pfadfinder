@@ -70,19 +70,21 @@ export class Skill extends ClassSerializer {
 
 	notes = string('', { maxLength: 2000 });
 
-	readonly affectedByCondition = derive<Character, boolean>((c) => {
-		// Todo, make this better
-		return c.conditions.skillCheckModifier(this) !== 0;
-	});
+	readonly conditionNotes = derive<Character, string[]>((c) =>
+		c.conditions.mods[`${this.ability.value}Skill`].messages.concat(
+			c.conditions.mods[this.key].messages,
+		),
+	);
 
 	readonly mod = derive<Character>(
 		(c) =>
-			c[this.ability.value].skillCheckMod +
-			this.ranks.value +
-			this.misc.eval(c) +
-			this.temp.eval(c) +
-			(this.classSkill.value && this.ranks.value > 0 ? 3 : 0) +
-			c.conditions.skillCheckModifier(this),
+			c[this.ability.value].skillCheckMod
+			+ this.ranks.value
+			+ this.misc.eval(c)
+			+ this.temp.eval(c)
+			+ (this.classSkill.value && this.ranks.value > 0 ? 3 : 0)
+			+ c.conditions.mods[`${this.ability.value}Skill`].mod
+			+ c.conditions.mods[this.key].mod,
 	);
 
 	constructor(public readonly key: SkillKey) {

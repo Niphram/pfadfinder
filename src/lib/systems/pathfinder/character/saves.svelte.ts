@@ -29,11 +29,11 @@ export class Save extends ClassSerializer {
 
 	readonly mod = derive<Character>(
 		(c) =>
-			c.classes[this.key] +
-			c[this.ability.value].mod +
-			c[this.key].bonus +
-			c[this.key].misc +
-			c.conditions.saveMod(this),
+			c.classes[this.key]
+			+ c[this.ability.value].mod
+			+ c[this.key].bonus
+			+ c[this.key].misc
+			+ c.conditions.mods[this.key].mod,
 	);
 
 	constructor(public readonly key: SaveKey) {

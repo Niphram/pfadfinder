@@ -143,9 +143,9 @@
 												!open && 'overflow-hidden whitespace-nowrap',
 											]}
 										>
-											{(attack.hasDamage &&
-												parseTextWithMacros(attack.damage.damage, c)) ||
-												'-'}
+											{(attack.hasDamage
+												&& parseTextWithMacros(attack.damage.damage, c))
+												|| '-'}
 										</div>
 									{/if}
 								</div>

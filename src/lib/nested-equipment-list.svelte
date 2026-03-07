@@ -88,8 +88,8 @@
 							class="btn btn-accent btn-sm md:btn-md ml-2 w-28 px-2"
 							onclick={stopPropagation(
 								() =>
-									items[props.index].remaining > 0 &&
-									items[props.index].remaining--,
+									items[props.index].remaining > 0
+									&& items[props.index].remaining--,
 							)}
 						>
 							{props.item.remaining}{#if props.item.chargeType === 'perDay'}

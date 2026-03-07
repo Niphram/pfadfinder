@@ -20,10 +20,10 @@ export class Ability extends ClassSerializer {
 
 	readonly total = derive<Character>(
 		(c) =>
-			c[this.key].base +
-			c.race[this.key] +
-			c[this.key].bonus +
-			c[this.key].temp,
+			c[this.key].base
+			+ c.race[this.key]
+			+ c[this.key].bonus
+			+ c[this.key].temp,
 	);
 
 	readonly totalNoTemp = derive<Character>(
@@ -37,7 +37,11 @@ export class Ability extends ClassSerializer {
 	readonly skillCheckMod = this.mod;
 
 	readonly checkMod = derive<Character>(
-		(c) => this.mod.eval(c) + c.conditions.abilityCheckMod(this),
+		(c) => this.mod.eval(c) + c.conditions.mods[this.key].mod,
+	);
+
+	readonly conditionNotes = derive<Character, string[]>(
+		(c) => c.conditions.mods[this.key].messages,
 	);
 
 	constructor(public readonly key: AbilityKey) {

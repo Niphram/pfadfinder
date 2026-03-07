@@ -71,13 +71,13 @@ export class CombatManeuverBonus extends ClassSerializer {
 
 	readonly mod = derive<Character>((c) => {
 		const { ability, mod } = sizeModifiers[c.race.size];
-		const conditionMod = c.conditions.cmbMod;
+		const conditionMod = c.conditions.mods.meeleeAtk.mod;
 		return (
-			c.combat.bab.mod +
-			mod +
-			c[ability].mod +
-			this.bonus.eval(c) +
-			conditionMod
+			c.combat.bab.mod
+			+ mod
+			+ c[ability].mod
+			+ this.bonus.eval(c)
+			+ conditionMod
 		);
 	});
 }
@@ -89,15 +89,15 @@ export class CombatManeuverDefense extends ClassSerializer {
 
 	readonly mod = derive<Character>((c) => {
 		const { mod } = sizeModifiers[c.race.size];
-		const conditionMod = c.conditions.cmdMod;
+		const conditionMod = c.conditions.mods.cmd.mod;
 		return (
-			10 +
-			c.combat.bab.mod +
-			c.str.mod +
-			c.dex.mod +
-			mod +
-			this.bonus.eval(c) +
-			conditionMod
+			10
+			+ c.combat.bab.mod
+			+ c.str.mod
+			+ c.dex.mod
+			+ mod
+			+ this.bonus.eval(c)
+			+ conditionMod
 		);
 	});
 }
@@ -126,18 +126,6 @@ export class AttackRoll extends ClassSerializer {
 
 	range = string('', { maxLength: 100 });
 
-	readonly baseModValue = derive<Character>((c) =>
-		// TODO: Check this
-		this.baseModifier.value === 'none' ? 0
-		: this.baseModifier.value === 'babMax' ? c.combat.bab.mod
-		: this.baseModifier.value === 'babFull' ? c.combat.bab.mod
-		: this.baseModifier.value === 'cmb' ? c.combat.cmb.mod
-		: this.baseModifier.value === 'meelee' ? c.combat.bab.mod + c.str.mod
-		: this.baseModifier.value === 'ranged' ? c.combat.bab.mod + c.dex.mod
-		: this.baseModifier.value === 'flurryOfBlows' ? 0
-		: 0,
-	);
-
 	readonly abilityModValue = derive<Character>((c) =>
 		this.abilityModifier.value ? c[this.abilityModifier.value].mod : 0,
 	);
@@ -148,33 +136,49 @@ export class AttackRoll extends ClassSerializer {
 		const abilityMod =
 			this.abilityModifier.value ? c[this.abilityModifier.value].mod : 0;
 		const bonus = this.bonusModifier.eval(c) ?? 0;
-		const conditionMod = c.conditions.attackRollModifier(this);
 
 		switch (this.baseModifier.value) {
 			case 'meelee':
 				return attackArray(
 					fullAttackCount,
-					bab + c.str.mod + abilityMod + bonus + conditionMod,
+					bab
+						+ c.str.mod
+						+ abilityMod
+						+ bonus
+						+ c.conditions.mods.meeleeAtk.mod,
 				);
 			case 'ranged':
 				return attackArray(
 					fullAttackCount,
-					bab + c.dex.mod + abilityMod + bonus + conditionMod,
+					bab
+						+ c.dex.mod
+						+ abilityMod
+						+ bonus
+						+ c.conditions.mods.rangedAtk.mod,
 				);
 			case 'babFull':
 				return attackArray(
 					fullAttackCount,
-					bab + abilityMod + bonus + conditionMod,
+					bab + abilityMod + bonus + c.conditions.mods.meeleeAtk.mod, // TODO: meelee/ranged fix
 				);
 			case 'babMax':
-				return attackArray(1, bab + abilityMod + bonus + conditionMod);
+				return attackArray(
+					1,
+					bab + abilityMod + bonus + c.conditions.mods.meeleeAtk.mod, // TODO: meelee/ranged fix
+				);
 			case 'cmb':
 				return attackArray(
 					1,
-					c.combat.cmb.mod + abilityMod + bonus + conditionMod,
+					c.combat.cmb.mod
+						+ abilityMod
+						+ bonus
+						+ c.conditions.mods.meeleeAtk.mod, // TODO: meelee/ranged fix
 				);
 			default:
-				return attackArray(1, abilityMod + bonus + conditionMod);
+				return attackArray(
+					1,
+					abilityMod + bonus + c.conditions.mods.meeleeAtk.mod, // TODO: meelee/ranged fix
+				);
 		}
 	});
 }
@@ -207,14 +211,6 @@ export class Attack extends ClassSerializer {
 	showNotes = boolean(true);
 
 	notes = string('', { maxLength: 1000 });
-
-	readonly attackBonus = derive<Character>((c) => {
-		let total = this.attack.baseModValue.eval(c);
-		total += this.attack.abilityModValue.eval(c);
-		const bonus = this.attack.bonusModifier.eval(c) ?? 0;
-		total += Number.isNaN(bonus) ? 0 : bonus;
-		return total;
-	});
 
 	readonly details = derive<Character, [label: string, value: string][]>(
 		(c) => {

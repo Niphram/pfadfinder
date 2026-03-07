@@ -2,7 +2,6 @@
 	import { resolve } from '$app/paths';
 
 	const { data } = $props();
-	const { changelogHtml } = data;
 
 	/* eslint svelte/no-at-html-tags: "off" */
 </script>
@@ -17,5 +16,5 @@
 		<a href={resolve('/changelog')}>Back to changelogs</a>
 	</p>
 
-	{@html changelogHtml}
+	{@html data.changelogHtml}
 </article>

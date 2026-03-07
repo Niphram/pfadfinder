@@ -42,10 +42,10 @@ export function charProxy<T extends object>(char: T) {
 				const property = Reflect.get(target, key);
 
 				if (
-					property instanceof StringWrapper ||
-					property instanceof NumberWrapper ||
-					property instanceof BoolWrapper ||
-					property instanceof EnumWrapper
+					property instanceof StringWrapper
+					|| property instanceof NumberWrapper
+					|| property instanceof BoolWrapper
+					|| property instanceof EnumWrapper
 				) {
 					return property.value;
 				} else if (property instanceof Derive || property instanceof Macro) {
@@ -63,11 +63,11 @@ export function charProxy<T extends object>(char: T) {
 				const property = Reflect.get(target, key);
 
 				if (
-					property instanceof StringWrapper ||
-					property instanceof NumberWrapper ||
-					property instanceof BoolWrapper ||
-					property instanceof EnumWrapper ||
-					property instanceof ArrayWrapper
+					property instanceof StringWrapper
+					|| property instanceof NumberWrapper
+					|| property instanceof BoolWrapper
+					|| property instanceof EnumWrapper
+					|| property instanceof ArrayWrapper
 				) {
 					return Reflect.set(property, 'value', newValue);
 				}

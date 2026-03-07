@@ -94,8 +94,8 @@ body {
 	@apply bg-base-100;
 }
 
-a[href^="http://"]::after,
-a[href^="https://"]::after,
+a[href^='http://']::after,
+a[href^='https://']::after,
 .external-link::after {
 	content: '';
 	width: 0.8em;

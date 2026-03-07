@@ -27,7 +27,7 @@
 
 	const { state }: Props = $props();
 
-	setChar(state);
+	setChar(() => state);
 
 	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());

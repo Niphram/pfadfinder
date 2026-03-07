@@ -20,7 +20,7 @@
 	let temp = $derived(c[key].temp);
 
 	function notify() {
-		const notifyLines = [];
+		const notifyLines: string[] = [];
 
 		if (c[key].damage > 0) {
 			notifyLines.push(
@@ -29,6 +29,8 @@
 		}
 
 		notifyLines.push(c[key].notes);
+
+		notifyLines.push(...c[key].conditionNotes);
 
 		macroNotify($t(`abilities.${key}.full`), notifyLines.join('\n'));
 	}

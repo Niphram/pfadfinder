@@ -129,6 +129,14 @@
 		<div class="contents">
 			<Divider>Values</Divider>
 
+			{#if c.conditions.mods.maxHp.messages.length > 0}
+				<Alert level="warning">
+					{#each c.conditions.mods.maxHp.messages as message, i (message)}
+						<p>{message}</p>
+					{/each}
+				</Alert>
+			{/if}
+
 			{#if conHp !== 0}
 				<Alert level="info">
 					Constitution Mod: {Math.abs(conHp)} HP will be {conHp < 0 ?

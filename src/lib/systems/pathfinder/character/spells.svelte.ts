@@ -124,7 +124,7 @@ export class Spell extends SpellCommonProps {
 			(dcAbility ? c[dcAbility].mod : 0) + (c.spells.dcBonus ?? 0);
 		const saveDc = 10 + level + this.savingThrow.dcMod + abilityDc;
 
-		let attackBonus = this.attack.mod - c.conditions.negative_levels; // TODO: Fix this
+		let attackBonus = this.attack.mod - c.conditions.mods.attacks.mod;
 
 		switch (this.attack.type) {
 			case 'touch':
@@ -163,8 +163,8 @@ export class Spell extends SpellCommonProps {
 			['Spell Resistance', this.spellResistance],
 			[
 				'Attack',
-				this.attack.hasAttack &&
-					`${withSign(attackBonus)} (${this.attack.type}) (Crit ≥${this.attack.critRange} for x${
+				this.attack.hasAttack
+					&& `${withSign(attackBonus)} (${this.attack.type}) (Crit ≥${this.attack.critRange} for x${
 						this.attack.critMultiplier
 					})`,
 			],
@@ -197,8 +197,8 @@ export class SpellLikeAbility extends SpellCommonProps {
 			['Effect', this.effect.value],
 			[
 				'Saving Throw',
-				this.savingThrow.hasSave.value &&
-					`${this.savingThrow.effect.value} (DC ${this.savingThrow.dcMod.value})`,
+				this.savingThrow.hasSave.value
+					&& `${this.savingThrow.effect.value} (DC ${this.savingThrow.dcMod.value})`,
 			],
 			['Spell Resistance', this.spellResistance.value],
 		].filter((e) => !!e[1]),

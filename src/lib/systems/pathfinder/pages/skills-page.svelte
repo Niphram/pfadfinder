@@ -23,13 +23,14 @@
 			{@const ability = c.skills[key].skills[index].ability}
 			{@const penalty = c[ability].skillCheckMod !== c[ability].mod}
 			{@const trainedOnly = c.skills[key].trained}
-			{@const condition = c.skills[key].skills[index].affectedByCondition}
+			{@const conditionNotes = c.skills[key].skills[index].conditionNotes}
+			{@const hasConditions = conditionNotes.length > 0}
 
 			{@const skillTags = [
 				penalty && '!',
 				variant.classSkill && 'c',
 				variant.ranks > 0 && 't',
-				condition && '?',
+				hasConditions && '?',
 			]
 				.filter(Boolean)
 				.join(', ')}
@@ -39,7 +40,13 @@
 				onclick={() =>
 					macroNotify(
 						$t(`skills.${key}`),
-						variant.notes + (penalty ? '\n\nApplied penalty due to armor' : ''),
+						[
+							variant.notes,
+							penalty && 'Applied penalty due to armor',
+							conditionNotes.join('\n'),
+						]
+							.filter(Boolean)
+							.join('\n\n'),
 					)}
 				oncontextmenu={preventDefault(() =>
 					openDialog(SkillDialog, { key, index }),
@@ -55,7 +62,7 @@
 					<div
 						class={[
 							'join-item bg-base-200 text-base-content flex grow items-center',
-							condition && 'bg-warning! text-warning-content!',
+							hasConditions && 'bg-warning! text-warning-content!',
 						]}
 					>
 						<span

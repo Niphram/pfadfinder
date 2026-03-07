@@ -21,11 +21,11 @@ export abstract class ClassSerializer implements Serializable {
 		if (value && typeof value === 'object') {
 			for (const [key, dvalue] of Object.entries(value)) {
 				if (
-					key in this &&
+					key in this
 					// @ts-expect-error TODO
-					typeof this[key] === 'object' &&
+					&& typeof this[key] === 'object'
 					// @ts-expect-error TODO
-					DESERIALIZE_SYMBOL in this[key]
+					&& DESERIALIZE_SYMBOL in this[key]
 				) {
 					// @ts-expect-error TODO
 					this[key][DESERIALIZE_SYMBOL](dvalue);

@@ -58,8 +58,8 @@
 	>
 		{#if value.options.optional}
 			<option value={null}
-				>{translate?.(null as Option<Values[number], IsOptional>) ??
-					'-'}</option
+				>{translate?.(null as Option<Values[number], IsOptional>)
+					?? '-'}</option
 			>
 		{/if}
 		{#each value.values as option (option)}

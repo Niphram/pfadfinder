@@ -62,8 +62,8 @@
 		onscroll={synchronizeScroll}
 		spellcheck="false"
 		class={[
-			c.settings.enableMacroHighlighting &&
-				'caret-base-content relative z-20 resize-none bg-transparent text-transparent',
+			c.settings.enableMacroHighlighting
+				&& 'caret-base-content relative z-20 resize-none bg-transparent text-transparent',
 			commonClasses,
 			className,
 		]}

@@ -94,3 +94,13 @@ export function number<IsOptional extends boolean = false>(
 		Object.assign({}, DEFAULT_OPTIONS, options),
 	);
 }
+
+export class MappedNumberWrapper<T> extends NumberWrapper<false> {
+	constructor(value: number, map: (value: number) => T) {
+		super(value, { integer: true, min: 0, max: Infinity, optional: false });
+
+		this.effects = $derived(map(this.value));
+	}
+
+	readonly effects: T;
+}
