@@ -13,7 +13,9 @@
 	<body data-sveltekit-preload-data="hover">
 		<script>
 			const savedTheme = window.localStorage.getItem('theme');
-			if (savedTheme) document.body.setAttribute('data-theme', 'dark');
+			if (savedTheme) {
+				document.documentElement.setAttribute('data-theme', savedTheme);
+			}
 		</script>
 
 		<div style="display: contents">%sveltekit.body%</div>

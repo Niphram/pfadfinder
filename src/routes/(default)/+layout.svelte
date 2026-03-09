@@ -32,6 +32,7 @@
 		<nav class="grid-flow-col gap-4 sm:justify-self-end">
 			<a href={resolve('/changelog')} class="link">Changelog</a>
 			<a href={resolve('/privacy')} class="link">Privacy Policy</a>
+			<a href={resolve('/licenses')} class="link">Licenses</a>
 			<a href="https://github.com/Niphram/pfadfinder" class="link">Github</a>
 		</nav>
 	</footer>

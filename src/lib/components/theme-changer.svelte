@@ -86,7 +86,9 @@
 
 	// Update theme attribute
 	$effect.pre(() => {
-		if (browser) document.body.setAttribute('data-theme', themeKey);
+		if (browser) {
+			document.documentElement.setAttribute('data-theme', themeKey);
+		}
 	});
 </script>
 
