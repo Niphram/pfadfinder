@@ -1,10 +1,10 @@
 [
-    {
-        "name": "DEV-ONLY",
-        "version": "",
-        "repository": "",
-        "source": "",
-        "license": "None",
-        "licenseText": "This file will be replaced at build-time to contain the actual dependencies that are bundled in the client."
-    }
+	{
+		"name": "DEV-ONLY",
+		"version": "",
+		"repository": "",
+		"source": "",
+		"license": "None",
+		"licenseText": "This file will be replaced at build-time to contain the actual dependencies that are bundled in the client."
+	}
 ]
