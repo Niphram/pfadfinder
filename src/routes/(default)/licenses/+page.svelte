@@ -19,7 +19,7 @@
 			return repo.replace('git+', '');
 		} else if (repo.startsWith('git:')) {
 			return repo.replace('git:', 'https:');
-		} else if (!/^http(s)?:/.test(repo)) {
+		} else if (repo && !/^http(s)?:/.test(repo)) {
 			// Assume github, if no absolute url was given
 			return `https://github.com/${repo}`;
 		}
@@ -89,14 +89,16 @@
 					{/if}
 					<span class="z-1 ml-auto flex flex-row gap-2 text-sm">
 						{#each Object.entries(l.links) as [label, href] (label)}
-							<a
-								onclick={(e) => e.stopPropagation()}
-								{href}
-								rel="external"
-								target="_blank"
-							>
-								{label}
-							</a>
+							{#if href}
+								<a
+									onclick={(e) => e.stopPropagation()}
+									{href}
+									rel="external"
+									target="_blank"
+								>
+									{label}
+								</a>
+							{/if}
 						{/each}
 					</span>
 				</div>
