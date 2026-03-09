@@ -1,22 +1,10 @@
-import path from 'node:path';
-
 import { sveltekit } from '@sveltejs/kit/vite';
 import { svelteTesting } from '@testing-library/svelte/vite';
-import license from 'rollup-plugin-license';
+import { createViteLicensePlugin } from 'rollup-license-plugin';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-	plugins: [
-		sveltekit(),
-		license({
-			thirdParty: {
-				output: {
-					file: path.join(__dirname, 'static', 'licenses.json'),
-					template: (dependencies) => JSON.stringify(dependencies, null, 2),
-				},
-			},
-		}),
-	],
+	plugins: [createViteLicensePlugin(), sveltekit()],
 	define: {
 		__BUILD_DATE__: JSON.stringify(
 			new Date().toISOString().replace(/[^0-9]/g, ''),
