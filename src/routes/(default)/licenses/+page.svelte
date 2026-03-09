@@ -51,7 +51,7 @@
 	<title>Open-source licenses - Pfadfinder</title>
 </svelte:head>
 
-<article class="prose mx-auto min-w-2xl p-4 select-text">
+<article class="prose mx-auto w-full max-w-2xl p-4 select-text">
 	<p>
 		&lt;
 		<a href={resolve('/')}>Back to home</a>
@@ -74,7 +74,7 @@
 					{#if l.homepage}
 						<a
 							onclick={(e) => e.stopPropagation()}
-							class="z-1 ml-auto"
+							class="z-1 ml-auto text-sm"
 							href={l.homepage}
 							rel="external"
 							target="_blank"
