@@ -5,8 +5,8 @@
 	import Divider from '$lib/atoms/divider.svelte';
 
 	import MacroNumber from '$lib/components/input/macro-number.svelte';
+	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
 	import Select from '$lib/components/input/select.svelte';
-	import TextArea from '$lib/components/input/text-area.svelte';
 
 	import { getChar } from '$lib/data';
 
@@ -44,5 +44,5 @@
 		value={c.ac.$.bonusFf}
 	/>
 
-	<TextArea name="acNotes" label="Notes" rows={5} value={c.ac.$.notes} />
+	<MacroTextArea name="acNotes" label="Notes" rows={5} value={c.ac.$.notes} />
 </DialogBase>

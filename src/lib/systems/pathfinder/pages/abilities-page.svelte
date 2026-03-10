@@ -6,7 +6,7 @@
 	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import AcDialog from '$lib/components/dialogs/ac-dialog.svelte';
 	import { useToast } from '$lib/components/toast-provider.svelte';
-	import SimpleToast from '$lib/components/toasts/simple-toast.svelte';
+	import MultilineMacroToast from '$lib/components/toasts/multiline-macro-toast.svelte';
 
 	import { ABILITY_KEYS, getChar, SAVE_KEYS } from '$lib/data';
 
@@ -34,11 +34,9 @@
 	<AcButton
 		oncontextmenu={() => openDialog(AcDialog, {})}
 		onclick={() =>
-			c.ac.affectedByCondition
-			&& showToast(SimpleToast, {
-				message: 'Affected by conditions!',
-				type: 'warning',
-				icon: 'warning',
+			showToast(MultilineMacroToast, {
+				title: 'Armor Class',
+				content: c.ac.notes,
 			})}
 		class={[
 			c.ac.affectedByCondition && 'btn-warning underline decoration-wavy',
