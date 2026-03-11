@@ -2,6 +2,9 @@ import { error } from '@sveltejs/kit';
 
 import type { PageLoad } from './$types';
 
+// Disable prerendering for character sheet
+export const prerender = false;
+
 export const load: PageLoad = async ({ params, parent }) => {
 	const { db } = await parent();
 

@@ -145,7 +145,20 @@
 	<title>Character List - Pfadfinder</title>
 </svelte:head>
 
-<div class="flex w-full justify-center">
+<!-- show info if JS is disabled -->
+<noscript class="my-auto">
+	<div class="card bg-neutral text-neutral-content w-96 max-w-full">
+		<div class="card-body items-center text-center">
+			<h2 class="card-title">Scripts are disabled</h2>
+			<p>
+				JavaScript is disabled in your browser. This app won't work. Sorry about
+				that :&lpar;
+			</p>
+		</div>
+	</div>
+</noscript>
+
+<div class="flex w-full justify-center noscript:hidden">
 	<div class="flex w-full max-w-3xl flex-col gap-4">
 		<ul class="list bg-base-100 card card-border shadow-sm">
 			<li class="p-4 pb-2 text-xs tracking-wide opacity-60">Characters</li>

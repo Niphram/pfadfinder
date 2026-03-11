@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 
-	import { resolve } from '$app/paths';
+	import { asset, resolve } from '$app/paths';
 
 	const { data }: PageProps = $props();
 
@@ -35,6 +35,62 @@
 				licenseText: '"Wiggle" by Steve Schoger, licensed under CC BY 4.0',
 				links: {
 					Homepage: 'https://heropatterns.com/',
+				},
+			},
+			{
+				name: 'daisyUI',
+				license: 'MIT',
+				licenseText: `MIT License
+
+Copyright (c) 2020 Pouya Saadeghi
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.`,
+				links: {
+					Homepage: 'https://daisyui.com/',
+				},
+			},
+			{
+				name: 'tailwindcss',
+				license: 'MIT',
+				licenseText: `MIT License
+
+Copyright (c) Tailwind Labs, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.`,
+				links: {
+					Homepage: 'https://tailwindcss.com/',
 				},
 			},
 			...data.licenses.map((l) => ({
@@ -74,6 +130,19 @@
 	</p>
 
 	{@render heading('h1', 'oss-licenses', 'Open-source licenses')}
+
+	<p>This list contains projects which are included in this website.</p>
+
+	<noscript>
+		<div class="alert alert-info mb-8">
+			<span>
+				JavaScript is disabled in this browser, so the full list could not be
+				loaded. <a href={asset('/oss-licenses.json')}
+					>Click here to view the full file.</a
+				>
+			</span>
+		</div>
+	</noscript>
 
 	<div class="flex flex-col gap-2">
 		{#each LICENSES as l (l.name)}
