@@ -173,7 +173,9 @@ SOFTWARE.`,
 				</div>
 				<div class="collapse-content text-sm">
 					<p>License: {l.license}</p>
-					<p>{l.licenseText}</p>
+					{#each l.licenseText.split('\n\n') as line, i (i)}
+						<p>{line}</p>
+					{/each}
 				</div>
 			</div>
 		{/each}
