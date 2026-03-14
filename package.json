@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"license": "MIT",
+	"packageManager": "pnpm@10.11.0",
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
 		"postinstall": "svelte-kit sync",
@@ -22,7 +23,7 @@
 		"@ngneat/falso": "^8.0.2",
 		"@sveltejs/adapter-static": "^3.0.10",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
-		"@tailwindcss/postcss": "^4.2.1",
+		"@tailwindcss/vite": "^4.2.1",
 		"@testing-library/jest-dom": "^6.9.1",
 		"@testing-library/svelte": "^5.3.1",
 		"@types/node": "^24.11.0",

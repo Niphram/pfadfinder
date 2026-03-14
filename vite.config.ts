@@ -1,10 +1,11 @@
 import { sveltekit } from '@sveltejs/kit/vite';
+import tailwindcss from '@tailwindcss/vite';
 import { svelteTesting } from '@testing-library/svelte/vite';
 import { createViteLicensePlugin } from 'rollup-license-plugin';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-	plugins: [createViteLicensePlugin(), sveltekit()],
+	plugins: [createViteLicensePlugin(), tailwindcss(), sveltekit()],
 	define: {
 		__BUILD_DATE__: JSON.stringify(
 			new Date().toISOString().replace(/[^0-9]/g, ''),
