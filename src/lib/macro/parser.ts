@@ -311,7 +311,7 @@ export class Parser {
 
 		const path: string[] = [];
 
-		let endToken = atToken;
+		let endToken: Token;
 		do {
 			endToken = yield* this.consumeOneOf(
 				TokenType.IDENTIFIER,

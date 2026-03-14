@@ -7,11 +7,11 @@ import {
 export class ArrayWrapper<T extends Serializable> implements Serializable {
 	value: T[];
 
-	factory: () => T;
-
-	constructor(value: T[], factory: () => T) {
+	constructor(
+		value: T[],
+		private readonly factory: () => T,
+	) {
 		this.value = $state(value);
-		this.factory = factory;
 	}
 
 	[SERIALIZE_SYMBOL](): unknown {

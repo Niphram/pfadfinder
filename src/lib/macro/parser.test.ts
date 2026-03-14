@@ -1,5 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
+import { expectErrResult, expectOkResult } from '$lib/test-utils';
+
 import { AstNodeType } from './ast';
 import { Parser } from './parser';
 
@@ -16,8 +18,8 @@ describe('Parser', () => {
 			(input, expected) => {
 				const parseResult = Parser.parse(input);
 
-				expect(parseResult.ok).toBe(true);
-				expect(parseResult.value).toEqual({
+				expectOkResult(parseResult);
+				expect(parseResult.value).toStrictEqual({
 					type: AstNodeType.Constant,
 					constant: expected,
 					from: 0,
@@ -46,8 +48,8 @@ describe('Parser', () => {
 			(input, func, args) => {
 				const parsed = Parser.parse(input);
 
-				expect(parsed.ok).toBe(true);
-				expect(parsed.value).toEqual({
+				expectOkResult(parsed);
+				expect(parsed.value).toStrictEqual({
 					type: AstNodeType.Func,
 					func,
 					nodes: expect.objectContaining({
@@ -66,8 +68,8 @@ describe('Parser', () => {
 			(input) => {
 				const parsed = Parser.parse(input);
 
-				expect(parsed.ok).toBe(false);
-				expect(parsed.error).toEqual({
+				expectErrResult(parsed);
+				expect(parsed.error).toStrictEqual({
 					message: 'Unexpected end of input, expected a valid expression.',
 					from: 0,
 					to: 0,

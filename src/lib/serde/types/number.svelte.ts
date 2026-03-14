@@ -50,7 +50,7 @@ export class NumberWrapper<IsOptional extends boolean> implements Serializable {
 	[DESERIALIZE_SYMBOL](value: unknown) {
 		if (value === null && this.options.optional) {
 			this.value = null as Option<number, IsOptional>;
-		} else if (typeof value === 'number') {
+		} else if (typeof value === 'number' && Number.isFinite(value)) {
 			this.value = value;
 		}
 	}
@@ -99,8 +99,8 @@ export class MappedNumberWrapper<T> extends NumberWrapper<false> {
 	constructor(value: number, map: (value: number) => T) {
 		super(value, { integer: true, min: 0, max: Infinity, optional: false });
 
-		this.effects = $derived(map(this.value));
+		this.mapped = $derived(map(this.value));
 	}
 
-	readonly effects: T;
+	readonly mapped: T;
 }

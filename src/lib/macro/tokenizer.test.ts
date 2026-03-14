@@ -44,6 +44,6 @@ describe('Tokenizer', () => {
 
 		const result = tokenizer.allTokens();
 
-		expect(result.map((t) => t.type)).toEqual(tokens);
+		expect(result.map((t) => t.type)).toStrictEqual(tokens);
 	});
 });

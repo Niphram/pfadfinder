@@ -210,11 +210,11 @@ export class Conditions extends ClassSerializer {
 	// Modifiers
 	private readonly effects = $derived(
 		[
-			this.blinded.effects,
-			this.cowering.effects,
-			this.dazzled.effects,
-			this.fatigued.effects,
-			this.negative_levels.effects,
+			this.blinded.mapped,
+			this.cowering.mapped,
+			this.dazzled.mapped,
+			this.fatigued.mapped,
+			this.negative_levels.mapped,
 		].filter((c) => c.length > 0),
 	);
 

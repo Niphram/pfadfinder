@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
 import { charProxy, derive, macro, type SerdeProxy } from '$lib/serde';
+import { expectOkResult } from '$lib/test-utils';
 
 import { evalNode } from './evaluate';
 import { Parser } from './parser';
@@ -29,9 +30,9 @@ describe('evaluateNode', () => {
 	])('"%s" should evaluate to %s', (input, expected) => {
 		const astResult = Parser.parse(input);
 
-		expect(astResult.ok).toBe(true);
+		expectOkResult(astResult);
 
-		const result = evalNode(astResult.value!, {});
+		const result = evalNode(astResult.value, {});
 
 		expect(result).toBe(expected);
 	});
@@ -52,7 +53,7 @@ describe('evaluateNode', () => {
 		])('"%s" should evaluate to %s', (input, expected) => {
 			const astResult = Parser.parse(input);
 
-			expect(astResult.ok).toBe(true);
+			expectOkResult(astResult);
 
 			const result = evalNode(astResult.value!, {});
 
@@ -74,7 +75,7 @@ describe('evaluateNode', () => {
 		])('Attribute "%s" should evaluate to %s', (input, expected) => {
 			const astResult = Parser.parse(input);
 
-			expect(astResult.ok).toBe(true);
+			expectOkResult(astResult);
 
 			const result = evalNode(astResult.value!, new TestChar());
 

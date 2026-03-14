@@ -30,8 +30,8 @@ export class MappedBoolWrapper<T> extends BoolWrapper {
 	constructor(value: boolean, map: (value: boolean) => T) {
 		super(value);
 
-		this.effects = $derived(map(this.value));
+		this.mapped = $derived(map(this.value));
 	}
 
-	readonly effects: T;
+	readonly mapped: T;
 }
