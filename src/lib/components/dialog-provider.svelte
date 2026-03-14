@@ -78,6 +78,7 @@
 <script lang="ts">
 	import { mount, unmount, type Snippet } from 'svelte';
 	import type { Attachment } from 'svelte/attachments';
+	import { on } from 'svelte/events';
 
 	import { rafraf } from '$lib/utils';
 
@@ -96,7 +97,8 @@
 		content: DialogContent<Record<string, unknown>>,
 	): Attachment<HTMLDialogElement> {
 		return (el) => {
-			el.addEventListener(
+			const off = on(
+				el,
 				'close',
 				() => {
 					// Remove the content from context when the dialog closes
@@ -105,11 +107,7 @@
 						dialogSystemContext.content.splice(index, 1);
 					}
 				},
-				{
-					capture: false,
-					once: true,
-					passive: true,
-				},
+				{ passive: true },
 			);
 
 			// Mount the content
@@ -123,6 +121,7 @@
 			rafraf(() => el.showModal());
 
 			return () => {
+				off();
 				unmount(mountedDialog);
 			};
 		};
