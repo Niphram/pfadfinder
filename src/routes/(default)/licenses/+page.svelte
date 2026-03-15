@@ -123,7 +123,7 @@ SOFTWARE.`,
 	<title>Open-source licenses - Pfadfinder</title>
 </svelte:head>
 
-<article class="prose mx-auto w-full max-w-2xl p-4 select-text">
+<article class="mx-auto prose w-full max-w-2xl p-4 select-text">
 	<p>
 		&lt;
 		<a href={resolve('/')}>Back to home</a>
@@ -134,7 +134,7 @@ SOFTWARE.`,
 	<p>This list contains projects which are included in this website.</p>
 
 	<noscript>
-		<div class="alert alert-info mb-8">
+		<div class="mb-8 alert alert-info">
 			<span>
 				JavaScript is disabled in this browser, so the full list could not be
 				loaded. <a href={asset('/oss-licenses.json')}
@@ -146,7 +146,7 @@ SOFTWARE.`,
 
 	<div class="flex flex-col gap-2">
 		{#each LICENSES as l (l.name)}
-			<div class="collapse-arrow bg-base-200 collapse">
+			<div class="collapse-arrow collapse bg-base-200">
 				<input type="checkbox" />
 
 				<div

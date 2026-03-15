@@ -1,8 +1,11 @@
 {
+	"tailwindCSS.experimental.configFile": "src/app.css",
 	"tailwindCSS.experimental.classRegex": [
 		"\\S*Class={\\s*([\\s\\S]+?)\\s*}",
-		"\\S*Class=\"([^\"]+)\""
+		"\\S*Class=\"([^\"]+)\"",
+		"class:(.+)"
 	],
+
 	"files.associations": {
 		"*.css": "tailwindcss"
 	},

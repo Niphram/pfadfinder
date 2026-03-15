@@ -52,16 +52,16 @@
 					openDialog(SkillDialog, { key, index }),
 				)}
 			>
-				<div class="btn btn-ghost join btn-sm flex flex-row gap-1 p-0">
+				<div class="btn join flex flex-row gap-1 p-0 btn-ghost btn-sm">
 					<div
-						class="join-item bg-accent text-accent-content flex items-center"
+						class="join-item flex items-center bg-accent text-accent-content"
 						class:bg-warning={penalty}
 					>
 						<span class="w-16">{skillTags}</span>
 					</div>
 					<div
 						class={[
-							'join-item bg-base-200 text-base-content flex grow items-center',
+							'join-item flex grow items-center bg-base-200 text-base-content',
 							hasConditions && 'bg-warning! text-warning-content!',
 						]}
 					>
@@ -76,7 +76,7 @@
 						>
 					</div>
 					<div
-						class="join-item bg-accent text-accent-content flex items-center"
+						class="join-item flex items-center bg-accent text-accent-content"
 						class:bg-warning={penalty}
 					>
 						<span class="join-item w-16 align-middle"
@@ -92,6 +92,6 @@
 
 	<button
 		onclick={() => openDialog(SkillVariantsDialog, {})}
-		class="btn btn-primary w-min self-center">Skill Variants</button
+		class="btn w-min self-center btn-primary">Skill Variants</button
 	>
 </div>

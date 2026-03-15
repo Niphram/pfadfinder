@@ -59,7 +59,7 @@
 		onscroll={synchronizeScroll}
 		class={[
 			c.settings.enableMacroHighlighting
-				&& 'caret-base-content z-10 bg-transparent text-transparent',
+				&& 'z-10 bg-transparent text-transparent caret-base-content',
 			commonClasses,
 			className,
 		]}

@@ -12,5 +12,5 @@
 		loading && 'pointer-events-auto! visible! bg-black/40! opacity-100!',
 	]}
 >
-	<span class="loading loading-bars w-32"></span>
+	<span class="loading w-32 loading-bars"></span>
 </div>

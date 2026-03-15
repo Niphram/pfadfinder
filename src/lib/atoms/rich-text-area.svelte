@@ -63,7 +63,7 @@
 		spellcheck="false"
 		class={[
 			c.settings.enableMacroHighlighting
-				&& 'caret-base-content relative z-20 resize-none bg-transparent text-transparent',
+				&& 'relative z-20 resize-none bg-transparent text-transparent caret-base-content',
 			commonClasses,
 			className,
 		]}

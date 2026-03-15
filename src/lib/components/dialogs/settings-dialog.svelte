@@ -86,7 +86,7 @@
 		<div class="flex flex-col gap-4">
 			{#if c.settings.experimentalFeatures}
 				<button
-					class="btn btn-secondary w-full"
+					class="btn w-full btn-secondary"
 					onclick={preventDefault(() => openDialog(MacroDebugDialog, {}))}
 					>Macro debugger</button
 				>

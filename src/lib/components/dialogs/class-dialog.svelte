@@ -97,7 +97,7 @@
 
 		<button
 			onclick={deleteClass}
-			class="btn btn-error mt-4 w-max self-center uppercase"
+			class="btn mt-4 w-max self-center uppercase btn-error"
 			class:btn-outline={!deleteConfirm}
 			>{deleteConfirm ? 'Are you sure?' : 'Delete'}</button
 		>

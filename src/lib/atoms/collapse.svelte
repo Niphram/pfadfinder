@@ -49,7 +49,7 @@
 
 <div
 	class={[
-		'bg-base-200 collapse text-left',
+		'collapse bg-base-200 text-left',
 		icon === 'arrow' && 'collapse-arrow',
 		icon === 'plus' && 'collapse-plus',
 		open ? 'collapse-open' : 'collapse-close',

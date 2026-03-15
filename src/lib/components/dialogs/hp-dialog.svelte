@@ -27,19 +27,14 @@
 				<div class="flex flex-col items-center">
 					<span class="uppercase">Current HP</span>
 
-					<!--
-					TODO: Make this error-proof
-					
 					<input
-					type="number"
-					disabled
-					class="input input-bordered w-full text-center text-2xl"
-					value={c.hp.current.eval(c)}
-					oninput={(e) => (c.hp.damage_taken = c.hp.max.eval(c) - +e.currentTarget.value)}
+						type="number"
+						class="input-bordered input w-full text-center text-2xl"
+						value={c.hp.current}
+						oninput={(e) => {
+							c.hp.damageTaken = c.hp.max - +e.currentTarget.value;
+						}}
 					/>
-					-->
-
-					<span class="text-4xl font-extrabold">{c.hp.current}</span>
 				</div>
 
 				<div class="flex flex-col items-center">
@@ -50,7 +45,7 @@
 					<span class="uppercase">Temp HP</span>
 					<input
 						type="number"
-						class="input input-bordered w-full text-center text-2xl"
+						class="input-bordered input w-full text-center text-2xl"
 						min="0"
 						bind:value={c.hp.temp}
 					/>
@@ -59,7 +54,7 @@
 					<span class="uppercase">Nonlethal</span>
 					<input
 						type="number"
-						class="input input-bordered w-full text-center text-2xl"
+						class="input-bordered input w-full text-center text-2xl"
 						bind:value={c.hp.nonlethalDamage}
 					/>
 				</div>
@@ -76,7 +71,7 @@
 				</div>
 				<input
 					type="number"
-					class="input input-bordered h-auto w-24 text-center text-6xl"
+					class="input-bordered input h-auto w-24 text-center text-6xl"
 					min="0"
 					step="1"
 					bind:value={modifyAmount}

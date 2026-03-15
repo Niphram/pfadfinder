@@ -67,7 +67,7 @@
 				<div class="badge badge-secondary">
 					Per Day: {c.spells[level].totalPerDay}
 				</div>
-				<div class="badge badge-neutral badge-outline">
+				<div class="badge badge-outline badge-neutral">
 					Prepared: {c.spells[level].prepared}
 				</div>
 			</div>
@@ -108,7 +108,7 @@
 									<span class="grow text-sm font-semibold">{spell.name}</span>
 									{#if spell.prepared > 0}
 										<button
-											class="btn btn-accent btn-xs w-16"
+											class="btn w-16 btn-xs btn-accent"
 											onclick={stopPropagation(
 												preventDefault(() => castSpell(level, spellIdx)),
 											)}
@@ -181,7 +181,7 @@
 						<div class="flex flex-row items-center">
 							<div class="grow text-sm font-semibold">{sla.name}</div>
 							<button
-								class="btn btn-accent btn-xs w-16"
+								class="btn w-16 btn-xs btn-accent"
 								onclick={stopPropagation(() => castSla(slaIndex))}
 							>
 								{sla.type === 'perDay' ?

@@ -147,7 +147,7 @@
 
 <!-- show info if JS is disabled -->
 <noscript class="my-auto">
-	<div class="card bg-neutral text-neutral-content w-96 max-w-full">
+	<div class="card w-96 max-w-full bg-neutral text-neutral-content">
 		<div class="card-body items-center text-center">
 			<h2 class="card-title">Scripts are disabled</h2>
 			<p>
@@ -160,16 +160,16 @@
 
 <div class="flex w-full justify-center noscript:hidden">
 	<div class="flex w-full max-w-3xl flex-col gap-4">
-		<ul class="list bg-base-100 card card-border shadow-sm">
+		<ul class="list card bg-base-100 shadow-sm card-border">
 			<li class="p-4 pb-2 text-xs tracking-wide opacity-60">Characters</li>
 
 			{#each characters as { id, name, description, system, updated_at } (id)}
-				<li class="list-row p-2">
+				<li class="list-row p-2" data-sveltekit-preload-data="false">
 					<a
 						href={resolve('/(app)/character/[id]', { id })}
 						aria-label="Open {name}"
 						role="button"
-						class="btn btn-ghost btn-block col-span-2 grid h-max grid-cols-subgrid items-center p-2 text-left align-middle font-normal"
+						class="btn col-span-2 grid h-max btn-block grid-cols-subgrid items-center p-2 text-left align-middle font-normal btn-ghost"
 						oncontextmenu={preventDefault(() => openCharacterDialog(id))}
 					>
 						<div class="list-col-grow overflow-hidden">
@@ -181,7 +181,7 @@
 							</div>
 						</div>
 						<div class="flex flex-col items-end justify-center">
-							<div class="badge badge-xs badge-soft badge-neutral uppercase">
+							<div class="badge badge-soft badge-xs uppercase badge-neutral">
 								{system}
 							</div>
 							<div
@@ -210,7 +210,7 @@
 					type="file"
 					bind:files
 					accept=".json, application/json"
-					class="file-input file-input-bordered w-full"
+					class="file-input-bordered file-input w-full"
 				/>
 			</label>
 			<button

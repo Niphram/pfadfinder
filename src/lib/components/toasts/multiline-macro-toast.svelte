@@ -9,7 +9,7 @@
 	let { title, content }: Props = $props();
 </script>
 
-<div class="alert alert-info flex flex-col p-2">
+<div class="alert flex flex-col p-2 alert-info">
 	<span class="text-lg">{title}</span>
 	{#if content}
 		<div class="border-t pt-4">

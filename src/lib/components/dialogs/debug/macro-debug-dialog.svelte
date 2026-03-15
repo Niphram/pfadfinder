@@ -41,7 +41,7 @@
 		<Divider>Tokens</Divider>
 
 		<div
-			class="bg-base-200 flex w-full flex-row flex-wrap gap-1 rounded-md p-2"
+			class="flex w-full flex-row flex-wrap gap-1 rounded-md bg-base-200 p-2"
 		>
 			{#each tokens as { type, value }, i (i)}
 				<div
@@ -65,7 +65,7 @@
 		</Divider>
 
 		{#if testMacro.parseResult.ok}
-			<ul class="menu menu-sm bg-base-200 w-full rounded-md">
+			<ul class="menu w-full menu-sm rounded-md bg-base-200">
 				<li>
 					<MacroAstTree node={testMacro.parseResult.value} open={astOpen} />
 				</li>

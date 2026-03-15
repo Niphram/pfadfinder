@@ -40,7 +40,7 @@
 	<input
 		{name}
 		{placeholder}
-		class={['input input-bordered w-full', !result.ok && 'input-error']}
+		class={['input-bordered input w-full', !result.ok && 'input-error']}
 		bind:value={tempString.value}
 	/>
 </InputWrapper>

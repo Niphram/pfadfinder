@@ -74,7 +74,7 @@
 
 		<button
 			onclick={deleteFeat}
-			class="btn btn-error mt-4 w-max self-center uppercase"
+			class="btn mt-4 w-max self-center uppercase btn-error"
 		>
 			Delete
 		</button>

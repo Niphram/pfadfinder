@@ -39,7 +39,7 @@
 				content: c.ac.notes,
 			})}
 		class={[
-			c.ac.affectedByCondition && 'btn-warning underline decoration-wavy',
+			c.ac.affectedByCondition && 'underline decoration-wavy btn-warning',
 		]}
 	/>
 

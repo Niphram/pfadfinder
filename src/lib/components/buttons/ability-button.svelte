@@ -43,7 +43,7 @@
 	)}
 	class="btn h-min p-0"
 >
-	<div class="divide-base-100 flex w-full flex-col divide-y-2 text-center">
+	<div class="flex w-full flex-col divide-y-2 divide-base-100 text-center">
 		<div
 			class="py-1 text-3xl font-extrabold"
 			class:text-red-700={c[key].damage > 0}

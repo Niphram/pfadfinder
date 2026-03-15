@@ -211,7 +211,7 @@
 				<div class="flex flex-row gap-2">
 					Damage
 					<button
-						class="btn btn-secondary btn-xs"
+						class="btn btn-xs btn-secondary"
 						onclick={preventDefault(addDamageToSpell)}>Add</button
 					>
 				</div>
@@ -222,13 +222,13 @@
 					<input
 						name="spellDamage"
 						placeholder="1d6"
-						class="input input-bordered w-full"
+						class="input-bordered input w-full"
 						bind:value={damage.damage}
 					/>
 					<input
 						name="damageType"
 						placeholder="Fire"
-						class="input input-bordered w-full"
+						class="input-bordered input w-full"
 						bind:value={damage.type}
 					/>
 					<button
@@ -249,7 +249,7 @@
 
 		<button
 			onclick={deleteSpell}
-			class="btn btn-error mt-4 w-max self-center uppercase"
+			class="btn mt-4 w-max self-center uppercase btn-error"
 		>
 			Delete
 		</button>

@@ -28,7 +28,7 @@
 		<legend class="fieldset-legend w-full py-1">
 			<span>{legend}</span>
 			{#if hint}
-				<div class="badge badge-xs overflow-hidden">
+				<div class="badge overflow-hidden badge-xs">
 					<span class="overflow-hidden overflow-ellipsis whitespace-nowrap">
 						{hint}
 					</span>

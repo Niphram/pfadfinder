@@ -28,7 +28,7 @@ export const GET: RequestHandler = () => {
 		// Generated icons
 		...ICON_PUPOSES_SIZES.flatMap(({ purpose, size }) => [
 			{
-				src: resolve('/(default)/icons/[purpose]/[size].png', {
+				src: resolve('/icons/[purpose]/[size].png', {
 					purpose,
 					size: `${size}`,
 				}),

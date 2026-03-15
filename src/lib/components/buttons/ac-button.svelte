@@ -21,16 +21,16 @@
 	{onclick}
 	oncontextmenu={oncontextmenu && preventDefault(oncontextmenu)}
 >
-	<div class="divide-base-100 grid w-full grid-cols-3 divide-x-2">
-		<div class="divide-base-100 flex w-full flex-col divide-y-2 text-center">
+	<div class="grid w-full grid-cols-3 divide-x-2 divide-base-100">
+		<div class="flex w-full flex-col divide-y-2 divide-base-100 text-center">
 			<div class="py-1 text-3xl font-extrabold">{c.ac.total}</div>
 			<div class="py-1 uppercase">AC</div>
 		</div>
-		<div class="divide-base-100 flex w-full flex-col divide-y-2 text-center">
+		<div class="flex w-full flex-col divide-y-2 divide-base-100 text-center">
 			<div class="py-1 text-3xl font-extrabold">{c.ac.touch}</div>
 			<div class="py-1 uppercase">Touch</div>
 		</div>
-		<div class="divide-base-100 flex w-full flex-col divide-y-2 text-center">
+		<div class="flex w-full flex-col divide-y-2 divide-base-100 text-center">
 			<div class="py-1 text-3xl font-extrabold">{c.ac.flatFooted}</div>
 			<div class="py-1 uppercase">Flat-Footed</div>
 		</div>

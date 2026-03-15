@@ -50,21 +50,21 @@
 
 		{#if c.settings.enableExperimentalConditions}
 			<button
-				class="btn btn-accent w-full"
+				class="btn w-full btn-accent"
 				onclick={preventDefault(() => replaceDialog(ConditionsDialog, {}))}
 				>Conditions</button
 			>
 		{/if}
 
 		<button
-			class="btn btn-accent w-full"
+			class="btn w-full btn-accent"
 			onclick={preventDefault(() => openDialog(RestDialog, {}))}>Rest</button
 		>
 
 		<div class="divider">Options</div>
 
 		<button
-			class="btn btn-outline btn-accent w-full"
+			class="btn w-full btn-outline btn-accent"
 			onclick={preventDefault(() => openDialog(SettingsDialog, {}))}
 		>
 			Settings

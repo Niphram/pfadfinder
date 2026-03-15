@@ -9,7 +9,7 @@
 		<!-- HEADER -->
 		<div
 			id="header"
-			class="bg-base-200 sticky top-0 z-40 flex w-full flex-col drop-shadow-xl"
+			class="sticky top-0 z-40 flex w-full flex-col bg-base-200 drop-shadow-xl"
 		>
 			<div class="flex flex-row items-center gap-2 p-2">
 				<p class="text-lg font-bold">Pfadfinder</p>
@@ -24,7 +24,7 @@
 
 	<!-- Footer -->
 	<footer
-		class="footer sm:footer-horizontal bg-neutral text-neutral-content items-center gap-y-4 p-4"
+		class="footer items-center gap-y-4 bg-neutral p-4 text-neutral-content sm:footer-horizontal"
 	>
 		<aside class="grid-flow-col items-center">
 			<p>&copy; Niphram - All rights reserved</p>

@@ -43,7 +43,7 @@
 		{placeholder}
 		{rows}
 		class={[
-			'textarea textarea-bordered w-full resize-none',
+			'textarea-bordered textarea w-full resize-none',
 			!result.ok && 'input-error',
 		]}
 		bind:value={tempString.value}

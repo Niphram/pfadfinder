@@ -33,13 +33,13 @@
 						onclick={preventDefault(() => {
 							removeSkill(key, idx);
 						})}
-						class="btn btn-warning join-item">Delete</button
+						class="btn join-item btn-warning">Delete</button
 					>
 				</div>
 			{/each}
 			<div class="flex flex-row justify-center">
 				<button
-					class="btn btn-circle btn-primary btn-sm"
+					class="btn btn-circle btn-sm btn-primary"
 					onclick={preventDefault(() => addSkill(key))}>+</button
 				>
 			</div>

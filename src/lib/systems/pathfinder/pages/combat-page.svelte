@@ -67,7 +67,7 @@
 	<div class="divider">
 		<div class="flex flex-row gap-2">
 			Weapons/Attacks
-			<button class="btn btn-secondary btn-xs" onclick={addAttack}>Add</button>
+			<button class="btn btn-xs btn-secondary" onclick={addAttack}>Add</button>
 		</div>
 	</div>
 

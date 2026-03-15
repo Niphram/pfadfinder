@@ -69,7 +69,7 @@
 
 				{#if !props.item.isContainer}
 					<button
-						class="btn btn-sm md:btn-md min-w-0 flex-auto truncate"
+						class="btn min-w-0 flex-auto truncate btn-sm md:btn-md"
 						onclick={stopPropagation(() =>
 							macroNotify(props.item.name, props.item.description),
 						)}
@@ -85,7 +85,7 @@
 					</button>
 					{#if props.item.chargeType !== 'none'}
 						<button
-							class="btn btn-accent btn-sm md:btn-md ml-2 w-28 px-2"
+							class="btn ml-2 w-28 px-2 btn-sm btn-accent md:btn-md"
 							onclick={stopPropagation(
 								() =>
 									items[props.index].remaining > 0
@@ -121,7 +121,7 @@
 								bind:items={props.item.children}
 								parentId={props.item.id}
 								disabled={!open}
-								class="bg-base-100 rounded-lg p-2 pl-0"
+								class="rounded-lg bg-base-100 p-2 pl-0"
 							/>
 						{/snippet}
 					</Collapse>

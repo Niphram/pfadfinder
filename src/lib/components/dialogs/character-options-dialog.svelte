@@ -12,7 +12,7 @@
 <div class="modal-box">
 	<form method="dialog" class="modal-backdrop">
 		<div class="flex flex-col gap-4">
-			<h3 class="text-primary-content text-lg font-bold">Character options</h3>
+			<h3 class="text-lg font-bold text-primary-content">Character options</h3>
 
 			<button class="btn btn-secondary" onclick={() => oncopy?.(charId)}>
 				Copy

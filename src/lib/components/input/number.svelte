@@ -44,7 +44,7 @@
 		{name}
 		type="number"
 		{placeholder}
-		class={['input input-bordered w-full', !result.ok && 'input-error']}
+		class={['input-bordered input w-full', !result.ok && 'input-error']}
 		bind:value={tempNumber.value}
 		min={value.options.min}
 		max={value.options.max}

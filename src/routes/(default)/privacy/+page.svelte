@@ -19,7 +19,7 @@
 	<title>Privacy-Policy - Pfadfinder</title>
 </svelte:head>
 
-<article class="prose mx-auto p-4 select-text">
+<article class="mx-auto prose p-4 select-text">
 	<p>
 		&lt;
 		<a href={resolve('/')}>Back to home</a>

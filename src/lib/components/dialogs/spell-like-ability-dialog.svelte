@@ -202,7 +202,7 @@
 			<Divider>
 				Damage
 				<button
-					class="btn btn-secondary btn-xs"
+					class="btn btn-xs btn-secondary"
 					onclick={preventDefault(addDamageToSLA)}>Add</button
 				>
 			</Divider>
@@ -229,7 +229,7 @@
 
 		<button
 			onclick={deleteSLA}
-			class="btn btn-error mt-4 w-max self-center uppercase"
+			class="btn mt-4 w-max self-center uppercase btn-error"
 		>
 			Delete
 		</button>

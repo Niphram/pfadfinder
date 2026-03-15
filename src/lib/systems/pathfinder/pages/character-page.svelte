@@ -36,7 +36,7 @@
 			/>
 		{/each}
 	</div>
-	<button onclick={addClass} class="btn btn-secondary self-center"
+	<button onclick={addClass} class="btn self-center btn-secondary"
 		>Add Class</button
 	>
 </div>

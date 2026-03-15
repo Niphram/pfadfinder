@@ -26,7 +26,7 @@
 				)}
 			>
 				<div
-					class="divide-base-100 flex w-full flex-col divide-y-2 text-center"
+					class="flex w-full flex-col divide-y-2 divide-base-100 text-center"
 				>
 					<div class="py-1 text-3xl font-extrabold">{c.persona[key].rank}</div>
 					<div

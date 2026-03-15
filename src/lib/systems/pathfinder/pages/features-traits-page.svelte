@@ -41,7 +41,7 @@
 	<div class="divider">
 		<div class="flex flex-row gap-2">
 			Feats
-			<button class="btn btn-secondary btn-xs" onclick={addFeat}>Add</button>
+			<button class="btn btn-xs btn-secondary" onclick={addFeat}>Add</button>
 		</div>
 	</div>
 
@@ -113,7 +113,7 @@
 	<div class="divider">
 		<div class="flex flex-row gap-2">
 			Features/Traits
-			<button class="btn btn-secondary btn-xs" onclick={addTrait}>Add</button>
+			<button class="btn btn-xs btn-secondary" onclick={addTrait}>Add</button>
 		</div>
 	</div>
 
@@ -156,7 +156,7 @@
 
 							{#if item.perDay !== null}
 								<button
-									class="btn btn-accent btn-xs md:btn-md w-16 md:w-24"
+									class="btn w-16 btn-xs btn-accent md:w-24 md:btn-md"
 									onclick={stopPropagation(() => useTrait(index))}
 									oncontextmenu={stopPropagation(
 										preventDefault(() => refillTrait(index)),
