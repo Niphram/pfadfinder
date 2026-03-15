@@ -78,7 +78,7 @@
 	--noise: 0;
 }
 
-@utility bg-squiggles {
+@utility bg-wiggle {
 	@supports (mask-image: url()) {
 		&::before {
 			content: '';
@@ -119,6 +119,6 @@ a[href^='https://']::after,
 /* Set background pattern */
 @layer base {
 	:root {
-		@apply bg-squiggles;
+		@apply bg-wiggle;
 	}
 }
