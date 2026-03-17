@@ -13,11 +13,22 @@ const PROTECTED_CACHES: string[] = [];
 
 const ASSETS = build.concat(prerendered, files);
 
+function log(tag: string, message: string) {
+	console.log(`[ServiceWorker] [${tag}] ${message}`);
+}
+
 sw.addEventListener('install', (event) => {
 	// Create a new cache and add all files to it
 	async function addFilesToCache() {
+		log(
+			'install',
+			`Opening cache "${CACHE}" and adding ${ASSETS.length} assets.`,
+		);
+
 		const cache = await caches.open(CACHE);
 		await cache.addAll(ASSETS);
+
+		log('install', `All assets added.`);
 	}
 
 	event.waitUntil(addFilesToCache());
@@ -28,9 +39,13 @@ sw.addEventListener('activate', (event) => {
 	async function deleteOldCaches() {
 		for (const key of await caches.keys()) {
 			if (key !== CACHE && !PROTECTED_CACHES.includes(key)) {
+				log('activate', `Removing old cache "${key}".`);
+
 				await caches.delete(key);
 			}
 		}
+
+		log('install', `Deleted old caches.`);
 	}
 
 	event.waitUntil(deleteOldCaches());
