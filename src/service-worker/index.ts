@@ -11,7 +11,8 @@ const sw = self as unknown as ServiceWorkerGlobalScope;
 const CACHE = `cache-${version}`;
 const PROTECTED_CACHES: string[] = [];
 
-const ASSETS = build.concat(prerendered, files);
+// All assets, with duplicates removed
+const ASSETS = [...new Set(build.concat(prerendered, files))];
 
 function log(tag: string, message: string) {
 	console.log(`[ServiceWorker] [${tag}] ${message}`);
