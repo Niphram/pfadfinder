@@ -166,7 +166,7 @@
 			{#each characters as { id, name, description, system, updated_at } (id)}
 				<li class="list-row p-2" data-sveltekit-preload-data="false">
 					<a
-						href={resolve('/(app)/character/[id]', { id })}
+						href={resolve('/character/[id]', { id })}
 						aria-label="Open {name}"
 						role="button"
 						class="btn col-span-2 grid h-max btn-block grid-cols-subgrid items-center p-2 text-left align-middle font-normal btn-ghost"
