@@ -1,9 +1,7 @@
 <script lang="ts">
-	import type { PageProps } from './$types';
+	import type { LicenseMeta } from 'rollup-license-plugin';
 
 	import { asset, resolve } from '$app/paths';
-
-	const { data }: PageProps = $props();
 
 	type License = {
 		name: string;
@@ -27,20 +25,19 @@
 		return repo;
 	}
 
-	const LICENSES: License[] = $derived(
-		[
-			{
-				name: 'Heropatterns',
-				license: 'CC BY 4.0',
-				licenseText: '"Wiggle" by Steve Schoger, licensed under CC BY 4.0',
-				links: {
-					Homepage: 'https://heropatterns.com/',
-				},
+	const HARDCODED_LICENSES: License[] = $derived([
+		{
+			name: 'Heropatterns',
+			license: 'CC BY 4.0',
+			licenseText: '"Wiggle" by Steve Schoger, licensed under CC BY 4.0',
+			links: {
+				Homepage: 'https://heropatterns.com/',
 			},
-			{
-				name: 'daisyUI',
-				license: 'MIT',
-				licenseText: `MIT License
+		},
+		{
+			name: 'daisyUI',
+			license: 'MIT',
+			licenseText: `MIT License
 
 Copyright (c) 2020 Pouya Saadeghi
 
@@ -61,14 +58,14 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.`,
-				links: {
-					Homepage: 'https://daisyui.com/',
-				},
+			links: {
+				Homepage: 'https://daisyui.com/',
 			},
-			{
-				name: 'tailwindcss',
-				license: 'MIT',
-				licenseText: `MIT License
+		},
+		{
+			name: 'tailwindcss',
+			license: 'MIT',
+			licenseText: `MIT License
 
 Copyright (c) Tailwind Labs, Inc.
 
@@ -89,11 +86,19 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.`,
-				links: {
-					Homepage: 'https://tailwindcss.com/',
-				},
+			links: {
+				Homepage: 'https://tailwindcss.com/',
 			},
-			...data.licenses.map((l) => ({
+		},
+	]);
+
+	async function loadLicenses() {
+		const response = await fetch(asset('/oss-licenses.json'));
+		const loadedLicenses = (await response.json()) as LicenseMeta[];
+
+		return [
+			...HARDCODED_LICENSES,
+			...loadedLicenses.map((l) => ({
 				name: l.name,
 				version: l.version,
 				license: l.license,
@@ -102,8 +107,8 @@ SOFTWARE.`,
 					Repository: repositoryToHref(l.repository),
 				},
 			})),
-		].sort((a, b) => a.name.localeCompare(b.name)),
-	);
+		].sort((a, b) => a.name.localeCompare(b.name));
+	}
 </script>
 
 {#snippet heading(type: 'h1' | 'h2' | 'h3', id: string, content: string)}
@@ -144,40 +149,52 @@ SOFTWARE.`,
 		</div>
 	</noscript>
 
-	<div class="flex flex-col gap-2">
-		{#each LICENSES as l (l.name)}
-			<div class="collapse-arrow collapse bg-base-200">
-				<input type="checkbox" />
+	{#await loadLicenses()}
+		<div>Loading Licenses...</div>
+	{:then licenses}
+		<div class="flex flex-col gap-2">
+			{#each licenses as l (l.name)}
+				<div class="collapse-arrow collapse bg-base-200">
+					<input type="checkbox" />
 
-				<div
-					class="collapse-title flex w-full flex-row items-center gap-2 font-semibold"
-				>
-					<span class="font-bold">{l.name}</span>
-					{#if l.version}
-						<span class="text-sm">{l.version}</span>
-					{/if}
-					<span class="z-1 ml-auto flex flex-row gap-2 text-sm">
-						{#each Object.entries(l.links) as [label, href] (label)}
-							{#if href}
-								<a
-									onclick={(e) => e.stopPropagation()}
-									{href}
-									rel="external"
-									target="_blank"
-								>
-									{label}
-								</a>
-							{/if}
+					<div
+						class="collapse-title flex w-full flex-row items-center gap-2 font-semibold"
+					>
+						<span class="font-bold">{l.name}</span>
+						{#if l.version}
+							<span class="text-sm">{l.version}</span>
+						{/if}
+						<span class="z-1 ml-auto flex flex-row gap-2 text-sm">
+							{#each Object.entries(l.links) as [label, href] (label)}
+								{#if href}
+									<a
+										onclick={(e) => e.stopPropagation()}
+										{href}
+										rel="external"
+										target="_blank"
+									>
+										{label}
+									</a>
+								{/if}
+							{/each}
+						</span>
+					</div>
+					<div class="collapse-content text-sm">
+						<p>License: {l.license}</p>
+						{#each l.licenseText.split('\n\n') as line, i (i)}
+							<p>{line}</p>
 						{/each}
-					</span>
+					</div>
 				</div>
-				<div class="collapse-content text-sm">
-					<p>License: {l.license}</p>
-					{#each l.licenseText.split('\n\n') as line, i (i)}
-						<p>{line}</p>
-					{/each}
-				</div>
-			</div>
-		{/each}
-	</div>
+			{/each}
+		</div>
+	{:catch}
+		<div class="mb-8 alert alert-info">
+			<span>
+				Licenses could not be loaded. <a href={asset('/oss-licenses.json')}
+					>Click here to open the file manually.</a
+				>
+			</span>
+		</div>
+	{/await}
 </article>
