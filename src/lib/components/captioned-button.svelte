@@ -27,7 +27,7 @@
 >
 	<div class="flex w-full flex-col divide-y-2 divide-base-100 text-center">
 		<div class="py-1 text-3xl font-extrabold">{label}</div>
-		<div class="py-1 uppercase decoration-wavy" class:underline>
+		<div class={['py-1 uppercase decoration-wavy', underline && 'underline']}>
 			{caption}
 		</div>
 	</div>

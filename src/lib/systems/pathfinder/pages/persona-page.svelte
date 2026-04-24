@@ -30,8 +30,10 @@
 				>
 					<div class="py-1 text-3xl font-extrabold">{c.persona[key].rank}</div>
 					<div
-						class="py-1 uppercase decoration-wavy"
-						class:underline={!!c.persona[key].notes}
+						class={[
+							'py-1 uppercase decoration-wavy',
+							c.persona[key].notes && 'underline',
+						]}
 					>
 						{$t(`persona.${key}`)}
 					</div>

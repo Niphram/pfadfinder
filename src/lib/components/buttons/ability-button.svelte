@@ -45,23 +45,23 @@
 >
 	<div class="flex w-full flex-col divide-y-2 divide-base-100 text-center">
 		<div
-			class="py-1 text-3xl font-extrabold"
-			class:text-red-700={c[key].damage > 0}
+			class={[
+				'py-1 text-3xl font-extrabold',
+				c[key].damage > 0 && 'text-red-700',
+			]}
 		>
 			{withSign(c[key].checkMod)}
 		</div>
-		<div class="py-1 text-xs decoration-wavy" class:underline={!!c[key].notes}>
+		<div class={['py-1 text-xs decoration-wavy', c[key].notes && 'underline']}>
 			{c[key].totalNoTemp}{#if temp !== 0}<span
-					class:text-red-700={temp < 0}
-					class:text-green-700={temp > 0}
+					class={[temp < 0 && 'text-red-700', temp > 0 && 'text-green-700']}
 				>
 					{withSign(temp)}
 				</span>
 			{/if}
 		</div>
 		<div
-			class="py-1 uppercase decoration-wavy"
-			class:underline={!!c[key].notes}
+			class={['py-1 uppercase decoration-wavy', c[key].notes && 'underline']}
 		>
 			{$t(`abilities.${key}.short`)}
 		</div>

@@ -99,7 +99,7 @@
 						openDialog(AcItemDialog, { index }),
 					)}
 				>
-					<span class="truncate" class:underline={item.equipped}>
+					<span class={['truncate', item.equipped && 'underline']}>
 						{item.name} ({$t(`equipment.armorType.${item.type}`)})
 					</span>
 				</button>

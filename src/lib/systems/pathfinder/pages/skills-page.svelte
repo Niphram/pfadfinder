@@ -54,8 +54,10 @@
 			>
 				<div class="btn join flex flex-row gap-1 p-0 btn-ghost btn-sm">
 					<div
-						class="join-item flex items-center bg-accent text-accent-content"
-						class:bg-warning={penalty}
+						class={[
+							'join-item flex items-center bg-accent text-accent-content',
+							penalty && 'bg-warning',
+						]}
 					>
 						<span class="w-16">{skillTags}</span>
 					</div>
@@ -66,8 +68,10 @@
 						]}
 					>
 						<span
-							class="join-item grow align-middle decoration-wavy"
-							class:underline={variant.notes}
+							class={[
+								'join-item grow align-middle decoration-wavy',
+								variant.notes && 'underline',
+							]}
 							>{$t(`skills.${key}`)}{variant.name ? ` (${variant.name})` : ''}{(
 								trainedOnly
 							) ?
@@ -76,8 +80,10 @@
 						>
 					</div>
 					<div
-						class="join-item flex items-center bg-accent text-accent-content"
-						class:bg-warning={penalty}
+						class={[
+							'join-item flex items-center bg-accent text-accent-content',
+							penalty && 'bg-warning',
+						]}
 					>
 						<span class="join-item w-16 align-middle"
 							>{withSign(c.skills[key].skills[index].mod)}</span

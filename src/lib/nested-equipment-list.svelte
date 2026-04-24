@@ -106,8 +106,10 @@
 					>
 						{#snippet title()}
 							<span
-								class="text-sm font-semibold"
-								class:underline={props.item.equipped}
+								class={[
+									'text-sm font-semibold',
+									props.item.equipped && 'underline',
+								]}
 							>
 								{props.item.name}
 							</span>
