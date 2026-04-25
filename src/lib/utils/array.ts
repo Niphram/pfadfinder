@@ -11,7 +11,7 @@ export function mapMin<T>(arr: T[], get: (v: T) => number) {
 export function mapMax<T>(arr: T[], get: (v: T) => number) {
 	if (arr.length === 0) return undefined;
 
-	return arr.reduce((min, v) => Math.max(min, get(v)), Infinity);
+	return arr.reduce((min, v) => Math.max(min, get(v)), -Infinity);
 }
 
 export function isIn<T>(values: readonly T[], x: unknown): x is T {

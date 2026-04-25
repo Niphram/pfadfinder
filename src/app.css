@@ -4,6 +4,7 @@
 
 @plugin 'daisyui' {
 	themes: wireframe;
+	logs: false;
 }
 
 @plugin 'daisyui/theme' {
