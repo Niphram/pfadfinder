@@ -1,5 +1,7 @@
 # Pfadfinder
 
+[![Test and Deploy](https://github.com/Niphram/pfadfinder/actions/workflows/deploy.yml/badge.svg)](https://github.com/Niphram/pfadfinder/actions/workflows/deploy.yml)
+
 Charactersheet for Pathfinder 1st edition.
 
 Under development, no guarantees of stability and data-safety.
