@@ -14,5 +14,5 @@ Not final list, things will definetly change.
     - [ ] MVP: Write backups to GDrive
     - [ ] Full sync
   - [ ] Auto backups using FileSystem API (Maybe, looks like persistent permissions are not a thing anymore?)
-- [X] Write a (kinda) useful serviceworker to enable offline mode
+- [x] Write a (kinda) useful serviceworker to enable offline mode
 - [ ] Multiple RPG systems (When that happens, move the entire retro to `mummenschanz`)
