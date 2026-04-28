@@ -1,6 +1,6 @@
 import { ClassSerializer, derive, macro, number, string } from '$lib/serde';
 
-import { Character } from './character.svelte';
+import type { Character } from './character.svelte';
 
 export const ABILITY_KEYS = ['str', 'dex', 'con', 'int', 'wis', 'cha'] as const;
 export type AbilityKey = (typeof ABILITY_KEYS)[number];

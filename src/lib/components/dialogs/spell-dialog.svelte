@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
-	import { preventDefault } from '$lib/utils';
+	import { preventDefault } from '$lib/utils/event-modifiers';
 
 	import DialogBase from '$lib/atoms/dialog-base.svelte';
 

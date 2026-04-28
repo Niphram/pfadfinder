@@ -6,7 +6,7 @@
 
 	import { browser } from '$app/environment';
 
-	import { isIn } from '$lib/utils';
+	import { isIn } from '$lib/utils/array';
 
 	const STORAGE_KEY = 'theme';
 

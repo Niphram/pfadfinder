@@ -9,7 +9,7 @@ import {
 	string,
 	type SerdeProxy,
 } from '$lib/serde';
-import { mapMin, mapSum } from '$lib/utils';
+import { mapMin, mapSum } from '$lib/utils/array';
 
 export const ARMOR_TYPES = [
 	'light',

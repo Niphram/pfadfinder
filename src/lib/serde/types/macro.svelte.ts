@@ -1,7 +1,12 @@
 import type { RuntimeError } from '$lib/macro/errors';
 import { evalNodeGen } from '$lib/macro/evaluate';
 import { Parser } from '$lib/macro/parser';
-import { Err, iteratorResultToResult, Ok, type Result } from '$lib/utils';
+import {
+	Err,
+	iteratorResultToResult,
+	Ok,
+	type Result,
+} from '$lib/utils/result';
 
 import {
 	DESERIALIZE_SYMBOL,

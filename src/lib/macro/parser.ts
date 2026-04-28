@@ -1,4 +1,5 @@
-import { isIn, iteratorResultToResult } from '$lib/utils';
+import { isIn } from '$lib/utils/array';
+import { iteratorResultToResult } from '$lib/utils/result';
 
 import {
 	AstNodeType,

@@ -7,7 +7,8 @@
 	import { charProxy } from '$lib/serde';
 	import type { BaseCharacter } from '$lib/systems/character';
 	import Sheet from '$lib/systems/pathfinder/sheet.svelte';
-	import { observeMutations, throttle_fe } from '$lib/utils';
+	import { observeMutations } from '$lib/utils/mutation-observer';
+	import { throttle_fe } from '$lib/utils/throttle';
 
 	import Status from '$lib/atoms/status.svelte';
 

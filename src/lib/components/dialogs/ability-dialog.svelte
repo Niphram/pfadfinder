@@ -6,7 +6,7 @@
 	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
 	import Number from '$lib/components/input/number.svelte';
 
-	import { Ability } from '$lib/data';
+	import type { Ability } from '$lib/data';
 
 	import DialogBase from '../../atoms/dialog-base.svelte';
 

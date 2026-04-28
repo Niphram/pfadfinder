@@ -1,5 +1,5 @@
 <script lang="ts" generics="IsOptional extends boolean">
-	import { Macro } from '$lib/serde';
+	import type { Macro } from '$lib/serde';
 	import { computeMacroStyleWithError } from '$lib/text/macro-text-style';
 
 	import InputWrapper from '$lib/atoms/input-wrapper.svelte';

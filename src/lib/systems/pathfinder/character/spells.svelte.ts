@@ -11,9 +11,11 @@ import {
 	string,
 	type SerdeProxy,
 } from '$lib/serde';
-import { mapSum, withSign } from '$lib/utils';
+import { mapSum } from '$lib/utils/array';
+import { withSign } from '$lib/utils/format';
 
-import { ABILITY_KEYS, Character } from '.';
+import { ABILITY_KEYS } from './abilities.svelte';
+import type { Character } from './character.svelte';
 
 export const SPELL_LEVELS = [
 	'level_0',

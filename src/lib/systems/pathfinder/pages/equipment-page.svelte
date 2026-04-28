@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
 	import NestedEquipmentList from '$lib/nested-equipment-list.svelte';
-	import { preventDefault, useMacroNotify } from '$lib/utils';
+	import { preventDefault } from '$lib/utils/event-modifiers';
+	import { useMacroNotify } from '$lib/utils/notes';
 
 	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import AcItemDialog from '$lib/components/dialogs/ac-item-dialog.svelte';

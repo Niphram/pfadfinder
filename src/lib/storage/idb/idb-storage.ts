@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
 import { SYSTEMS_MAP } from '$lib/systems';
 import type { BaseCharacter } from '$lib/systems/character';
-import { lazy } from '$lib/utils';
+import { lazy } from '$lib/utils/lazy';
 
 import { VERSIONS, type Schema } from './versions';
 

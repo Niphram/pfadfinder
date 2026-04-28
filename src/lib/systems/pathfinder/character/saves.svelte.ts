@@ -7,7 +7,7 @@ import {
 } from '$lib/serde';
 
 import { ABILITY_KEYS } from './abilities.svelte';
-import { Character } from './character.svelte';
+import type { Character } from './character.svelte';
 
 export const SAVE_KEYS = ['fort', 'ref', 'will'] as const;
 export type SaveKey = (typeof SAVE_KEYS)[number];

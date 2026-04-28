@@ -10,10 +10,10 @@ import {
 	macro,
 	string,
 } from '$lib/serde';
-import { withSign } from '$lib/utils';
+import { withSign } from '$lib/utils/format';
 
 import { ABILITY_KEYS, type AbilityKey } from './abilities.svelte';
-import { Character } from './character.svelte';
+import type { Character } from './character.svelte';
 
 export const SIZES = [
 	'fine',

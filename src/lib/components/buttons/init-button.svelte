@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { useMacroNotify, withSign } from '$lib/utils';
+	import { withSign } from '$lib/utils/format';
+	import { useMacroNotify } from '$lib/utils/notes';
 
 	import CaptionedButton from '$lib/components/captioned-button.svelte';
 	import { useDialog } from '$lib/components/dialog-provider.svelte';

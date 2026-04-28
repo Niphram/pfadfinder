@@ -1,4 +1,4 @@
-import { Err, Ok, type Result } from '$lib/utils';
+import { Err, Ok, type Result } from '$lib/utils/result';
 
 import {
 	DESERIALIZE_SYMBOL,

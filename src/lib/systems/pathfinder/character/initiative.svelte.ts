@@ -1,6 +1,6 @@
 import { ClassSerializer, derive, macro, string } from '$lib/serde';
 
-import { Character } from './character.svelte';
+import type { Character } from './character.svelte';
 
 export class Initiative extends ClassSerializer {
 	misc = macro('0');

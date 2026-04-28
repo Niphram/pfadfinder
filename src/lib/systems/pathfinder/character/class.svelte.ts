@@ -7,9 +7,9 @@ import {
 	number,
 	string,
 } from '$lib/serde';
-import { mapSum } from '$lib/utils';
+import { mapSum } from '$lib/utils/array';
 
-import { Character } from './character.svelte';
+import type { Character } from './character.svelte';
 
 export const DICE = [4, 6, 8, 10, 12, 20] as const;
 export type Dice = (typeof DICE)[number];

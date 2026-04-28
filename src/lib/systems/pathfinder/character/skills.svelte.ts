@@ -8,10 +8,10 @@ import {
 	number,
 	string,
 } from '$lib/serde';
-import { mapSum } from '$lib/utils';
+import { mapSum } from '$lib/utils/array';
 
 import { ABILITY_KEYS } from './abilities.svelte';
-import { Character } from './character.svelte';
+import type { Character } from './character.svelte';
 
 const SKILLS = {
 	acrobatics: { ability: 'dex', trained: false, penalty: true },

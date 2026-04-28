@@ -3,7 +3,8 @@
 
 	import { t } from '$lib/i18n';
 	import { type SerdeProxy } from '$lib/serde';
-	import { preventDefault, stopPropagation, useMacroNotify } from '$lib/utils';
+	import { preventDefault, stopPropagation } from '$lib/utils/event-modifiers';
+	import { useMacroNotify } from '$lib/utils/notes';
 
 	import Collapse from '$lib/atoms/collapse.svelte';
 

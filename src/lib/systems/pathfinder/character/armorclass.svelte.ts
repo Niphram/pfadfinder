@@ -7,7 +7,7 @@ import {
 } from '$lib/serde';
 
 import { ABILITY_KEYS } from './abilities.svelte';
-import { Character } from './character.svelte';
+import type { Character } from './character.svelte';
 
 export class ArmorClass extends ClassSerializer {
 	primaryAbility = enumeration(ABILITY_KEYS, 'dex');

@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
-	import { preventDefault, useMacroNotify, withSign } from '$lib/utils';
+	import { preventDefault } from '$lib/utils/event-modifiers';
+	import { withSign } from '$lib/utils/format';
+	import { useMacroNotify } from '$lib/utils/notes';
 
 	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import AbilityDialog from '$lib/components/dialogs/ability-dialog.svelte';

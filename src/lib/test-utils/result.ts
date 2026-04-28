@@ -1,6 +1,6 @@
 import { expect } from 'vitest';
 
-import type { ErrResult, OkResult, Result } from '$lib/utils';
+import type { ErrResult, OkResult, Result } from '$lib/utils/result';
 
 export function expectOkResult<T, E>(
 	result: Result<T, E>,

@@ -2,7 +2,7 @@
 	import type { Snippet } from 'svelte';
 	import type { ClassValue, MouseEventHandler } from 'svelte/elements';
 
-	import { preventDefault } from '$lib/utils';
+	import { preventDefault } from '$lib/utils/event-modifiers';
 
 	interface Props {
 		open?: boolean;

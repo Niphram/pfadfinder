@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
-	import { preventDefault, useMacroNotify } from '$lib/utils';
+	import { preventDefault } from '$lib/utils/event-modifiers';
+	import { useMacroNotify } from '$lib/utils/notes';
 
 	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import PersonaScoreDialog from '$lib/components/dialogs/persona-facet-dialog.svelte';

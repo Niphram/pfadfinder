@@ -5,9 +5,9 @@ import {
 	number,
 	type SerdeProxy,
 } from '$lib/serde';
-import { mapSum } from '$lib/utils';
+import { mapSum } from '$lib/utils/array';
 
-import { Character } from './character.svelte';
+import type { Character } from './character.svelte';
 
 export class HitPoints extends ClassSerializer {
 	rolled = number(0, { min: 0 });

@@ -8,7 +8,7 @@
 
 	import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
 	import { SYSTEMS_MAP } from '$lib/systems';
-	import { preventDefault } from '$lib/utils';
+	import { preventDefault } from '$lib/utils/event-modifiers';
 
 	import { useDialog } from '$lib/components/dialog-provider.svelte';
 	import CharacterOptionsDialog from '$lib/components/dialogs/character-options-dialog.svelte';

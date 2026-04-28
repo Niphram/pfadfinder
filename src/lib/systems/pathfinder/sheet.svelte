@@ -7,7 +7,8 @@
 	import HpDialog from '$lib/components/dialogs/hp-dialog.svelte';
 	import PageDialog from '$lib/components/dialogs/page-dialog.svelte';
 
-	import { Character, getChar, setChar } from '$lib/data';
+	import type { Character } from '$lib/data';
+	import { getChar, setChar } from '$lib/data';
 
 	import AbilitiesPage from './pages/abilities-page.svelte';
 	import CharacterPage from './pages/character-page.svelte';

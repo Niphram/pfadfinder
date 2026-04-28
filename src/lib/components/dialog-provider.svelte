@@ -80,7 +80,7 @@
 	import type { Attachment } from 'svelte/attachments';
 	import { on } from 'svelte/events';
 
-	import { rafraf } from '$lib/utils';
+	import { rafraf } from '$lib/utils/double-raf';
 
 	type Props = {
 		children: Snippet;

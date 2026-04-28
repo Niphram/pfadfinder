@@ -1,4 +1,4 @@
-import { makeCachedProxyFactory } from '$lib/utils';
+import { makeCachedProxyFactory } from '$lib/utils/cached-proxy';
 
 import { ArrayWrapper } from './types/array.svelte';
 import { BoolWrapper } from './types/bool.svelte';

@@ -5,7 +5,8 @@
 
 	import Toggle from '$lib/components/input/toggle.svelte';
 
-	import { ABILITY_KEYS, getChar, Item, SPELL_LEVELS } from '$lib/data';
+	import type { Item } from '$lib/data';
+	import { ABILITY_KEYS, getChar, SPELL_LEVELS } from '$lib/data';
 
 	const { c } = $derived(getChar());
 

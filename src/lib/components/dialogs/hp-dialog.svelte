@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { preventDefault } from '$lib/utils';
+	import { preventDefault } from '$lib/utils/event-modifiers';
 
 	import Alert from '$lib/atoms/alert.svelte';
 	import DialogBase from '$lib/atoms/dialog-base.svelte';

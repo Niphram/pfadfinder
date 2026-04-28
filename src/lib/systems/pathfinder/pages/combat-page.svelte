@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { parseTextWithMacros } from '$lib/macro/text';
-	import { preventDefault, useMacroNotify } from '$lib/utils';
+	import { preventDefault } from '$lib/utils/event-modifiers';
 	import { withSign } from '$lib/utils/format';
+	import { useMacroNotify } from '$lib/utils/notes';
 
 	import Collapse from '$lib/atoms/collapse.svelte';
 	import Divider from '$lib/atoms/divider.svelte';

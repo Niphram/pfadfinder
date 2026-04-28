@@ -11,7 +11,8 @@
 	import Select from '$lib/components/input/select.svelte';
 	import Toggle from '$lib/components/input/toggle.svelte';
 
-	import { getChar, Item } from '$lib/data';
+	import type { Item } from '$lib/data';
+	import { getChar } from '$lib/data';
 
 	interface Props {
 		list?: SerdeProxy<Item>[];

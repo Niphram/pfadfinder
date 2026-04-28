@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
-	import { preventDefault, stopPropagation } from '$lib/utils';
+	import { preventDefault, stopPropagation } from '$lib/utils/event-modifiers';
 
 	import Button from '$lib/atoms/button.svelte';
 	import Collapse from '$lib/atoms/collapse.svelte';

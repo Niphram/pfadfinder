@@ -3,7 +3,7 @@
 
 	import { parseTextWithMacros } from '$lib/macro/text';
 
-	import { getChar } from '$lib/data';
+	import { getChar } from '$lib/data/context';
 
 	const { c } = $derived(getChar());
 

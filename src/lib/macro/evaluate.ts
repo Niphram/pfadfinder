@@ -1,4 +1,5 @@
-import { iteratorResultToResult, unreachable } from '$lib/utils';
+import { iteratorResultToResult } from '$lib/utils/result';
+import { unreachable } from '$lib/utils/unreachable';
 
 import { AstNodeType, type AstNode, type AttributeNode } from './ast';
 import type { BinaryOperator, FunctionName, UnaryOperator } from './constants';
@@ -71,6 +72,10 @@ function evalUnary(op: UnaryOperator, value: number): number {
 	return op === '+' ? value : -value;
 }
 
+function booleanToNumber(b: boolean) {
+	return b ? 1 : 0;
+}
+
 function evalBinary(op: BinaryOperator, left: number, right: number): number {
 	switch (op) {
 		case '+':
@@ -88,17 +93,17 @@ function evalBinary(op: BinaryOperator, left: number, right: number): number {
 		case '**':
 			return left ** right;
 		case '<':
-			return left < right ? 1 : 0;
+			return booleanToNumber(left < right);
 		case '>':
-			return left > right ? 1 : 0;
+			return booleanToNumber(left > right);
 		case '<=':
-			return left <= right ? 1 : 0;
+			return booleanToNumber(left <= right);
 		case '>=':
-			return left >= right ? 1 : 0;
+			return booleanToNumber(left >= right);
 		case '=':
-			return left === right ? 1 : 0;
+			return booleanToNumber(left === right);
 		case '!=':
-			return left !== right ? 1 : 0;
+			return booleanToNumber(left !== right);
 	}
 }
 
