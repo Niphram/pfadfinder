@@ -29,7 +29,7 @@ export type SerdeProxy<T> =
 		}
 	:	T;
 
-export function charProxy<T extends object>(char: T) {
+export function charProxy<T extends object>(char: T): SerdeProxy<T> {
 	const proxyFactory = makeCachedProxyFactory();
 
 	function makeCharProxy(value: object) {
