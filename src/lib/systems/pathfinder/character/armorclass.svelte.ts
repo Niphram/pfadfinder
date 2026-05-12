@@ -25,7 +25,7 @@ export class ArmorClass extends ClassSerializer {
 	readonly abilityMod = derive<Character>((c) => {
 		let primaryAbilityMod = c[this.primaryAbility.value].mod;
 		if (this.primaryAbility.value === 'dex') {
-			if (c.conditions.mods.acLooseDex) {
+			if (c.conditions.mods.acLooseDex.mod > 0) {
 				primaryAbilityMod = Math.min(0, primaryAbilityMod);
 			}
 
@@ -35,7 +35,7 @@ export class ArmorClass extends ClassSerializer {
 		let secondaryAbilityMod =
 			this.secondaryAbility.value ? c[this.secondaryAbility.value].mod : 0;
 		if (this.secondaryAbility.value === 'dex') {
-			if (c.conditions.mods.acLooseDex) {
+			if (c.conditions.mods.acLooseDex.mod > 0) {
 				secondaryAbilityMod = Math.min(0, secondaryAbilityMod);
 			}
 
