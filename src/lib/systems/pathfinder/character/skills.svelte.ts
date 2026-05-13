@@ -54,7 +54,7 @@ export const SKILL_KEYS = Object.keys(SKILLS);
 export type SkillKey = keyof typeof SKILLS;
 
 export class Skill extends ClassSerializer {
-	name = string('Unnamed Skill', { minLength: 1, maxLength: 100 });
+	name = string('', { minLength: 0, maxLength: 100 });
 
 	ability = enumeration(ABILITY_KEYS, 'str');
 

@@ -1,0 +1,829 @@
+{
+  "id": "0zbFxhRVKmgvznIIiicDw",
+  "name": "Test Character",
+  "system": "pathfinder",
+  "version": 4,
+  "race": {
+    "name": "Test Race",
+    "speed": "30",
+    "size": "medium",
+    "str": "1",
+    "dex": "2",
+    "con": "3",
+    "int": "4",
+    "wis": "5",
+    "cha": "6"
+  },
+  "classes": {
+    "list": [
+      {
+        "name": "First Class",
+        "favored": true,
+        "level": 4,
+        "hitDice": 4,
+        "bab": 5,
+        "fort": 1,
+        "ref": 2,
+        "will": 3,
+        "speed": 5,
+        "levelRanks": 5,
+        "miscRanks": 3
+      },
+      {
+        "name": "Second Class",
+        "favored": false,
+        "level": 1,
+        "hitDice": 4,
+        "bab": 4,
+        "fort": 3,
+        "ref": 2,
+        "will": 1,
+        "speed": 0,
+        "levelRanks": 10,
+        "miscRanks": 0
+      }
+    ]
+  },
+  "hp": {
+    "rolled": 50,
+    "bonus": "10",
+    "temp": 20,
+    "damageTaken": 0,
+    "nonlethalDamage": 10
+  },
+  "init": { "misc": "0", "notes": "" },
+  "str": { "base": "10", "bonus": "0", "temp": "0", "damage": 0, "notes": "" },
+  "dex": { "base": "10", "bonus": "0", "temp": "0", "damage": 0, "notes": "" },
+  "con": { "base": "10", "bonus": "0", "temp": "0", "damage": 0, "notes": "" },
+  "int": { "base": "10", "bonus": "0", "temp": "0", "damage": 0, "notes": "" },
+  "wis": { "base": "10", "bonus": "0", "temp": "0", "damage": 0, "notes": "" },
+  "cha": { "base": "10", "bonus": "0", "temp": "0", "damage": 0, "notes": "" },
+  "fort": { "ability": "con", "bonus": "0", "misc": "0", "notes": "" },
+  "ref": { "ability": "dex", "bonus": "0", "misc": "0", "notes": "" },
+  "will": { "ability": "wis", "bonus": "0", "misc": "0", "notes": "" },
+  "combat": {
+    "cmbAbility": "str",
+    "meeleeAbility": "str",
+    "rangedAbility": "dex",
+    "sr": { "base": "0", "misc": "0", "notes": "" },
+    "bab": { "bonus": "0", "notes": "" },
+    "cmb": { "bonus": "0", "notes": "" },
+    "cmd": { "bonus": "0", "notes": "" },
+    "attacks": [
+      {
+        "open": true,
+        "name": "Test Attack",
+        "category": "",
+        "type": "",
+        "hasAttack": true,
+        "attack": {
+          "baseModifier": "babFull",
+          "abilityModifier": "str",
+          "bonusModifier": "3",
+          "versus": "AC",
+          "critRange": "20",
+          "range": ""
+        },
+        "hasDamage": false,
+        "damage": { "damage": "", "notes": "" },
+        "showNotes": true,
+        "notes": ""
+      }
+    ]
+  },
+  "skills": {
+    "acrobatics": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "dex",
+          "penalty": true,
+          "ranks": 5,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": true,
+          "notes": ""
+        }
+      ]
+    },
+    "appraise": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "int",
+          "penalty": false,
+          "ranks": 5,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "bluff": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "cha",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "climb": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "str",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "craft": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "int",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "diplomacy": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "cha",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "disableDevice": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "dex",
+          "penalty": true,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "disguise": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "cha",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "escapeArtist": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "dex",
+          "penalty": true,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "fly": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "dex",
+          "penalty": true,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "handleAnimal": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "cha",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "heal": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "wis",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "intimidate": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "cha",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "knowledgeArcana": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "int",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "knowledgeDungeoneering": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "int",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "knowledgeEngineering": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "int",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "knowledgeGeography": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "int",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "knowledgeHistory": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "int",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "knowledgeLocal": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "int",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "knowledgeNature": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "int",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "knowledgeNobility": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "int",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "knowledgePlanes": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "int",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "knowledgeReligion": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "int",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "linguistics": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "int",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "perception": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "wis",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "perform": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "cha",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "profession": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "wis",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "ride": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "dex",
+          "penalty": true,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "senseMotive": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "wis",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "sleightOfHand": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "dex",
+          "penalty": true,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "spellcraft": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "int",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "stealth": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "dex",
+          "penalty": true,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "survival": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "wis",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "swim": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "str",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    },
+    "useMagicDevice": {
+      "skills": [
+        {
+          "name": "",
+          "ability": "cha",
+          "penalty": false,
+          "ranks": 0,
+          "misc": "0",
+          "temp": "0",
+          "classSkill": false,
+          "notes": ""
+        }
+      ]
+    }
+  },
+  "traits": [
+    {
+      "id": "Z0iAU3HVbX90RKFC91eo6",
+      "open": false,
+      "name": "Test Trait",
+      "perDay": "5",
+      "remaining": 3,
+      "description": ""
+    }
+  ],
+  "feats": [
+    {
+      "id": "FNSepEZoYcPHrK5dL0-SM",
+      "open": true,
+      "name": "Test Feat",
+      "prerequisites": "Prerequisites",
+      "type": "general",
+      "benefits": "Test Benefits",
+      "normal": "Test Normal",
+      "special": "Test Special"
+    }
+  ],
+  "spells": {
+    "dcAbility": "int",
+    "dcBonus": "3",
+    "level_0": {
+      "known": 0,
+      "perDay": 5,
+      "perDayBonus": 0,
+      "dcBonus": 0,
+      "spells": [
+        {
+          "open": true,
+          "name": "Test Cantrip",
+          "school": "",
+          "classAndLevel": "",
+          "castingTime": "",
+          "range": "",
+          "area": "",
+          "targets": "",
+          "effect": "",
+          "duration": "",
+          "savingThrow": { "hasSave": false, "effect": "", "dcMod": 0 },
+          "spellResistance": "",
+          "attack": {
+            "hasAttack": true,
+            "type": "rangedTouch",
+            "mod": 0,
+            "critRange": 20,
+            "critMultiplier": 2
+          },
+          "damage": [],
+          "description": "",
+          "notes": "",
+          "prepared": 0,
+          "used": 0,
+          "isDomainSpell": false,
+          "components": ""
+        }
+      ]
+    },
+    "level_1": {
+      "known": 0,
+      "perDay": 0,
+      "perDayBonus": 0,
+      "dcBonus": 0,
+      "spells": []
+    },
+    "level_2": {
+      "known": 0,
+      "perDay": 0,
+      "perDayBonus": 0,
+      "dcBonus": 0,
+      "spells": []
+    },
+    "level_3": {
+      "known": 0,
+      "perDay": 0,
+      "perDayBonus": 0,
+      "dcBonus": 0,
+      "spells": []
+    },
+    "level_4": {
+      "known": 0,
+      "perDay": 0,
+      "perDayBonus": 0,
+      "dcBonus": 0,
+      "spells": []
+    },
+    "level_5": {
+      "known": 0,
+      "perDay": 0,
+      "perDayBonus": 0,
+      "dcBonus": 0,
+      "spells": []
+    },
+    "level_6": {
+      "known": 0,
+      "perDay": 0,
+      "perDayBonus": 0,
+      "dcBonus": 0,
+      "spells": []
+    },
+    "level_7": {
+      "known": 0,
+      "perDay": 0,
+      "perDayBonus": 0,
+      "dcBonus": 0,
+      "spells": []
+    },
+    "level_8": {
+      "known": 0,
+      "perDay": 0,
+      "perDayBonus": 0,
+      "dcBonus": 0,
+      "spells": []
+    },
+    "level_9": {
+      "known": 0,
+      "perDay": 0,
+      "perDayBonus": 0,
+      "dcBonus": 0,
+      "spells": []
+    },
+    "spellLikeAbilities": [
+      {
+        "open": true,
+        "name": "SLA Test",
+        "school": "",
+        "classAndLevel": "",
+        "castingTime": "",
+        "range": "",
+        "area": "",
+        "targets": "",
+        "effect": "",
+        "duration": "",
+        "savingThrow": { "hasSave": true, "effect": "", "dcMod": 0 },
+        "spellResistance": "",
+        "attack": {
+          "hasAttack": true,
+          "type": "rangedTouch",
+          "mod": 5,
+          "critRange": 20,
+          "critMultiplier": 2
+        },
+        "damage": [{ "damage": "1d6", "type": "Fire" }],
+        "description": "",
+        "notes": "",
+        "type": "atWill",
+        "perDay": 1,
+        "remaining": 0
+      }
+    ]
+  },
+  "ac": {
+    "primaryAbility": "dex",
+    "secondaryAbility": null,
+    "bonusAc": "0",
+    "bonusTouch": "0",
+    "bonusFf": "0",
+    "notes": ""
+  },
+  "equipment": {
+    "items": [
+      {
+        "name": "Test Container",
+        "quantity": 1,
+        "equipped": true,
+        "weight": 0,
+        "chargeType": "none",
+        "remaining": 0,
+        "perDay": 1,
+        "description": "",
+        "isContainer": true,
+        "containerOpen": true,
+        "children": [
+          {
+            "name": "Test Item",
+            "quantity": 5,
+            "equipped": true,
+            "weight": 1,
+            "chargeType": "perDay",
+            "remaining": 1,
+            "perDay": 2,
+            "description": "",
+            "isContainer": false,
+            "containerOpen": false,
+            "children": []
+          }
+        ]
+      }
+    ],
+    "acItems": [
+      {
+        "name": "Test Armor",
+        "equipped": true,
+        "acBonus": 5,
+        "ffBonus": 0,
+        "touchBonus": 0,
+        "natBonus": 0,
+        "defBonus": 0,
+        "dodBonus": 0,
+        "type": "light",
+        "chkPenalty": 1,
+        "maxDexBonus": 6,
+        "spellFailure": 10,
+        "notes": ""
+      }
+    ]
+  },
+  "money": { "pp": 4, "gp": 3, "sp": 2, "cp": 1, "notes": "" },
+  "persona": {
+    "charm": { "rank": 0, "notes": "" },
+    "genius": { "rank": 0, "notes": "" },
+    "heroism": { "rank": 0, "notes": "" },
+    "sacrifice": { "rank": 0, "notes": "" },
+    "sagacity": { "rank": 0, "notes": "" },
+    "subterfuge": { "rank": 0, "notes": "" },
+    "notes": ""
+  },
+  "conditions": {
+    "blinded": false,
+    "cowering": false,
+    "dazzled": false,
+    "fatigued": false,
+    "negative_levels": 0
+  },
+  "settings": {
+    "heal": true,
+    "addConToHeal": false,
+    "healAbilityDamage": true,
+    "rechargeSLA": true,
+    "rechargeTraits": true,
+    "rechargeItems": true,
+    "resetSpellUsage": true,
+    "resetPreparedSpells": true,
+    "showMagicPage": true,
+    "usePersonaSystem": true,
+    "useAverageHP": false,
+    "enableExperimentalConditions": true,
+    "enableMacroHighlighting": true,
+    "experimentalFeatures": false
+  }
+}
