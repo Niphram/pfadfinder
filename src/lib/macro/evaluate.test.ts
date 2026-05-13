@@ -55,7 +55,7 @@ describe('evaluateNode', () => {
 
 			expectOkResult(astResult);
 
-			const result = evalNode(astResult.value!, {});
+			const result = evalNode(astResult.value, {});
 
 			expect(result).toBe(expected);
 		});
@@ -77,7 +77,7 @@ describe('evaluateNode', () => {
 
 			expectOkResult(astResult);
 
-			const result = evalNode(astResult.value!, new TestChar());
+			const result = evalNode(astResult.value, new TestChar());
 
 			expect(result).toBe(expected);
 		});

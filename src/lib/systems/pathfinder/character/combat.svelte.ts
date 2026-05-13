@@ -35,9 +35,9 @@ const sizeModifiers: Record<SizeKey, { mod: number; ability: AbilityKey }> = {
 	small: { ability: 'str', mod: -1 },
 	medium: { ability: 'str', mod: 0 },
 	large: { ability: 'str', mod: 1 },
-	huge: { ability: 'str', mod: +2 },
-	gargantuan: { ability: 'str', mod: +4 },
-	colossal: { ability: 'str', mod: +8 },
+	huge: { ability: 'str', mod: 2 },
+	gargantuan: { ability: 'str', mod: 4 },
+	colossal: { ability: 'str', mod: 8 },
 };
 
 function attackArray(attackCount: number, maxAttack: number) {
@@ -237,7 +237,7 @@ export class Attack extends ClassSerializer {
 				]);
 			}
 
-			return details.filter((e) => !!e[1]) as [string, string][];
+			return details.filter((e) => Boolean(e[1])) as [string, string][];
 		},
 	);
 }

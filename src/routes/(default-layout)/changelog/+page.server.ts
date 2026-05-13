@@ -4,7 +4,7 @@ import { basename } from 'node:path';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-	const changelogsIter = await glob('./changelog/*.md');
+	const changelogsIter = glob('./changelog/*.md');
 
 	const changelogPaths = await Array.fromAsync(changelogsIter);
 

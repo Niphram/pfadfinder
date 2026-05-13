@@ -11,9 +11,9 @@ export const enum TokenType {
 	PERIOD = 'PERIOD',
 }
 
-const TokenSpec: [RegExp, TokenType | null][] = [
+const TokenSpec: [RegExp, TokenType | undefined][] = [
 	// Whitespace
-	[/^\s+/, null],
+	[/^\s+/, undefined],
 
 	[/^,/, TokenType.COMMA],
 	[/^@/, TokenType.AT],

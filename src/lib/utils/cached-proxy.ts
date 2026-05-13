@@ -10,10 +10,7 @@ export function makeCachedProxyFactory() {
 		return !!(obj as { [MARKER]?: T })[MARKER];
 	}
 
-	return <T extends object>(
-		target: T,
-		{ get = Reflect.get, set = Reflect.set, ...handlers }: ProxyHandler<T>,
-	) => {
+	return <T extends object>(target: T, handler: ProxyHandler<T>) => {
 		// Check if the value already is the desired proxy
 		if (isProxy(target)) return target;
 
@@ -21,24 +18,30 @@ export function makeCachedProxyFactory() {
 		const cachedProxy = PROXY_MAP.get(target);
 		if (cachedProxy) return cachedProxy;
 
+		const get: ProxyHandler<T>['get'] = (...args) =>
+			handler.get ? handler.get(...args) : Reflect.get(...args);
+
+		const set: ProxyHandler<T>['set'] = (...args) =>
+			handler.set ? handler.set(...args) : Reflect.set(...args);
+
 		const proxy = new Proxy(target, {
-			get(target, p, receiver) {
+			...handler,
+			get(wrappedTarget, p, receiver) {
 				// Special marker property
 				if (p === MARKER) {
-					return target;
+					return wrappedTarget;
 				}
 
-				return get(target, p, receiver);
+				return get(wrappedTarget, p, receiver);
 			},
-			set(target, p, newValue, receiver) {
+			set(wrappedTarget, p, newValue, receiver) {
 				// If the new value is a proxy created using this factory, unwrap it
 				if (newValue !== undefined && newValue !== null && isProxy(newValue)) {
-					return set(target, p, newValue[MARKER], receiver);
+					return set(wrappedTarget, p, newValue[MARKER], receiver);
 				} else {
-					return set(target, p, newValue, receiver);
+					return set(wrappedTarget, p, newValue, receiver);
 				}
 			},
-			...handlers,
 		});
 
 		// Cache the proxy

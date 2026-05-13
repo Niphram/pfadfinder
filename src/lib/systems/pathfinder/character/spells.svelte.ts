@@ -116,11 +116,7 @@ export class Spell extends SpellCommonProps {
 
 	components = string('', { maxLength: 100 });
 
-	details(
-		this: SerdeProxy<Spell>,
-		level: number,
-		c: SerdeProxy<Character>,
-	): [string, boolean][] {
+	details(this: SerdeProxy<Spell>, level: number, c: SerdeProxy<Character>) {
 		const dcAbility = c.spells.dcAbility;
 		const abilityDc =
 			(dcAbility ? c[dcAbility].mod : 0) + (c.spells.dcBonus ?? 0);
@@ -149,32 +145,35 @@ export class Spell extends SpellCommonProps {
 			case 'none':
 		}
 
-		return [
-			['School', this.school],
-			['Casting Time', this.castingTime],
-			['Components', this.components],
-			['Range', this.range],
-			['Area', this.area],
-			['Targets', this.targets],
-			['Duration', this.duration],
-			['Effect', this.effect],
+		return (
 			[
-				'Saving Throw',
-				this.savingThrow.hasSave && `${this.savingThrow.effect} (DC ${saveDc})`,
-			],
-			['Spell Resistance', this.spellResistance],
-			[
-				'Attack',
-				this.attack.hasAttack
-					&& `${withSign(attackBonus)} (${this.attack.type}) (Crit ≥${this.attack.critRange} for x${
-						this.attack.critMultiplier
-					})`,
-			],
-			...this.damage.map((d, i) => [
-				`Damage #${i + 1}`,
-				`${d.damage} ${d.type}`,
-			]),
-		].filter((e) => !!e[1]) as [string, boolean][];
+				['School', this.school],
+				['Casting Time', this.castingTime],
+				['Components', this.components],
+				['Range', this.range],
+				['Area', this.area],
+				['Targets', this.targets],
+				['Duration', this.duration],
+				['Effect', this.effect],
+				[
+					'Saving Throw',
+					this.savingThrow.hasSave
+						&& `${this.savingThrow.effect} (DC ${saveDc})`,
+				],
+				['Spell Resistance', this.spellResistance],
+				[
+					'Attack',
+					this.attack.hasAttack
+						&& `${withSign(attackBonus)} (${this.attack.type}) (Crit ≥${this.attack.critRange} for x${
+							this.attack.critMultiplier
+						})`,
+				],
+				...this.damage.map((d, i) => [
+					`Damage #${i + 1}`,
+					`${d.damage} ${d.type}`,
+				]),
+			] as const
+		).filter((e) => Boolean(e[1]));
 	}
 }
 
@@ -189,21 +188,23 @@ export class SpellLikeAbility extends SpellCommonProps {
 	remaining = number(0, { min: 0 });
 
 	readonly details = $derived(
-		[
-			['School', this.school.value],
-			['Casting Time', this.castingTime.value],
-			['Range', this.range.value],
-			['Area', this.area.value],
-			['Targets', this.targets.value],
-			['Duration', this.duration.value],
-			['Effect', this.effect.value],
+		(
 			[
-				'Saving Throw',
-				this.savingThrow.hasSave.value
-					&& `${this.savingThrow.effect.value} (DC ${this.savingThrow.dcMod.value})`,
-			],
-			['Spell Resistance', this.spellResistance.value],
-		].filter((e) => !!e[1]),
+				['School', this.school.value],
+				['Casting Time', this.castingTime.value],
+				['Range', this.range.value],
+				['Area', this.area.value],
+				['Targets', this.targets.value],
+				['Duration', this.duration.value],
+				['Effect', this.effect.value],
+				[
+					'Saving Throw',
+					this.savingThrow.hasSave.value
+						&& `${this.savingThrow.effect.value} (DC ${this.savingThrow.dcMod.value})`,
+				],
+				['Spell Resistance', this.spellResistance.value],
+			] as const
+		).filter((e) => Boolean(e[1])),
 	);
 
 	recharge(this: SerdeProxy<SpellLikeAbility>) {
@@ -223,7 +224,7 @@ export class SpellLevelList extends ClassSerializer {
 	spells = array(() => new Spell(), []);
 
 	readonly dc = derive<Character>(
-		(c) => 10 + SPELL_LEVELS.indexOf(this.level)! + c.spells[this.level].known,
+		(c) => 10 + SPELL_LEVELS.indexOf(this.level) + c.spells[this.level].known,
 	);
 
 	readonly totalPerDay = derive<Character>(

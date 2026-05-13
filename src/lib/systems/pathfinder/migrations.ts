@@ -22,10 +22,10 @@ export const UPGRADES: ((
 		const oldMax = char.hp.max;
 		const oldCurrent = char.hp.current;
 
-		return (char) => {
+		return (postChar) => {
 			// Calculate new hitpoint data format
-			char.hp.rolled = oldMax - char.con.mod * char.classes.levels;
-			char.hp.damageTaken = oldMax - oldCurrent;
+			postChar.hp.rolled = oldMax - postChar.con.mod * postChar.classes.levels;
+			postChar.hp.damageTaken = oldMax - oldCurrent;
 		};
 	},
 	// Version 4: Breaking change for attack abilityModifier

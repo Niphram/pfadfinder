@@ -9,7 +9,7 @@ const sw = self as unknown as ServiceWorkerGlobalScope;
 
 // Every new version gets a new cache
 const CACHE = `cache-${version}`;
-const PROTECTED_CACHES: string[] = [];
+const PROTECTED_CACHES: Set<string> = new Set();
 
 // All assets, with duplicates removed
 const ASSETS = [...new Set(build.concat(prerendered, files))];
@@ -38,13 +38,16 @@ sw.addEventListener('install', (event) => {
 sw.addEventListener('activate', (event) => {
 	// Remove previous cached data from disk (except protected caches)
 	async function deleteOldCaches() {
-		for (const key of await caches.keys()) {
-			if (key !== CACHE && !PROTECTED_CACHES.includes(key)) {
-				log('activate', `Removing old cache "${key}".`);
+		const cacheKeys = await caches.keys();
 
-				await caches.delete(key);
-			}
-		}
+		await Promise.all(
+			cacheKeys.map(async (key) => {
+				if (key !== CACHE && !PROTECTED_CACHES.has(key)) {
+					log('activate', `Removing old cache "${key}".`);
+					await caches.delete(key);
+				}
+			}),
+		);
 
 		log('install', `Deleted old caches.`);
 	}
@@ -81,7 +84,7 @@ sw.addEventListener('fetch', (event) => {
 			}
 
 			if (response.status === 200) {
-				cache.put(event.request, response.clone());
+				await cache.put(event.request, response.clone());
 			}
 
 			return response;

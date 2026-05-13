@@ -10,7 +10,7 @@ export function debounce<A extends unknown[]>(
 	let timeoutId: number | undefined;
 
 	return (...args: A) => {
-		timeoutId && clearTimeout(timeoutId);
+		clearTimeout(timeoutId);
 		timeoutId = window.setTimeout(() => func(...args), timeout);
 	};
 }

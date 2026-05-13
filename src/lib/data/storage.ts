@@ -6,7 +6,7 @@ export const persisted = writable(false);
 export const loaded = writable(false);
 
 if (browser) {
-	if (navigator.storage && navigator.storage) {
+	if ('storage' in navigator) {
 		navigator.storage
 			.persist()
 			.then((p) => persisted.set(p))

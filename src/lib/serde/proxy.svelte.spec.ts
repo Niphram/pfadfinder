@@ -65,21 +65,21 @@ describe('Proxy', () => {
 		});
 
 		test('NumberWrapper', () => {
-			const number = randNumber();
+			const numberValue = randNumber();
 
 			const sut = charProxy(new TestClass());
-			sut.number = number;
+			sut.number = numberValue;
 
-			expect(sut.number).toBe(number);
+			expect(sut.number).toBe(numberValue);
 		});
 
 		test('BoolWrapper', () => {
-			const boolean = randBoolean();
+			const booleanValue = randBoolean();
 
 			const sut = charProxy(new TestClass());
-			sut.boolean = boolean;
+			sut.boolean = booleanValue;
 
-			expect(sut.boolean).toBe(boolean);
+			expect(sut.boolean).toBe(booleanValue);
 		});
 
 		test('EnumWrapper', () => {
@@ -99,46 +99,46 @@ describe('Proxy', () => {
 		});
 
 		test('ArrayWrapper', () => {
-			const array = toCollection(() => number(randNumber()));
+			const arrayValue = toCollection(() => number(randNumber()));
 
 			const sut = charProxy(new TestClass());
-			sut.$.array.value = array;
+			sut.$.array.value = arrayValue;
 
-			expect(sut.array).toStrictEqual(array.map((c) => c.value));
-			expect(sut.$.array.value).toStrictEqual(array);
+			expect(sut.array).toStrictEqual(arrayValue.map((c) => c.value));
+			expect(sut.$.array.value).toStrictEqual(arrayValue);
 		});
 
 		test('ArrayWrapper Object', () => {
-			const array = toCollection(() => new SubClass());
+			const arrayValue = toCollection(() => new SubClass());
 
 			const sut = charProxy(new TestClass());
-			sut.$.subarray.value = array;
+			sut.$.subarray.value = arrayValue;
 
-			expect(sut.subarray).toStrictEqual(array);
+			expect(sut.subarray).toStrictEqual(arrayValue);
 		});
 
 		test('Derive', () => {
-			const number = randNumber();
+			const numberValue = randNumber();
 
 			const sut = charProxy(new TestClass());
-			sut.number = number;
+			sut.number = numberValue;
 
-			expect(sut.derive).toBe(number);
+			expect(sut.derive).toBe(numberValue);
 		});
 
 		test('Macro', () => {
-			const number = randNumber();
+			const numberValue = randNumber();
 
 			const sut = charProxy(new TestClass());
-			sut.number = number;
+			sut.number = numberValue;
 
 			expect(sut.$.macro.expr).toBe('@number');
-			expect(sut.macro).toBe(number);
+			expect(sut.macro).toBe(numberValue);
 
 			sut.$.macro.expr = '@number * 3';
 
 			expect(sut.$.macro.expr).toBe('@number * 3');
-			expect(sut.macro).toBe(number * 3);
+			expect(sut.macro).toBe(numberValue * 3);
 		});
 	});
 

@@ -41,6 +41,8 @@
 		fallback,
 	}: Props = $props();
 
+	// bind:this
+	// oxlint-disable-next-line no-unassigned-vars
 	let listEl: HTMLElement;
 
 	let sortableInstance: Sortable | undefined = $state();

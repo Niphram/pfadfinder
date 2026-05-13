@@ -198,7 +198,7 @@ export class Parser {
 			);
 		}
 
-		switch (this.lookahead?.type) {
+		switch (this.lookahead.type) {
 			case TokenType.PARENTHESIS_LEFT:
 				return yield* this.ParenthesizedExpression();
 			case TokenType.IDENTIFIER:
@@ -213,7 +213,7 @@ export class Parser {
 
 			default:
 				return yield parserError(
-					`Unexpected Token: "${this.lookahead?.value}".`,
+					`Unexpected Token: "${this.lookahead.value}".`,
 					this.lookahead,
 				);
 		}

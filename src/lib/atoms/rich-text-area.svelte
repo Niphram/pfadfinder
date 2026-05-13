@@ -33,7 +33,10 @@
 		computeTextStyle,
 	}: Props = $props();
 
+	// bind:this
+	// oxlint-disable-next-line no-unassigned-vars
 	let inputEl: HTMLTextAreaElement;
+
 	let renderEl: HTMLDivElement | undefined = $state();
 
 	function synchronizeScroll() {

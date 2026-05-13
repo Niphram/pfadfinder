@@ -1,0 +1,37 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"plugins": ["typescript", "unicorn"],
+	"jsPlugins": ["eslint-plugin-svelte"],
+	"options": {
+		"typeAware": true
+	},
+	"categories": {
+		"correctness": "error",
+		"perf": "error",
+		"nursery": "error"
+	},
+	"env": {
+		"builtin": true,
+		"browser": true,
+		"node": true
+	},
+	"rules": {
+		"eslint/no-unused-vars": [
+			"error",
+			{
+				"caughtErrorsIgnorePattern": "^_"
+			}
+		],
+		"typescript/strict-boolean-expressions": [
+			"error",
+			{
+				"allowNullableBoolean": true,
+				"allowNullableEnum": true,
+				"allowNullableNumber": true,
+				"allowNullableString": true
+			}
+		],
+		"eslint/no-undef": "off",
+		"typescript/no-unnecessary-type-assertion": "error"
+	}
+}

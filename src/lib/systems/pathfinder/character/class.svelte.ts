@@ -56,7 +56,7 @@ export class Classes extends ClassSerializer {
 	readonly ranks = derive<Character>((c) => {
 		const classRanks = mapSum(
 			this.list.value,
-			(c) => c.levelRanks.value * c.level.value + c.miscRanks.value,
+			(cc) => cc.levelRanks.value * cc.level.value + cc.miscRanks.value,
 		);
 		return classRanks + c.int.mod * c.classes.levels;
 	});

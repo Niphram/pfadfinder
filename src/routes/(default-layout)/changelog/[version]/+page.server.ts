@@ -6,7 +6,7 @@ import type { EntryGenerator, PageServerLoad } from './$types';
 import { parseMarkdown } from '$lib/server/markdown';
 
 export const entries: EntryGenerator = async () => {
-	const changelogsIter = await glob('./changelog/*.md');
+	const changelogsIter = glob('./changelog/*.md');
 
 	const changelogPaths = await Array.fromAsync(changelogsIter);
 
