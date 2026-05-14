@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Character Snapshot Tests > pathfinder_complex.json 1`] = `
+exports[`Character Snapshot Tests > ./pathfinder_complex.json 1`] = `
 Character {
   "ac": ArmorClass {
     "abilityMod": 1,
@@ -93,6 +93,7 @@ Character {
         ],
         "hasAttack": true,
         "hasDamage": false,
+        "id": "static-test-id",
         "name": "Test Attack",
         "notes": "",
         "open": true,
@@ -172,6 +173,7 @@ Character {
         "dodBonus": 0,
         "equipped": true,
         "ffBonus": 0,
+        "id": "static-test-id",
         "maxDexBonus": 6,
         "name": "Test Armor",
         "natBonus": 0,
@@ -191,6 +193,7 @@ Character {
             "containerOpen": false,
             "description": "",
             "equipped": true,
+            "id": "static-test-id",
             "isContainer": false,
             "name": "Test Item",
             "perDay": 2,
@@ -202,6 +205,7 @@ Character {
         "containerOpen": true,
         "description": "",
         "equipped": true,
+        "id": "static-test-id",
         "isContainer": true,
         "name": "Test Container",
         "perDay": 1,
@@ -214,6 +218,7 @@ Character {
   "feats": [
     Feat {
       "benefits": "Test Benefits",
+      "id": "FNSepEZoYcPHrK5dL0-SM",
       "name": "Test Feat",
       "normal": "Test Normal",
       "open": true,
@@ -241,6 +246,7 @@ Character {
     "rolled": 50,
     "temp": 20,
   },
+  "id": "0zbFxhRVKmgvznIIiicDw",
   "init": Initiative {
     "misc": 0,
     "mod": 1,
@@ -1024,6 +1030,7 @@ Character {
           "description": "",
           "duration": "",
           "effect": "",
+          "id": "static-test-id",
           "isDomainSpell": false,
           "name": "Test Cantrip",
           "notes": "",
@@ -1154,6 +1161,7 @@ Character {
         "description": "",
         "duration": "",
         "effect": "",
+        "id": "static-test-id",
         "name": "SLA Test",
         "notes": "",
         "open": true,
@@ -1190,6 +1198,7 @@ Character {
   "traits": [
     Trait {
       "description": "",
+      "id": "Z0iAU3HVbX90RKFC91eo6",
       "name": "Test Trait",
       "open": false,
       "perDay": 5,
@@ -1222,7 +1231,7 @@ Character {
 }
 `;
 
-exports[`Character Snapshot Tests > pathfinder_default.json 1`] = `
+exports[`Character Snapshot Tests > ./pathfinder_default.json 1`] = `
 Character {
   "ac": ArmorClass {
     "abilityMod": 0,
@@ -1358,6 +1367,7 @@ Character {
     "rolled": 0,
     "temp": 0,
   },
+  "id": "C8LdQAuayi6DIRsUdKzHY",
   "init": Initiative {
     "misc": 0,
     "mod": 0,
