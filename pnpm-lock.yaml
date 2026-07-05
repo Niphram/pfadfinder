@@ -38,6 +38,9 @@ importers:
       sortablejs:
         specifier: ^1.15.7
         version: 1.15.7
+      svelte:
+        specifier: ^5.56.4
+        version: 5.56.4(@typescript-eslint/types@8.62.0)
       tailwindcss:
         specifier: ^4.3.1
         version: 4.3.1
@@ -90,9 +93,6 @@ importers:
       sharp:
         specifier: ^0.35.2
         version: 0.35.2
-      svelte:
-        specifier: ^5.56.4
-        version: 5.56.4(@typescript-eslint/types@8.62.0)
       svelte-check:
         specifier: ^4.7.1
         version: 4.7.1(picomatch@4.0.4)(svelte@5.56.4(@typescript-eslint/types@8.62.0))(typescript@6.0.3)
