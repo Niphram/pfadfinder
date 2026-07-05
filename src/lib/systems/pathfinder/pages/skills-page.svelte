@@ -76,7 +76,7 @@
 							]}
 						>
 							{$t(`skills.${key}`)}{#if variant.name}
-								(${variant.name})`
+								({variant.name})
 							{/if}{#if trainedOnly}
 								*
 							{/if}
