@@ -10,7 +10,12 @@
 		"*.css": "tailwindcss"
 	},
 
-	"oxc.fmt.configPath": ".oxfmtrc.json",
+	"oxc.fmt.configPath": "./vite.config.ts",
+
 	"editor.defaultFormatter": "oxc.oxc-vscode",
-	"editor.formatOnSave": true
+	"editor.formatOnSave": true,
+	"editor.formatOnSaveMode": "file",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.oxc": "explicit"
+	}
 }

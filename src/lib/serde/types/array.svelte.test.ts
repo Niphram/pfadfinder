@@ -1,5 +1,5 @@
 import { randNumber, toCollection } from '@ngneat/falso';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vite-plus/test';
 
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL } from '$lib/serde';
 

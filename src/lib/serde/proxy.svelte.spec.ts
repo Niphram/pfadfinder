@@ -5,7 +5,7 @@ import {
 	randText,
 	toCollection,
 } from '@ngneat/falso';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test } from 'vite-plus/test';
 
 import { ClassSerializer } from './class-serializer';
 import { charProxy } from './proxy';

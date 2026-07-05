@@ -11,28 +11,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v6
-        name: Install pnpm
+      - uses: voidzero-dev/setup-vp@v1
         with:
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: 'package.json'
-          cache: 'pnpm'
+          node-version: '24'
+          cache: true
 
       - name: Install dependencies
-        run: pnpm install
+        run: vp install
 
       - name: Check
-        run: pnpm run check
+        run: vp check
 
-      - name: Lint
-        run: pnpm run lint
+      - name: Svelte-Check
+        run: vpr check
 
       - name: Test
-        run: pnpm run test
+        run: vp test
 
       - name: Setup Pages
         id: pages
@@ -41,7 +35,7 @@ jobs:
       - name: build
         env:
           BASE_PATH: '${{ steps.pages.outputs.base_path }}'
-        run: pnpm run build
+        run: vp build
 
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v5

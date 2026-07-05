@@ -4,10 +4,107 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import tailwindcss from '@tailwindcss/vite';
 import { svelteTesting } from '@testing-library/svelte/vite';
 import { createViteLicensePlugin } from 'rollup-license-plugin';
-import { defineConfig } from 'vitest/config';
+import { defineConfig, lazyPlugins } from 'vite-plus';
 
 export default defineConfig({
-	plugins: [
+	fmt: {
+		useTabs: true,
+		singleQuote: true,
+		trailingComma: 'all',
+		printWidth: 80,
+		sortTailwindcss: {
+			stylesheet: './src/app.css',
+		},
+		svelte: {},
+		importOrder: [
+			'<BUILTIN_MODULES>',
+			'',
+			'<THIRD_PARTY_MODULES>',
+			'',
+			'^\\./\\$types',
+			'',
+			'^\\$(?!lib/)',
+			'',
+			'^\\$lib/(?!data|components|pages|atoms)',
+			'',
+			'^\\$lib/atoms(/.*)?$',
+			'',
+			'^\\$lib/components(/.*)?$',
+			'',
+			'^\\$lib/pages(/.*)?$',
+			'',
+			'^\\$lib/data(/.*)?$',
+			'',
+			'^[.]',
+		],
+		sortPackageJson: true,
+		ignorePatterns: [
+			'.DS_Store',
+			'node_modules',
+			'/build',
+			'/.svelte-kit',
+			'/package',
+			'.env',
+			'.env.*',
+			'!.env.example',
+			'pnpm-lock.yaml',
+			'package-lock.json',
+			'yarn.lock',
+		],
+	},
+	lint: {
+		plugins: ['typescript', 'unicorn'],
+		jsPlugins: [
+			{
+				name: 'vite-plus',
+				specifier: 'vite-plus/oxlint-plugin',
+			},
+			'eslint-plugin-svelte',
+		],
+		options: {
+			typeAware: true,
+			// Currently clashes with svelte module imports
+			// typeCheck: true,
+		},
+		categories: {
+			correctness: 'error',
+			perf: 'error',
+			nursery: 'error',
+		},
+		env: {
+			builtin: true,
+			browser: true,
+			node: true,
+		},
+		rules: {
+			'eslint/no-unused-vars': [
+				'error',
+				{
+					caughtErrorsIgnorePattern: '^_',
+				},
+			],
+			'eslint/no-unused-expressions': [
+				'error',
+				{
+					allowShortCircuit: true,
+				},
+			],
+			'eslint/no-undef': 'off',
+			'typescript/strict-boolean-expressions': [
+				'error',
+				{
+					allowNullableBoolean: true,
+					allowNullableEnum: true,
+					allowNullableNumber: true,
+					allowNullableString: true,
+				},
+			],
+			'typescript/no-unnecessary-type-assertion': 'error',
+			'typescript/consistent-type-imports': 'error',
+			'vite-plus/prefer-vite-plus-imports': 'error',
+		},
+	},
+	plugins: lazyPlugins(() => [
 		createViteLicensePlugin(),
 		tailwindcss(),
 		sveltekit({
@@ -27,7 +124,7 @@ export default defineConfig({
 				strict: true,
 			}),
 		}),
-	],
+	]),
 	define: {
 		__BUILD_DATE__: JSON.stringify(
 			new Date().toISOString().replace(/[^0-9]/g, ''),

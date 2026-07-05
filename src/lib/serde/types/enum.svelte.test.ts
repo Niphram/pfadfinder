@@ -1,5 +1,5 @@
 import { rand, randBoolean } from '@ngneat/falso';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL } from '$lib/serde';
 import { expectErrResult, expectOkResult } from '$lib/test-utils';

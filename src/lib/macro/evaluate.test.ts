@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test } from 'vite-plus/test';
 
 import { charProxy, derive, macro, type SerdeProxy } from '$lib/serde';
 import { expectOkResult } from '$lib/test-utils';

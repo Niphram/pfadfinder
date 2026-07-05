@@ -3,6 +3,7 @@
 		"oxc.oxc-vscode",
 		"svelte.svelte-vscode",
 		"bradlc.vscode-tailwindcss",
-		"vitest.explorer"
+		"vitest.explorer",
+		"VoidZero.vite-plus-extension-pack"
 	]
 }

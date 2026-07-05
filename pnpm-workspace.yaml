@@ -1,6 +1,30 @@
 minimumReleaseAge: 10080 # 7 days
+
+catalog:
+  vite: npm:@voidzero-dev/vite-plus-core@0.2.2
+  vite-plus: 0.2.2
+overrides:
+  vite: 'catalog:'
+
+peerDependencyRules:
+  allowAny:
+    - vite
+  allowedVersions:
+    vite: '*'
+
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'
   - esbuild
-publicHoistPattern:
-  - '*eslint*'
+  - sharp
+
+minimumReleaseAgeExclude:
+  - vite-plus
+  - '@voidzero-dev/*'
+  - oxlint
+  - '@oxlint/*'
+  - oxlint-tsgolint
+  - '@oxlint-tsgolint/*'
+  - oxfmt
+  - '@oxfmt/*'
+  - vitest
+  - '@vitest/*'

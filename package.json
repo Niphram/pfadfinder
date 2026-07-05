@@ -7,16 +7,16 @@
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
 		"postinstall": "svelte-kit sync",
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
+		"dev": "vp dev",
+		"build": "vp build",
+		"preview": "vp preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "pnpm run fmt:check &&  oxlint .",
-		"fmt": "oxfmt",
-		"fmt:check": "oxfmt --check",
-		"test:unit": "vitest",
-		"test": "vitest --run"
+		"lint": "vp lint",
+		"fmt": "vp fmt",
+		"fmt:check": "vp fmt --check",
+		"test:unit": "vp test",
+		"test": "vp test --run"
 	},
 	"dependencies": {
 		"@sveltejs/kit": "^2.68.0",
@@ -26,6 +26,7 @@
 		"moosmann-svelte": "^0.6.2",
 		"nanoid": "^5.1.16",
 		"sortablejs": "^1.15.7",
+		"svelte": "^5.56.4",
 		"tailwindcss": "^4.3.1"
 	},
 	"devDependencies": {
@@ -41,29 +42,18 @@
 		"globals": "^17.7.0",
 		"jsdom": "^29.1.1",
 		"micromark": "^4.0.2",
-		"oxfmt": "^0.56.0",
-		"oxlint": "^1.71.0",
-		"oxlint-tsgolint": "^0.23.0",
 		"postcss": "^8.5.15",
 		"prettier": "^3.9.0",
 		"rollup-license-plugin": "^3.2.1",
 		"sharp": "^0.35.2",
-		"svelte": "^5.56.4",
 		"svelte-check": "^4.7.1",
 		"typescript": "^6.0.3",
-		"vite": "^8.1.0",
-		"vitest": "^4.1.9"
+		"vite": "catalog:",
+		"vite-plus": "catalog:"
 	},
 	"engines": {
 		"node": "~24.14.0"
 	},
 	"engineStrict": true,
-	"packageManager": "pnpm@10.33.2",
-	"pnpm": {
-		"onlyBuiltDependencies": [
-			"@tailwindcss/oxide",
-			"esbuild",
-			"sharp"
-		]
-	}
+	"packageManager": "pnpm@10.33.2"
 }
