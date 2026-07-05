@@ -39,7 +39,7 @@
 			{/each}
 			<div class="flex flex-row justify-center">
 				<button
-					class="btn btn-circle btn-sm btn-primary"
+					class="btn btn-circle btn-primary btn-sm"
 					onclick={preventDefault(() => addSkill(key))}>+</button
 				>
 			</div>

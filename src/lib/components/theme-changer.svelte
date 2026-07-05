@@ -4,7 +4,7 @@
 	import { MediaQuery } from 'svelte/reactivity';
 	import { writable } from 'svelte/store';
 
-	import { browser } from '$app/environment';
+	import { browser } from '$app/env';
 
 	import { isIn } from '$lib/utils/array';
 
@@ -77,9 +77,11 @@
 	const darkPreferenceQuery = new MediaQuery('(prefers-color-scheme: dark)');
 
 	const themeKey = $derived(
-		$selectedTheme ? $selectedTheme
-		: darkPreferenceQuery.current ? darkKey
-		: lightKey,
+		$selectedTheme
+			? $selectedTheme
+			: darkPreferenceQuery.current
+				? darkKey
+				: lightKey,
 	);
 
 	const theme = $derived(THEMES[themeKey]);

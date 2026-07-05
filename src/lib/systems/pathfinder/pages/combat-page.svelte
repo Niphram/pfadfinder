@@ -68,7 +68,7 @@
 	<div class="divider">
 		<div class="flex flex-row gap-2">
 			Weapons/Attacks
-			<button class="btn btn-xs btn-secondary" onclick={addAttack}>Add</button>
+			<button class="btn btn-secondary btn-xs" onclick={addAttack}>Add</button>
 		</div>
 	</div>
 
@@ -129,11 +129,13 @@
 									</div>
 									{#if !open}
 										<div class="text-center whitespace-nowrap">
-											{attack.hasAttack ?
-												attack.attack.attacks
+											{#if attack.hasAttack}
+												{attack.attack.attacks
 													.map((v, i) => (i === 0 ? withSign(v) : v))
-													.join('/')
-											:	'-'}
+													.join('/')}
+											{:else}
+												-
+											{/if}
 										</div>
 										<div class="text-center whitespace-nowrap">
 											{(attack.hasAttack && attack.attack.critRange) || '-'}
@@ -144,15 +146,15 @@
 												!open && 'overflow-hidden whitespace-nowrap',
 											]}
 										>
-											{(attack.hasDamage
-												&& parseTextWithMacros(attack.damage.damage, c))
-												|| '-'}
+											{(attack.hasDamage &&
+												parseTextWithMacros(attack.damage.damage, c)) ||
+												'-'}
 										</div>
 									{/if}
 								</div>
 							{/snippet}
 
-							{@const details = attack.details}
+							{const details = attack.details}
 							{#if details.length > 0}
 								<Divider class="my-0">Details</Divider>
 								<div

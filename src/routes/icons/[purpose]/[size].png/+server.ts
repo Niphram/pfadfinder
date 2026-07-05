@@ -4,7 +4,7 @@ import { error } from '@sveltejs/kit';
 
 import type { EntryGenerator, RequestHandler } from './$types';
 
-import { dev } from '$app/environment';
+import { dev } from '$app/env';
 
 import {
 	generateIcon,

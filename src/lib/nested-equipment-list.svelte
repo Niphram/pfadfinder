@@ -86,11 +86,11 @@
 					</button>
 					{#if props.item.chargeType !== 'none'}
 						<button
-							class="btn ml-2 w-28 px-2 btn-sm btn-accent md:btn-md"
+							class="btn ml-2 w-28 px-2 btn-accent btn-sm md:btn-md"
 							onclick={stopPropagation(
 								() =>
-									items[props.index].remaining > 0
-									&& items[props.index].remaining--,
+									items[props.index].remaining > 0 &&
+									items[props.index].remaining--,
 							)}
 						>
 							{props.item.remaining}{#if props.item.chargeType === 'perDay'}

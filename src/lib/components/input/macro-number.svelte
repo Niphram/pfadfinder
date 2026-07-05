@@ -54,15 +54,15 @@
 	);
 
 	const feedback = $derived(
-		validateResult.ok ?
-			{
-				feedback: `Evaluates to: ${validateResult.value ?? '-'}`,
-				feedbackClass: '',
-			}
-		:	{
-				feedback: validateResult.error.message,
-				feedbackClass: 'text-error',
-			},
+		validateResult.ok
+			? {
+					feedback: `Evaluates to: ${validateResult.value ?? '-'}`,
+					feedbackClass: '',
+				}
+			: {
+					feedback: validateResult.error.message,
+					feedbackClass: 'text-error',
+				},
 	);
 </script>
 

@@ -108,7 +108,7 @@
 									<span class="grow text-sm font-semibold">{spell.name}</span>
 									{#if spell.prepared > 0}
 										<button
-											class="btn w-16 btn-xs btn-accent"
+											class="btn w-16 btn-accent btn-xs"
 											onclick={stopPropagation(
 												preventDefault(() => castSpell(level, spellIdx)),
 											)}
@@ -181,12 +181,14 @@
 						<div class="flex flex-row items-center">
 							<div class="grow text-sm font-semibold">{sla.name}</div>
 							<button
-								class="btn w-16 btn-xs btn-accent"
+								class="btn w-16 btn-accent btn-xs"
 								onclick={stopPropagation(() => castSla(slaIndex))}
 							>
-								{sla.type === 'perDay' ?
-									`${sla.remaining} of ${sla.perDay}`
-								:	$t(`spell.slaType.${sla.type}`)}
+								{#if sla.type === 'perDay'}
+									{sla.remaining} of {sla.perDay}
+								{:else}
+									{$t(`spell.slaType.${sla.type}`)}}
+								{/if}
 							</button>
 						</div>
 					{/snippet}

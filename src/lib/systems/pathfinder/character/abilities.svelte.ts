@@ -20,10 +20,10 @@ export class Ability extends ClassSerializer {
 
 	readonly total = derive<Character>(
 		(c) =>
-			c[this.key].base
-			+ c.race[this.key]
-			+ c[this.key].bonus
-			+ c[this.key].temp,
+			c[this.key].base +
+			c.race[this.key] +
+			c[this.key].bonus +
+			c[this.key].temp,
 	);
 
 	readonly totalNoTemp = derive<Character>(

@@ -32,8 +32,9 @@ export class ArmorClass extends ClassSerializer {
 			primaryAbilityMod = Math.min(primaryAbilityMod, c.equipment.maxDexBonus);
 		}
 
-		let secondaryAbilityMod =
-			this.secondaryAbility.value ? c[this.secondaryAbility.value].mod : 0;
+		let secondaryAbilityMod = this.secondaryAbility.value
+			? c[this.secondaryAbility.value].mod
+			: 0;
 		if (this.secondaryAbility.value === 'dex') {
 			if (c.conditions.mods.acLooseDex.mod > 0) {
 				secondaryAbilityMod = Math.min(0, secondaryAbilityMod);
@@ -50,11 +51,11 @@ export class ArmorClass extends ClassSerializer {
 
 	readonly total = derive<Character>(
 		(c) =>
-			10
-			+ c.ac.abilityMod
-			+ c.equipment.acBonus
-			+ this.bonusAc.eval(c)
-			+ c.conditions.mods.ac.mod,
+			10 +
+			c.ac.abilityMod +
+			c.equipment.acBonus +
+			this.bonusAc.eval(c) +
+			c.conditions.mods.ac.mod,
 	);
 
 	readonly touch = derive<Character>(
@@ -64,18 +65,18 @@ export class ArmorClass extends ClassSerializer {
 
 	readonly flatFooted = derive<Character>(
 		(c) =>
-			10
-			+ c.equipment.acBonus
-			+ Math.min(c.ac.abilityMod, 0)
-			+ this.bonusFf.eval(c)
-			+ c.conditions.mods.ac.mod,
+			10 +
+			c.equipment.acBonus +
+			Math.min(c.ac.abilityMod, 0) +
+			this.bonusFf.eval(c) +
+			c.conditions.mods.ac.mod,
 	);
 
 	readonly affectedByCondition = derive<Character, boolean>((c) => {
 		// Todo, make this better
 		return (
-			c.conditions.mods.acLooseDex.messages.length > 0
-			|| c.conditions.mods.ac.messages.length > 0
+			c.conditions.mods.acLooseDex.messages.length > 0 ||
+			c.conditions.mods.ac.messages.length > 0
 		);
 	});
 }

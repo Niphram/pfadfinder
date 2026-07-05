@@ -22,6 +22,13 @@
 				"caughtErrorsIgnorePattern": "^_"
 			}
 		],
+		"eslint/no-unused-expressions": [
+			"error",
+			{
+				"allowShortCircuit": true
+			}
+		],
+		"eslint/no-undef": "off",
 		"typescript/strict-boolean-expressions": [
 			"error",
 			{
@@ -31,7 +38,7 @@
 				"allowNullableString": true
 			}
 		],
-		"eslint/no-undef": "off",
-		"typescript/no-unnecessary-type-assertion": "error"
+		"typescript/no-unnecessary-type-assertion": "error",
+		"typescript/consistent-type-imports": "error"
 	}
 }

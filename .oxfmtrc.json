@@ -1,24 +1,13 @@
 {
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
 	"useTabs": true,
 	"singleQuote": true,
 	"trailingComma": "all",
-	"experimentalOperatorPosition": "start",
 	"printWidth": 80,
-	"plugins": [
-		"prettier-plugin-svelte",
-		"@ianvs/prettier-plugin-sort-imports",
-		"prettier-plugin-tailwindcss"
-	],
-	"experimentalTernaries": true,
-	"overrides": [
-		{
-			"files": "*.svelte",
-			"options": {
-				"parser": "svelte"
-			}
-		}
-	],
-	"tailwindStylesheet": "./src/app.css",
+	"sortTailwindcss": {
+		"stylesheet": "./src/app.css"
+	},
+	"svelte": {},
 	"importOrder": [
 		"<BUILTIN_MODULES>",
 		"",
@@ -39,5 +28,19 @@
 		"^\\$lib/data(/.*)?$",
 		"",
 		"^[.]"
+	],
+	"sortPackageJson": true,
+	"ignorePatterns": [
+		".DS_Store",
+		"node_modules",
+		"/build",
+		"/.svelte-kit",
+		"/package",
+		".env",
+		".env.*",
+		"!.env.example",
+		"pnpm-lock.yaml",
+		"package-lock.json",
+		"yarn.lock"
 	]
 }

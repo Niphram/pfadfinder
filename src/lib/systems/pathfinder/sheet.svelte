@@ -75,7 +75,7 @@
 	>
 		{#each pages as { key, component, active } (key)}
 			{#if active}
-				{@const SvelteComponent = component}
+				{const SvelteComponent = component}
 				<div
 					id={key}
 					class="w-full flex-none snap-center snap-always overflow-y-scroll p-4"

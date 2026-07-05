@@ -65,12 +65,11 @@
 		onscroll={synchronizeScroll}
 		spellcheck="false"
 		class={[
-			c.settings.enableMacroHighlighting
-				&& 'relative z-20 resize-none bg-transparent text-transparent caret-base-content',
+			c.settings.enableMacroHighlighting &&
+				'relative z-20 resize-none bg-transparent text-transparent caret-base-content',
 			commonClasses,
 			className,
-		]}
-	></textarea>
+		]}></textarea>
 
 	{#if c.settings.enableMacroHighlighting}
 		<div
@@ -85,7 +84,7 @@
 				<span class="text-current/50">{placeholder}</span>
 			{:else}
 				{#each textStyle.spans as { start, length, props }, i (i)}
-					{@const { color, decoration } = props}
+					{const { color, decoration } = props}
 					<span style:color style:text-decoration={decoration}
 						>{value.substring(start, start + length)}</span
 					>

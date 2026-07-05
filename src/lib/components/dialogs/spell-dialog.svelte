@@ -211,7 +211,7 @@
 				<div class="flex flex-row gap-2">
 					Damage
 					<button
-						class="btn btn-xs btn-secondary"
+						class="btn btn-secondary btn-xs"
 						onclick={preventDefault(addDamageToSpell)}>Add</button
 					>
 				</div>

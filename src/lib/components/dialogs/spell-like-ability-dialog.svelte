@@ -202,7 +202,7 @@
 			<Divider>
 				Damage
 				<button
-					class="btn btn-xs btn-secondary"
+					class="btn btn-secondary btn-xs"
 					onclick={preventDefault(addDamageToSLA)}>Add</button
 				>
 			</Divider>

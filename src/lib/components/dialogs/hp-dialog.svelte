@@ -134,9 +134,9 @@
 
 			{#if conHp !== 0}
 				<Alert level="info">
-					Constitution Mod: {Math.abs(conHp)} HP will be {conHp < 0 ?
-						'subtracted'
-					:	'added'}
+					Constitution Mod: {Math.abs(conHp)} HP will be {conHp < 0
+						? 'subtracted'
+						: 'added'}
 				</Alert>
 			{/if}
 

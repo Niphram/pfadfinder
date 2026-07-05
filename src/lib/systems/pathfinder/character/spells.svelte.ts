@@ -157,14 +157,14 @@ export class Spell extends SpellCommonProps {
 				['Effect', this.effect],
 				[
 					'Saving Throw',
-					this.savingThrow.hasSave
-						&& `${this.savingThrow.effect} (DC ${saveDc})`,
+					this.savingThrow.hasSave &&
+						`${this.savingThrow.effect} (DC ${saveDc})`,
 				],
 				['Spell Resistance', this.spellResistance],
 				[
 					'Attack',
-					this.attack.hasAttack
-						&& `${withSign(attackBonus)} (${this.attack.type}) (Crit ≥${this.attack.critRange} for x${
+					this.attack.hasAttack &&
+						`${withSign(attackBonus)} (${this.attack.type}) (Crit ≥${this.attack.critRange} for x${
 							this.attack.critMultiplier
 						})`,
 				],
@@ -199,8 +199,8 @@ export class SpellLikeAbility extends SpellCommonProps {
 				['Effect', this.effect.value],
 				[
 					'Saving Throw',
-					this.savingThrow.hasSave.value
-						&& `${this.savingThrow.effect.value} (DC ${this.savingThrow.dcMod.value})`,
+					this.savingThrow.hasSave.value &&
+						`${this.savingThrow.effect.value} (DC ${this.savingThrow.dcMod.value})`,
 				],
 				['Spell Resistance', this.spellResistance.value],
 			] as const

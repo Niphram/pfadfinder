@@ -58,7 +58,7 @@
 			<div class="badge badge-outline badge-neutral">
 				{c.equipment.totalWeight} lb.
 			</div>
-			<button class="btn btn-xs btn-secondary" onclick={addItem}>Add</button>
+			<button class="btn btn-secondary btn-xs" onclick={addItem}>Add</button>
 		</div>
 	</div>
 
@@ -67,7 +67,7 @@
 	<div class="divider">
 		<div class="flex flex-row gap-2">
 			AC Items
-			<button class="btn btn-xs btn-secondary" onclick={addAcItem}>Add</button>
+			<button class="btn btn-secondary btn-xs" onclick={addAcItem}>Add</button>
 		</div>
 	</div>
 

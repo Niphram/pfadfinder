@@ -1,6 +1,6 @@
 import type { LayoutLoad } from './$types';
 
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 
 import { mockStorage } from '$lib/mocks/storage';
 import { IDBStorage } from '$lib/storage';

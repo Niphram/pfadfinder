@@ -183,28 +183,28 @@ export class Conditions extends ClassSerializer {
 	]);
 
 	negative_levels = scalarCondition(0, (v) =>
-		v > 0 ?
-			[
-				C.ability('str', -v, `[Negative Levels] ${-v}`),
-				C.ability('dex', -v, `[Negative Levels] ${-v}`),
-				C.ability('con', -v, `[Negative Levels] ${-v}`),
-				C.ability('int', -v, `[Negative Levels] ${-v}`),
-				C.ability('wis', -v, `[Negative Levels] ${-v}`),
-				C.ability('cha', -v, `[Negative Levels] ${-v}`),
-				C.attacks(-v, `[Negative Levels] ${-v} to attack rolls`),
-				C.cmd(-v, `[Negative Levels] ${-v}`),
-				C.skillAbility('str', -v, `[Negative Levels] ${-v}`),
-				C.skillAbility('dex', -v, `[Negative Levels] ${-v}`),
-				C.skillAbility('con', -v, `[Negative Levels] ${-v}`),
-				C.skillAbility('int', -v, `[Negative Levels] ${-v}`),
-				C.skillAbility('wis', -v, `[Negative Levels] ${-v}`),
-				C.skillAbility('cha', -v, `[Negative Levels] ${-v}`),
-				C.save('fort', -v, `[Negative Levels] ${-v}`),
-				C.save('ref', -v, `[Negative Levels] ${-v}`),
-				C.save('will', -v, `[Negative Levels] ${-v}`),
-				C.maxHp(-v * 5, `[Negative Levels] ${-v * 5} HP`),
-			]
-		:	[],
+		v > 0
+			? [
+					C.ability('str', -v, `[Negative Levels] ${-v}`),
+					C.ability('dex', -v, `[Negative Levels] ${-v}`),
+					C.ability('con', -v, `[Negative Levels] ${-v}`),
+					C.ability('int', -v, `[Negative Levels] ${-v}`),
+					C.ability('wis', -v, `[Negative Levels] ${-v}`),
+					C.ability('cha', -v, `[Negative Levels] ${-v}`),
+					C.attacks(-v, `[Negative Levels] ${-v} to attack rolls`),
+					C.cmd(-v, `[Negative Levels] ${-v}`),
+					C.skillAbility('str', -v, `[Negative Levels] ${-v}`),
+					C.skillAbility('dex', -v, `[Negative Levels] ${-v}`),
+					C.skillAbility('con', -v, `[Negative Levels] ${-v}`),
+					C.skillAbility('int', -v, `[Negative Levels] ${-v}`),
+					C.skillAbility('wis', -v, `[Negative Levels] ${-v}`),
+					C.skillAbility('cha', -v, `[Negative Levels] ${-v}`),
+					C.save('fort', -v, `[Negative Levels] ${-v}`),
+					C.save('ref', -v, `[Negative Levels] ${-v}`),
+					C.save('will', -v, `[Negative Levels] ${-v}`),
+					C.maxHp(-v * 5, `[Negative Levels] ${-v * 5} HP`),
+				]
+			: [],
 	);
 
 	// Modifiers

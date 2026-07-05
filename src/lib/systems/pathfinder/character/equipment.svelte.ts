@@ -49,10 +49,10 @@ export class Item extends ClassSerializer {
 	children = array(() => new Item(), []);
 
 	readonly totalWeight: number = $derived(
-		this.quantity.value * this.weight.value
-			+ (this.isContainer.value ?
-				mapSum(this.children.value, (item) => item.totalWeight)
-			:	0),
+		this.quantity.value * this.weight.value +
+			(this.isContainer.value
+				? mapSum(this.children.value, (item) => item.totalWeight)
+				: 0),
 	);
 
 	recharge(this: SerdeProxy<Item>) {
@@ -102,8 +102,8 @@ export class Equipment extends ClassSerializer {
 	);
 
 	readonly maxDexBonus = $derived(
-		mapMin(this.acItems.value, (i) => i.maxDexBonus.value ?? Infinity)
-			?? Infinity,
+		mapMin(this.acItems.value, (i) => i.maxDexBonus.value ?? Infinity) ??
+			Infinity,
 	);
 
 	readonly armorCheckPenalty = $derived(

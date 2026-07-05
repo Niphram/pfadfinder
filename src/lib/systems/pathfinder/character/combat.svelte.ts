@@ -73,11 +73,11 @@ export class CombatManeuverBonus extends ClassSerializer {
 		const { ability, mod } = sizeModifiers[c.race.size];
 		const conditionMod = c.conditions.mods.meeleeAtk.mod;
 		return (
-			c.combat.bab.mod
-			+ mod
-			+ c[ability].mod
-			+ this.bonus.eval(c)
-			+ conditionMod
+			c.combat.bab.mod +
+			mod +
+			c[ability].mod +
+			this.bonus.eval(c) +
+			conditionMod
 		);
 	});
 }
@@ -91,13 +91,13 @@ export class CombatManeuverDefense extends ClassSerializer {
 		const { mod } = sizeModifiers[c.race.size];
 		const conditionMod = c.conditions.mods.cmd.mod;
 		return (
-			10
-			+ c.combat.bab.mod
-			+ c.str.mod
-			+ c.dex.mod
-			+ mod
-			+ this.bonus.eval(c)
-			+ conditionMod
+			10 +
+			c.combat.bab.mod +
+			c.str.mod +
+			c.dex.mod +
+			mod +
+			this.bonus.eval(c) +
+			conditionMod
 		);
 	});
 }
@@ -133,28 +133,29 @@ export class AttackRoll extends ClassSerializer {
 	readonly attacks = derive<Character, number[]>((c) => {
 		const bab = c.combat.bab.mod;
 		const fullAttackCount = Math.max(Math.ceil(bab / 5), 1);
-		const abilityMod =
-			this.abilityModifier.value ? c[this.abilityModifier.value].mod : 0;
+		const abilityMod = this.abilityModifier.value
+			? c[this.abilityModifier.value].mod
+			: 0;
 		const bonus = this.bonusModifier.eval(c) ?? 0;
 
 		switch (this.baseModifier.value) {
 			case 'meelee':
 				return attackArray(
 					fullAttackCount,
-					bab
-						+ c.str.mod
-						+ abilityMod
-						+ bonus
-						+ c.conditions.mods.meeleeAtk.mod,
+					bab +
+						c.str.mod +
+						abilityMod +
+						bonus +
+						c.conditions.mods.meeleeAtk.mod,
 				);
 			case 'ranged':
 				return attackArray(
 					fullAttackCount,
-					bab
-						+ c.dex.mod
-						+ abilityMod
-						+ bonus
-						+ c.conditions.mods.rangedAtk.mod,
+					bab +
+						c.dex.mod +
+						abilityMod +
+						bonus +
+						c.conditions.mods.rangedAtk.mod,
 				);
 			case 'babFull':
 				return attackArray(
@@ -169,10 +170,10 @@ export class AttackRoll extends ClassSerializer {
 			case 'cmb':
 				return attackArray(
 					1,
-					c.combat.cmb.mod
-						+ abilityMod
-						+ bonus
-						+ c.conditions.mods.meeleeAtk.mod, // TODO: meelee/ranged fix
+					c.combat.cmb.mod +
+						abilityMod +
+						bonus +
+						c.conditions.mods.meeleeAtk.mod, // TODO: meelee/ranged fix
 				);
 			default:
 				return attackArray(

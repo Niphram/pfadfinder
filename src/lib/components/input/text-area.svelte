@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { StringWrapper } from '$lib/serde';
+	import { StringWrapper } from '$lib/serde';
 
 	import InputWrapper from '$lib/atoms/input-wrapper.svelte';
 
@@ -46,6 +46,5 @@
 			'textarea-bordered textarea w-full resize-none',
 			!result.ok && 'input-error',
 		]}
-		bind:value={tempString.value}
-	></textarea>
+		bind:value={tempString.value}></textarea>
 </InputWrapper>

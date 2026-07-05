@@ -22,13 +22,13 @@
 
 	{#each SKILL_KEYS as key (key)}
 		{#each c.skills[key].skills as variant, index (index)}
-			{@const ability = c.skills[key].skills[index].ability}
-			{@const penalty = c[ability].skillCheckMod !== c[ability].mod}
-			{@const trainedOnly = c.skills[key].trained}
-			{@const conditionNotes = c.skills[key].skills[index].conditionNotes}
-			{@const hasConditions = conditionNotes.length > 0}
+			{const ability = c.skills[key].skills[index].ability}
+			{const penalty = c[ability].skillCheckMod !== c[ability].mod}
+			{const trainedOnly = c.skills[key].trained}
+			{const conditionNotes = c.skills[key].skills[index].conditionNotes}
+			{const hasConditions = conditionNotes.length > 0}
 
-			{@const skillTags = [
+			{const skillTags = [
 				penalty && '!',
 				variant.classSkill && 'c',
 				variant.ranks > 0 && 't',
@@ -54,10 +54,10 @@
 					openDialog(SkillDialog, { key, index }),
 				)}
 			>
-				<div class="btn join flex flex-row gap-1 p-0 btn-ghost btn-sm">
+				<div class="btn join flex flex-row gap-1 btn-ghost p-0 btn-sm">
 					<div
 						class={[
-							'join-item flex items-center bg-accent text-accent-content',
+							'join-item flex items-center border-0 bg-accent text-accent-content',
 							penalty && 'bg-warning',
 						]}
 					>
@@ -65,29 +65,30 @@
 					</div>
 					<div
 						class={[
-							'join-item flex grow items-center bg-base-200 text-base-content',
+							'join-item flex grow items-center border-0 bg-base-200 text-base-content',
 							hasConditions && 'bg-warning! text-warning-content!',
 						]}
 					>
 						<span
 							class={[
-								'join-item grow align-middle decoration-wavy',
+								'grow align-middle decoration-wavy',
 								variant.notes && 'underline',
 							]}
-							>{$t(`skills.${key}`)}{variant.name ? ` (${variant.name})` : ''}{(
-								trainedOnly
-							) ?
-								'*'
-							:	''}</span
 						>
+							{$t(`skills.${key}`)}{#if variant.name}
+								(${variant.name})`
+							{/if}{#if trainedOnly}
+								*
+							{/if}
+						</span>
 					</div>
 					<div
 						class={[
-							'join-item flex items-center bg-accent text-accent-content',
+							'join-item flex items-center border-0 bg-accent text-accent-content',
 							penalty && 'bg-warning',
 						]}
 					>
-						<span class="join-item w-16 align-middle"
+						<span class="w-16 align-middle"
 							>{withSign(c.skills[key].skills[index].mod)}</span
 						>
 					</div>

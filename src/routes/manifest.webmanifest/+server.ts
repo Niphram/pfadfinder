@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 
 import type { RequestHandler } from './$types';
 
-import { dev } from '$app/environment';
+import { dev } from '$app/env';
 import { asset, resolve } from '$app/paths';
 
 import { ICON_PUPOSES_SIZES } from '$lib/server/icon';

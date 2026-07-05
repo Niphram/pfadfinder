@@ -169,7 +169,7 @@
 						href={resolve('/character/[id]', { id })}
 						aria-label="Open {name}"
 						role="button"
-						class="btn col-span-2 grid h-max btn-block grid-cols-subgrid items-center p-2 text-left align-middle font-normal btn-ghost"
+						class="btn col-span-2 grid h-max btn-block grid-cols-subgrid items-center btn-ghost p-2 text-left align-middle font-normal"
 						oncontextmenu={preventDefault(() => openCharacterDialog(id))}
 					>
 						<div class="list-col-grow overflow-hidden">

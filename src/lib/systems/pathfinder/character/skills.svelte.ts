@@ -78,13 +78,13 @@ export class Skill extends ClassSerializer {
 
 	readonly mod = derive<Character>(
 		(c) =>
-			c[this.ability.value].skillCheckMod
-			+ this.ranks.value
-			+ this.misc.eval(c)
-			+ this.temp.eval(c)
-			+ (this.classSkill.value && this.ranks.value > 0 ? 3 : 0)
-			+ c.conditions.mods[`${this.ability.value}Skill`].mod
-			+ c.conditions.mods[this.key].mod,
+			c[this.ability.value].skillCheckMod +
+			this.ranks.value +
+			this.misc.eval(c) +
+			this.temp.eval(c) +
+			(this.classSkill.value && this.ranks.value > 0 ? 3 : 0) +
+			c.conditions.mods[`${this.ability.value}Skill`].mod +
+			c.conditions.mods[this.key].mod,
 	);
 
 	constructor(public readonly key: SkillKey) {

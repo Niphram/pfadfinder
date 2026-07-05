@@ -1,11 +1,33 @@
+import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import tailwindcss from '@tailwindcss/vite';
 import { svelteTesting } from '@testing-library/svelte/vite';
 import { createViteLicensePlugin } from 'rollup-license-plugin';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-	plugins: [createViteLicensePlugin(), tailwindcss(), sveltekit()],
+	plugins: [
+		createViteLicensePlugin(),
+		tailwindcss(),
+		sveltekit({
+			preprocess: vitePreprocess(),
+
+			paths: {
+				base: process.argv.includes('dev')
+					? ''
+					: (process.env.BASE_PATH as `/${string}`),
+			},
+
+			adapter: adapter({
+				pages: 'build',
+				assets: 'build',
+				fallback: '404.html',
+				precompress: false,
+				strict: true,
+			}),
+		}),
+	],
 	define: {
 		__BUILD_DATE__: JSON.stringify(
 			new Date().toISOString().replace(/[^0-9]/g, ''),

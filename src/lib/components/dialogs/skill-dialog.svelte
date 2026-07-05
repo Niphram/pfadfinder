@@ -22,9 +22,9 @@
 	const { c } = $derived(getChar());
 
 	let variant = $derived(
-		c.skills[key].skills[index].name ?
-			` (${c.skills[key].skills[index].name})`
-		:	'',
+		c.skills[key].skills[index].name
+			? ` (${c.skills[key].skills[index].name})`
+			: '',
 	);
 </script>
 

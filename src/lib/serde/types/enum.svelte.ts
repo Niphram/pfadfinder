@@ -43,8 +43,8 @@ export class EnumWrapper<
 		if (value === null && this.options.optional) {
 			this.value = null as Option<Values[number], IsOptional>;
 		} else if (
-			value !== null
-			&& this.values.includes(value as Values[number])
+			value !== null &&
+			this.values.includes(value as Values[number])
 		) {
 			this.value = value as Option<Values[number], IsOptional>;
 		}
