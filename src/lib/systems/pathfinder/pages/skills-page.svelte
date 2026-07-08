@@ -22,20 +22,24 @@
 
 	{#each SKILL_KEYS as key (key)}
 		{#each c.skills[key].skills as variant, index (index)}
-			{const ability = c.skills[key].skills[index].ability}
-			{const penalty = c[ability].skillCheckMod !== c[ability].mod}
-			{const trainedOnly = c.skills[key].trained}
-			{const conditionNotes = c.skills[key].skills[index].conditionNotes}
-			{const hasConditions = conditionNotes.length > 0}
+			{const ability = $derived(c.skills[key].skills[index].ability)}
+			{const penalty = $derived(c[ability].skillCheckMod !== c[ability].mod)}
+			{const trainedOnly = $derived(c.skills[key].trained)}
+			{const conditionNotes = $derived(
+				c.skills[key].skills[index].conditionNotes,
+			)}
+			{const hasConditions = $derived(conditionNotes.length > 0)}
 
-			{const skillTags = [
-				penalty && '!',
-				variant.classSkill && 'c',
-				variant.ranks > 0 && 't',
-				hasConditions && '?',
-			]
-				.filter(Boolean)
-				.join(', ')}
+			{const skillTags = $derived(
+				[
+					penalty && '!',
+					variant.classSkill && 'c',
+					variant.ranks > 0 && 't',
+					hasConditions && '?',
+				]
+					.filter(Boolean)
+					.join(', '),
+			)}
 
 			<button
 				class="w-full"

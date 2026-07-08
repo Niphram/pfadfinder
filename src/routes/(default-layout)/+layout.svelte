@@ -2,6 +2,8 @@
 	import { resolve } from '$app/paths';
 
 	let { children } = $props();
+
+	$inspect($effect.pending());
 </script>
 
 <div class="flex min-h-dvh flex-col items-stretch gap-4">
@@ -18,7 +20,17 @@
 
 		<!-- Content -->
 		<div class="flex grow flex-col items-center px-2 md:px-4">
-			{@render children()}
+			<svelte:boundary>
+				{#snippet pending()}
+					<div
+						class="fixed top-0 right-0 bottom-0 left-0 grid grow place-items-center items-center"
+					>
+						<span class="loading w-32 loading-bars"></span>
+					</div>
+				{/snippet}
+
+				{@render children()}
+			</svelte:boundary>
 		</div>
 	</div>
 

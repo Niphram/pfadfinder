@@ -154,7 +154,7 @@
 								</div>
 							{/snippet}
 
-							{const details = attack.details}
+							{const details = $derived(attack.details)}
 							{#if details.length > 0}
 								<Divider class="my-0">Details</Divider>
 								<div

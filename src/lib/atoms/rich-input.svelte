@@ -72,7 +72,7 @@
 		<div class={['absolute top-0 left-0 z-0', commonClasses, className]}>
 			<div bind:this={renderEl} class="overflow-hidden whitespace-pre">
 				{#each textStyle.spans as { start, length, props }, i (i)}
-					{const { color, decoration } = props}
+					{const { color, decoration } = $derived(props)}
 					<span style:color style:text-decoration={decoration}
 						>{value.substring(start, start + length)}</span
 					>
