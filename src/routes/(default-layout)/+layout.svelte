@@ -23,13 +23,24 @@
 			<svelte:boundary>
 				{#snippet pending()}
 					<div
-						class="fixed top-0 right-0 bottom-0 left-0 grid grow place-items-center items-center"
+						class={[
+							'fixed top-0 right-0 bottom-0 left-0 grid grow place-items-center items-center ',
+							'opacity-100 transition-all delay-500 duration-200',
+							'starting:opacity-0',
+						]}
 					>
 						<span class="loading w-32 loading-bars"></span>
 					</div>
 				{/snippet}
 
-				{@render children()}
+				<div
+					class={[
+						'h-full w-full scale-100 transition-all duration-100',
+						'starting:scale-75 starting:opacity-0',
+					]}
+				>
+					{@render children()}
+				</div>
 			</svelte:boundary>
 		</div>
 	</div>
