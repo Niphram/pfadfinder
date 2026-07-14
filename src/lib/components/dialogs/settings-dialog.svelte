@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
+
 	import { t } from '$lib/i18n';
 	import { preventDefault } from '$lib/utils/event-modifiers';
 
@@ -14,7 +16,7 @@
 	import { useDialog } from '../dialog-provider.svelte';
 	import { selectedTheme, THEME_KEYS } from '../theme-changer.svelte';
 
-	const { openDialog } = useDialog();
+	const { openDialog, closeAll } = useDialog();
 	const { c } = $derived(getChar());
 
 	const showDanger = $derived(c.settings.experimentalFeatures);
@@ -93,4 +95,14 @@
 			{/if}
 		</div>
 	{/if}
+
+	<div class="divider"></div>
+
+	<div class="flex flex-col gap-4">
+		<a
+			href={resolve('/')}
+			onclick={() => closeAll()}
+			class="btn w-full btn-secondary">Exit to menu</a
+		>
+	</div>
 </DialogBase>
