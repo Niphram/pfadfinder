@@ -2,8 +2,6 @@
 	import { resolve } from '$app/paths';
 
 	let { children } = $props();
-
-	$inspect($effect.pending());
 </script>
 
 <div class="flex min-h-dvh flex-col items-stretch gap-4">
