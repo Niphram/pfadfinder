@@ -6,6 +6,7 @@
 	import { navigating } from '$app/state';
 
 	import DialogProvider from '$lib/components/dialog-provider.svelte';
+	import BrokenScreen from '$lib/components/fun/broken-screen.svelte';
 	import PageLoader from '$lib/components/page-loader.svelte';
 	import ThemeChanger from '$lib/components/theme-changer.svelte';
 	import ToastProvider from '$lib/components/toast-provider.svelte';
@@ -30,6 +31,8 @@
 <ThemeChanger>
 	<DialogProvider>
 		<ToastProvider>
+			<BrokenScreen />
+
 			{@render children()}
 		</ToastProvider>
 	</DialogProvider>
