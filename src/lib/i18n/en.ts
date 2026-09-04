@@ -167,6 +167,11 @@ export default {
 		items: (amount: number) => count('item', amount),
 	},
 	spell: {
+		displayFilter: {
+			all: 'All',
+			favorites_only: 'Only favorites',
+			prepared_only: 'Only prepared',
+		},
 		attackType: {
 			touch: 'Touch',
 			rangedTouch: 'Ranged Touch',

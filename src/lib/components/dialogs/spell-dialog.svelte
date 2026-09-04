@@ -39,6 +39,12 @@
 <DialogBase title="Spell">
 	<div class="flex flex-col gap-2">
 		{#if spellIdx < c.spells[spellLevel].spells.length}
+			<Toggle
+				name="favorite"
+				label="Favorite?"
+				bind:checked={c.spells[spellLevel].spells[spellIdx].favorite}
+			></Toggle>
+
 			<Input
 				name="spellName"
 				label="Name"

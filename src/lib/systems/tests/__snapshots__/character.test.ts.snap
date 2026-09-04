@@ -1006,6 +1006,7 @@ Character {
   "spells": Spells {
     "dcAbility": "int",
     "dcBonus": 3,
+    "displayFilter": "all",
     "level_0": SpellLevelList {
       "dc": 10,
       "dcBonus": 0,
@@ -1030,6 +1031,7 @@ Character {
           "description": "",
           "duration": "",
           "effect": "",
+          "favorite": false,
           "id": "static-test-id",
           "isDomainSpell": false,
           "name": "Test Cantrip",
@@ -1161,6 +1163,7 @@ Character {
         "description": "",
         "duration": "",
         "effect": "",
+        "favorite": false,
         "id": "static-test-id",
         "name": "SLA Test",
         "notes": "",
@@ -2127,6 +2130,7 @@ Character {
   "spells": Spells {
     "dcAbility": null,
     "dcBonus": null,
+    "displayFilter": "all",
     "level_0": SpellLevelList {
       "dc": 10,
       "dcBonus": 0,

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
+	import { string } from '$lib/serde';
 	import { preventDefault, stopPropagation } from '$lib/utils/event-modifiers';
 
 	import Button from '$lib/atoms/button.svelte';
@@ -12,6 +13,8 @@
 	import SpellLevelDialog from '$lib/components/dialogs/spell-level-dialog.svelte';
 	import SpellLikeAbilityDialog from '$lib/components/dialogs/spell-like-ability-dialog.svelte';
 	import DragHandle from '$lib/components/icons/drag-handle.svelte';
+	import Input from '$lib/components/input/input.svelte';
+	import Select from '$lib/components/input/select.svelte';
 	import SortableList from '$lib/components/sortable-list.svelte';
 
 	import {
@@ -45,6 +48,8 @@
 		if (c.spells.spellLikeAbilities[index].remaining > 0)
 			c.spells.spellLikeAbilities[index].remaining--;
 	}
+
+	const searchString = string('', { minLength: 0 });
 </script>
 
 <div>
@@ -52,6 +57,21 @@
 		Spells
 		<Button size="xs" color="primary" onclick={openConfigDialog}>Config</Button>
 	</Divider>
+
+	<div class="flex flex-row items-center gap-2">
+		<div class="flex flex-row items-center gap-2">
+			<p>Filter</p>
+
+			<Select
+				name="Filter"
+				translate={(key) => $t(`spell.displayFilter.${key}`)}
+				class="w-min"
+				value={c.spells.$.displayFilter}
+			/>
+		</div>
+
+		<Input name="searchstring" placeholder="Search" value={searchString} />
+	</div>
 
 	{#each SPELL_LEVELS as level, idx (level)}
 		{#if c.spells[level].perDay > 0}
@@ -88,7 +108,15 @@
 				{/snippet}
 
 				{#snippet children({ item: spell, index: spellIdx })}
-					<div class="flex w-full flex-row">
+					{@const isFavorite = spell.favorite}
+					{@const isPrepared = spell.prepared > 0}
+
+					{@const hide =
+						(searchString.value && !spell.name.includes(searchString.value)) ||
+						(c.spells.displayFilter === 'favorites_only' && !isFavorite) ||
+						(c.spells.displayFilter === 'prepared_only' && !isPrepared)}
+
+					<div class={['flex w-full flex-row', hide && 'hidden']}>
 						<div
 							class="drag-handle flex w-6 items-center justify-center"
 							role="button"
@@ -104,7 +132,10 @@
 							bind:open={spell.open}
 						>
 							{#snippet title()}
-								<div class="flex flex-row">
+								<div class="flex flex-row gap-1">
+									{#if isFavorite}
+										<span class="text-sm font-semibold">★</span>
+									{/if}
 									<span class="grow text-sm font-semibold">{spell.name}</span>
 									{#if spell.prepared > 0}
 										<button

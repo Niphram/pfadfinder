@@ -45,6 +45,13 @@ export const SPELL_ATTACK_TYPE = [
 ] as const;
 export type SpellAttackType = (typeof SPELL_ATTACK_TYPE)[number];
 
+export const SPELL_DISPLAY_TYPE = [
+	'all',
+	'favorites_only',
+	'prepared_only',
+] as const;
+export type SpellDisplayType = (typeof SPELL_DISPLAY_TYPE)[number];
+
 export class SpellAttackDamage extends ClassSerializer {
 	damage = string('', { maxLength: 1000 });
 
@@ -77,6 +84,8 @@ export class SpellCommonProps extends ClassSerializer {
 	open = boolean(false);
 
 	name = string('Unnamed Spell', { minLength: 1, maxLength: 100 });
+
+	favorite = boolean(false);
 
 	school = string('', { maxLength: 100 });
 
@@ -243,6 +252,8 @@ export class SpellLevelList extends ClassSerializer {
 }
 
 export class Spells extends ClassSerializer {
+	displayFilter = enumeration(SPELL_DISPLAY_TYPE, 'all');
+
 	dcAbility = enumeration(ABILITY_KEYS, null, { optional: true });
 
 	dcBonus = macro('', { optional: true });
