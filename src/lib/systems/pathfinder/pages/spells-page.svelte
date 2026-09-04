@@ -112,7 +112,10 @@
 					{@const isPrepared = spell.prepared > 0}
 
 					{@const hide =
-						(searchString.value && !spell.name.includes(searchString.value)) ||
+						(searchString.value &&
+							!spell.name
+								.toLocaleLowerCase()
+								.includes(searchString.value.toLocaleLowerCase())) ||
 						(c.spells.displayFilter === 'favorites_only' && !isFavorite) ||
 						(c.spells.displayFilter === 'prepared_only' && !isPrepared)}
 
