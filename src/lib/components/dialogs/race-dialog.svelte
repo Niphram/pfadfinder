@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n/index.js';
 
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
 
-	import Input from '$lib/components/input/input.svelte';
-	import MacroNumber from '$lib/components/input/macro-number.svelte';
+	import Input from '#lib/components/input/input.svelte';
+	import MacroNumber from '#lib/components/input/macro-number.svelte';
 
-	import { ABILITY_KEYS, getChar } from '$lib/data';
+	import { ABILITY_KEYS, getChar } from '#lib/data/index.js';
 
 	const { c } = $derived(getChar());
 </script>

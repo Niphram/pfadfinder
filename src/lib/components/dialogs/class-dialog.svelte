@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n/index.js';
 
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
 
-	import Input from '$lib/components/input/input.svelte';
-	import Number from '$lib/components/input/number.svelte';
-	import Toggle from '$lib/components/input/toggle.svelte';
+	import Input from '#lib/components/input/input.svelte';
+	import Number from '#lib/components/input/number.svelte';
+	import Toggle from '#lib/components/input/toggle.svelte';
 
-	import { getChar, SAVE_KEYS } from '$lib/data';
+	import { getChar, SAVE_KEYS } from '#lib/data/index.js';
 
 	interface Props {
 		classIndex: number;

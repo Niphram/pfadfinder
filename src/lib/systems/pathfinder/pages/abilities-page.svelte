@@ -1,14 +1,14 @@
 <script lang="ts">
-	import AbilityButton from '$lib/components/buttons/ability-button.svelte';
-	import AcButton from '$lib/components/buttons/ac-button.svelte';
-	import InitButton from '$lib/components/buttons/init-button.svelte';
-	import SaveButton from '$lib/components/buttons/save-button.svelte';
-	import { useDialog } from '$lib/components/dialog-provider.svelte';
-	import AcDialog from '$lib/components/dialogs/ac-dialog.svelte';
-	import { useToast } from '$lib/components/toast-provider.svelte';
-	import MultilineMacroToast from '$lib/components/toasts/multiline-macro-toast.svelte';
+	import AbilityButton from '#lib/components/buttons/ability-button.svelte';
+	import AcButton from '#lib/components/buttons/ac-button.svelte';
+	import InitButton from '#lib/components/buttons/init-button.svelte';
+	import SaveButton from '#lib/components/buttons/save-button.svelte';
+	import { useDialog } from '#lib/components/dialog-provider.svelte';
+	import AcDialog from '#lib/components/dialogs/ac-dialog.svelte';
+	import { useToast } from '#lib/components/toast-provider.svelte';
+	import MultilineMacroToast from '#lib/components/toasts/multiline-macro-toast.svelte';
 
-	import { ABILITY_KEYS, getChar, SAVE_KEYS } from '$lib/data';
+	import { ABILITY_KEYS, getChar, SAVE_KEYS } from '#lib/data/index.js';
 
 	const { showToast } = useToast();
 	const { openDialog } = useDialog();

@@ -1,7 +1,7 @@
 <script>
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
 
-	import { getChar } from '$lib/data';
+	import { getChar } from '#lib/data/index.js';
 
 	import Number from '../input/number.svelte';
 	import Toggle from '../input/toggle.svelte';

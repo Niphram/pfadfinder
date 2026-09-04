@@ -1,6 +1,6 @@
-import type { SerdeProxy } from '$lib/serde/proxy';
+import type { SerdeProxy } from '#lib/serde/proxy.js';
 
-import type { Character } from '$lib/data';
+import type { Character } from '#lib/data/index.js';
 
 import { evalNode } from './evaluate';
 import { Parser } from './parser';

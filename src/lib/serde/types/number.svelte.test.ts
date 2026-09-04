@@ -1,8 +1,8 @@
 import { randBoolean, randNumber } from '@ngneat/falso';
 import { describe, expect, it } from 'vite-plus/test';
 
-import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL } from '$lib/serde';
-import { expectErrResult, expectOkResult } from '$lib/test-utils';
+import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL } from '#lib/serde/index.js';
+import { expectErrResult, expectOkResult } from '#lib/test-utils/index.js';
 
 import { number, NumberWrapper } from './number.svelte';
 

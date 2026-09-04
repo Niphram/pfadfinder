@@ -4,7 +4,7 @@ import {
 	enumeration,
 	macro,
 	string,
-} from '$lib/serde';
+} from '#lib/serde/index.js';
 
 import { ABILITY_KEYS } from './abilities.svelte';
 import type { Character } from './character.svelte';

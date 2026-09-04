@@ -1,4 +1,4 @@
-import { ClassSerializer, derive, macro, string } from '$lib/serde';
+import { ClassSerializer, derive, macro, string } from '#lib/serde/index.js';
 
 import type { Character } from './character.svelte';
 

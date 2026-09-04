@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import { preventDefault } from '$lib/utils/event-modifiers';
+	import { t } from '#lib/i18n/index.js';
+	import { preventDefault } from '#lib/utils/event-modifiers.js';
 
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
 
-	import Input from '$lib/components/input/input.svelte';
+	import Input from '#lib/components/input/input.svelte';
 
-	import { getChar, Skill, type SkillKey } from '$lib/data';
+	import { getChar, Skill, type SkillKey } from '#lib/data/index.js';
 
 	const { c } = $derived(getChar());
 

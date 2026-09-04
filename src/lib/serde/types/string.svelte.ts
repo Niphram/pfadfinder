@@ -1,4 +1,4 @@
-import { Err, Ok, type Result } from '$lib/utils/result';
+import { Err, Ok, type Result } from '#lib/utils/result.js';
 
 import {
 	DESERIALIZE_SYMBOL,

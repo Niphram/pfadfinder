@@ -7,7 +7,7 @@ import {
 	number,
 	string,
 	type SerdeProxy,
-} from '$lib/serde';
+} from '#lib/serde/index.js';
 
 export class Trait extends ClassSerializer {
 	id = string(nanoid());

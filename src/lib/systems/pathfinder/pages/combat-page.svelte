@@ -1,24 +1,24 @@
 <script lang="ts">
-	import { parseTextWithMacros } from '$lib/macro/text';
-	import { preventDefault } from '$lib/utils/event-modifiers';
-	import { withSign } from '$lib/utils/format';
-	import { useMacroNotify } from '$lib/utils/notes';
+	import { parseTextWithMacros } from '#lib/macro/text.js';
+	import { preventDefault } from '#lib/utils/event-modifiers.js';
+	import { withSign } from '#lib/utils/format.js';
+	import { useMacroNotify } from '#lib/utils/notes.js';
 
-	import Collapse from '$lib/atoms/collapse.svelte';
-	import Divider from '$lib/atoms/divider.svelte';
-	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
+	import Collapse from '#lib/atoms/collapse.svelte';
+	import Divider from '#lib/atoms/divider.svelte';
+	import MultilineMacro from '#lib/atoms/multiline-macro.svelte';
 
-	import CaptionedButton from '$lib/components/captioned-button.svelte';
-	import { useDialog } from '$lib/components/dialog-provider.svelte';
-	import AttackDialog from '$lib/components/dialogs/attack-dialog.svelte';
-	import BabDialog from '$lib/components/dialogs/bab-dialog.svelte';
-	import CmbDialog from '$lib/components/dialogs/cmb-dialog.svelte';
-	import CmdDialog from '$lib/components/dialogs/cmd-dialog.svelte';
-	import SrDialog from '$lib/components/dialogs/sr-dialog.svelte';
-	import DragHandle from '$lib/components/icons/drag-handle.svelte';
-	import SortableList from '$lib/components/sortable-list.svelte';
+	import CaptionedButton from '#lib/components/captioned-button.svelte';
+	import { useDialog } from '#lib/components/dialog-provider.svelte';
+	import AttackDialog from '#lib/components/dialogs/attack-dialog.svelte';
+	import BabDialog from '#lib/components/dialogs/bab-dialog.svelte';
+	import CmbDialog from '#lib/components/dialogs/cmb-dialog.svelte';
+	import CmdDialog from '#lib/components/dialogs/cmd-dialog.svelte';
+	import SrDialog from '#lib/components/dialogs/sr-dialog.svelte';
+	import DragHandle from '#lib/components/icons/drag-handle.svelte';
+	import SortableList from '#lib/components/sortable-list.svelte';
 
-	import { Attack, getChar } from '$lib/data';
+	import { Attack, getChar } from '#lib/data/index.js';
 
 	const { openDialog } = useDialog();
 	const { macroNotify } = useMacroNotify();

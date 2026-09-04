@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n/index.js';
 
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
 
-	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
-	import Number from '$lib/components/input/number.svelte';
+	import MacroTextArea from '#lib/components/input/macro-text-area.svelte';
+	import Number from '#lib/components/input/number.svelte';
 
-	import { getChar, type FacetKey } from '$lib/data';
+	import { getChar, type FacetKey } from '#lib/data/index.js';
 
 	interface Props {
 		key?: FacetKey;

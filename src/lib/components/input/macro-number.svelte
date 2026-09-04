@@ -1,11 +1,11 @@
 <script lang="ts" generics="IsOptional extends boolean">
-	import type { Macro } from '$lib/serde';
-	import { computeMacroStyleWithError } from '$lib/text/macro-text-style';
+	import type { Macro } from '#lib/serde/index.js';
+	import { computeMacroStyleWithError } from '#lib/text/macro-text-style.js';
 
-	import InputWrapper from '$lib/atoms/input-wrapper.svelte';
-	import RichInput from '$lib/atoms/rich-input.svelte';
+	import InputWrapper from '#lib/atoms/input-wrapper.svelte';
+	import RichInput from '#lib/atoms/rich-input.svelte';
 
-	import { getChar } from '$lib/data';
+	import { getChar } from '#lib/data/index.js';
 
 	const { c } = $derived(getChar());
 

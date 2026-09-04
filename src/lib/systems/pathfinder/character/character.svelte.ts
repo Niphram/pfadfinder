@@ -1,6 +1,6 @@
-import { array } from '$lib/serde';
-import { BaseCharacter } from '$lib/systems/character';
-import { VERSION_NUMBER } from '$lib/systems/pathfinder/migrations';
+import { array } from '#lib/serde/index.js';
+import { BaseCharacter } from '#lib/systems/character.js';
+import { VERSION_NUMBER } from '#lib/systems/pathfinder/migrations.js';
 
 import { Ability } from './abilities.svelte';
 import { ArmorClass } from './armorclass.svelte';

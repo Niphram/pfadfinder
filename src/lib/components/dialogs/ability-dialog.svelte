@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import type { SerdeProxy } from '$lib/serde/proxy';
+	import { t } from '#lib/i18n/index.js';
+	import type { SerdeProxy } from '#lib/serde/proxy.js';
 
-	import MacroNumber from '$lib/components/input/macro-number.svelte';
-	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
-	import Number from '$lib/components/input/number.svelte';
+	import MacroNumber from '#lib/components/input/macro-number.svelte';
+	import MacroTextArea from '#lib/components/input/macro-text-area.svelte';
+	import Number from '#lib/components/input/number.svelte';
 
-	import type { Ability } from '$lib/data';
+	import type { Ability } from '#lib/data/index.js';
 
 	import DialogBase from '../../atoms/dialog-base.svelte';
 

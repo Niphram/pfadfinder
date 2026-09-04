@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { StringWrapper } from '$lib/serde';
+	import { StringWrapper } from '#lib/serde/index.js';
 
-	import InputWrapper from '$lib/atoms/input-wrapper.svelte';
+	import InputWrapper from '#lib/atoms/input-wrapper.svelte';
 
 	interface Props {
 		name: string;

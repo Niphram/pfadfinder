@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n/index.js';
 
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
 
-	import Checkbox from '$lib/components/input/checkbox.svelte';
-	import MacroNumber from '$lib/components/input/macro-number.svelte';
-	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
-	import Number from '$lib/components/input/number.svelte';
-	import Select from '$lib/components/input/select.svelte';
-	import Toggle from '$lib/components/input/toggle.svelte';
+	import Checkbox from '#lib/components/input/checkbox.svelte';
+	import MacroNumber from '#lib/components/input/macro-number.svelte';
+	import MacroTextArea from '#lib/components/input/macro-text-area.svelte';
+	import Number from '#lib/components/input/number.svelte';
+	import Select from '#lib/components/input/select.svelte';
+	import Toggle from '#lib/components/input/toggle.svelte';
 
-	import { getChar, type SkillKey } from '$lib/data';
+	import { getChar, type SkillKey } from '#lib/data/index.js';
 
 	interface Props {
 		key?: SkillKey;

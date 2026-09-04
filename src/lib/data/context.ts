@@ -1,6 +1,6 @@
 import { createContext } from 'svelte';
 
-import type { SerdeProxy } from '$lib/serde/proxy';
+import type { SerdeProxy } from '#lib/serde/proxy.js';
 
 import type { Character } from '../systems/pathfinder/character';
 

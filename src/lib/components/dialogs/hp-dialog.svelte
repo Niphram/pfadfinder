@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { preventDefault } from '$lib/utils/event-modifiers';
+	import { preventDefault } from '#lib/utils/event-modifiers.js';
 
-	import Alert from '$lib/atoms/alert.svelte';
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
-	import Divider from '$lib/atoms/divider.svelte';
+	import Alert from '#lib/atoms/alert.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
+	import Divider from '#lib/atoms/divider.svelte';
 
-	import MacroNumber from '$lib/components/input/macro-number.svelte';
-	import Number from '$lib/components/input/number.svelte';
+	import MacroNumber from '#lib/components/input/macro-number.svelte';
+	import Number from '#lib/components/input/number.svelte';
 
-	import { getChar } from '$lib/data';
+	import { getChar } from '#lib/data/index.js';
 
 	let { c } = $derived(getChar());
 

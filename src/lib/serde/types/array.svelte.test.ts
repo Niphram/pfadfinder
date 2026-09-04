@@ -1,7 +1,7 @@
 import { randNumber, toCollection } from '@ngneat/falso';
 import { describe, expect, it, vi } from 'vite-plus/test';
 
-import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL } from '$lib/serde';
+import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL } from '#lib/serde/index.js';
 
 import { array, ArrayWrapper } from './array.svelte';
 import { number } from './number.svelte';

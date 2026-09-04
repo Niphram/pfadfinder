@@ -12,8 +12,7 @@
 
 <article class="mx-auto prose p-4 select-text">
 	<p>
-		&lt;
-		<a href={resolve('/changelog')}>Back to changelogs</a>
+		<a href={resolve('changelog')}>Back to changelogs</a>
 	</p>
 
 	{@html data.changelogHtml}

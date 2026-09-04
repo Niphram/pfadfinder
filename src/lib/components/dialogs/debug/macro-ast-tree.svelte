@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { AstNodeType, type AstNode } from '$lib/macro/ast';
-	import type { BinaryOperator } from '$lib/macro/constants';
-	import { evalNode } from '$lib/macro/evaluate';
+	import { AstNodeType, type AstNode } from '#lib/macro/ast.js';
+	import type { BinaryOperator } from '#lib/macro/constants.js';
+	import { evalNode } from '#lib/macro/evaluate.js';
 
-	import { getChar } from '$lib/data';
+	import { getChar } from '#lib/data/index.js';
 
 	import Self from './macro-ast-tree.svelte';
 

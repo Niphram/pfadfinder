@@ -8,8 +8,8 @@ import {
 	number,
 	string,
 	type SerdeProxy,
-} from '$lib/serde';
-import { mapMin, mapSum } from '$lib/utils/array';
+} from '#lib/serde/index.js';
+import { mapMin, mapSum } from '#lib/utils/array.js';
 
 export const ARMOR_TYPES = [
 	'light',

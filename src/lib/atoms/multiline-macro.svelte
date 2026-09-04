@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { ClassValue } from 'svelte/elements';
 
-	import { parseTextWithMacros } from '$lib/macro/text';
+	import { parseTextWithMacros } from '#lib/macro/text.js';
 
-	import { getChar } from '$lib/data/context';
+	import { getChar } from '#lib/data/context.js';
 
 	const { c } = $derived(getChar());
 

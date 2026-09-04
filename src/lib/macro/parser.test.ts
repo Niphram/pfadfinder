@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vite-plus/test';
 
-import { expectErrResult, expectOkResult } from '$lib/test-utils';
+import { expectErrResult, expectOkResult } from '#lib/test-utils/index.js';
 
 import { AstNodeType } from './ast';
 import { Parser } from './parser';

@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { SerdeProxy } from '$lib/serde/proxy';
+	import type { SerdeProxy } from '#lib/serde/proxy.js';
 
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
 
-	import Toggle from '$lib/components/input/toggle.svelte';
+	import Toggle from '#lib/components/input/toggle.svelte';
 
-	import type { Item } from '$lib/data';
-	import { ABILITY_KEYS, getChar, SPELL_LEVELS } from '$lib/data';
+	import type { Item } from '#lib/data/index.js';
+	import { ABILITY_KEYS, getChar, SPELL_LEVELS } from '#lib/data/index.js';
 
 	const { c } = $derived(getChar());
 

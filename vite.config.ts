@@ -37,23 +37,23 @@ export default defineConfig({
 				},
 				{
 					groupName: 'lib-atoms',
-					elementNamePattern: ['$lib/atoms', '$lib/atoms/**/*'],
+					elementNamePattern: ['#lib/atoms', '#lib/atoms/**/*'],
 				},
 				{
 					groupName: 'lib-components',
-					elementNamePattern: ['$lib/components', '$lib/components/**/*'],
+					elementNamePattern: ['#lib/components', '#lib/components/**/*'],
 				},
 				{
 					groupName: 'lib-data',
-					elementNamePattern: ['$lib/data', '$lib/data/**/*'],
+					elementNamePattern: ['#lib/data', '#lib/data/**/*'],
 				},
 				{
 					groupName: 'lib-pages',
-					elementNamePattern: ['$lib/pages', '$lib/pages**/*'],
+					elementNamePattern: ['#lib/pages', '#lib/pages**/*'],
 				},
 				{
 					groupName: 'lib',
-					elementNamePattern: ['$lib', '$lib/**/*'],
+					elementNamePattern: ['#lib', '#lib/**/*'],
 				},
 				{
 					groupName: 'svelte-virtual',

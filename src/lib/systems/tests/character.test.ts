@@ -1,7 +1,7 @@
 import { describe, test, vi } from 'vite-plus/test';
 
-import { charProxy } from '$lib/serde';
-import { SYSTEMS_MAP } from '$lib/systems';
+import { charProxy } from '#lib/serde/index.js';
+import { SYSTEMS_MAP } from '#lib/systems/index.js';
 
 // Mock nanoid so generated ids are stable across runs
 vi.mock('nanoid', () => ({

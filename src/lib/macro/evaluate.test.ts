@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vite-plus/test';
 
-import { charProxy, derive, macro, type SerdeProxy } from '$lib/serde';
-import { expectOkResult } from '$lib/test-utils';
+import { charProxy, derive, macro, type SerdeProxy } from '#lib/serde/index.js';
+import { expectOkResult } from '#lib/test-utils/index.js';
 
 import { evalNode } from './evaluate';
 import { Parser } from './parser';

@@ -48,12 +48,14 @@
 		class="footer items-center gap-y-4 bg-neutral p-4 text-neutral-content sm:footer-horizontal"
 	>
 		<aside class="grid-flow-col items-center">
-			<p>&copy; Niphram - All rights reserved</p>
+			<p>© Niphram - All rights reserved</p>
 		</aside>
+
 		<nav class="grid-flow-col gap-4 sm:justify-self-end">
-			<a href={resolve('/changelog')} class="link">Changelog</a>
-			<a href={resolve('/privacy')} class="link">Privacy Policy</a>
-			<a href={resolve('/licenses')} class="link">Licenses</a>
+			<a href={resolve('changelog')} class="link">Changelog</a>
+			<a href={resolve('privacy')} class="link">Privacy Policy</a>
+			<a href={resolve('licenses')} class="link">Licenses</a>
+
 			<a href="https://github.com/Niphram/pfadfinder" class="link">Github</a>
 		</nav>
 	</footer>

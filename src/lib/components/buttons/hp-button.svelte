@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { MouseEventHandler } from 'svelte/elements';
 
-	import Button from '$lib/atoms/button.svelte';
+	import Button from '#lib/atoms/button.svelte';
 
-	import { getChar } from '$lib/data';
+	import { getChar } from '#lib/data/index.js';
 
 	const { c } = $derived(getChar());
 

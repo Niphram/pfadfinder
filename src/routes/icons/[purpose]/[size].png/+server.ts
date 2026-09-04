@@ -11,7 +11,7 @@ import {
 	ICON_PUPOSES_SIZES,
 	isIconPurpose,
 	isIconSize,
-} from '$lib/server/icon';
+} from '#lib/server/icon.js';
 
 export const prerender = true;
 

@@ -1,7 +1,7 @@
 import { randBoolean } from '@ngneat/falso';
 import { describe, expect, it } from 'vite-plus/test';
 
-import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL } from '$lib/serde';
+import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL } from '#lib/serde/index.js';
 
 import { boolean, BoolWrapper } from './bool.svelte';
 

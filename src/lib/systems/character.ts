@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import { ClassSerializer, number, string } from '$lib/serde';
+import { ClassSerializer, number, string } from '#lib/serde/index.js';
 
 import type { SYSTEMS_MAP } from '.';
 

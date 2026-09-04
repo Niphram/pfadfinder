@@ -29,7 +29,7 @@
 			<span>{legend}</span>
 			{#if hint}
 				<div class="badge overflow-hidden badge-xs">
-					<span class="overflow-hidden overflow-ellipsis whitespace-nowrap">
+					<span class="overflow-hidden text-ellipsis whitespace-nowrap">
 						{hint}
 					</span>
 				</div>

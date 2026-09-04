@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { Tokenizer, TokenType } from '$lib/macro/tokenizer';
-	import { macro } from '$lib/serde';
+	import { Tokenizer, TokenType } from '#lib/macro/tokenizer.js';
+	import { macro } from '#lib/serde/index.js';
 
-	import Button from '$lib/atoms/button.svelte';
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
-	import Divider from '$lib/atoms/divider.svelte';
+	import Button from '#lib/atoms/button.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
+	import Divider from '#lib/atoms/divider.svelte';
 
-	import MacroNumber from '$lib/components/input/macro-number.svelte';
+	import MacroNumber from '#lib/components/input/macro-number.svelte';
 
 	import MacroAstTree from './macro-ast-tree.svelte';
 

@@ -1,9 +1,9 @@
 <script>
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
 
-	import Input from '$lib/components/input/input.svelte';
+	import Input from '#lib/components/input/input.svelte';
 
-	import { getChar } from '$lib/data';
+	import { getChar } from '#lib/data/index.js';
 
 	const { c } = $derived(getChar());
 </script>

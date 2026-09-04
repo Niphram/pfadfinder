@@ -1,11 +1,11 @@
 <script lang="ts">
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
 
-	import Input from '$lib/components/input/input.svelte';
-	import MacroNumber from '$lib/components/input/macro-number.svelte';
-	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
+	import Input from '#lib/components/input/input.svelte';
+	import MacroNumber from '#lib/components/input/macro-number.svelte';
+	import MacroTextArea from '#lib/components/input/macro-text-area.svelte';
 
-	import { getChar } from '$lib/data';
+	import { getChar } from '#lib/data/index.js';
 
 	interface Props {
 		index: number;

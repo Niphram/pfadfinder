@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import type { SerdeProxy } from '$lib/serde/proxy';
+	import { t } from '#lib/i18n/index.js';
+	import type { SerdeProxy } from '#lib/serde/proxy.js';
 
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
-	import Divider from '$lib/atoms/divider.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
+	import Divider from '#lib/atoms/divider.svelte';
 
-	import Input from '$lib/components/input/input.svelte';
-	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
-	import Number from '$lib/components/input/number.svelte';
-	import Select from '$lib/components/input/select.svelte';
-	import Toggle from '$lib/components/input/toggle.svelte';
+	import Input from '#lib/components/input/input.svelte';
+	import MacroTextArea from '#lib/components/input/macro-text-area.svelte';
+	import Number from '#lib/components/input/number.svelte';
+	import Select from '#lib/components/input/select.svelte';
+	import Toggle from '#lib/components/input/toggle.svelte';
 
-	import type { Item } from '$lib/data';
-	import { getChar } from '$lib/data';
+	import type { Item } from '#lib/data/index.js';
+	import { getChar } from '#lib/data/index.js';
 
 	interface Props {
 		list?: SerdeProxy<Item>[];

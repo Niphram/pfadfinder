@@ -1,17 +1,20 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import { preventDefault, stopPropagation } from '$lib/utils/event-modifiers';
+	import { t } from '#lib/i18n/index.js';
+	import {
+		preventDefault,
+		stopPropagation,
+	} from '#lib/utils/event-modifiers.js';
 
-	import Collapse from '$lib/atoms/collapse.svelte';
-	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
+	import Collapse from '#lib/atoms/collapse.svelte';
+	import MultilineMacro from '#lib/atoms/multiline-macro.svelte';
 
-	import { useDialog } from '$lib/components/dialog-provider.svelte';
-	import FeatDialog from '$lib/components/dialogs/feat-dialog.svelte';
-	import TraitDialog from '$lib/components/dialogs/trait-dialog.svelte';
-	import DragHandle from '$lib/components/icons/drag-handle.svelte';
-	import SortableList from '$lib/components/sortable-list.svelte';
+	import { useDialog } from '#lib/components/dialog-provider.svelte';
+	import FeatDialog from '#lib/components/dialogs/feat-dialog.svelte';
+	import TraitDialog from '#lib/components/dialogs/trait-dialog.svelte';
+	import DragHandle from '#lib/components/icons/drag-handle.svelte';
+	import SortableList from '#lib/components/sortable-list.svelte';
 
-	import { Feat, getChar, Trait } from '$lib/data';
+	import { Feat, getChar, Trait } from '#lib/data/index.js';
 
 	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());

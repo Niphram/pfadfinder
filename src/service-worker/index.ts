@@ -1,24 +1,22 @@
-/// <reference no-default-lib="true"/>
-/// <reference lib="esnext" />
-/// <reference lib="webworker" />
-/// <reference types="@sveltejs/kit" />
-
-import { build, files, prerendered, version } from '$service-worker';
-
-const sw = self as unknown as ServiceWorkerGlobalScope;
+import { version } from '$app/env';
+import { assets, immutable, prerendered } from '$app/manifest';
+import { resolve } from '$app/paths';
+import { self } from '$app/service-worker';
 
 // Every new version gets a new cache
 const CACHE = `cache-${version}`;
 const PROTECTED_CACHES: Set<string> = new Set();
 
 // All assets, with duplicates removed
-const ASSETS = [...new Set(build.concat(prerendered, files))];
+const ASSETS = [
+	...new Set(immutable.concat(prerendered, assets).map((e) => resolve(e.path))),
+];
 
 function log(tag: string, message: string) {
 	console.log(`[ServiceWorker] [${tag}] ${message}`);
 }
 
-sw.addEventListener('install', (event) => {
+self.addEventListener('install', (event) => {
 	// Create a new cache and add all files to it
 	async function addFilesToCache() {
 		log(
@@ -35,7 +33,7 @@ sw.addEventListener('install', (event) => {
 	event.waitUntil(addFilesToCache());
 });
 
-sw.addEventListener('activate', (event) => {
+self.addEventListener('activate', (event) => {
 	// Remove previous cached data from disk (except protected caches)
 	async function deleteOldCaches() {
 		const cacheKeys = await caches.keys();
@@ -55,7 +53,7 @@ sw.addEventListener('activate', (event) => {
 	event.waitUntil(deleteOldCaches());
 });
 
-sw.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', (event) => {
 	// ignore POST requests etc
 	if (event.request.method !== 'GET') return;
 
@@ -66,6 +64,15 @@ sw.addEventListener('fetch', (event) => {
 		// `build`/`files` can always be served from the cache
 		if (ASSETS.includes(url.pathname)) {
 			const response = await cache.match(url.pathname);
+
+			if (response) {
+				return response;
+			}
+		}
+
+		// try to return the index for navigation-requests (single page app)
+		if (event.request.mode === 'navigate') {
+			const response = await cache.match('');
 
 			if (response) {
 				return response;

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { StringWrapper } from '$lib/serde';
-	import { computeMacroInTextStyle } from '$lib/text/macro-text-style';
+	import type { StringWrapper } from '#lib/serde/index.js';
+	import { computeMacroInTextStyle } from '#lib/text/macro-text-style.js';
 
-	import InputWrapper from '$lib/atoms/input-wrapper.svelte';
-	import RichInput from '$lib/atoms/rich-input.svelte';
+	import InputWrapper from '#lib/atoms/input-wrapper.svelte';
+	import RichInput from '#lib/atoms/rich-input.svelte';
 
 	interface Props {
 		name: string;

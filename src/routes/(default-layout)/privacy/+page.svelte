@@ -22,7 +22,7 @@
 <article class="mx-auto prose p-4 select-text">
 	<p>
 		&lt;
-		<a href={resolve('/')}>Back to home</a>
+		<a href={resolve('')}>Back to home</a>
 	</p>
 
 	{@render heading('h1', 'privacy-policy', 'Privacy Policy')}

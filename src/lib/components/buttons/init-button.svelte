@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { withSign } from '$lib/utils/format';
-	import { useMacroNotify } from '$lib/utils/notes';
+	import { withSign } from '#lib/utils/format.js';
+	import { useMacroNotify } from '#lib/utils/notes.js';
 
-	import CaptionedButton from '$lib/components/captioned-button.svelte';
-	import { useDialog } from '$lib/components/dialog-provider.svelte';
-	import InitDialog from '$lib/components/dialogs/init-dialog.svelte';
+	import CaptionedButton from '#lib/components/captioned-button.svelte';
+	import { useDialog } from '#lib/components/dialog-provider.svelte';
+	import InitDialog from '#lib/components/dialogs/init-dialog.svelte';
 
-	import { getChar } from '$lib/data';
+	import { getChar } from '#lib/data/index.js';
 
 	const { openDialog } = useDialog();
 	const { macroNotify } = useMacroNotify();

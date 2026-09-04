@@ -1,5 +1,5 @@
-import { iteratorResultToResult } from '$lib/utils/result';
-import { unreachable } from '$lib/utils/unreachable';
+import { iteratorResultToResult } from '#lib/utils/result.js';
+import { unreachable } from '#lib/utils/unreachable.js';
 
 import { AstNodeType, type AstNode, type AttributeNode } from './ast';
 import type { BinaryOperator, FunctionName, UnaryOperator } from './constants';

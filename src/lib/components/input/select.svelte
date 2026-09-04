@@ -4,10 +4,10 @@
 >
 	import type { ClassValue } from 'svelte/elements';
 
-	import type { EnumWrapper } from '$lib/serde';
-	import type { Option } from '$lib/serde/optional';
+	import type { EnumWrapper } from '#lib/serde/index.js';
+	import type { Option } from '#lib/serde/optional.js';
 
-	import InputWrapper from '$lib/atoms/input-wrapper.svelte';
+	import InputWrapper from '#lib/atoms/input-wrapper.svelte';
 
 	interface Props {
 		name: string;
