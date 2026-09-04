@@ -1,4 +1,4 @@
-import { ClassSerializer, number, string } from '$lib/serde';
+import { ClassSerializer, number, string } from '#lib/serde/index.js';
 
 export class Money extends ClassSerializer {
 	pp = number(0, { min: 0 });

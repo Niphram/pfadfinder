@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { ClassValue } from 'svelte/elements';
 
-	import { RangedProperties } from '$lib/text/ranged-properties';
+	import { RangedProperties } from '#lib/text/ranged-properties.js';
 
-	import { getChar } from '$lib/data';
+	import { getChar } from '#lib/data/index.js';
 
 	export type RichInputTextProperties = {
 		color: string;

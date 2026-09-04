@@ -2,7 +2,7 @@ import {
 	ClassSerializer,
 	MappedBoolWrapper,
 	MappedNumberWrapper,
-} from '$lib/serde';
+} from '#lib/serde/index.js';
 
 import { type AbilityKey } from './abilities.svelte';
 import { type SaveKey } from './saves.svelte';

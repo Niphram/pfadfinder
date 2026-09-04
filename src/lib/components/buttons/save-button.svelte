@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import { withSign } from '$lib/utils/format';
-	import { useMacroNotify } from '$lib/utils/notes';
+	import { t } from '#lib/i18n/index.js';
+	import { withSign } from '#lib/utils/format.js';
+	import { useMacroNotify } from '#lib/utils/notes.js';
 
-	import CaptionedButton from '$lib/components/captioned-button.svelte';
-	import { useDialog } from '$lib/components/dialog-provider.svelte';
-	import SaveDialog from '$lib/components/dialogs/save-dialog.svelte';
+	import CaptionedButton from '#lib/components/captioned-button.svelte';
+	import { useDialog } from '#lib/components/dialog-provider.svelte';
+	import SaveDialog from '#lib/components/dialogs/save-dialog.svelte';
 
-	import { getChar, type SaveKey } from '$lib/data';
+	import { getChar, type SaveKey } from '#lib/data/index.js';
 
 	interface Props {
 		key: SaveKey;

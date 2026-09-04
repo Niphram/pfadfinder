@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import { preventDefault } from '$lib/utils/event-modifiers';
-	import { useMacroNotify } from '$lib/utils/notes';
+	import { t } from '#lib/i18n/index.js';
+	import { preventDefault } from '#lib/utils/event-modifiers.js';
+	import { useMacroNotify } from '#lib/utils/notes.js';
 
-	import { useDialog } from '$lib/components/dialog-provider.svelte';
-	import PersonaScoreDialog from '$lib/components/dialogs/persona-facet-dialog.svelte';
-	import TextArea from '$lib/components/input/text-area.svelte';
+	import { useDialog } from '#lib/components/dialog-provider.svelte';
+	import PersonaScoreDialog from '#lib/components/dialogs/persona-facet-dialog.svelte';
+	import TextArea from '#lib/components/input/text-area.svelte';
 
-	import { FACET_KEYS, getChar } from '$lib/data';
+	import { FACET_KEYS, getChar } from '#lib/data/index.js';
 
 	const { openDialog } = useDialog();
 	const { macroNotify } = useMacroNotify();

@@ -1,14 +1,14 @@
 <script lang="ts">
-	import type { SerdeProxy } from '$lib/serde';
+	import type { SerdeProxy } from '#lib/serde/index.js';
 
-	import HpButton from '$lib/components/buttons/hp-button.svelte';
-	import { useDialog } from '$lib/components/dialog-provider.svelte';
-	import CharacterInfoDialog from '$lib/components/dialogs/character-info-dialog.svelte';
-	import HpDialog from '$lib/components/dialogs/hp-dialog.svelte';
-	import PageDialog from '$lib/components/dialogs/page-dialog.svelte';
+	import HpButton from '#lib/components/buttons/hp-button.svelte';
+	import { useDialog } from '#lib/components/dialog-provider.svelte';
+	import CharacterInfoDialog from '#lib/components/dialogs/character-info-dialog.svelte';
+	import HpDialog from '#lib/components/dialogs/hp-dialog.svelte';
+	import PageDialog from '#lib/components/dialogs/page-dialog.svelte';
 
-	import type { Character } from '$lib/data';
-	import { getChar, setChar } from '$lib/data';
+	import type { Character } from '#lib/data/index.js';
+	import { getChar, setChar } from '#lib/data/index.js';
 
 	import AbilitiesPage from './pages/abilities-page.svelte';
 	import CharacterPage from './pages/character-page.svelte';

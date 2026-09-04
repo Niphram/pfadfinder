@@ -3,7 +3,7 @@ import { basename, resolve } from 'node:path';
 
 import type { EntryGenerator, PageServerLoad } from './$types';
 
-import { parseMarkdown } from '$lib/server/markdown';
+import { parseMarkdown } from '#lib/server/markdown.js';
 
 export const entries: EntryGenerator = async () => {
 	const changelogsIter = glob('./changelog/*.md');

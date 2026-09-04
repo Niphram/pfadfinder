@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import NestedEquipmentList from '$lib/nested-equipment-list.svelte';
-	import { preventDefault } from '$lib/utils/event-modifiers';
-	import { useMacroNotify } from '$lib/utils/notes';
+	import { t } from '#lib/i18n/index.js';
+	import NestedEquipmentList from '#lib/nested-equipment-list.svelte';
+	import { preventDefault } from '#lib/utils/event-modifiers.js';
+	import { useMacroNotify } from '#lib/utils/notes.js';
 
-	import { useDialog } from '$lib/components/dialog-provider.svelte';
-	import AcItemDialog from '$lib/components/dialogs/ac-item-dialog.svelte';
-	import ItemDialog from '$lib/components/dialogs/item-dialog.svelte';
-	import DragHandle from '$lib/components/icons/drag-handle.svelte';
-	import Number from '$lib/components/input/number.svelte';
-	import TextArea from '$lib/components/input/text-area.svelte';
-	import SortableList from '$lib/components/sortable-list.svelte';
+	import { useDialog } from '#lib/components/dialog-provider.svelte';
+	import AcItemDialog from '#lib/components/dialogs/ac-item-dialog.svelte';
+	import ItemDialog from '#lib/components/dialogs/item-dialog.svelte';
+	import DragHandle from '#lib/components/icons/drag-handle.svelte';
+	import Number from '#lib/components/input/number.svelte';
+	import TextArea from '#lib/components/input/text-area.svelte';
+	import SortableList from '#lib/components/sortable-list.svelte';
 
-	import { AcItem, getChar, Item } from '$lib/data';
+	import { AcItem, getChar, Item } from '#lib/data/index.js';
 
 	const { openDialog } = useDialog();
 	const { macroNotify } = useMacroNotify();

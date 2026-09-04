@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { MouseEventHandler } from 'svelte/elements';
 
-	import { preventDefault } from '$lib/utils/event-modifiers';
+	import { preventDefault } from '#lib/utils/event-modifiers.js';
 
 	interface Props {
 		label: string | number;

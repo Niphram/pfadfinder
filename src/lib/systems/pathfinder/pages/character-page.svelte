@@ -1,10 +1,10 @@
 <script lang="ts">
-	import CaptionedButton from '$lib/components/captioned-button.svelte';
-	import { useDialog } from '$lib/components/dialog-provider.svelte';
-	import ClassDialog from '$lib/components/dialogs/class-dialog.svelte';
-	import RaceDialog from '$lib/components/dialogs/race-dialog.svelte';
+	import CaptionedButton from '#lib/components/captioned-button.svelte';
+	import { useDialog } from '#lib/components/dialog-provider.svelte';
+	import ClassDialog from '#lib/components/dialogs/class-dialog.svelte';
+	import RaceDialog from '#lib/components/dialogs/race-dialog.svelte';
 
-	import { Class, getChar } from '$lib/data';
+	import { Class, getChar } from '#lib/data/index.js';
 
 	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());

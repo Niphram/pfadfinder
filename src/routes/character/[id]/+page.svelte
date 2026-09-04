@@ -3,14 +3,14 @@
 
 	import type { PageProps } from './$types';
 
-	import { t } from '$lib/i18n';
-	import { charProxy } from '$lib/serde';
-	import type { BaseCharacter } from '$lib/systems/character';
-	import Sheet from '$lib/systems/pathfinder/sheet.svelte';
-	import { observeMutations } from '$lib/utils/mutation-observer';
-	import { throttle_fe } from '$lib/utils/throttle';
+	import { t } from '#lib/i18n/index.js';
+	import { charProxy } from '#lib/serde/index.js';
+	import type { BaseCharacter } from '#lib/systems/character.js';
+	import Sheet from '#lib/systems/pathfinder/sheet.svelte';
+	import { observeMutations } from '#lib/utils/mutation-observer.js';
+	import { throttle_fe } from '#lib/utils/throttle.js';
 
-	import Status from '$lib/atoms/status.svelte';
+	import Status from '#lib/atoms/status.svelte';
 
 	const { data }: PageProps = $props();
 

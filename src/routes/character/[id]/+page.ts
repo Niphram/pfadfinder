@@ -11,7 +11,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 
 	const character = await db.getCharacterById(params.id);
 
-	if (!character) error(404, { message: 'Character not found!' });
+	if (!character) error(404, 'Character not found!');
 
 	return {
 		character,

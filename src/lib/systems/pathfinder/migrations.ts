@@ -1,4 +1,4 @@
-import type { SerdeProxy } from '$lib/serde';
+import type { SerdeProxy } from '#lib/serde/index.js';
 
 import type { Character } from './character';
 

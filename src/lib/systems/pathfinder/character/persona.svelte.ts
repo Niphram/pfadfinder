@@ -1,4 +1,4 @@
-import { ClassSerializer, number, string } from '$lib/serde';
+import { ClassSerializer, number, string } from '#lib/serde/index.js';
 
 export const FACET_KEYS = [
 	'charm',

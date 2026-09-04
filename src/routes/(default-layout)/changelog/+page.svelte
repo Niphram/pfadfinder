@@ -13,7 +13,7 @@
 <article class="prose p-4 select-text">
 	<p>
 		&lt;
-		<a href={resolve('/')}>Back to home</a>
+		<a href={resolve('')}>Back to home</a>
 	</p>
 
 	<h1>Changelogs</h1>

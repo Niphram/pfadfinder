@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 
-	import { t } from '$lib/i18n';
-	import { preventDefault } from '$lib/utils/event-modifiers';
+	import { t } from '#lib/i18n/index.js';
+	import { preventDefault } from '#lib/utils/event-modifiers.js';
 
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
-	import Divider from '$lib/atoms/divider.svelte';
-	import InputWrapper from '$lib/atoms/input-wrapper.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
+	import Divider from '#lib/atoms/divider.svelte';
+	import InputWrapper from '#lib/atoms/input-wrapper.svelte';
 
-	import MacroDebugDialog from '$lib/components/dialogs/debug/macro-debug-dialog.svelte';
-	import Toggle from '$lib/components/input/toggle.svelte';
+	import MacroDebugDialog from '#lib/components/dialogs/debug/macro-debug-dialog.svelte';
+	import Toggle from '#lib/components/input/toggle.svelte';
 
-	import { getChar, persisted } from '$lib/data';
+	import { getChar, persisted } from '#lib/data/index.js';
 
 	import { useDialog } from '../dialog-provider.svelte';
 	import { selectedTheme, THEME_KEYS } from '../theme-changer.svelte';
@@ -100,7 +100,7 @@
 
 	<div class="flex flex-col gap-4">
 		<a
-			href={resolve('/')}
+			href={resolve('')}
 			onclick={() => closeAll()}
 			class="btn w-full btn-secondary">Exit to menu</a
 		>

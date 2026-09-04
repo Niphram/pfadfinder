@@ -1,4 +1,4 @@
-import type { IDBStorage } from '$lib/storage';
+import type { IDBStorage } from '#lib/storage/index.js';
 
 export const mockStorage: Omit<IDBStorage, 'db'> = {
 	saveCharacter: async () => {},

@@ -1,21 +1,24 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import { string } from '$lib/serde';
-	import { preventDefault, stopPropagation } from '$lib/utils/event-modifiers';
+	import { t } from '#lib/i18n/index.js';
+	import { string } from '#lib/serde/index.js';
+	import {
+		preventDefault,
+		stopPropagation,
+	} from '#lib/utils/event-modifiers.js';
 
-	import Button from '$lib/atoms/button.svelte';
-	import Collapse from '$lib/atoms/collapse.svelte';
-	import Divider from '$lib/atoms/divider.svelte';
-	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
+	import Button from '#lib/atoms/button.svelte';
+	import Collapse from '#lib/atoms/collapse.svelte';
+	import Divider from '#lib/atoms/divider.svelte';
+	import MultilineMacro from '#lib/atoms/multiline-macro.svelte';
 
-	import { useDialog } from '$lib/components/dialog-provider.svelte';
-	import SpellDialog from '$lib/components/dialogs/spell-dialog.svelte';
-	import SpellLevelDialog from '$lib/components/dialogs/spell-level-dialog.svelte';
-	import SpellLikeAbilityDialog from '$lib/components/dialogs/spell-like-ability-dialog.svelte';
-	import DragHandle from '$lib/components/icons/drag-handle.svelte';
-	import Input from '$lib/components/input/input.svelte';
-	import Select from '$lib/components/input/select.svelte';
-	import SortableList from '$lib/components/sortable-list.svelte';
+	import { useDialog } from '#lib/components/dialog-provider.svelte';
+	import SpellDialog from '#lib/components/dialogs/spell-dialog.svelte';
+	import SpellLevelDialog from '#lib/components/dialogs/spell-level-dialog.svelte';
+	import SpellLikeAbilityDialog from '#lib/components/dialogs/spell-like-ability-dialog.svelte';
+	import DragHandle from '#lib/components/icons/drag-handle.svelte';
+	import Input from '#lib/components/input/input.svelte';
+	import Select from '#lib/components/input/select.svelte';
+	import SortableList from '#lib/components/sortable-list.svelte';
 
 	import {
 		getChar,
@@ -23,7 +26,7 @@
 		SPELL_LEVELS,
 		SpellLikeAbility,
 		type SpellLevel,
-	} from '$lib/data';
+	} from '#lib/data/index.js';
 
 	const { openDialog } = useDialog();
 	const { c } = $derived(getChar());

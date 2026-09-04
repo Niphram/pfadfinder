@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n/index.js';
 
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
 
-	import MacroNumber from '$lib/components/input/macro-number.svelte';
-	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
-	import Select from '$lib/components/input/select.svelte';
+	import MacroNumber from '#lib/components/input/macro-number.svelte';
+	import MacroTextArea from '#lib/components/input/macro-text-area.svelte';
+	import Select from '#lib/components/input/select.svelte';
 
-	import { getChar, type SaveKey } from '$lib/data';
+	import { getChar, type SaveKey } from '#lib/data/index.js';
 
 	interface Props {
 		key?: SaveKey;

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { ClassValue, MouseEventHandler } from 'svelte/elements';
 
-	import { preventDefault } from '$lib/utils/event-modifiers';
+	import { preventDefault } from '#lib/utils/event-modifiers.js';
 
-	import { getChar } from '$lib/data';
+	import { getChar } from '#lib/data/index.js';
 
 	interface Props {
 		onclick?: MouseEventHandler<HTMLButtonElement>;

@@ -1,4 +1,9 @@
-import { ClassSerializer, enumeration, macro, string } from '$lib/serde';
+import {
+	ClassSerializer,
+	enumeration,
+	macro,
+	string,
+} from '#lib/serde/index.js';
 
 import { SIZES } from './combat.svelte';
 

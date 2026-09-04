@@ -7,8 +7,8 @@ import {
 	macro,
 	number,
 	string,
-} from '$lib/serde';
-import { mapSum } from '$lib/utils/array';
+} from '#lib/serde/index.js';
+import { mapSum } from '#lib/utils/array.js';
 
 import { ABILITY_KEYS } from './abilities.svelte';
 import type { Character } from './character.svelte';

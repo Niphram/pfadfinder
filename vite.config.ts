@@ -7,6 +7,9 @@ import { createViteLicensePlugin } from 'rollup-license-plugin';
 import { defineConfig, lazyPlugins } from 'vite-plus';
 
 export default defineConfig({
+	build: {
+		minify: false,
+	},
 	fmt: {
 		useTabs: true,
 		singleQuote: true,
@@ -37,23 +40,23 @@ export default defineConfig({
 				},
 				{
 					groupName: 'lib-atoms',
-					elementNamePattern: ['$lib/atoms', '$lib/atoms/**/*'],
+					elementNamePattern: ['#lib/atoms', '#lib/atoms/**/*'],
 				},
 				{
 					groupName: 'lib-components',
-					elementNamePattern: ['$lib/components', '$lib/components/**/*'],
+					elementNamePattern: ['#lib/components', '#lib/components/**/*'],
 				},
 				{
 					groupName: 'lib-data',
-					elementNamePattern: ['$lib/data', '$lib/data/**/*'],
+					elementNamePattern: ['#lib/data', '#lib/data/**/*'],
 				},
 				{
 					groupName: 'lib-pages',
-					elementNamePattern: ['$lib/pages', '$lib/pages**/*'],
+					elementNamePattern: ['#lib/pages', '#lib/pages**/*'],
 				},
 				{
 					groupName: 'lib',
-					elementNamePattern: ['$lib', '$lib/**/*'],
+					elementNamePattern: ['#lib', '#lib/**/*'],
 				},
 				{
 					groupName: 'svelte-virtual',
@@ -135,9 +138,7 @@ export default defineConfig({
 			preprocess: vitePreprocess(),
 
 			paths: {
-				base: process.argv.includes('dev')
-					? ''
-					: (process.env.BASE_PATH as `/${string}`),
+				base: '/test',
 			},
 
 			adapter: adapter({

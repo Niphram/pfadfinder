@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import { preventDefault } from '$lib/utils/event-modifiers';
+	import { t } from '#lib/i18n/index.js';
+	import { preventDefault } from '#lib/utils/event-modifiers.js';
 
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
-	import Divider from '$lib/atoms/divider.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
+	import Divider from '#lib/atoms/divider.svelte';
 
-	import Input from '$lib/components/input/input.svelte';
-	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
-	import Number from '$lib/components/input/number.svelte';
-	import Select from '$lib/components/input/select.svelte';
-	import Toggle from '$lib/components/input/toggle.svelte';
+	import Input from '#lib/components/input/input.svelte';
+	import MacroTextArea from '#lib/components/input/macro-text-area.svelte';
+	import Number from '#lib/components/input/number.svelte';
+	import Select from '#lib/components/input/select.svelte';
+	import Toggle from '#lib/components/input/toggle.svelte';
 
-	import { getChar, SpellAttackDamage } from '$lib/data';
+	import { getChar, SpellAttackDamage } from '#lib/data/index.js';
 
 	const { c } = $derived(getChar());
 

@@ -1,6 +1,6 @@
 import { expect } from 'vite-plus/test';
 
-import type { ErrResult, OkResult, Result } from '$lib/utils/result';
+import type { ErrResult, OkResult, Result } from '#lib/utils/result.js';
 
 export function expectOkResult<T, E>(
 	result: Result<T, E>,

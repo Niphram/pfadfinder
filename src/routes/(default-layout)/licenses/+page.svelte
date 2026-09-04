@@ -93,7 +93,7 @@ SOFTWARE.`,
 	]);
 
 	async function loadLicenses() {
-		const response = await fetch(asset('/oss-licenses.json'));
+		const response = await fetch(asset('oss-licenses.json'));
 		const loadedLicenses = (await response.json()) as LicenseMeta[];
 
 		return [
@@ -129,11 +129,7 @@ SOFTWARE.`,
 </svelte:head>
 
 <article class="mx-auto prose w-full max-w-2xl p-4 select-text">
-	<p>
-		&lt;
-		<a href={resolve('/')}>Back to home</a>
-	</p>
-
+	<p><a href={resolve('')}>Back to home</a></p>
 	{@render heading('h1', 'oss-licenses', 'Open-source licenses')}
 
 	<p>This list contains projects which are included in this website.</p>
@@ -142,7 +138,8 @@ SOFTWARE.`,
 		<div class="mb-8 alert alert-info">
 			<span>
 				JavaScript is disabled in this browser, so the full list could not be
-				loaded. <a href={asset('/oss-licenses.json')}
+				loaded.
+				<a href={asset('oss-licenses.json')}
 					>Click here to view the full file.</a
 				>
 			</span>
@@ -191,7 +188,8 @@ SOFTWARE.`,
 	{:catch}
 		<div class="mb-8 alert alert-info">
 			<span>
-				Licenses could not be loaded. <a href={asset('/oss-licenses.json')}
+				Licenses could not be loaded.
+				<a href={asset('oss-licenses.json')}
 					>Click here to open the file manually.</a
 				>
 			</span>

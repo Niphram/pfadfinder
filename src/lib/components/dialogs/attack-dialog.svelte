@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n/index.js';
 
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
-	import Divider from '$lib/atoms/divider.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
+	import Divider from '#lib/atoms/divider.svelte';
 
-	import Input from '$lib/components/input/input.svelte';
-	import MacroNumber from '$lib/components/input/macro-number.svelte';
-	import MacroTextArea from '$lib/components/input/macro-text-area.svelte';
-	import MacroText from '$lib/components/input/macro-text.svelte';
-	import Select from '$lib/components/input/select.svelte';
+	import Input from '#lib/components/input/input.svelte';
+	import MacroNumber from '#lib/components/input/macro-number.svelte';
+	import MacroTextArea from '#lib/components/input/macro-text-area.svelte';
+	import MacroText from '#lib/components/input/macro-text.svelte';
+	import Select from '#lib/components/input/select.svelte';
 
-	import { getChar } from '$lib/data';
+	import { getChar } from '#lib/data/index.js';
 
 	interface Props {
 		index: number;

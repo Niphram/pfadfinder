@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 
-import { parseTextWithMacros } from '$lib/macro/text';
+import { parseTextWithMacros } from '#lib/macro/text.js';
 import {
 	array,
 	boolean,
@@ -9,8 +9,8 @@ import {
 	enumeration,
 	macro,
 	string,
-} from '$lib/serde';
-import { withSign } from '$lib/utils/format';
+} from '#lib/serde/index.js';
+import { withSign } from '#lib/utils/format.js';
 
 import { ABILITY_KEYS, type AbilityKey } from './abilities.svelte';
 import type { Character } from './character.svelte';

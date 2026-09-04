@@ -2,8 +2,8 @@ import type { LayoutLoad } from './$types';
 
 import { browser } from '$app/env';
 
-import { mockStorage } from '$lib/mocks/storage';
-import { IDBStorage } from '$lib/storage';
+import { mockStorage } from '#lib/mocks/storage.js';
+import { IDBStorage } from '#lib/storage/index.js';
 
 // Try to prerender everything by default
 export const prerender = true;

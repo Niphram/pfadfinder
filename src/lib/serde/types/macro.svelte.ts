@@ -1,12 +1,12 @@
-import type { RuntimeError } from '$lib/macro/errors';
-import { evalNodeGen } from '$lib/macro/evaluate';
-import { Parser } from '$lib/macro/parser';
+import type { RuntimeError } from '#lib/macro/errors.js';
+import { evalNodeGen } from '#lib/macro/evaluate.js';
+import { Parser } from '#lib/macro/parser.js';
 import {
 	Err,
 	iteratorResultToResult,
 	Ok,
 	type Result,
-} from '$lib/utils/result';
+} from '#lib/utils/result.js';
 
 import {
 	DESERIALIZE_SYMBOL,

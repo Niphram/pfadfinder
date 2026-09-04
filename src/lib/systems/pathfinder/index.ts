@@ -1,4 +1,8 @@
-import { charProxy, DESERIALIZE_SYMBOL, type SerdeProxy } from '$lib/serde';
+import {
+	charProxy,
+	DESERIALIZE_SYMBOL,
+	type SerdeProxy,
+} from '#lib/serde/index.js';
 
 import { BaseSystem } from '../system';
 import { Character } from './character';

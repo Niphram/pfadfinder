@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import { preventDefault } from '$lib/utils/event-modifiers';
-	import { withSign } from '$lib/utils/format';
-	import { useMacroNotify } from '$lib/utils/notes';
+	import { t } from '#lib/i18n/index.js';
+	import { preventDefault } from '#lib/utils/event-modifiers.js';
+	import { withSign } from '#lib/utils/format.js';
+	import { useMacroNotify } from '#lib/utils/notes.js';
 
-	import { useDialog } from '$lib/components/dialog-provider.svelte';
-	import SkillDialog from '$lib/components/dialogs/skill-dialog.svelte';
-	import SkillVariantsDialog from '$lib/components/dialogs/skill-variants-dialog.svelte';
+	import { useDialog } from '#lib/components/dialog-provider.svelte';
+	import SkillDialog from '#lib/components/dialogs/skill-dialog.svelte';
+	import SkillVariantsDialog from '#lib/components/dialogs/skill-variants-dialog.svelte';
 
-	import { getChar, SKILL_KEYS } from '$lib/data';
+	import { getChar, SKILL_KEYS } from '#lib/data/index.js';
 
 	const { openDialog } = useDialog();
 	const { macroNotify } = useMacroNotify();

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import MultilineMacro from '$lib/atoms/multiline-macro.svelte';
+	import MultilineMacro from '#lib/atoms/multiline-macro.svelte';
 
 	interface Props {
 		title: string;

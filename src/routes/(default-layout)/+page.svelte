@@ -6,16 +6,16 @@
 	import { invalidate } from '$app/navigation';
 	import { resolve } from '$app/paths';
 
-	import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
-	import { SYSTEMS_MAP } from '$lib/systems';
-	import { preventDefault } from '$lib/utils/event-modifiers';
+	import { SERIALIZE_SYMBOL } from '#lib/serde/interfaces.js';
+	import { SYSTEMS_MAP } from '#lib/systems/index.js';
+	import { preventDefault } from '#lib/utils/event-modifiers.js';
 
-	import { useDialog } from '$lib/components/dialog-provider.svelte';
-	import CharacterOptionsDialog from '$lib/components/dialogs/character-options-dialog.svelte';
-	import { useToast } from '$lib/components/toast-provider.svelte';
-	import SimpleToast from '$lib/components/toasts/simple-toast.svelte';
+	import { useDialog } from '#lib/components/dialog-provider.svelte';
+	import CharacterOptionsDialog from '#lib/components/dialogs/character-options-dialog.svelte';
+	import { useToast } from '#lib/components/toast-provider.svelte';
+	import SimpleToast from '#lib/components/toasts/simple-toast.svelte';
 
-	import { Character } from '$lib/data';
+	import { Character } from '#lib/data/index.js';
 
 	const { data }: PageProps = $props();
 	const { characters, db } = $derived(data);

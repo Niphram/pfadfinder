@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import { preventDefault } from '$lib/utils/event-modifiers';
+	import { t } from '#lib/i18n/index.js';
+	import { preventDefault } from '#lib/utils/event-modifiers.js';
 
-	import DialogBase from '$lib/atoms/dialog-base.svelte';
+	import DialogBase from '#lib/atoms/dialog-base.svelte';
 
-	import { useDialog } from '$lib/components/dialog-provider.svelte';
-	import RestDialog from '$lib/components/dialogs/rest-dialog.svelte';
-	import SettingsDialog from '$lib/components/dialogs/settings-dialog.svelte';
+	import { useDialog } from '#lib/components/dialog-provider.svelte';
+	import RestDialog from '#lib/components/dialogs/rest-dialog.svelte';
+	import SettingsDialog from '#lib/components/dialogs/settings-dialog.svelte';
 
-	import { getChar } from '$lib/data';
+	import { getChar } from '#lib/data/index.js';
 
 	import ConditionsDialog from './conditions-dialog.svelte';
 

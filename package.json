@@ -4,6 +4,10 @@
 	"private": true,
 	"license": "MIT",
 	"type": "module",
+	"imports": {
+		"#lib": "./src/lib/index.js",
+		"#lib/*": "./src/lib/*"
+	},
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
 		"postinstall": "svelte-kit sync",
@@ -19,7 +23,6 @@
 		"test": "vp test --run"
 	},
 	"dependencies": {
-		"@sveltejs/kit": "^2.68.0",
 		"@tailwindcss/typography": "^0.5.20",
 		"daisyui": "^5.6.3",
 		"dexie": "^4.4.4",
@@ -31,7 +34,8 @@
 	},
 	"devDependencies": {
 		"@ngneat/falso": "^8.0.2",
-		"@sveltejs/adapter-static": "^3.0.10",
+		"@sveltejs/adapter-static": "next",
+		"@sveltejs/kit": "next",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"@tailwindcss/vite": "^4.3.1",
 		"@testing-library/jest-dom": "^6.9.1",
@@ -46,7 +50,7 @@
 		"prettier": "^3.9.0",
 		"rollup-license-plugin": "^3.2.1",
 		"sharp": "^0.35.2",
-		"svelte-check": "^4.7.1",
+		"svelte-check": "^4.7.5",
 		"typescript": "^6.0.3",
 		"vite": "catalog:",
 		"vite-plus": "catalog:"

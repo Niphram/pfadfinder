@@ -1,5 +1,5 @@
-import { isIn } from '$lib/utils/array';
-import { iteratorResultToResult } from '$lib/utils/result';
+import { isIn } from '#lib/utils/array.js';
+import { iteratorResultToResult } from '#lib/utils/result.js';
 
 import {
 	AstNodeType,

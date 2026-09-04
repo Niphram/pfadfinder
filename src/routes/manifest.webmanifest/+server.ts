@@ -1,11 +1,9 @@
-import { json } from '@sveltejs/kit';
-
 import type { RequestHandler } from './$types';
 
 import { dev } from '$app/env';
 import { asset, resolve } from '$app/paths';
 
-import { ICON_PUPOSES_SIZES } from '$lib/server/icon';
+import { ICON_PUPOSES_SIZES } from '#lib/server/icon.js';
 
 export const prerender = true;
 
@@ -16,7 +14,7 @@ export const GET: RequestHandler = () => {
 	const appNameSuffix = dev ? ' DEV' : '';
 	const appIdSuffix = dev ? '-dev' : '';
 
-	const iconPath = dev ? '/icons/icon_dev.svg' : '/icons/icon.svg';
+	const iconPath = dev ? 'icons/icon_dev.svg' : 'icons/icon.svg';
 
 	const icons = [
 		{
@@ -39,7 +37,7 @@ export const GET: RequestHandler = () => {
 		]),
 	];
 
-	return json({
+	return Response.json({
 		name: `Pfadfinder${appNameSuffix}`,
 		short_name: `Pfadfinder${appNameSuffix}`,
 		description: 'Charactersheet for Pathfinder 1st Edition',

@@ -1,10 +1,10 @@
 import Dexie from 'dexie';
 import { nanoid } from 'nanoid';
 
-import { SERIALIZE_SYMBOL } from '$lib/serde/interfaces';
-import { isValidSystem, SYSTEMS_MAP } from '$lib/systems';
-import type { BaseCharacter } from '$lib/systems/character';
-import { lazy } from '$lib/utils/lazy';
+import { SERIALIZE_SYMBOL } from '#lib/serde/interfaces.js';
+import type { BaseCharacter } from '#lib/systems/character.js';
+import { isValidSystem, SYSTEMS_MAP } from '#lib/systems/index.js';
+import { lazy } from '#lib/utils/lazy.js';
 
 import { VERSIONS, type Schema } from './versions';
 

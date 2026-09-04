@@ -1,19 +1,22 @@
 <script lang="ts">
 	import type { ClassValue } from 'svelte/elements';
 
-	import { t } from '$lib/i18n';
-	import { type SerdeProxy } from '$lib/serde';
-	import { preventDefault, stopPropagation } from '$lib/utils/event-modifiers';
-	import { useMacroNotify } from '$lib/utils/notes';
+	import { t } from '#lib/i18n/index.js';
+	import { type SerdeProxy } from '#lib/serde/index.js';
+	import {
+		preventDefault,
+		stopPropagation,
+	} from '#lib/utils/event-modifiers.js';
+	import { useMacroNotify } from '#lib/utils/notes.js';
 
-	import Collapse from '$lib/atoms/collapse.svelte';
+	import Collapse from '#lib/atoms/collapse.svelte';
 
-	import { useDialog } from '$lib/components/dialog-provider.svelte';
-	import ItemDialog from '$lib/components/dialogs/item-dialog.svelte';
-	import DragHandle from '$lib/components/icons/drag-handle.svelte';
-	import SortableList from '$lib/components/sortable-list.svelte';
+	import { useDialog } from '#lib/components/dialog-provider.svelte';
+	import ItemDialog from '#lib/components/dialogs/item-dialog.svelte';
+	import DragHandle from '#lib/components/icons/drag-handle.svelte';
+	import SortableList from '#lib/components/sortable-list.svelte';
 
-	import { getChar, type Item } from '$lib/data';
+	import { getChar, type Item } from '#lib/data/index.js';
 
 	import Self from './nested-equipment-list.svelte';
 

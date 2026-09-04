@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import { preventDefault } from '$lib/utils/event-modifiers';
-	import { withSign } from '$lib/utils/format';
-	import { useMacroNotify } from '$lib/utils/notes';
+	import { t } from '#lib/i18n/index.js';
+	import { preventDefault } from '#lib/utils/event-modifiers.js';
+	import { withSign } from '#lib/utils/format.js';
+	import { useMacroNotify } from '#lib/utils/notes.js';
 
-	import { useDialog } from '$lib/components/dialog-provider.svelte';
-	import AbilityDialog from '$lib/components/dialogs/ability-dialog.svelte';
+	import { useDialog } from '#lib/components/dialog-provider.svelte';
+	import AbilityDialog from '#lib/components/dialogs/ability-dialog.svelte';
 
-	import { getChar, type AbilityKey } from '$lib/data';
+	import { getChar, type AbilityKey } from '#lib/data/index.js';
 
 	interface Props {
 		key: AbilityKey;

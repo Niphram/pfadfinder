@@ -1,7 +1,7 @@
-import type { ParserError, RuntimeError } from '$lib/macro/errors';
-import { Tokenizer, TokenType } from '$lib/macro/tokenizer';
+import type { ParserError, RuntimeError } from '#lib/macro/errors.js';
+import { Tokenizer, TokenType } from '#lib/macro/tokenizer.js';
 
-import type { RichInputTextProperties } from '$lib/atoms/rich-input.svelte';
+import type { RichInputTextProperties } from '#lib/atoms/rich-input.svelte';
 
 import { RangedProperties } from './ranged-properties';
 
