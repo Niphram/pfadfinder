@@ -7,9 +7,6 @@ import { createViteLicensePlugin } from 'rollup-license-plugin';
 import { defineConfig, lazyPlugins } from 'vite-plus';
 
 export default defineConfig({
-	build: {
-		minify: false,
-	},
 	fmt: {
 		useTabs: true,
 		singleQuote: true,
@@ -138,7 +135,9 @@ export default defineConfig({
 			preprocess: vitePreprocess(),
 
 			paths: {
-				base: '/test',
+				base: process.argv.includes('dev')
+					? ''
+					: (process.env.BASE_PATH as `/${string}`),
 			},
 
 			adapter: adapter({
