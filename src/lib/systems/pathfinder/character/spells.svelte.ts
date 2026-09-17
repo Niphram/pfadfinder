@@ -49,6 +49,7 @@ export const SPELL_DISPLAY_TYPE = [
 	'all',
 	'favorites_only',
 	'prepared_only',
+	'prepared_and_favorites',
 ] as const;
 export type SpellDisplayType = (typeof SPELL_DISPLAY_TYPE)[number];
 

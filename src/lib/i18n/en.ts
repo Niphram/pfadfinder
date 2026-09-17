@@ -171,6 +171,7 @@ export default {
 			all: 'All',
 			favorites_only: 'Only favorites',
 			prepared_only: 'Only prepared',
+			prepared_and_favorites: 'Prepared or favorite',
 		},
 		attackType: {
 			touch: 'Touch',
