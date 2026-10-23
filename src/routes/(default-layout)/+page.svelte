@@ -172,7 +172,7 @@
 						class="btn col-span-2 grid h-max btn-block grid-cols-subgrid items-center btn-ghost p-2 text-left align-middle font-normal"
 						oncontextmenu={preventDefault(() => openCharacterDialog(id))}
 					>
-						<div class="list-col-grow overflow-hidden">
+						<div class="overflow-hidden list-col-grow">
 							<div class="min-w-0 truncate">{name}</div>
 							<div
 								class="min-w-0 truncate text-xs font-semibold uppercase opacity-60"
