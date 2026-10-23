@@ -1,10 +1,4 @@
-import {
-	rand,
-	randBoolean,
-	randNumber,
-	randText,
-	toCollection,
-} from '@ngneat/falso';
+import { faker } from '@faker-js/faker';
 import { describe, expect, test } from 'vite-plus/test';
 
 import { ClassSerializer } from './class-serializer';
@@ -18,11 +12,11 @@ import { number } from './types/number.svelte';
 import { string } from './types/string.svelte';
 
 class SubSubClass extends ClassSerializer {
-	foo = randNumber();
+	foo = faker.number.int();
 }
 
 class SubClass extends ClassSerializer {
-	foo = randNumber();
+	foo = faker.number.int();
 
 	sub = new SubSubClass();
 }
@@ -30,19 +24,26 @@ class SubClass extends ClassSerializer {
 const ENUM_EXAMPLE = ['a', 'b', 'c'] as const;
 
 class TestClass extends ClassSerializer {
-	string = string(randText());
+	string = string(faker.string.sample());
 
-	number = number(randNumber());
+	number = number(faker.number.int());
 
-	boolean = boolean(randBoolean());
+	boolean = boolean(faker.datatype.boolean());
 
-	enumeration = enumeration(ENUM_EXAMPLE, rand(ENUM_EXAMPLE));
+	enumeration = enumeration(
+		ENUM_EXAMPLE,
+		faker.helpers.arrayElement(ENUM_EXAMPLE),
+	);
 
-	optionalEnumeration = enumeration(ENUM_EXAMPLE, rand(ENUM_EXAMPLE), {
-		optional: true,
-	});
+	optionalEnumeration = enumeration(
+		ENUM_EXAMPLE,
+		faker.helpers.arrayElement(ENUM_EXAMPLE),
+		{
+			optional: true,
+		},
+	);
 
-	array = array(() => number(randNumber()), []);
+	array = array(() => number(faker.number.int()), []);
 
 	subarray = array(() => new SubClass(), []);
 
@@ -56,7 +57,7 @@ class TestClass extends ClassSerializer {
 describe('Proxy', () => {
 	describe('Special objects', () => {
 		test('StringWrapper', () => {
-			const text = randText();
+			const text = faker.string.sample();
 
 			const sut = charProxy(new TestClass());
 			sut.string = text;
@@ -65,7 +66,7 @@ describe('Proxy', () => {
 		});
 
 		test('NumberWrapper', () => {
-			const numberValue = randNumber();
+			const numberValue = faker.number.int();
 
 			const sut = charProxy(new TestClass());
 			sut.number = numberValue;
@@ -74,7 +75,7 @@ describe('Proxy', () => {
 		});
 
 		test('BoolWrapper', () => {
-			const booleanValue = randBoolean();
+			const booleanValue = faker.datatype.boolean();
 
 			const sut = charProxy(new TestClass());
 			sut.boolean = booleanValue;
@@ -83,7 +84,7 @@ describe('Proxy', () => {
 		});
 
 		test('EnumWrapper', () => {
-			const text = rand(ENUM_EXAMPLE);
+			const text = faker.helpers.arrayElement(ENUM_EXAMPLE);
 
 			const sut = charProxy(new TestClass());
 			sut.enumeration = text;
@@ -99,7 +100,9 @@ describe('Proxy', () => {
 		});
 
 		test('ArrayWrapper', () => {
-			const arrayValue = toCollection(() => number(randNumber()));
+			const arrayValue = faker.helpers.multiple(() =>
+				number(faker.number.int()),
+			);
 
 			const sut = charProxy(new TestClass());
 			sut.$.array.value = arrayValue;
@@ -109,7 +112,7 @@ describe('Proxy', () => {
 		});
 
 		test('ArrayWrapper Object', () => {
-			const arrayValue = toCollection(() => new SubClass());
+			const arrayValue = faker.helpers.multiple(() => new SubClass());
 
 			const sut = charProxy(new TestClass());
 			sut.$.subarray.value = arrayValue;
@@ -118,7 +121,7 @@ describe('Proxy', () => {
 		});
 
 		test('Derive', () => {
-			const numberValue = randNumber();
+			const numberValue = faker.number.int();
 
 			const sut = charProxy(new TestClass());
 			sut.number = numberValue;
@@ -127,7 +130,7 @@ describe('Proxy', () => {
 		});
 
 		test('Macro', () => {
-			const numberValue = randNumber();
+			const numberValue = faker.number.int();
 
 			const sut = charProxy(new TestClass());
 			sut.number = numberValue;

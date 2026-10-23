@@ -1,4 +1,4 @@
-import { randNumber, toCollection } from '@ngneat/falso';
+import { faker } from '@faker-js/faker';
 import { describe, expect, it, vi } from 'vite-plus/test';
 
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL } from '#lib/serde/index.js';
@@ -7,8 +7,8 @@ import { array, ArrayWrapper } from './array.svelte';
 import { number } from './number.svelte';
 
 const factory = () => number(0);
-const genValues = (length = 10) =>
-	toCollection(() => number(randNumber()), { length });
+const genValues = (count = 10) =>
+	faker.helpers.multiple(() => number(faker.number.int()), { count });
 
 describe('ArrayWrapper', () => {
 	describe('array factory', () => {

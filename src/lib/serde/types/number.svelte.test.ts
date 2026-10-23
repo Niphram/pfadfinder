@@ -1,4 +1,4 @@
-import { randBoolean, randNumber } from '@ngneat/falso';
+import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vite-plus/test';
 
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL } from '#lib/serde/index.js';
@@ -28,7 +28,7 @@ describe('NumberWrapper', () => {
 
 	describe('result', () => {
 		it('should return ok-result if all checks pass', () => {
-			const instance = number(randNumber());
+			const instance = number(faker.number.int());
 
 			const result = instance.result();
 
@@ -84,11 +84,11 @@ describe('NumberWrapper', () => {
 
 	describe('clone', () => {
 		it('should return a new instance with the same state', () => {
-			const instance = number(randNumber(), {
-				integer: randBoolean(),
-				min: randNumber(),
-				max: randNumber(),
-				optional: randBoolean(),
+			const instance = number(faker.number.int(), {
+				integer: faker.datatype.boolean(),
+				min: faker.number.int(),
+				max: faker.number.int(),
+				optional: faker.datatype.boolean(),
 			});
 
 			const clone = instance.clone();
@@ -101,7 +101,7 @@ describe('NumberWrapper', () => {
 
 	describe('serialize', () => {
 		it('should return the value', () => {
-			const instance = number(randNumber());
+			const instance = number(faker.number.int());
 
 			const serialized = instance[SERIALIZE_SYMBOL]();
 

@@ -1,4 +1,4 @@
-import { randBoolean, randNumber } from '@ngneat/falso';
+import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vite-plus/test';
 
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL } from '#lib/serde/index.js';
@@ -130,11 +130,11 @@ describe('Macro', () => {
 
 	describe('clone', () => {
 		it('should return a new instance with the same state', () => {
-			const instance = macro(`${randNumber()}`, {
-				optional: randBoolean(),
-				integer: randBoolean(),
-				min: randNumber(),
-				max: randNumber(),
+			const instance = macro(`${faker.number.int()}`, {
+				optional: faker.datatype.boolean(),
+				integer: faker.datatype.boolean(),
+				min: faker.number.int(),
+				max: faker.number.int(),
 			});
 
 			const clone = instance.clone();
@@ -147,7 +147,7 @@ describe('Macro', () => {
 
 	describe('serialize', () => {
 		it('should return the expression', () => {
-			const instance = macro(`${randNumber()}`);
+			const instance = macro(`${faker.number.int()}`);
 
 			const serialized = instance[SERIALIZE_SYMBOL]();
 

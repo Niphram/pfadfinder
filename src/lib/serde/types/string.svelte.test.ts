@@ -1,4 +1,4 @@
-import { randAlpha, randNumber } from '@ngneat/falso';
+import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vite-plus/test';
 
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL } from '#lib/serde/index.js';
@@ -9,13 +9,13 @@ import { string, StringWrapper } from './string.svelte';
 describe('StringWrapper', () => {
 	describe('string factory', () => {
 		it('should return instance of StringWrapper', () => {
-			const instance = string(randAlpha());
+			const instance = string(faker.string.sample());
 
 			expect(instance).toBeInstanceOf(StringWrapper);
 		});
 
 		it('should set default options', () => {
-			const instance = string(randAlpha());
+			const instance = string(faker.string.sample());
 
 			expect(instance.options).toStrictEqual({
 				minLength: 0,
@@ -26,7 +26,7 @@ describe('StringWrapper', () => {
 
 	describe('result', () => {
 		it('should return ok-result if all checks pass', () => {
-			const instance = string(randAlpha());
+			const instance = string(faker.string.sample());
 
 			const result = instance.result();
 
@@ -55,9 +55,9 @@ describe('StringWrapper', () => {
 
 	describe('clone', () => {
 		it('should return a new instance with the same state', () => {
-			const instance = string(randAlpha(), {
-				minLength: randNumber(),
-				maxLength: randNumber(),
+			const instance = string(faker.string.sample(), {
+				minLength: faker.number.int(),
+				maxLength: faker.number.int(),
 			});
 
 			const clone = instance.clone();
@@ -70,7 +70,7 @@ describe('StringWrapper', () => {
 
 	describe('serialize', () => {
 		it('should return the value', () => {
-			const instance = string(randAlpha());
+			const instance = string(faker.string.sample());
 
 			const serialized = instance[SERIALIZE_SYMBOL]();
 

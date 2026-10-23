@@ -1,4 +1,4 @@
-import { rand, randBoolean } from '@ngneat/falso';
+import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vite-plus/test';
 
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL } from '#lib/serde/index.js';
@@ -7,7 +7,7 @@ import { expectErrResult, expectOkResult } from '#lib/test-utils/index.js';
 import { enumeration, EnumWrapper } from './enum.svelte';
 
 const VALUES = ['some', 'valid', 'values'] as const;
-const randValue = () => rand(VALUES);
+const randValue = () => faker.helpers.arrayElement(VALUES);
 
 describe('EnumWrapper', () => {
 	describe('enumeration factory', () => {
@@ -61,7 +61,7 @@ describe('EnumWrapper', () => {
 	describe('clone', () => {
 		it('should return a new instance with the same state', () => {
 			const instance = enumeration(VALUES, randValue(), {
-				optional: randBoolean(),
+				optional: faker.datatype.boolean(),
 			});
 
 			const clone = instance.clone();

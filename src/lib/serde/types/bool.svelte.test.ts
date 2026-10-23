@@ -1,4 +1,4 @@
-import { randBoolean } from '@ngneat/falso';
+import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vite-plus/test';
 
 import { DESERIALIZE_SYMBOL, SERIALIZE_SYMBOL } from '#lib/serde/index.js';
@@ -8,7 +8,7 @@ import { boolean, BoolWrapper } from './bool.svelte';
 describe('BoolWrapper', () => {
 	describe('boolean factory', () => {
 		it('should create BoolWrapper instance', () => {
-			const instance = boolean(randBoolean());
+			const instance = boolean(faker.datatype.boolean());
 
 			expect(instance).toBeInstanceOf(BoolWrapper);
 		});
@@ -16,7 +16,7 @@ describe('BoolWrapper', () => {
 
 	describe('serialize', () => {
 		it('should return value', () => {
-			const instance = boolean(randBoolean());
+			const instance = boolean(faker.datatype.boolean());
 
 			const serialized = instance[SERIALIZE_SYMBOL]();
 
