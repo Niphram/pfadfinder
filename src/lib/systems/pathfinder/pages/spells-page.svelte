@@ -47,12 +47,20 @@
 		c.spells[level].spells[index].used++;
 	}
 
+	function changePrepared(level: SpellLevel, index: number, delta: number) {
+		const spell = c.spells[level].spells[index];
+		spell.prepared = Math.max(0, spell.prepared + delta);
+		if (spell.used > spell.prepared) spell.used = spell.prepared;
+	}
+
 	function castSla(index: number) {
 		if (c.spells.spellLikeAbilities[index].remaining > 0)
 			c.spells.spellLikeAbilities[index].remaining--;
 	}
 
 	const searchString = string('', { minLength: 0 });
+
+	let preparationMode = $state(false);
 </script>
 
 <div>
@@ -74,6 +82,15 @@
 		</div>
 
 		<Input name="searchstring" placeholder="Search" value={searchString} />
+
+		<Button
+			size="xs"
+			color="primary"
+			class={'border-black'}
+			onclick={() => (preparationMode = !preparationMode)}
+		>
+			Preparation
+		</Button>
 	</div>
 
 	{#each SPELL_LEVELS as level, idx (level)}
@@ -120,9 +137,9 @@
 								.toLocaleLowerCase()
 								.includes(searchString.value.toLocaleLowerCase())) ||
 						(c.spells.displayFilter === 'favorites_only' && !isFavorite) ||
-						(c.spells.displayFilter === 'prepared_only' && !isPrepared) ||
+						(c.spells.displayFilter === 'prepared_only' && !(isPrepared || preparationMode)) ||
 						(c.spells.displayFilter === 'prepared_and_favorites' &&
-							!(isFavorite || isPrepared))}
+							!(isFavorite || isPrepared || preparationMode))}
 
 					<div class={['flex w-full flex-row', hide && 'hidden']}>
 						<div
@@ -145,7 +162,31 @@
 										<span class="text-sm font-semibold">★</span>
 									{/if}
 									<span class="grow text-sm font-semibold">{spell.name}</span>
-									{#if spell.prepared > 0}
+									{#if preparationMode}
+										<div class="mr-2 flex flex-row gap-3">
+											<button
+												class="btn relative w-8 border-black font-bold text-white btn-error btn-xs after:absolute after:-inset-x-1 after:-inset-y-3 after:content-['']"
+												onclick={stopPropagation(
+													preventDefault(() =>
+														changePrepared(level, spellIdx, -1),
+													),
+												)}
+											>
+												−
+											</button>
+											<button
+												class="btn relative w-8 border-black font-bold text-white btn-success btn-xs after:absolute after:-inset-x-1 after:-inset-y-3 after:content-['']"
+												onclick={stopPropagation(
+													preventDefault(() =>
+														changePrepared(level, spellIdx, 1),
+													),
+												)}
+											>
+												+
+											</button>
+										</div>
+									{/if}
+									{#if preparationMode || spell.prepared > 0}
 										<button
 											class="btn w-16 btn-accent btn-xs"
 											onclick={stopPropagation(
