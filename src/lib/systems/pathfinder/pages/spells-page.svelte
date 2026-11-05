@@ -47,18 +47,34 @@
 		c.spells[level].spells[index].used++;
 	}
 
+	function changePrepared(level: SpellLevel, index: number, delta: number) {
+		const spell = c.spells[level].spells[index];
+		spell.prepared = Math.max(0, spell.prepared + delta);
+		if (spell.used > spell.prepared) spell.used = spell.prepared;
+	}
+
 	function castSla(index: number) {
 		if (c.spells.spellLikeAbilities[index].remaining > 0)
 			c.spells.spellLikeAbilities[index].remaining--;
 	}
 
 	const searchString = string('', { minLength: 0 });
+
+	let preparationMode = $state(false);
 </script>
 
 <div>
 	<Divider>
 		Spells
 		<Button size="xs" color="primary" onclick={openConfigDialog}>Config</Button>
+		<Button
+			size="xs"
+			color="primary"
+			style={preparationMode ? 'default' : 'outline'}
+			onclick={() => (preparationMode = !preparationMode)}
+		>
+			Prepare
+		</Button>
 	</Divider>
 
 	<div class="flex flex-row items-center gap-2">
@@ -144,8 +160,35 @@
 									{#if isFavorite}
 										<span class="text-sm font-semibold">★</span>
 									{/if}
-									<span class="grow text-sm font-semibold">{spell.name}</span>
-									{#if spell.prepared > 0}
+									<span
+										class="grow overflow-hidden text-sm font-semibold text-ellipsis whitespace-nowrap"
+										>{spell.name}</span
+									>
+									{#if preparationMode}
+										<div class="flex flex-row gap-1">
+											<button
+												class="btn relative w-8 bg-red-500 text-lg font-bold btn-xs after:absolute after:-inset-x-1 after:-inset-y-3 after:content-['']"
+												onclick={stopPropagation(
+													preventDefault(() =>
+														changePrepared(level, spellIdx, -1),
+													),
+												)}
+											>
+												&minus;
+											</button>
+											<button
+												class="btn relative w-8 bg-green-500 text-lg font-bold btn-xs after:absolute after:-inset-x-1 after:-inset-y-3 after:content-['']"
+												onclick={stopPropagation(
+													preventDefault(() =>
+														changePrepared(level, spellIdx, 1),
+													),
+												)}
+											>
+												&plus;
+											</button>
+										</div>
+									{/if}
+									{#if preparationMode || spell.prepared > 0}
 										<button
 											class="btn w-16 btn-accent btn-xs"
 											onclick={stopPropagation(
