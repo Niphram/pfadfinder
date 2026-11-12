@@ -45,6 +45,7 @@
 
 	<!-- Footer -->
 	<footer
+		id="footer"
 		class="footer items-center gap-y-4 bg-neutral p-4 text-neutral-content sm:footer-horizontal"
 	>
 		<aside class="grid-flow-col items-center">
@@ -60,3 +61,13 @@
 		</nav>
 	</footer>
 </div>
+
+<style>
+	#header {
+		view-transition-name: header;
+	}
+
+	#footer {
+		view-transition-name: footer;
+	}
+</style>

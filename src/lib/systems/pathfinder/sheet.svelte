@@ -50,7 +50,7 @@
 </script>
 
 <div class="flex h-dvh flex-col">
-	<div class="sticky top-0 z-40 w-full bg-base-200 drop-shadow-xl">
+	<div id="header" class="sticky top-0 z-40 w-full bg-base-200 drop-shadow-xl">
 		<div class="flex flex-row items-stretch gap-2 p-2 align-middle">
 			<button
 				class="grow text-left"
@@ -112,3 +112,9 @@
 		</svg>
 	</button>
 </div>
+
+<style>
+	#header {
+		view-transition-name: header;
+	}
+</style>
