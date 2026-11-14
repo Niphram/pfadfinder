@@ -1,7 +1,9 @@
 <script lang="ts">
 	import type { LicenseMeta } from 'rollup-license-plugin';
 
-	import { asset, resolve } from '$app/paths';
+	import { asset } from '$app/paths';
+
+	import Container from '#lib/atoms/container.svelte';
 
 	type License = {
 		name: string;
@@ -112,7 +114,8 @@ SOFTWARE.`,
 </script>
 
 {#snippet heading(type: 'h1' | 'h2' | 'h3', id: string, content: string)}
-	<svelte:element this={type} {id}>
+	<svelte:element this={type}>
+		<span class="invisible relative -top-16 block" {id}></span>
 		<a aria-hidden="true" tabindex="-1" href="#{id}">
 			<span
 				class="relative -mt-1 mr-1 inline-block align-middle text-base font-bold opacity-20 hover:opacity-60"
@@ -128,71 +131,72 @@ SOFTWARE.`,
 	<title>Open-source licenses - Pfadfinder</title>
 </svelte:head>
 
-<article class="mx-auto prose w-full max-w-2xl p-4 select-text">
-	<p><a href={resolve('')}>Back to home</a></p>
-	{@render heading('h1', 'oss-licenses', 'Open-source licenses')}
+<Container>
+	<article class="prose w-full max-w-none select-text">
+		{@render heading('h1', 'oss-licenses', 'Open-source licenses')}
 
-	<p>This list contains projects which are included in this website.</p>
+		<p>This list contains projects which are included in this website.</p>
 
-	<noscript>
-		<div class="mb-8 alert alert-info">
-			<span>
-				JavaScript is disabled in this browser, so the full list could not be
-				loaded.
-				<a href={asset('oss-licenses.json')}
-					>Click here to view the full file.</a
-				>
-			</span>
-		</div>
-	</noscript>
-
-	{#await loadLicenses()}
-		<div>Loading Licenses...</div>
-	{:then licenses}
-		<div class="flex flex-col gap-2">
-			{#each licenses as l (l.name)}
-				<div class="collapse-arrow collapse bg-base-200">
-					<input type="checkbox" />
-
-					<div
-						class="collapse-title flex w-full flex-row items-center gap-2 font-semibold"
+		<noscript>
+			<div class="mb-8 alert alert-info">
+				<span>
+					JavaScript is disabled in this browser, so the full list could not be
+					loaded.
+					<a href={asset('oss-licenses.json')}
+						>Click here to view the full file.</a
 					>
-						<span class="font-bold">{l.name}</span>
-						{#if l.version}
-							<span class="text-sm">{l.version}</span>
-						{/if}
-						<span class="z-1 ml-auto flex flex-row gap-2 text-sm">
-							{#each Object.entries(l.links) as [label, href] (label)}
-								{#if href}
-									<a
-										onclick={(e) => e.stopPropagation()}
-										{href}
-										rel="external"
-										target="_blank"
-									>
-										{label}
-									</a>
-								{/if}
+				</span>
+			</div>
+		</noscript>
+
+		{#await loadLicenses()}
+			<div>Loading Licenses...</div>
+		{:then licenses}
+			<div class="flex flex-col gap-2">
+				{#each licenses as l (l.name)}
+					<div class="collapse-arrow collapse bg-base-200">
+						<input type="checkbox" />
+
+						<div
+							class="collapse-title flex w-full flex-row items-center gap-2 font-semibold"
+						>
+							<span class="font-bold">{l.name}</span>
+							{#if l.version}
+								<span class="text-sm">{l.version}</span>
+							{/if}
+							<span class="z-1 ml-auto flex flex-row gap-2 text-sm">
+								{#each Object.entries(l.links) as [label, href] (label)}
+									{#if href}
+										<a
+											onclick={(e) => e.stopPropagation()}
+											{href}
+											rel="external"
+											target="_blank"
+										>
+											{label}
+										</a>
+									{/if}
+								{/each}
+							</span>
+						</div>
+						<div class="collapse-content text-sm">
+							<p>License: {l.license}</p>
+							{#each l.licenseText.split('\n\n') as line, i (i)}
+								<p>{line}</p>
 							{/each}
-						</span>
+						</div>
 					</div>
-					<div class="collapse-content text-sm">
-						<p>License: {l.license}</p>
-						{#each l.licenseText.split('\n\n') as line, i (i)}
-							<p>{line}</p>
-						{/each}
-					</div>
-				</div>
-			{/each}
-		</div>
-	{:catch}
-		<div class="mb-8 alert alert-info">
-			<span>
-				Licenses could not be loaded.
-				<a href={asset('oss-licenses.json')}
-					>Click here to open the file manually.</a
-				>
-			</span>
-		</div>
-	{/await}
-</article>
+				{/each}
+			</div>
+		{:catch}
+			<div class="mb-8 alert alert-info">
+				<span>
+					Licenses could not be loaded.
+					<a href={asset('oss-licenses.json')}
+						>Click here to open the file manually.</a
+					>
+				</span>
+			</div>
+		{/await}
+	</article>
+</Container>

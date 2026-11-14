@@ -1,14 +1,17 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 
 	let { children } = $props();
+
+	const isHome = $derived(page.route.id === '/(default-layout)');
 </script>
 
 <div class="flex min-h-dvh flex-col items-stretch gap-4">
 	<div class="flex grow flex-col gap-4">
 		<!-- HEADER -->
 		<div
-			id="header"
+			style="view-transition-name: header;"
 			class="sticky top-0 z-40 flex w-full flex-col bg-base-200 drop-shadow-xl"
 		>
 			<div class="flex flex-row items-center gap-2 p-2">
@@ -37,6 +40,13 @@
 						'starting:scale-75 starting:opacity-0',
 					]}
 				>
+					{#if !isHome}
+						<p style="view-transition-name: back-to-home;" class="mb-4">
+							&lt;
+							<a class="link" href={resolve('')}>Back to home</a>
+						</p>
+					{/if}
+
 					{@render children()}
 				</div>
 			</svelte:boundary>
@@ -45,7 +55,7 @@
 
 	<!-- Footer -->
 	<footer
-		id="footer"
+		style="view-transition-name: footer;"
 		class="footer items-center gap-y-4 bg-neutral p-4 text-neutral-content sm:footer-horizontal"
 	>
 		<aside class="grid-flow-col items-center">
@@ -53,6 +63,7 @@
 		</aside>
 
 		<nav class="grid-flow-col gap-4 sm:justify-self-end">
+			<a href={resolve('settings')} class="link">Settings</a>
 			<a href={resolve('changelog')} class="link">Changelog</a>
 			<a href={resolve('privacy')} class="link">Privacy Policy</a>
 			<a href={resolve('licenses')} class="link">Licenses</a>
@@ -61,13 +72,3 @@
 		</nav>
 	</footer>
 </div>
-
-<style>
-	#header {
-		view-transition-name: header;
-	}
-
-	#footer {
-		view-transition-name: footer;
-	}
-</style>
