@@ -26,7 +26,7 @@
 		const unit = Math.min(Math.floor(Math.log10(max) / 3), UNITS.length);
 		const factor = Math.pow(10, unit * 3);
 
-		return bytes.map((v) => `${(v / factor).toFixed(2)} ${UNITS[unit]}`) as {
+		return bytes.map((v) => `${(v / factor).toFixed(1)} ${UNITS[unit]}`) as {
 			[K in keyof T]: string;
 		};
 	}

@@ -2,7 +2,6 @@ import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import tailwindcss from '@tailwindcss/vite';
-import { svelteTesting } from '@testing-library/svelte/vite';
 import { createViteLicensePlugin } from 'rollup-license-plugin';
 import { defineConfig, lazyPlugins } from 'vite-plus';
 
@@ -161,38 +160,8 @@ export default defineConfig({
 		),
 	},
 	test: {
-		// Vitest v4 compatibility: preserve mock call history.
-		// Remove after tests no longer rely on calls from setup or earlier tests.
-		// https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
-		// https://vitest.dev/guide/migration/#clearmocks-is-enabled-by-default
-		clearMocks: false,
-		// Vitest v4 compatibility: keep separate Vite servers for inline projects.
-		// Remove when plugins and config hooks can run once for shared projects.
-		// https://viteplus.dev/guide/vitest-v5#remove-unneeded-compatibility-settings
-		// https://vitest.dev/guide/migration/#inline-projects-share-the-vite-server-by-default
-		sharedViteServer: false,
-		projects: [
-			{
-				extends: './vite.config.ts',
-				plugins: [svelteTesting()],
-				test: {
-					name: 'client',
-					environment: 'jsdom',
-					clearMocks: true,
-					include: ['src/**/*.svelte.{test,spec}.{js,ts}'],
-					exclude: ['src/lib/server/**'],
-					setupFiles: ['./src/lib/test-utils/vitest-setup-client.ts'],
-				},
-			},
-			{
-				extends: './vite.config.ts',
-				test: {
-					name: 'server',
-					environment: 'node',
-					include: ['src/**/*.{test,spec}.{js,ts}'],
-					exclude: ['src/**/*.svelte.{test,spec}.{js,ts}'],
-				},
-			},
-		],
+		environment: 'jsdom',
+		pool: 'vmThreads',
 	},
+	resolve: process.env.VITEST ? { conditions: ['browser'] } : undefined,
 });
