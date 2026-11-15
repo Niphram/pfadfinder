@@ -1,36 +1,16 @@
 <script lang="ts">
-	import { t } from '#lib/i18n/index.ts';
-
 	import Container from '#lib/atoms/container.svelte';
-	import Divider from '#lib/atoms/divider.svelte';
-	import InputWrapper from '#lib/atoms/input-wrapper.svelte';
 
-	import {
-		selectedTheme,
-		THEME_KEYS,
-	} from '#lib/components/theme-changer.svelte';
+	import Appearance from './appearance.svelte';
+	import Storage from './storage.svelte';
 </script>
 
 <svelte:head>
 	<title>Settings - Pfadfinder</title>
 </svelte:head>
 
-<Container class="flex flex-col">
-	<div>
-		<Divider>Appearance</Divider>
+<Container class="flex flex-col gap-4">
+	<Appearance />
 
-		<InputWrapper legend="Theme">
-			<select
-				name="theme"
-				class={['select w-full appearance-none']}
-				bind:value={$selectedTheme}
-			>
-				<option value={null}>{$t('ui.theme.auto')}</option>
-				<option disabled>-----</option>
-				{#each THEME_KEYS as key (key)}
-					<option value={key}>{$t(`ui.theme.${key}`)}</option>
-				{/each}
-			</select>
-		</InputWrapper>
-	</div>
+	<Storage />
 </Container>

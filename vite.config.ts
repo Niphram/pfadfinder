@@ -147,6 +147,12 @@ export default defineConfig({
 				precompress: false,
 				strict: true,
 			}),
+
+			compilerOptions: {
+				experimental: {
+					async: true,
+				},
+			},
 		}),
 	]),
 	define: {

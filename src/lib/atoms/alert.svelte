@@ -6,6 +6,7 @@
 	type Props = {
 		level?: AlertLevel;
 		children: Snippet;
+		actionChildren?: Snippet;
 	};
 
 	const MAP: Record<AlertLevel, [string, Snippet]> = {
@@ -15,7 +16,7 @@
 		info: ['alert-info', infoIcon],
 	};
 
-	const { level, children }: Props = $props();
+	const { level, children, actionChildren }: Props = $props();
 </script>
 
 <!-- TODO: Move icons to a central location -->
@@ -89,4 +90,9 @@
 		{@render MAP[level][1]()}
 	{/if}
 	<span>{@render children()}</span>
+	{#if actionChildren}
+		<div>
+			{@render actionChildren()}
+		</div>
+	{/if}
 </div>
