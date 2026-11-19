@@ -8,7 +8,7 @@
 	import type { BaseCharacter } from '#lib/systems/character.js';
 	import Sheet from '#lib/systems/pathfinder/sheet.svelte';
 	import { observeMutations } from '#lib/utils/mutation-observer.js';
-	import { throttle_fe } from '#lib/utils/throttle.js';
+	import { awaited_throttle_re, throttle_fe } from '#lib/utils/throttle.js';
 
 	import Status from '#lib/atoms/status.svelte';
 
@@ -19,10 +19,13 @@
 		throttledSave(char);
 	};
 
-	const throttledSave = throttle_fe(async (char: BaseCharacter) => {
-		await data.db.saveCharacter(char);
-		state.dirty = false;
-	}, 500);
+	const throttledSave = throttle_fe(
+		awaited_throttle_re(async (char: BaseCharacter) => {
+			await data.db.saveCharacter(char);
+			state.dirty = false;
+		}),
+		500,
+	);
 
 	const state = $state({
 		c: charProxy(

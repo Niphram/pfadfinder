@@ -8,7 +8,7 @@ import { lazy } from '#lib/utils/lazy.js';
 
 import { VERSIONS, type Schema } from './versions';
 
-const initIDB = lazy(async () => {
+const initIDB = lazy(() => {
 	const db = new Dexie('pfadfinder') as Dexie & Schema;
 
 	VERSIONS.forEach((v, i) => v(db.version(i + 1)));
@@ -19,11 +19,19 @@ const initIDB = lazy(async () => {
 export class IDBStorage {
 	private constructor(private readonly db: Dexie & Schema) {}
 
-	static init = lazy(async () => {
-		const db = await initIDB();
+	static init = lazy(() => {
+		const db = initIDB();
 
 		return new IDBStorage(db);
 	});
+
+	async getSettings() {
+		return this.db.settings.toArray();
+	}
+
+	async updateSetting(key: string, value: string | number | boolean | Date) {
+		await this.db.settings.upsert(key, { value });
+	}
 
 	async saveCharacter(char: BaseCharacter) {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any

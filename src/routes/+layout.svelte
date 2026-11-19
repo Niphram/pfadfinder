@@ -2,6 +2,8 @@
 	import '../app.css';
 	import './transition.css';
 
+	import type { LayoutProps } from './$types';
+
 	import { onNavigate } from '$app/navigation';
 	import { navigating } from '$app/state';
 
@@ -24,7 +26,7 @@
 		});
 	});
 
-	let { children } = $props();
+	let { children }: LayoutProps = $props();
 </script>
 
 <PageLoader loading={navigating.complete !== null} />

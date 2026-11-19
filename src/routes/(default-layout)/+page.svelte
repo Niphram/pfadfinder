@@ -3,10 +3,10 @@
 
 	import type { PageProps } from './$types';
 
-	import { invalidate } from '$app/navigation';
 	import { resolve } from '$app/paths';
 
 	import { SERIALIZE_SYMBOL } from '#lib/serde/interfaces.js';
+	import { IDBStorage } from '#lib/storage/index.ts';
 	import { SYSTEMS_MAP } from '#lib/systems/index.js';
 	import { preventDefault } from '#lib/utils/event-modifiers.js';
 
@@ -18,13 +18,16 @@
 	import { Character } from '#lib/data/index.js';
 
 	const { data }: PageProps = $props();
-	const { characters, db } = $derived(data);
 
 	const { openDialog } = useDialog();
 	const { showToast } = useToast();
 
-	function invalidateCharacters() {
-		invalidate('characters:list');
+	const db = IDBStorage.init();
+
+	let characters = $state(await db.getCharactersMetadata());
+
+	async function invalidateCharacters() {
+		characters = await db.getCharactersMetadata();
 	}
 
 	async function createChar() {

@@ -104,6 +104,7 @@ export default defineConfig({
 				'error',
 				{
 					caughtErrorsIgnorePattern: '^_',
+					argsIgnorePattern: '^_',
 				},
 			],
 			'eslint/no-unused-expressions': [

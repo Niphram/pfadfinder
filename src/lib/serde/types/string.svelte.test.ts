@@ -18,6 +18,7 @@ describe('StringWrapper', () => {
 			const instance = string(faker.string.sample());
 
 			expect(instance.options).toStrictEqual({
+				optional: false,
 				minLength: 0,
 				maxLength: Infinity,
 			});
@@ -51,6 +52,15 @@ describe('StringWrapper', () => {
 			expectErrResult(result);
 			expect(result.error).toBe('Length must be at most 10');
 		});
+
+		it('should return err-result if value is null but options.optional is false', () => {
+			const instance = string(null!, { optional: false });
+
+			const result = instance.result();
+
+			expectErrResult(result);
+			expect(result.error).toBe('Value is not valid');
+		});
 	});
 
 	describe('clone', () => {
@@ -58,6 +68,7 @@ describe('StringWrapper', () => {
 			const instance = string(faker.string.sample(), {
 				minLength: faker.number.int(),
 				maxLength: faker.number.int(),
+				optional: faker.datatype.boolean(),
 			});
 
 			const clone = instance.clone();
@@ -92,6 +103,22 @@ describe('StringWrapper', () => {
 			const instance = string('foo');
 
 			instance[DESERIALIZE_SYMBOL](15);
+
+			expect(instance.value).toBe('foo');
+		});
+
+		it('should allow null if options.optional is true', () => {
+			const instance = string('foo', { optional: true });
+
+			instance[DESERIALIZE_SYMBOL](null);
+
+			expect(instance.value).toBeNull();
+		});
+
+		it('should now allow null if options.optional is false', () => {
+			const instance = string('foo');
+
+			instance[DESERIALIZE_SYMBOL](null);
 
 			expect(instance.value).toBe('foo');
 		});
