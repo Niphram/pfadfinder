@@ -14,6 +14,7 @@
 	import PageLoader from '#lib/components/page-loader.svelte';
 	import ThemeChanger from '#lib/components/theme-changer.svelte';
 	import ToastProvider from '#lib/components/toast-provider.svelte';
+	import UpdateNotification from '#lib/components/update-notification.svelte';
 
 	// Nice looking transitions (if supported)
 	onNavigate((navigation) => {
@@ -38,6 +39,8 @@
 <ThemeChanger>
 	<DialogProvider>
 		<ToastProvider>
+			<UpdateNotification />
+
 			<BrokenScreen />
 
 			{@render children()}

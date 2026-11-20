@@ -9,7 +9,7 @@ import { NumberWrapper } from './types/number.svelte';
 import { StringWrapper } from './types/string.svelte';
 
 export type SerdeProxy<T> =
-	T extends StringWrapper<string>
+	T extends StringWrapper<string, boolean>
 		? T['value']
 		: T extends NumberWrapper<boolean>
 			? T['value']
@@ -36,8 +36,8 @@ export type SerdeProxy<T> =
 											  ) => infer R
 											? (...args: Args) => R
 											: T extends object
-												? { [K in keyof T]: SerdeProxy<T[K]> } & {
-														$: T;
+												? { -readonly [K in keyof T]: SerdeProxy<T[K]> } & {
+														readonly $: T;
 													}
 												: T;
 

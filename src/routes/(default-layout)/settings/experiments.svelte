@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { useSettings } from '#lib/state/settings.svelte.ts';
 
+	import Button from '#lib/atoms/button.svelte';
 	import Divider from '#lib/atoms/divider.svelte';
 
 	import Toggle from '#lib/components/input/toggle.svelte';
@@ -23,7 +24,9 @@
 		/>
 
 		{#if settings.experimentalFeaturesEnabled}
-			<p>Nothing here yet :)</p>
+			<Button onclick={() => (settings.lastAcknowledgedVersion = '0')}>
+				Test update notification
+			</Button>
 		{/if}
 	</div>
 </div>
