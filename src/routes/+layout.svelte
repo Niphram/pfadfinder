@@ -7,6 +7,8 @@
 	import { onNavigate } from '$app/navigation';
 	import { navigating } from '$app/state';
 
+	import { initSettings } from '#lib/state/settings.svelte.ts';
+
 	import DialogProvider from '#lib/components/dialog-provider.svelte';
 	import BrokenScreen from '#lib/components/fun/broken-screen.svelte';
 	import PageLoader from '#lib/components/page-loader.svelte';
@@ -27,6 +29,8 @@
 	});
 
 	let { children }: LayoutProps = $props();
+
+	await initSettings();
 </script>
 
 <PageLoader loading={navigating.complete !== null} />

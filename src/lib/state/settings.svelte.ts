@@ -1,36 +1,63 @@
-import { error } from '@sveltejs/kit';
-import * as v from 'valibot';
+import { createContext } from 'svelte';
 
-import type { IDBStorage } from '../storage';
+import { browser } from '$app/env';
 
-const SettingsSchema = v.object({
-	experimentalFeaturesEnabled: v.optional(v.boolean(), false),
-});
+import { awaited_throttle_re } from '#lib/utils/throttle.ts';
 
-export function settingsProxy(
-	values: Awaited<ReturnType<IDBStorage['getSettings']>>,
-	cb: (key: string, value: string | number | boolean | Date) => void,
-): v.InferOutput<typeof SettingsSchema> {
-	const settingsObj = values.reduce<Record<string, unknown>>(
-		(acc, cur) => ((acc[cur.key] = cur.value), acc),
-		{},
-	);
+import type { SerdeProxy } from '../serde';
+import {
+	boolean,
+	charProxy,
+	ClassSerializer,
+	DESERIALIZE_SYMBOL,
+	string,
+} from '../serde';
+import { IDBStorage } from '../storage';
 
-	const result = v.safeParse(SettingsSchema, settingsObj);
+export class Settings extends ClassSerializer {
+	readonly experimentalFeaturesEnabled = boolean(false);
 
-	if (!result.success) {
-		error(400, 'Could not load settings!');
+	readonly lastAcknowledgedVersion = string(null, { optional: true });
+
+	readonly lastAcknowledgedChangelog = string(null, { optional: true });
+}
+
+const [useSettings, setSettings] = createContext<SerdeProxy<Settings>>();
+export { useSettings };
+
+export function initSettings() {
+	const state = $state(new Settings());
+
+	let loadPromise: Promise<void> | undefined;
+	if (browser) {
+		const db = IDBStorage.init();
+		loadPromise = db.getSettings().then((values) => {
+			const settingsObj = values.reduce<Record<string, unknown>>(
+				(acc, cur) => ((acc[cur.key] = cur.value), acc),
+				{},
+			);
+
+			state[DESERIALIZE_SYMBOL](settingsObj);
+		});
 	}
 
-	const state = $state(result.output);
-
-	return new Proxy(state, {
-		set(target, p, newValue, receiver) {
-			const res = Reflect.set(target, p, newValue, receiver);
-
-			if (res) cb(p as string, newValue);
-
-			return res;
+	const settingsCallback = awaited_throttle_re(
+		async (key: string, value: string | number | boolean | Date) => {
+			await IDBStorage.init().updateSetting(key, value);
 		},
-	});
+	);
+
+	setSettings(
+		new Proxy(charProxy(state), {
+			set(target, p, newValue, receiver) {
+				const res = Reflect.set(target, p, newValue, receiver);
+
+				if (res) settingsCallback(p as string, newValue);
+
+				return res;
+			},
+		}),
+	);
+
+	return loadPromise;
 }

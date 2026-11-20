@@ -1,15 +1,11 @@
 <script lang="ts">
-	import type { settingsProxy } from '#lib/state/settings.svelte.ts';
+	import { useSettings } from '#lib/state/settings.svelte.ts';
 
 	import Divider from '#lib/atoms/divider.svelte';
 
 	import Toggle from '#lib/components/input/toggle.svelte';
 
-	type Props = {
-		settings: ReturnType<typeof settingsProxy>;
-	};
-
-	const { settings = $bindable() }: Props = $props();
+	const settings = useSettings();
 </script>
 
 <div>
