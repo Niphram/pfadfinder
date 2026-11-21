@@ -36,8 +36,8 @@ describe('EnumWrapper', () => {
 			expect(result.value).toBe(instance.value);
 		});
 
-		it('should return err-result if value null but options.optional is false', () => {
-			const instance = enumeration(VALUES, null!, { optional: false });
+		it('should return err-result if value undefined but options.optional is false', () => {
+			const instance = enumeration(VALUES, undefined!, { optional: false });
 
 			const result = instance.result();
 
@@ -98,7 +98,7 @@ describe('EnumWrapper', () => {
 
 			instance[DESERIALIZE_SYMBOL](null);
 
-			expect(instance.value).toBeNull();
+			expect(instance.value).toBeUndefined();
 		});
 
 		it('should validate against values', () => {

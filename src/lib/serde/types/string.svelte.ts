@@ -25,14 +25,14 @@ export class StringWrapper<
 	}
 
 	result(): Result<Option<Values, IsOptional>, string> {
-		if (this.value !== null) {
+		if (this.value !== undefined) {
 			if (this.value.length < this.options.minLength)
 				return Err(`Length must be at least ${this.options.minLength}`);
 
 			if (this.value.length > this.options.maxLength)
 				return Err(`Length must be at most ${this.options.maxLength}`);
 		} else if (!this.options.optional) {
-			// input value will be null if it is invalid, so we can't differentiate between empty and invalid input
+			// input value will be undefined if it is invalid, so we can't differentiate between empty and invalid input
 			return Err('Value is not valid');
 		}
 
@@ -40,12 +40,12 @@ export class StringWrapper<
 	}
 
 	[SERIALIZE_SYMBOL](): unknown {
-		return this.value;
+		return this.value ?? null; // serialize undefined as null
 	}
 
 	[DESERIALIZE_SYMBOL](value: unknown) {
 		if (value === null && this.options.optional) {
-			this.value = null as Option<Values, IsOptional>;
+			this.value = undefined as Option<Values, IsOptional>;
 		} else if (typeof value === 'string') {
 			this.value = value as Values;
 		}

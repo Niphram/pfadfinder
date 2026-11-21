@@ -116,7 +116,7 @@ export type AttackType = (typeof ATTACK_TYPES)[number];
 export class AttackRoll extends ClassSerializer {
 	baseModifier = enumeration(ATTACK_TYPES, 'babFull');
 
-	abilityModifier = enumeration(ABILITY_KEYS, null, { optional: true });
+	abilityModifier = enumeration(ABILITY_KEYS, undefined, { optional: true });
 
 	bonusModifier = macro('', { optional: true });
 

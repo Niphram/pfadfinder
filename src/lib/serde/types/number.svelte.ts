@@ -22,7 +22,7 @@ export class NumberWrapper<IsOptional extends boolean> implements Serializable {
 	}
 
 	result(): Result<Option<number, IsOptional>, string> {
-		if (this.value !== null) {
+		if (this.value !== undefined) {
 			// Could this even happen?
 			if (typeof this.value !== 'number') {
 				return Err('Not a number');
@@ -36,7 +36,7 @@ export class NumberWrapper<IsOptional extends boolean> implements Serializable {
 			if (this.options.integer && !Number.isInteger(this.value))
 				return Err('Must be an integer');
 		} else if (!this.options.optional) {
-			// input value will be null if it is invalid, so we can't differentiate between empty and invalid input
+			// input value will be undefined if it is invalid, so we can't differentiate between empty and invalid input
 			return Err('Value is not valid');
 		}
 
@@ -44,12 +44,12 @@ export class NumberWrapper<IsOptional extends boolean> implements Serializable {
 	}
 
 	[SERIALIZE_SYMBOL](): unknown {
-		return this.value;
+		return this.value ?? null; // serialize undefined as null
 	}
 
 	[DESERIALIZE_SYMBOL](value: unknown) {
 		if (value === null && this.options.optional) {
-			this.value = null as Option<number, IsOptional>;
+			this.value = undefined as Option<number, IsOptional>;
 		} else if (typeof value === 'number' && Number.isFinite(value)) {
 			this.value = value;
 		}

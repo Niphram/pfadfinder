@@ -85,7 +85,7 @@ export class AcItem extends ClassSerializer {
 
 	chkPenalty = number(0);
 
-	maxDexBonus = number(null, { optional: true });
+	maxDexBonus = number(undefined, { optional: true });
 
 	spellFailure = number(0);
 

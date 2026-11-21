@@ -72,7 +72,7 @@ describe('Macro', () => {
 			const result = instance.result({});
 
 			expectOkResult(result);
-			expect(result.value).toBeNull();
+			expect(result.value).toBeUndefined();
 		});
 
 		it('should return the parser error if the expression could not be parsed', () => {

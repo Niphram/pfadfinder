@@ -26,7 +26,7 @@ export class EnumWrapper<
 	}
 
 	result(): Result<Option<Values[number], IsOptional>, string> {
-		if (this.value !== null) {
+		if (this.value !== undefined) {
 			if (!this.values.includes(this.value)) return Err('Value is invalid');
 		} else if (!this.options.optional) {
 			return Err('Value is required');
@@ -36,12 +36,12 @@ export class EnumWrapper<
 	}
 
 	[SERIALIZE_SYMBOL](): unknown {
-		return this.value;
+		return this.value ?? null; // serialize undefined as null
 	}
 
 	[DESERIALIZE_SYMBOL](value: unknown) {
 		if (value === null && this.options.optional) {
-			this.value = null as Option<Values[number], IsOptional>;
+			this.value = undefined as Option<Values[number], IsOptional>;
 		} else if (
 			value !== null &&
 			this.values.includes(value as Values[number])

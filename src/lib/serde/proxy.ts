@@ -24,7 +24,7 @@ export type SerdeProxy<T> =
 						: T extends Macro<false>
 							? number
 							: T extends Macro<true>
-								? number | null
+								? number | undefined
 								: T extends ArrayWrapper<infer A>
 									? SerdeProxy<A>[]
 									: T extends Array<infer A>

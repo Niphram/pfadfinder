@@ -12,7 +12,7 @@ import type { Character } from './character.svelte';
 export class ArmorClass extends ClassSerializer {
 	primaryAbility = enumeration(ABILITY_KEYS, 'dex');
 
-	secondaryAbility = enumeration(ABILITY_KEYS, null, { optional: true });
+	secondaryAbility = enumeration(ABILITY_KEYS, undefined, { optional: true });
 
 	bonusAc = macro('0');
 

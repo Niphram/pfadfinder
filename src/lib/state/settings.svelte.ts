@@ -17,9 +17,9 @@ import { IDBStorage } from '../storage';
 export class Settings extends ClassSerializer {
 	readonly experimentalFeaturesEnabled = boolean(false);
 
-	readonly lastAcknowledgedVersion = string(null, { optional: true });
+	readonly lastAcknowledgedVersion = string(undefined, { optional: true });
 
-	readonly lastAcknowledgedChangelog = string(null, { optional: true });
+	readonly lastAcknowledgedChangelog = string(undefined, { optional: true });
 }
 
 const [useSettings, setSettings] = createContext<SerdeProxy<Settings>>();

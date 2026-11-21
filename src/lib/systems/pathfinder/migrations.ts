@@ -33,14 +33,14 @@ export const UPGRADES: ((
 		combat: {
 			attacks: {
 				attack: {
-					abilityModifier: string | null;
+					abilityModifier: string | undefined;
 				};
 			}[];
 		};
 	}) => {
 		char.combat.attacks.forEach((attack) => {
 			if (attack.attack.abilityModifier === 'none') {
-				attack.attack.abilityModifier = null;
+				attack.attack.abilityModifier = undefined;
 			}
 		});
 	},

@@ -157,7 +157,7 @@
 								]}>{item.name}</span
 							>
 
-							{#if item.perDay !== null}
+							{#if item.perDay !== undefined}
 								<button
 									class="btn w-16 btn-accent btn-xs md:w-24 md:btn-md"
 									onclick={stopPropagation(() => useTrait(index))}

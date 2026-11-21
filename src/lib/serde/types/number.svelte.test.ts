@@ -72,8 +72,8 @@ describe('NumberWrapper', () => {
 			expect(result.error).toBe('Must be an integer');
 		});
 
-		it('should return err-result if value is null but options.optional is false', () => {
-			const instance = number(null!, { optional: false });
+		it('should return err-result if value is undefined but options.optional is false', () => {
+			const instance = number(undefined!, { optional: false });
 
 			const result = instance.result();
 
@@ -140,7 +140,7 @@ describe('NumberWrapper', () => {
 
 			instance[DESERIALIZE_SYMBOL](null);
 
-			expect(instance.value).toBeNull();
+			expect(instance.value).toBeUndefined();
 		});
 
 		it('should now allow null if options.optional is false', () => {

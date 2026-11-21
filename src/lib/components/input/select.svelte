@@ -57,8 +57,8 @@
 		bind:value={tempEnum.value}
 	>
 		{#if value.options.optional}
-			<option value={null}
-				>{translate?.(null as Option<Values[number], IsOptional>) ??
+			<option value={undefined}
+				>{translate?.(undefined as Option<Values[number], IsOptional>) ??
 					'-'}</option
 			>
 		{/if}

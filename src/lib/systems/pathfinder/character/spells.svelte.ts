@@ -255,7 +255,7 @@ export class SpellLevelList extends ClassSerializer {
 export class Spells extends ClassSerializer {
 	displayFilter = enumeration(SPELL_DISPLAY_TYPE, 'all');
 
-	dcAbility = enumeration(ABILITY_KEYS, null, { optional: true });
+	dcAbility = enumeration(ABILITY_KEYS, undefined, { optional: true });
 
 	dcBonus = macro('', { optional: true });
 

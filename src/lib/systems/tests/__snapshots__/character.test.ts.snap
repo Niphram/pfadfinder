@@ -11,7 +11,7 @@ Character {
     "flatFooted": 15,
     "notes": "",
     "primaryAbility": "dex",
-    "secondaryAbility": null,
+    "secondaryAbility": undefined,
     "total": 16,
     "touch": 11,
   },
@@ -1245,7 +1245,7 @@ Character {
     "flatFooted": 10,
     "notes": "",
     "primaryAbility": "dex",
-    "secondaryAbility": null,
+    "secondaryAbility": undefined,
     "total": 10,
     "touch": 10,
   },
@@ -2128,8 +2128,8 @@ Character {
     },
   },
   "spells": Spells {
-    "dcAbility": null,
-    "dcBonus": null,
+    "dcAbility": undefined,
+    "dcBonus": undefined,
     "displayFilter": "all",
     "level_0": SpellLevelList {
       "dc": 10,

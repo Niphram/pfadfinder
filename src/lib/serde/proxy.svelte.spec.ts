@@ -94,9 +94,9 @@ describe('Proxy', () => {
 
 		test('optional EnumWrapper', () => {
 			const sut = charProxy(new TestClass());
-			sut.optionalEnumeration = null;
+			sut.optionalEnumeration = undefined;
 
-			expect(sut.optionalEnumeration).toBeNull();
+			expect(sut.optionalEnumeration).toBeUndefined();
 		});
 
 		test('ArrayWrapper', () => {
