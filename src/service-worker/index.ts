@@ -8,8 +8,13 @@ const CACHE = `cache-${version}`;
 const PROTECTED_CACHES: Set<string> = new Set();
 
 // All assets, with duplicates removed
+// append version for cache-busting, so a serviceworker update will never pick up old files
 const ASSETS = [
-	...new Set(immutable.concat(prerendered, assets).map((e) => resolve(e.path))),
+	...new Set(
+		immutable
+			.concat(prerendered, assets)
+			.map((e) => resolve(e.path) + `?v=${version}`),
+	),
 ];
 
 function log(tag: string, message: string) {
